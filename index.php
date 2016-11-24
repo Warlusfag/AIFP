@@ -5,7 +5,7 @@ require_once 'libs/aifp_controller.php';
 
 $contr = new aifp_controller();
 $smarty = new AIFP_Smarty();
-/*
+
  if(isset($_SESSION['user'])){
     //codice di benvenuto
 }else{
