@@ -64,11 +64,11 @@ class conversazione extends gen_model
             $this->err_descr = "ERROR: page selected is not right";
             return false;
         }
-        $convs = array();
+        $posts = array();
         for($i=0;$i<count($this->posts[$page]);$i++){
-            $convs[$i] = $this->posts[$page]->attributes;
+            $posts[$i] = $this->posts[$page]->attributes;
         }
-        return $convs;
+        return $posts;
     }   
     
     public function load_posts($page){
@@ -85,7 +85,7 @@ class conversazione extends gen_model
         $params = array(
             $t->table_descr['fk_conversazione'] => $this->attributes[$this->table_descr['key']],            
         );        
-        $posts = $t->search_conversazioni($params, $after, limit_conv);
+        $posts = $t->search_posts($params, $after, limit_conv);
         if(!$t){
             $this->err_descr = GEN_ERROR;
             return false;
@@ -102,11 +102,7 @@ class conversazione extends gen_model
         }
         return true;
     }
-    
-    public function add_post($text){
-        
-    }
-    
+
     public function search_conversazioni($params, $after=-1, $limit=-1){
         if(!$this->conn){
             $this->conn = new db_interface();

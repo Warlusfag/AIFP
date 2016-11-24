@@ -2,6 +2,9 @@
 require_once 'gen_model.php';
 require_once 'admin/setup.php';
 
+//ancora da finire
+const limit_filesize = 440000;
+
 function get_us_from_type($type){
     if($type == 'utente'){
         $us = new user();
@@ -356,11 +359,18 @@ class user extends gen_model{
             $this->err_descr = "Error: conversaton id is not set";
             return false;                
         }
-        $p = new post($fk_conv, $text);
-        if(!$p->add_post()){
-            $this->err_descr = $this->conn->error;
+        $user = array(
+            'user'=>$this->attributes['user'],
+            'punteggio'=>$this->attributes['punteggio'],
+            'image'=>$this->attributes_descr['image'],
+        );
+        $p = new post();
+        $p->new_post( $user, $text, $fk_conv);
+        if($p->err_descr != ''){
+            $this->err_descr = $p->err_descr;
             return false;
-        }                
+        }
+        $this->attributes['punteggio']+=1;
         $this->err_descr = '';
         return true;              
     }
@@ -392,7 +402,7 @@ class user extends gen_model{
             $this->err_descr = "Error, the file already exists";
             return false;            
         }
-        $path = IMG_USER.$this->id;
+        $path = IMG_USER.$this->attributes['user'];
         $size = $file_image['userfile']['size'];
         if((file_exists($path))){
           if (!unlink($path)){
