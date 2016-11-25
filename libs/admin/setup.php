@@ -10,7 +10,7 @@ define('PROJ_DIR', $server_root);
 define('PROJ_LIBS',PROJ_DIR.'libs/');
 define('PROJ_ADMIN', PROJ_LIBS.'admin/');
 define('FILE_ASS', PROJ_DIR.'fuser/filespace_ass/');
-define('IMG_USER', PROJ_DIR.'fuser/image_user/');
+define('IMG_USER', PROJ_DIR.'libs/fuser/image_user/');
 define('DEFAULT_IMG', IMG_USER.'default.png');
 define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com');
 

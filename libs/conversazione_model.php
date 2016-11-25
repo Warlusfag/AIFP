@@ -12,22 +12,19 @@ class conversazione extends gen_model
         $this->attributes = array(
             'id_conv'=>-1,
             'sezione' => -1,
-            'titolo' => 'titolo',
-            'user' => 'user',            
-            'num_post' => array(),
+            'titolo' => 'titolo',            
+            'num_post' => 1,
             'data' => '0-0-0000',
         );        
         $this->table_descr = array(
             'table' => 'conversazioni',
             'key'=>'id_conv',
             'key_type'=>'i',
-            'column_name' => 'id_conv,sezione,titolo,user,num_post,data',
-            'colimn_type' => 'i,i,s,i,i,da',
+            'column_name' => 'id_conv,sezione,titolo,num_post,data',
+            'colimn_type' => 'i,i,s,i,i,t',
         );        
-        $this->convs = array();
-        for($i=0;$i<limit_page;$i++){
-            $this->convs[$i] = array();        
-        }
+        $this->posts = array();
+        
         if($id != -1 || $titolo != -1){
             if($id != -1 ){
                 $params = array(
@@ -53,29 +50,55 @@ class conversazione extends gen_model
             }
         }
         return true;
-    }
+    }  
     
-    public function get_post($page){
-        if($page > limit_page){
-            $this->err_descr = "ERROR: page over the limit";
+    public function new_conv($fk_sez, $user, $titolo, $text){
+        if(!$this->conn->status){
+            $this->conn = new db_interface();
+            if(!$this->conn->status){
+                $this->err_descr = $this->conn->error;
+                return false;
+            }
+        }
+        $this->attributes['fk_sez'] = $fk_sez;
+        $this->attributes['titolo'] = $titolo;
+        
+        $name = extract_node($this->table_descr['column_name'], 0);
+        $type = extract_node($this->table_descr['column_type'], 0);
+        $value = array(
+            0 => $this->attributes['fk_sez'],
+            1 => $this->attributes['titolo'],
+            3 => $this->attributes['num_post'],
+            4 => $this->attributes['data'] = $this->conn->get_timestamp(),
+        );
+        if(!$this->conn->statement_insert($this->table_descr['table_name'],$name, $value, $type) ){
+            $this->err_descr =$this->conn->error;
             return false;
         }
-        if(!isset($this->posts[$page])){
-            $this->err_descr = "ERROR: page selected is not right";
-            return false;
-        }
-        $posts = array();
-        for($i=0;$i<count($this->posts[$page]);$i++){
-            $posts[$i] = $this->posts[$page]->attributes;
-        }
-        return $posts;
-    }   
+        $p = new post();
+        $p->attributes['time'] = $this->attributes['data'];
+        $p->new_post($text,$user,$this->conn->last_id);
+        $this->posts[0][0]=$p;
+        
+        $this->err_descr = '';
+        return true;
+    }
     
     public function load_posts($page){
         if($this->attributes[$this->table_descr['key']]==-1){
             $this->err_descr = "ERROR: object is not initialized";
             return false;
-        }        
+        }
+        if($page > limit_post){ return false;}
+        //Codice per assicurare un corretto caricamento della pagina
+        if(isset($this->posts[0])){
+            if(count($this->posts) >= $page){
+                $this->posts[$page] = array();
+            }else if(count($this->convs) < $page){
+                return true;
+            }
+        }else{ $this->posts[0] = array();}
+        //after serve per determinare nella query quali
         $after = 0;
         if($page > 0){ 
             $after = $page*limit_post;
@@ -85,9 +108,9 @@ class conversazione extends gen_model
         $params = array(
             $t->table_descr['fk_conversazione'] => $this->attributes[$this->table_descr['key']],            
         );        
-        $posts = $t->search_posts($params, $after, limit_conv);
-        if(!$t){
-            $this->err_descr = GEN_ERROR;
+        $posts = $t->search_posts($params, $after, limit_post);
+        if($t->err_descr == ''){
+            $this->err_descr = $t->err_descr;
             return false;
         }
         if(count($posts)>= limit_conv){
@@ -97,9 +120,10 @@ class conversazione extends gen_model
         }
         for($i=0;$i<$n;$i++){
             $t = new post();
-            $t->init($posts[$i]);
-            $this->$posts[$page][$posts[$i][$t->table_descr['key']]] = $t;
+            $t->init($posts[$i]);            
+            $this->$posts[$page][$i] = $t;
         }
+        $this->err_descr = '';
         return true;
     }
 
@@ -152,8 +176,6 @@ class conversazione extends gen_model
 
 class post extends gen_model
 {    
-    public $user;
-    
     function __construct( $id = -1){
         parent::__construct();
         
@@ -162,22 +184,16 @@ class post extends gen_model
             'fk_conversazione' => -1,            
             'user' => 'user',
             'text' => 'Hello World!',
-            'ordine' => -1,
-            'time'=>'00:00',
+            'time'=>'',
         );        
         $this->table_descr = array(
             'table' => 'post',
             'key'=>'id_post',
             'key_type'=>'i',
-            'column_name' => 'id_post,fk_conversazione,user,text,ordine,time',
-            'colimn_type' => 'i,i,s,s,i,t',
-        );
-        
-        $this->user = array(
-            'user' => 'user',
-            'punteggio'=>1,
-            'image'=>IMG_USER,
-        );
+            'column_name' => 'id_post,fk_conversazione,user,text,time',
+            'colimn_type' => 'i,i,s,s,t',
+        );        
+
         if($id != -1){
             $params = array(
                 $this->table_descr['key'] => $id,
@@ -191,12 +207,35 @@ class post extends gen_model
         if(!is_array($params) && count($params)>0 ){
             return false;
         }
-        foreach($this->attributes as $key=>$value){
+        foreach($this->attributes as $key=>$value){            
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
             }
         }
         return true;
+    }
+    
+    public function get_user(){
+        if($this->attributes['user'] == 'user'){
+            $this->err_descr = 'ERROR: post is not initialized';
+            return false;
+        }
+        $user = array();
+        if(!file_exists(IMG_USER.$this->attributes['user'])){
+            $user['image']=DEFAULT_IMG;
+        }else{
+            $user['image'] = IMG_USER.$this->attributes['user'];
+        }
+        $user['user']=$this->attributes['user'];
+        return $user;        
+    }
+    
+    public function get_post(){
+        if($this->attributes['fk_conversazione'] == -1 || count($this->attributes['text'])==0){
+            $this->err_descr='ERROR:post is not initialized';
+            return false;
+        }
+        return $this->attributes;        
     }
     
     public function new_post($text, $user, $fk_conv=-1){
@@ -212,25 +251,24 @@ class post extends gen_model
             $this->err_descr = "ERROR: there is not text";
             return false;
         }
-        $c = $this->table_descr['column_name'];
-        $params = array(
-            $c[1] => $this->attributes['fk_conversazione'],
-        );        
-        $posts = $this->search_posts($params);
-        $n = count($posts);        
-        $n++;
-        //codice per l'inserimento del post
-        $name = $this->table_descr['column_name'];
-        $type = $this->table_descr['column_type'];
+        $this->attributes['user'] = $user;
+        $this->attributes['text'] = $text;
+        if($this->attributes['time'] == ''){
+            $this->attrubutes['time'] = $this->conn->get_timestamp();
+        }
+        $name = extract_node($this->table_descr['column_name'],0);        
+        $type = extract_node($this->table_descr['column_type'],0);
         $value = array(
-            [0]=>$this->fk_conv,
-            [1]=>$this->text,
-            [3]=>$n,
+            [0]=>$this->attributes['fk_conversazione'],
+            [1]=>$this->attributes['user'],
+            [2]=>$this->attributes['text'],
+            [3] => $this->attrubutes['time'],
         );        
         if(!$this->conn->statement_insert($this->table_descr['table'], $name, $value, $type)){
             $this->err_descr = "ERROR: DB is not ready";
             return false;
         }
+        $this->err_descr = '';
         return true;       
     }
     

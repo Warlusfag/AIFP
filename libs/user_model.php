@@ -344,8 +344,7 @@ class user extends gen_model{
         }        
         $this->err_descr = '';
         return true;       
-    }
-    
+    }    
     
     public function write_post($fk_conv, $text)            
     {

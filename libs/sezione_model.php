@@ -18,7 +18,7 @@ class sezione extends gen_model{
             'id_sez'=>-1,
             'nome' => '',
             'moderatore' => '',            
-            'num_convs' => array(),            
+            'num_convs' => -1,            
         );
         
         $this->table_descr = array(
@@ -28,11 +28,7 @@ class sezione extends gen_model{
             'column_name' => 'id_sez,nome,moderatore,num_conv',
             'colimn_type' => 'i,s,s,i',
         );
-        $this->convs = array();
-        for($i=0;$i<limit_page;$i++){
-            $this->convs[$i] = array();        
-        }
-        
+        $this->convs = array();        
     }
     
     public function init ($params){
@@ -52,11 +48,22 @@ class sezione extends gen_model{
             $this->err_descr = "ERROR: object is not initialized";
             return false;
         }
+        if($page > limit_conv){ return false;}
+        
         require_once 'conversazione_model.php';
+        //Codice per assicurare un corretto caricamento della pagina
+        if(isset($this->convs[0])){
+            if(count($this->convs) >= $page){
+                $this->convs[$page] = array();
+            }else if(count($this->convs) < $page){
+                return true;
+            }
+        }else{ $this->convs[0] = array();}
+        
         $after = 0;
         if($page > 0){ 
             $after = $page*limit_conv;
-            $page -= 1;            
+            $page -= 1;
         }
         $t = new conversazione();        
         $params = array(
@@ -75,7 +82,7 @@ class sezione extends gen_model{
         for($i=0;$i<$n;$i++){
             $t = new conversazione();
             $t->init($convs[$i]);
-            $this->$convs[$page][$convs[$i][$t->table_descr['key']]] = $t;
+            $this->$convs[$page][$i] = $t;
         }
         return true;
     }    
@@ -94,6 +101,24 @@ class sezione extends gen_model{
             $convs[$i] = $this->convs[$page]->attributes;
         }
         return $convs;
+    }
+    
+    public function new_conversazione($fk_sez, $user, $titolo, $text){
+        $c = new conversazione();
+        $c->new_conv($fk_sez, $user, $titolo, $text);
+        if($c->err_descr != ''){
+            $this->err_descr = $c->err_descr;
+            return false;
+        }
+        $i = count($this->convs)-1;
+        if(count($this->convs[$i]) < limit_conv){
+            array_push($this->convs[$i], $c);
+            $this->attributes['num_convs']++;
+        }else{            
+            if(count($this->convs) == limit_conv){
+                $this->push_ahead_conv($c);
+            }
+        }
     }
     
     public function search_sezioni($params, $after = -1, $limit=-1){
@@ -138,5 +163,24 @@ class sezione extends gen_model{
             $this->err_descr="ERROR: No results found \n ";
             return false;
         }      
+    }
+    
+    private function push_ahead_conv($c){
+        $convs = array();
+        $convs[0] = array();
+        $convs[0][0]=$c;
+        for($p=0;$p<limit_page;$p++){
+            for($i=0;$i<limit_conv;$i++){
+                if($i==limit_conv-1){
+                    if($p != limit_page){
+                        $convs[$p+1] = array();
+                        $convs[$p+1][0] = $this->convs[$p][$i];
+                    }
+                }else{
+                    $convs[$p][$i+1] = $this->convs[$p][$i];
+                }
+            }
+        }
+        $this->convs = $convs;
     }
 }

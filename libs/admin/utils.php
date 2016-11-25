@@ -48,3 +48,27 @@ function download ($file)
     }
 }
 
+function extract_node($array, $node){
+    if(is_string($array)){
+        $temp = explode(',',$array);
+        $n_col = '';
+        for($i=0;$i<count($temp);$i++){
+            if($i!=$node){
+                $n_col .=$temp[$i].',';
+            }        
+        }
+        return str_replace($n_col,'', count($n_col)-2);  
+    }else if(is_array($array)){
+        if (count($array)<=$node){
+            return null;
+        }else{
+            $temp = array();
+            for($i=0;$i<count($temp);$i++){
+                if($i!=$node){
+                    $temp[$i] = $array[$i];
+                }        
+            }
+            return $temp;
+        }
+    }
+}
