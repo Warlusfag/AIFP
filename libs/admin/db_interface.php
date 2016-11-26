@@ -37,6 +37,13 @@ class db_interface
         //Codice per rendere una data con gli / per SQL
         
     }
+    
+    public function get_timestamp(){
+        return date('Y-m-d H:i:s',time());
+    }
+    public function get_current_date(){
+        return date('Y-m-d',time());
+    }
 
     //Metodi per l'utilizzo di questa classe come 
     function close()
@@ -114,7 +121,8 @@ class db_interface
                 $ptype .= 's';
             }
             else if($param_type[$i] == 't'){
-                $set.=$param_name[$i]."= CURRENT_TIMESTAMP(), ";                    
+                $query_val.='str_to_date(?,\'%Y-%m-%d %H:$i:%s\'), ';
+                $ptype .= 's';                    
             }
             else{
                 $set .= $param_name[$i]."= ?, ";
@@ -165,7 +173,8 @@ class db_interface
                 $ptype .= 's';
             }
             else if($param_type[$i] == 't'){
-                $query_val.='CURRENT_TIMESTAMP(), ';                    
+                $query_val.='str_to_date(?,\'%Y-%m-%d %H:%i:%s\'), ';
+                $ptype .= 's';                    
             }
             else{
                 $query_val.='?, ';
@@ -205,7 +214,8 @@ class db_interface
                 $ptype .= 's';
             }
             else if($param_type[$i] == 't'){
-                $cond.=$param_name[$i]."= CURRENT_TIMESTAMP() AND ";                    
+                $query_val.='str_to_date(?,\'%Y-%m-%d %H:$i:%s\'), ';
+                $ptype .= 's';                    
             }
             else{
                 $cond .= $param_name[$i]."=? AND ";
