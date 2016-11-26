@@ -144,7 +144,7 @@ class sezione extends gen_model{
             $query = str_replace($query, '', count($query)-6);
         }
         if($limit > 0){
-            $query .= "LIMIT $limit;";            
+            $query .= " LIMIT $limit;";            
         } else { $query .= ";";}
         
         $res = $this->conn->query($query);
@@ -157,7 +157,8 @@ class sezione extends gen_model{
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
                 $app[$j]=$res->fetch_assoc();                
-            }            
+            }
+            $this->err_descr = '';
             return $app;
         }else{                
             $this->err_descr="ERROR: No results found \n ";
