@@ -12,27 +12,18 @@ function check_post($param){
             $app[$key] = sanitaze_input($value);
         }           
     }
-    return $app;
- 
+    return $app; 
 }
     
 try{
     $smarty = new AIFP_smarty();
     $contr = new aifp_controller();
 
-    if(check_post($_POST)){
-        $em = $_POST['user'];
-        $pwd = $_POST['password'];
-
-        $user = $contr->select_user($em, $pwd);            
-
+    if(($post = check_post($_POST)) ){
+        $user = $contr->login($pwd, $em);
         if($user){
             session_start();
-            $SESSION['user']= $user;
-            $SESSION['ip']=$_SERVER['REMOTE_ADDR'];
-            //codice per effettuare il login
-            $smarty->assign();
-            $smarty->display();
+            $SESSION['user']= $user;           
         }else{            
             $smarty->assign('error', $contr->descritpion);
             $smarty->display('error.tpl');

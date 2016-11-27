@@ -222,7 +222,7 @@ class associazione extends user
         return true;            
     }
     
-    public function add_evento($titolo, $indirizzo, $data_inizio, $data_fine)
+    public function add_evento($params)
     {
         if($this->id == -1)
         {
@@ -232,7 +232,7 @@ class associazione extends user
         require_once 'evento_class.php';
         
         $ev = new evento();
-        if( !($ev->add_evento($titolo, $this, $indirizzo, $data_inizio, $data_fine)) )
+        if( !($ev->add_evento($params['titolo'], $this, $params['indirizzo'], $params['data_inizio'], $params['data_fine'])) )
         {
             $this->isok = 'Impossible to add an event';
             return false;

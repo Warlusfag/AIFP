@@ -97,11 +97,9 @@ class evento extends gen_model
                 . "con la presente email le vogliamo comunicare che un utente si appena inscritto "
                 . "al suo evento ";
 
-
-
         $subject="AIFP: email di conferma dell\'avenuta inscrizione all\'evento: $titolo ";
         $text= "Gentile utente,"
-                . "con la presente email le confermiamo l'avvenuta";
+                . "con la presente email le confermiamo l'avvenuta registrazione ";
             
         
     }
