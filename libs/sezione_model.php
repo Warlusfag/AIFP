@@ -10,10 +10,14 @@ const limit_page = 5;
 class sezione extends gen_model{
     
     public $convs;
+    static public $inserted;
     
     function __construct(){
         parent::__construct(); 
         
+        if(!isset(self::$inserted)){
+            self::$inserted = true;            
+        }
         $this->attributes = array(
             'id_sez'=>-1,
             'nome' => '',
@@ -42,7 +46,7 @@ class sezione extends gen_model{
         }
         return true;
     }
-    
+     
     public function load_conv ($page){
         if($this->attributes[$this->table_descr['key']]==-1){
             $this->err_descr = "ERROR: object is not initialized";
@@ -84,14 +88,20 @@ class sezione extends gen_model{
             $t->init($convs[$i]);
             $this->$convs[$page][$i] = $t;
         }
+        self::$inserted = false;
+        $this->err_descr = '';
         return true;
     }    
     
-    public function get_conversazioni($page){
+    public function get_conversazioni($page){        
         if($page > limit_page){
             $this->err_descr = "ERROR: page over the limit";
             return false;
         }
+        if($page <= 0){
+            return false;
+        }
+        $page -= 1;
         if(!isset($this->convs[$page])){
             $this->err_descr = "ERROR: page selected is not right";
             return false;
@@ -103,9 +113,9 @@ class sezione extends gen_model{
         return $convs;
     }
     
-    public function new_conversazione($fk_sez, $user, $titolo, $text){
+    public function new_conversazione($user, $titolo, $text){
         $c = new conversazione();
-        $c->new_conv($fk_sez, $user, $titolo, $text);
+        $c->new_conv($this->attributes[$this->table_descr['key']], $user, $titolo, $text);
         if($c->err_descr != ''){
             $this->err_descr = $c->err_descr;
             return false;
@@ -119,6 +129,7 @@ class sezione extends gen_model{
                 $this->push_ahead_conv($c);
             }
         }
+        self::$inserted = true;
     }
     
     public function search_sezioni($params, $after = -1, $limit=-1){

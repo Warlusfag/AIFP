@@ -83,9 +83,10 @@ class aifp_controller
             for($i=0;$i<count($t);$i++){
                 $sez = new sezione();
                 $sez->init($t[$i]);
-                self::$collection_sez[$t[$i][$sez->table_descr['key']]];
+                self::$collection_sez[$i] = $sez;
             }
-            $this->descritpion = '';            
+            $this->descritpion = '';
+            return $t;
         }       
     }
 }

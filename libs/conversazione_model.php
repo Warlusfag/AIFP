@@ -1,13 +1,18 @@
 <?php
 
-const limit_post = 5;
+const limit_post = 10;
 
 class conversazione extends gen_model
 {
     public $posts;
+    static public $inserted;
     
     function __construct($id=-1, $titolo=-1){
         parent::__construct();
+        
+        if(!isset(self::$inserted)){
+            self::$inserted = true;
+        }
         
         $this->attributes = array(
             'id_conv'=>-1,
@@ -94,7 +99,7 @@ class conversazione extends gen_model
         if(isset($this->posts[0])){
             if(count($this->posts) >= $page){
                 $this->posts[$page] = array();
-            }else if(count($this->convs) < $page){
+            }else if(count($this->convs) < $page && self::$inserted == false){
                 return true;
             }
         }else{ $this->posts[0] = array();}
@@ -123,8 +128,24 @@ class conversazione extends gen_model
             $t->init($posts[$i]);            
             $this->$posts[$page][$i] = $t;
         }
+        self::$inserted = false;
         $this->err_descr = '';
         return true;
+    }
+    
+    public function show_posts($page){
+        if(isset($this->posts[$page])){
+            $temp = array();
+            $i=0;
+            foreach($this->posts as $post){
+                $temp[$i] = $post->get_post();
+                $user = $post->get_user();
+                foreach($user as $key=>$value){
+                    $temp[$i][$key] = $value;
+                }
+            }
+            return $temp;
+        }
     }
 
     public function search_conversazioni($params, $after=-1, $limit=-1){
@@ -268,6 +289,7 @@ class post extends gen_model
             $this->err_descr = "ERROR: DB is not ready";
             return false;
         }
+        conversazione::$inserted = true;
         $this->err_descr = '';
         return true;       
     }

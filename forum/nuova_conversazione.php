@@ -1,33 +1,49 @@
 <?php
-require_once 'libs/db_interface.php';
+require_once 'libs/aifp_controller.php';
 
-function check_post ($post)
+session_start();
+
+function check_post ($param)
 {
-    
+    $app = array();
+    foreach ($param as $key=>$value){
+        if( $key == 'titolo' ){
+            $app[$key] = sanitaze_input($value);
+        }
+        else if( $key == 'text' ){
+            $app[$key] = sanitaze_input($value);
+        }
+        else if( $key == 'sezione' ){
+            $app[$key] = sanitaze_input($value);
+        }
+    }
+    return $app;
 }
 
-$db = new db_interface();
 $smarty = new AIFP_smarty();
 
 if(isset($_SESSION['user']))
 {
-    if(check_post($_POST))        
-    {
-        $ass = $_POST['associazione'];
-        $text = $_POST['testo'];
-        $title = $_POST['titolo'];
-        if($db->add_conversazione($_SESSION['user'], $ass, $testo, $title))
+    $tok = $_SESSION['user'];
+    $user = aifp_controller::$collection_user[$tok];
+    if(($post=check_post($_POST))){
+        
+        $sez = aifp_controller::$collection_sez[$post['sezione']];        
+        
+        $text = $post['text'];
+        $title = $post['titolo'];
+        $us = $user->attributes['user'];        
+        
+        if($sez->new_conversazione($us, $text, $title))
         {
             //Codice dell'avenuta aggiunta della conversazione            
         }
         else
         {
-            $smarty->assign('error',$db->$error);
+            $smarty->assign('error',GEN_ERROR);
             $smarty->display('error.tpl');        
         }
-    }
-    else
-    {
+    }else{
         $smarty->assign('error','POST array is setted in bad way');
         $smarty->display('error.tpl');
     }    

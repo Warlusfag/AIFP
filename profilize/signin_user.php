@@ -23,6 +23,8 @@ function check_post($param){
             } 
             else if( $key == 'data' ){
                 $app[$key] = sanitaze_input($value);
+            }else if( $key == 'email' ){
+                $app[$key] = sanitaze_input($value);
             } 
         }
         return $app;
@@ -35,16 +37,14 @@ $smarty = new AIFP_smarty();
 
 if(($post = check_post($_POST))){           
 
-    if(user::register_user($post['nome'], $post['cognome'], $post['email'], $post['password'], $post['user'], $post['data'], $post['residenza']) ){
-        //Codice per do conferma di avvenuta registrazione
-        $smarty->assign();
-        $smarty->display();
+    $user = new user();
+    
+    if($user->insert_user($post, array())){
         
     }else{
-        $smarty->assign('error', $ass->isok);
+        $smarty->assign('error', GEN_ERR);
         $smarty->display('error.tpl');
-    }
-    
+    }  
 }else{
     $smarty->assign('error', GEN_ERR);
     $smarty->display('error.tpl');

@@ -13,33 +13,19 @@ if(isset($_GET['page'])){
 if(isset($_POST['sezione']) && $_POST['conversazione'])
 {   
     $id_sez = $_POST['sezione'];
-    if(isset(aifp_controller::$collection_sez[$id_sez])){
-        $sez = aifp_controller::$collection_sez[$id_sez];
-        if(count($sez->convs)==0){
-            $convs= $sez->load_convs();        
-        }else{
-            $convs = $sez->convs;
-        }
-        
-        if(isset($convs[$_POST['conversazione']])){
-            $c = $convs[$_POST['conversazione']];
-            if(count($c->posts)==0){
-                $c->load_posts($page);                
-            }
-            $posts = $c->posts;            
-           
-        }       
-        
-    }
+    $id_conv = $_POST['conversazione'];
+    $sez = aifp_controller::$collection_sez[$id_sez];
+    $conv = $sez->convs[$id_conv];
     
-    
-    
-    $smarty->assign('post',$posts);
-    $smarty->assign('utenti',$users);
-    $smarty->display('sezione.tpl');    
-}
-else
-{
-    $smarty->assign('error','Internal server error');
+    if($conv->load_post($page)){
+        $posts = $conv->show_posts($page);
+        $smarty->assign($posts);
+        //smarty display        
+    }else{
+        $smarty->assign('error',GEN_ERROR);
+        $smarty->display('error.tpl');
+    }   
+}else{
+    $smarty->assign('error',GEN_ERROR);
     $smarty->display('error.tpl');    
 }
