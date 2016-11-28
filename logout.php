@@ -4,8 +4,8 @@ require_once 'libs/aifp_controller.php';
 
 $smarty = new AIFP_smarty();
 
-session_destroy();
-  
+$user = $SESSION['user'];
 
-$smarty->assign();
-$smarty->destroy();
+ unset(aifp_controller::$collection_user[$user]);
+
+session_destroy();  
