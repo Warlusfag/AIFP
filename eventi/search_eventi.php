@@ -1,5 +1,4 @@
 <?php
-
 require_once 'libs/aifp_controller.php';
 
 session_start();
@@ -31,22 +30,15 @@ function check_post($param)
 }
 
 $smarty = new AIFP_smarty();
-$tok = $_SESSION['user']; 
-$ass = aifp_controller::$collection_user[$tok];
-    if( $ass instanceof associazione ){      
 
-        if(($post = check_post($_POST))){            
-
-            if($ass->add_evento($post)){
-                
-            }else{
-                $smarty->assign('error', $ass->err_descr);
-                $smarty->display('error.tpl');
-            }
-        }    
-    }else
-    {
-        session_destroy();
-        $smarty->assign('error', GEN_ERROR);
-        $smarty->display('error.tpl');
-    }
+if(($post = check_post($_POST))){
+    $ev = new evento();
+    $events = $ev->search_eventi($post);
+    if($ev->err_descr == ''){
+        $smarty->assign($events);
+    }else{
+        //smarty error
+    }   
+}else{
+    //smarty error
+}
