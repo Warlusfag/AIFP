@@ -59,7 +59,7 @@ class sezione extends gen_model{
         if(isset($this->convs[0])){
             if(count($this->convs) >= $page){
                 $this->convs[$page] = array();
-            }else if(count($this->convs) < $page){
+            }else if(count($this->convs) < $page || self::$inserted == false){
                 return true;
             }
         }else{ $this->convs[0] = array();}
@@ -130,6 +130,8 @@ class sezione extends gen_model{
             }
         }
         self::$inserted = true;
+        $this->err_descr = '';
+        return true;
     }
     
     public function search_sezioni($params, $after = -1, $limit=-1){

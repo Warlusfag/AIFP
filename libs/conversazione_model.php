@@ -82,11 +82,16 @@ class conversazione extends gen_model
         }
         $p = new post();
         $p->attributes['time'] = $this->attributes['data'];
-        $p->new_post($text,$user,$this->conn->last_id);
-        $this->posts[0][0]=$p;
-        
-        $this->err_descr = '';
-        return true;
+        if($p->new_post($text,$user,$this->conn->last_id)){
+            self::$inserted = true;
+            $this->err_descr = '';
+            return true;
+            
+        }else{
+            self::$inserted = false;
+            $this->err_descr = $p->err_descr;
+            return false;
+        }
     }
     
     public function load_posts($page){
@@ -171,8 +176,9 @@ class conversazione extends gen_model
             $query = str_replace($query, '', count($query)-6);
         }
         if($limit > 0){
-            $query .= "LIMIT $limit;";            
-        } else { $query .= ";";}
+            $query .= "LIMIT $limit";            
+        } 
+        $query .= " ORDER BY data;";
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
@@ -317,8 +323,10 @@ class post extends gen_model
              $query = str_replace($query, '', count($query)-6);
          }
          if($limit > 0){
-             $query .= "LIMIT $limit;";            
-         } else { $query .= ";";}
+             $query .= "LIMIT $limit ";            
+         } 
+         
+         $query .= "ORDER BY time";
 
          $res = $this->conn->query($query);
          if (!$this->conn->status){            
