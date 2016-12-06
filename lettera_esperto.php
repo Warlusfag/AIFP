@@ -20,19 +20,25 @@ function check_post($param)
 }
 
 $smarty = new AIFP_smarty();
-$contr = new aifp_controller();
 
-if( ($param = check_post($_POST)) ){
-    
-    $list_user = user::search_descr_user(-1, -1, -1, -1, -1, $esperto=1);
+if( ($post = check_post($_POST)) ){
+    $params = array(
+        'esperto' => 1,
+    );    
+    $list_user = search_OnAll_descr_user($parmas, 20);
     if($list_user){
         $emails = array();
+        $i=0;
         foreach($list_user as $value){
-            $t = user::get_table($value['type']);
-            $k = user::get_key($value['type']);
-            $user= user::search_user($table= $t, $id=$list_user[$k]);
-            $emails[$i]=$user['email'];
+            foreach($value as $key=>$id){
+                $p = array($key => $id);
+                break;
+            }
+            $u=search_OnAll_users($p);
+            $emails[$i] = $u['email'];
+            $i++;
         }
+        
     }else{
         $smarty->assign('error', GEN_ERROR);
         $smarty->display('error.tpl');        

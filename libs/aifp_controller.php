@@ -40,7 +40,7 @@ class aifp_controller
                 'password'=>md5($password),
             );            
         }
-        $us = search_OnAll_users($params);
+        $us = search_OnAll_users($params, 1);
         if(!$us){
             $this->description = 'ERROR: user or password are not correct';
             return false;

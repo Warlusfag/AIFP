@@ -3,7 +3,15 @@ require_once 'gen_model.php';
 require_once 'admin/setup.php';
 
 //ancora da finire
-const limit_filesize = 440000;
+const limit_filesize = 4000000;
+
+const types = array(
+    0 =>'utente',
+    1 =>'inscritto',
+    2=>'micologo',
+    3=>'botanico',
+    4=>'associazione',
+);
 
 function get_us_from_type($type){
     if($type == 'utente'){
@@ -18,79 +26,103 @@ function get_us_from_type($type){
     else if($type == 'botanico'){
         $us = new inscritto();
     }
+    else if($type == 'associazione'){
+        $us = new associazione();
+    }
     else{return null;}
     
     return $us;    
 }
 
-function search_OnAll_users($params){
-    $us = new user();
-        $temp = $us->search_user($params);        
-        if(!$temp){
-            $us = new inscritto();
-            $temp = $us->search_user($params);
-            if(!$temp){
-                $us = new micologo();
-                $temp = $us->search_user($params);
-                if(!$temp){
-                    $us = new botanico();
-                    $temp = $us->search_user($params);
-                    if(!$temp){
-                        $us = new asociazione();
-                        $temp = $us->search_user($params);
-                        if(!$temp || count($temp)== 0 ){
-                            return null;                            
-                        }
-                    }
-
-                }
+function search_OnAll_users($params, $limit=-1, $type=-1){
+    $count = 0;
+    $ris = array();
+    if($type != -1){
+        $n = 1;
+    }else{
+        $n = count(types);
+    }
+    for($i=0;$i<$n;$i++){
+        if($type != -1){
+            $us = get_us_from_type($type);
+            if($us == null){
+                return null;
             }
-        }
-        if (count($temp)==1){
-            $id = array( $us->table_descr['key'] => $temp[0][$us->table_descr['key']]);
-            $temp_descr = $us->search_descr_user($id);
-            $us->init($temp, $temp_descr);
-            return $us;
+            $i = array_keys($ris, $type);
         }else{
-            return $temp;
-        }
-
-}
-
-function search_OnAll_descr_users($params){
-    $us = new user();
-        $temp_descr = $us->search_descr_user($params);        
-        if(!$temp_descr){
-            $us = new inscritto();
-            $temp_descr= $us->search_descr_user($params);
+            $us = get_us_from_type(types[$i]);
+        }        
+        $t = $us->search_user($params);
+        if($limit == -1 && $t){
+            array_merge($ris, $t);
+        }else if ($limit == 1 && count($t)==1){
+            $id = array( $us->table_descr['key'] => $t[0][$us->table_descr['key']]);
+            $temp_descr = $us->search_descr_user($id,-1, types[$i]);
             if(!$temp_descr){
-                $us = new micologo();
-                $temp_descr = $us->search_descr_user($params);
-                if(!$temp_descr){
-                    $us = new botanico();
-                    $temp_descr = $us->search_descr_user($params);
-                    if(!$temp_descr){
-                        $us = new asociazione();
-                        $temp_descr = $us->search_descr_user($params);
-                        if(!$temp_descr || count($temp_descr)== 0 ){
-                            return null;                            
-                        }
-                    }
-
-                }
+                return null;
             }
-        }
-        if (count($temp_descr)==1){
-            $id = array( $us->table_descr['key'] => $temp[0][$us->table_descr['key']]);
-            $temp = $us->search_user($id);
-            $us->init($temp, $temp_descr);
+            $us->init($t, $temp_descr);
             return $us;
-        }else{
-            return $temp_descr;
+        }else if($limit > 1 && $t){            
+           if($count($t) + $count <= $limit){
+                $count += count($t);           
+                array_merge($ris, $t);
+           }else{
+                $diff = $limit - $count;
+                for($j=0;$j<$diff;$j++){
+                   array_merge($ris,$t[$j]);
+                }
+                return $ris;
+           }     
         }
-
+    }
+    return $ris;
 }
 
+function search_OnAll_descr_users($params, $limit=-1, $type=-1){
+    $count = 0;
+    $ris = array();
+    if($type != -1){
+        $n = 1;
+    }else{
+        $n = count(types);
+    }
+    for($i=0;$i<$n;$i++){
+        if($type != -1){
+            $us = get_us_from_type($type);
+            if($us == null){
+                return null;
+            }
+            $i = array_keys($ris, $type);
+        }else{
+            $us = get_us_from_type(types[$i]);
+        }        
+        $t = $us->search_descr_user($params);
+        if($limit == -1 && $t){
+            array_merge($ris, $t);
+        }else if ($limit == 1 && count($t)==1){
+            $id = array( $us->table_descr['key'] => $t[0][$us->table_descr['key']]);
+            $temp_descr = $us->search_user($id,-1, type[$i]);
+            if(!$temp_descr){
+                return null;
+            }
+            $us->init($t, $temp_descr);
+            return $us;
+        }else if($limit > 1 && $t){            
+           if($count($t) + $count <= $limit){
+                $count += count($t);           
+                array_merge($ris, $t);
+           }else{
+                $diff = $limit - $count;
+                for($j=0;$j<$diff;$j++){
+                   array_merge($ris,$t[$j]);
+                }
+                return $ris;
+           }     
+        }
+    }
+    return $ris;
+}
 
 //normal user
 class user extends gen_model{       
@@ -213,7 +245,7 @@ class user extends gen_model{
     }
     
     
-    public function search_user($params)
+    public function search_user($params, $limit=-1)
     {
         if(!is_array($params) || !$this->conn->status ){
             return false;
@@ -228,6 +260,9 @@ class user extends gen_model{
                 }
             }        
             $query = substr_replace($query, '', count($query)-6);
+        }
+        if($limit > 0){
+            $query .= "LIMIT $limit;";            
         }
         $query .= ";";
         
@@ -249,7 +284,7 @@ class user extends gen_model{
         }     
     }
     
-    public function search_descr_user($params)
+    public function search_descr_user($params, $limit=-1)
     {          
         if(!is_array($params) || !$this->conn->status ){
             return false;
@@ -262,6 +297,9 @@ class user extends gen_model{
                 $query .= "U.$key=$value AND "; 
             }        
             $query = substr_replace($query, '', count($query)-6);
+        }
+        if($limit > 0){
+            $query .= "LIMIT $limit;";            
         }
         $query .= ";";
         
