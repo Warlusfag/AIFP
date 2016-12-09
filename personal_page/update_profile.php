@@ -1,6 +1,7 @@
 <?php
-
 require_once 'libs/aifp_controller.php';
+
+session_start();
 
 function check_post($param){
     $app = array();
@@ -23,6 +24,8 @@ function check_post($param){
             } 
             else if( $key == 'data' ){
                 $app[$key] = sanitaze_input($value);
+            }else if( $key == 'email' ){
+                $app[$key] = sanitaze_input($value);
             } 
         }
         return $app;
@@ -30,22 +33,16 @@ function check_post($param){
         return null;
     }   
 }
-
-$smarty = new AIFP_smarty();
-
-if(($post = check_post($_POST))){           
-
-    if(user::register_user($post['nome'], $post['cognome'], $post['email'], $post['password'], $post['user'], $post['data'], $post['residenza']) ){
-        //Codice per do conferma di avvenuta registrazione
-        $smarty->assign();
-        $smarty->display();
-        
-    }else{
-        $smarty->assign('error', $ass->isok);
-        $smarty->display('error.tpl');
-    }
-    
+if(isset($_SESSION['user'])){
+    $tok = $_SESSION['user'];
+    $us = aifp_controller::$collection_user[$tok];
+    if(($post = check_post($_POST))){
+        if($us->update_user($post)){
+            //smarty results ok
+        }else{
+            //smarty error
+        }
+    }   
 }else{
-    $smarty->assign('error', GEN_ERR);
-    $smarty->display('error.tpl');
+    //error smarty general
 }

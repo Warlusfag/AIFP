@@ -4,7 +4,7 @@ require_once 'libs/aifp_controller.php';
 
 session_start();
 
-$contr = new aifp_controllere();
+$contr = new aifp_controller();
 $smarty = new AIFP_smarty();
 
 $tok = $_SESSIONS['user'];
@@ -25,7 +25,7 @@ if( $ass instanceof associazioni){
             }
         }        
         if($ass->err_descr != ''){
-            $smarty->assign('error',$ass->isok);
+            $smarty->assign('error',$ass->err_descr);
             $smarty->display('error.tpl');
         }
     }else{

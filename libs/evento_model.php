@@ -5,9 +5,14 @@ require_once 'admin/setup.php';
 
 class evento extends gen_model
 {     
+    
+    static public $inserted;
+    
     function __construct()
     {        
         parent::__construct(); 
+        
+        self::$inserted = true;
         
         $this->attributes = array(
             'id_evento'=>-1,
@@ -36,7 +41,11 @@ class evento extends gen_model
             if(!$this->conn){
                 return false;
             }
-        }        
+        }
+        //If tinserted is false i have already update all my news
+        if(!self::$inserted){
+            return true;
+        }
         $date = $this->conn->get_curdate();
         
         $params = array();
@@ -46,7 +55,8 @@ class evento extends gen_model
        $news = $this->search_eventi($params,$after, $limit);
        if($this->err_descr != ''){
            return false;
-       }   
+       }
+       self::$inserted = false;
        return $news;               
     }
     
@@ -82,6 +92,7 @@ class evento extends gen_model
         }
         
         //send email to confirm
+        self::$inserted = true;
         $this->err_descr = '';
         return true;
         
@@ -150,7 +161,5 @@ class evento extends gen_model
             $this->err_descr="ERROR: No results found \n ";
             return false;
         }      
-    }
-        
-    
+    }   
 }

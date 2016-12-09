@@ -3,22 +3,21 @@ require_once 'libs/aifp_controller.php';
 
 session_start();
 
-$contr = new aifp_controllere();
+$contr = new aifp_controller();
 $smarty = new AIFP_smarty();
 
-if ($_SESSION['ip']==$_SERVER['REMOTE_ADDR']){
-    if(isset($_SESSION['user'])){
-        
-        $user = $_SESSION['user'];        
-        
-        //Codice per visualizzare tutto il contenuto della personal page
-        
-    }else{
-        $smarty->assign('error',GEN_ERROR);
-        $smarty->display('error.tpl');
-    }  
+
+if(isset($_SESSION['user'])){
+    
+    $tok = $_SESSION['user'];
+    $user = aifp_controller::$collection_user[$tok];
+    
+    $attributes = $user->attributes;
+    $attributes_descr = $user->attributes_descr;
+    
+    //codice per la visualizzazione dell'utente
+            
 }else{
-    session_destroy();
     $smarty->assign('error',GEN_ERROR);
     $smarty->display('error.tpl');
 }

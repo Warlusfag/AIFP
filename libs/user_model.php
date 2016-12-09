@@ -13,116 +13,6 @@ const types = array(
     4=>'associazione',
 );
 
-function get_us_from_type($type){
-    if($type == 'utente'){
-        $us = new user();
-    }
-    else if($type == 'inscritto'){
-        $us = new inscritto();
-    }
-    else if($type == 'micolgo'){
-        $us = new inscritto();
-    }
-    else if($type == 'botanico'){
-        $us = new inscritto();
-    }
-    else if($type == 'associazione'){
-        $us = new associazione();
-    }
-    else{return null;}
-    
-    return $us;    
-}
-
-function search_OnAll_users($params, $limit=-1, $type=-1){
-    $count = 0;
-    $ris = array();
-    if($type != -1){
-        $n = 1;
-    }else{
-        $n = count(types);
-    }
-    for($i=0;$i<$n;$i++){
-        if($type != -1){
-            $us = get_us_from_type($type);
-            if($us == null){
-                return null;
-            }
-            $i = array_keys($ris, $type);
-        }else{
-            $us = get_us_from_type(types[$i]);
-        }        
-        $t = $us->search_user($params);
-        if($limit == -1 && $t){
-            array_merge($ris, $t);
-        }else if ($limit == 1 && count($t)==1){
-            $id = array( $us->table_descr['key'] => $t[0][$us->table_descr['key']]);
-            $temp_descr = $us->search_descr_user($id,-1, types[$i]);
-            if(!$temp_descr){
-                return null;
-            }
-            $us->init($t, $temp_descr);
-            return $us;
-        }else if($limit > 1 && $t){            
-           if($count($t) + $count <= $limit){
-                $count += count($t);           
-                array_merge($ris, $t);
-           }else{
-                $diff = $limit - $count;
-                for($j=0;$j<$diff;$j++){
-                   array_merge($ris,$t[$j]);
-                }
-                return $ris;
-           }     
-        }
-    }
-    return $ris;
-}
-
-function search_OnAll_descr_users($params, $limit=-1, $type=-1){
-    $count = 0;
-    $ris = array();
-    if($type != -1){
-        $n = 1;
-    }else{
-        $n = count(types);
-    }
-    for($i=0;$i<$n;$i++){
-        if($type != -1){
-            $us = get_us_from_type($type);
-            if($us == null){
-                return null;
-            }
-            $i = array_keys($ris, $type);
-        }else{
-            $us = get_us_from_type(types[$i]);
-        }        
-        $t = $us->search_descr_user($params);
-        if($limit == -1 && $t){
-            array_merge($ris, $t);
-        }else if ($limit == 1 && count($t)==1){
-            $id = array( $us->table_descr['key'] => $t[0][$us->table_descr['key']]);
-            $temp_descr = $us->search_user($id,-1, type[$i]);
-            if(!$temp_descr){
-                return null;
-            }
-            $us->init($t, $temp_descr);
-            return $us;
-        }else if($limit > 1 && $t){            
-           if($count($t) + $count <= $limit){
-                $count += count($t);           
-                array_merge($ris, $t);
-           }else{
-                $diff = $limit - $count;
-                for($j=0;$j<$diff;$j++){
-                   array_merge($ris,$t[$j]);
-                }
-                return $ris;
-           }     
-        }
-    }
-    return $ris;
-}
 
 //normal user
 class user extends gen_model{       
@@ -174,8 +64,8 @@ class user extends gen_model{
     }
     
     public function change_pwd($password){
-        $this->table_descr['password'] = md5($password);
-        //Codice per l'update
+        $params = array('password' => md5($password));
+        $this->update_user($params);
     }
     
     
@@ -337,49 +227,66 @@ class user extends gen_model{
             }
         }
         return true;
-    }   
-
+    }
     
     //metodo per aggiornare tutte le modifiche fatte nel DB
-    public function update_user(){
+    public function update_user($params=array(), $params_descr=array()){
         if ($this->attributes[$this->table_descr['key']] == -1){
             $this->err_descr = 'ERROR: User is not initialized';
             return false;
         }
-        $value=array();$i=0;
-        foreach($this->attributes as $value){
-            $value[$i]=$value;
+        $value=array();$t=array();$i=0;
+        $keys=explode(',',$this->table_descr['column_name']);
+        $type=explode(',',$this->table_descr['column_type']);
+        foreach($keys as $key){
+            if(isset($params[$key])){
+                if($key == $this->table_descr['key']){
+                    return false;
+                }
+                $value[$i]=$params[$key];
+                $name[$i]=$key;
+                $t[$i]=$type[$i];                
+            }
             $i++;
-        }
-        $name=$this->table_descr['column_name'];
-        $type=$this->table_descr['column_type'];       
+        }       
         $id_arr= array(
             0=>$this->table_descr['key_name'],
             1=>$this->id,
             2=>'i',
         );
-        $this->conn = statement_update($this->table_descr['table_name'],$name,$value,$type,$id_arr);
-        if(!$this->conn->status){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }        
-        $name=$this->table_descr['column_descr_name'];
-        $type=$this->table_descr['column_descr_type'];
-        $i=0;
-        foreach($this->attributes_descr as $value){
-            $value[$i]=$value;
+        if(count($value)>0){
+            $this->conn = statement_update($this->table_descr['table_name'],$name,$value,$type,$id_arr);
+            if(!$this->conn->status){
+                $this->err_descr = $this->conn->error;
+                return false;
+            }
+        }
+        $name=explode(',',$this->table_descr['column_descr_name']);
+        $type=explode(',',$this->table_descr['column_descr_type']);
+        $i=0;$value=array();
+        foreach($name as $key){
+            if(isset($params_descr[$key])){
+                if($key == $this->table_descr['key']){
+                    return false;
+                }
+                $value[$i]=$params[$key];
+                $name[$i]=$key;
+                $t[$i]=$type[$i];                
+            }
             $i++;
-        }        
+        }         
         $id_arr= array(
             0=>$this->table_descr['key_name'],
             1=>$this->attributes[$this->table_descr['key']],
             2=>'i',
         );
-        $this->conn = statement_update($this->table_descr['table_descr'],$name,$value,$type,$id_arr);
-        if(!$this->conn->status){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }        
+        if(count($value)>0){
+            $this->conn = statement_update($this->table_descr['table_descr'],$name,$value,$type,$id_arr);
+            if(!$this->conn->status){
+                $this->err_descr = $this->conn->error;
+                return false;
+            }
+        }
         $this->err_descr = '';
         return true;       
     }    
