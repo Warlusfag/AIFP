@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>AIFP</title>
+		<title>Funghi</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -18,7 +18,7 @@
 			<link rel="stylesheet" href="css/style-desktop.css" />
 		</noscript>
 	</head>
-	<body class="homepage">
+	<body>
 
 	<!-- Header -->
 		<div id="header">
@@ -29,63 +29,110 @@
 						<h1><a href="index.php">AIFP</a></h1>
 					</div>
 			</div>
-			<div id="nav-wrapper" class="container" >
+			<div id="nav-wrapper" class="container">
 				<!-- Nav -->
-					<nav id="nav" >
+					<nav id="nav">
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li class="dropdown"><a class="dropbtn" href="funghi.php">Funghi</a></li>
-								<ul class="dropdown-content">
+							<li><a href="funghi.php">Funghi</a></li>
+								<!--<ul>
 									<li><a href="#">Storia del fungo</a></li>
 									<li><a href="#">Schede funghi</a></li>
 									<li><a href="#">Libri e guide</a></li>
-								</ul>
-							<li><a href="right-sidebar.html">Regolamenti</a></li>
-							<li><a href="no-sidebar.html">Eventi</a></li>
-							<li><a href="#">Forum</a></li>
-							<li><a href="#">Chiedi all'esperto</a></li>
-						</ul>
+									<li><a href="#">Approfondimenti</a></li>
+								</ul>-->
+							<li><a href="">Regolamenti</a></li>
+							<li><a href="">Eventi</a></li>
+							<li><a href="">Forum</a></li>
+							<li><a href="">Chiedi all'esperto</a></li>
+						</ul>	
 					</nav>
 			</div>
-			<div class="container">
-				<div id="banner"><a href="index.php" class="image featured"><img src="images/pics11.jpg" alt=""></a></div>
-			</div>
+
 		</div>
 	<!-- Header -->
 		
 
 	<!-- Main -->
 		<div id="main">
+		
+			<div class="container">
+				<div id="banner"></div>
+			</div>
 			
 			<div class="container">
-				<section>
-					<header>
-						<h4>Scopri il fantastico moondo dei funghi!!</h4>
-					</header>
-					<div class="row">
-						<div class="4u">
-							<section>
-								<a href="funghi.php" class="image full"><img src="images/pics01.jpg" alt=""></a>
-								<p>Entra nel fantastico mondo dei funghi. Scopri la loro storia e tutte le loro caratteristiche grazie alla nostra sezione dedicata al FUNGO</p>
-								<a href="funghi.php" class="button">Entra</a>
-							</section>
-						</div>
-						<div class="4u">
-							<section>
-								<a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a>
-								<p>Pellentesque tristique ante ut risus. Quisque dictum. Integer sagittis convallis, rutrum elementum congue, nibh. Suspendisse dictum porta lectus.</p>
-								<a href="#" class="button">View Full Details</a>
-							</section>
-						</div>
-						<div class="4u">
-							<section>
-								<a href="#" class="image full"><img src="images/pics03.jpg" alt=""></a>
-								<p>Pellentesque tristique ante ut risus. Quisque dictum. Integer sagittis convallis, rutrum elementum congue, nibh. Suspendisse dictum porta lectus.</p>
-								<a href="#" class="button">View Full Details</a>
-							</section>
-						</div>
+				<div class="row">
+					<div id="sidebar" class="3u">
+						<section>
+							<header>
+								<h2>GABRI GAY</h2>
+							</header>
+							<p>Questa left-sidebar la possiamo sfruttare in qualche modo?? dal punto di vista estetico non dispiace.</p>
+							<ul class="style1">
+								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
+								<li><a href="#">Integer rutrum nisl in mi</a></li>
+								<li><a href="#">Etiam malesuada rutrum enim</a></li>
+								<li><a href="#">Aenean elementum facilisis ligula</a></li>
+								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
+								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
+							</ul>
+						</section>
+						<section>
+							<header>
+								<h2>Sagittis convallis</h2>
+							</header>
+							<p>Quisque dictum. Integer nisl risus, sagittis convallis elementum.</p>
+							<ul class="style1">
+								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
+								<li><a href="#">Integer rutrum nisl in mi</a></li>
+								<li><a href="#">Etiam malesuada rutrum enim</a></li>
+								<li><a href="#">Aenean elementum facilisis ligula</a></li>
+								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
+								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
+							</ul>
+						</section>
 					</div>
-				</section>
+					
+					<div id="content" class="9u skel-cell-important">
+						<section>
+							<header>
+								<h2>FUNGHI</h2>
+							</header>
+							<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
+							<p>In questa sezione blabla blaa Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum.</p>
+						</section>
+						<section>
+							<header>
+								<h4>Tutto ciò che puoi sapere sul mondo micologico</h4>
+							</header>
+							<div class="row">
+								<div class="4u">
+									<section>
+										<a href="storia.php" class="image full"><img src="images/pics01.jpg" alt=""></a>
+										<p>La micologia e le sue scoperte scientifiche </p>
+										<a href="storia.php" class="button">STORIA</a>
+									</section>
+								</div>
+								<div class="4u">
+									<section>
+										<a href="schede.php" class="image full"><img src="images/pics02.jpg" alt=""></a>
+										<p>Schede di tutti i fottuti funghi allucinogeni e non</p>
+										<a href="schede.php" class="button">SCHEDE</a>
+									</section>
+								</div>
+								<div class="4u">
+									<section>
+										<a href="libri.php" class="image full"><img src="images/pics03.jpg" alt=""></a>
+										<p>Libri consigliati dal nostro esperto, dott.Faggioni</p>
+										<a href="libri.php" class="button">LIBRI</a>
+									</section>
+								</div>
+
+							</div>
+						</section>
+					</div>
+					
+				</div>
 			</div>
 		</div>
 	<!-- /Main -->
@@ -97,7 +144,7 @@
 					<div class="3u">
 						<section>
 							<header>
-								<h2>EVENTI & SAGRE</h2>
+								<h2>Praesent mattis</h2>
 							</header>
 							<ul class="default">
 								<li><img src="images/pics04.jpg" width="78" height="78" alt="">
@@ -118,7 +165,7 @@
 					<div class="3u">
 						<section>
 							<header>
-								<h2>CORSI</h2>
+								<h2>Maecenas luctus</h2>
 							</header>
 							<ul class="default">
 								<li><img src="images/pics07.jpg" width="78" height="78" alt="">
@@ -139,10 +186,10 @@
 					<div class="6u">
 						<section>
 							<header>
-								<h2></h2>
+								<h2>Elementum facilisis</h2>
 							</header>
 							<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
-							<p>This is <strong>Elemental</strong>, a responsive HTML5 site template freebie by <a href="http://templated.co">TEMPLATED</a>. Released for free under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so use it for whatever (personal or commercial) &ndash; just give us credit! Check out more of our stuff at <a href="http://templated.co">our site</a> or follow us on <a href="http://twitter.com/templatedco">Twitter</a>.</p>
+							<p>Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Consectetuer adipiscing elit. </p>
 							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris.</p>
 						</section>
 					</div>
