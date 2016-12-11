@@ -9,7 +9,8 @@ $smarty = new AIFP_Smarty();
  if(isset($_SESSION['user'])){
     //codice di benvenuto
 }else{
-    $ev = $contr->get_news();    
+    $contr->get_news();
+    $news = aifp_controller::$collection_news;
     if(!$ev){
         $smarty->assign('error',GEN_ERROR);
         $smarty->display('error.tpl');

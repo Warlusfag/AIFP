@@ -1,5 +1,11 @@
 <?php
-require_once 'user_model.php';
+
+if(!defined('associazione')){
+    require_once 'user_model.php';
+    require_once 'aifp_controller.php';
+    define('associazione',1);    
+}
+
 
 class associazione extends user
 {   
@@ -9,27 +15,28 @@ class associazione extends user
     function __construct() 
     {
         parent::__construct();
+        $this->type= 'associazione';        
         
         $this->table_descr['table'] = 'associazione';
-        $this->table_descr['table_descr'] = 'descr_ass';
-        $this->table_descr['type']='associazione';
+        $this->table_descr['table_descr'] = 'descr_ass';       
         $this->table_descr['key'] = 'ID_ass';
-        $this->table_descr['column_name']='email,password,user,nome,regione,indirizzo,CAP';
-        $this->table_descr['column_descr']='sito_web,num_post,punteggio,componenti,esperto';
-        $this->table_descr['column_type']='s,s,s,s,s,s,s';
-        $this->table_descr['column_type_descr'] = 's,i,i,i,i';
+        $this->table_descr['column_name']='ID_ass,email,password,user,nome,regione,indirizzo,CAP';
+        $this->table_descr['column_descr']='ID_ass,sito_web,num_post,punteggio,componenti,esperto';
+        $this->table_descr['column_type']='i,s,s,s,s,s,s,s';
+        $this->table_descr['column_type_descr'] = 'i,s,i,i,i,i';
                 
         $this->attributes = array(
-            'id' => -1,
+            'ID_ass' => -1,
             'email'=> 'default@aifp.com',
             'user' =>'user',
+            'password' => 'password',
             'nome' => 'associazione',
             'regione' => 'regione',
             'indirizzo' => 'indirizzo',
             'CAP' => '00000',        
         );
         $this->attributes_descr = array(
-            'id' => -1,
+            'ID_ass' => -1,
             'sito_web'=> 'default.aifp.com',
             'num_post' => 0,
             'punteggio' => 1,
@@ -46,16 +53,17 @@ class associazione extends user
         
         $this->table_descr_req = clone $this->table_descr;
         $this->table_descr_req['table'] = 'ass_req';    
-        $this->table_descr['column_name']='email,password,user,nome,regione,indirizzo,CAP,sito_web';
-        $this->table_descr['column_type']='s,s,s,s,s,s,s,s';
+        $this->table_descr_req['column_name']='email,password,user,nome,regione,indirizzo,CAP,sito_web';
+        $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s';
     }   
 
     public function upgrade_user($em, $type){
-        if($type == $this->table_descr['type']){
+        if($type == $this->$type){
             $this->err_descr = 'ERROR: wrong type';
             return false;
         }
-        $us_new = get_us_from_type($type);
+        $contr = new aifp_controller();
+        $us_new = $contr->get_us_from_type($type);
         if($us_new == null){
             $this->err_descr = 'ERROR: wrong type';
             return false;
@@ -63,8 +71,8 @@ class associazione extends user
         $params=array(
             'email'=>$em,
         );  
-        $us = search_OnAll_users($params);
-        if(!$us){
+        $us = $contr->search_OnAll_users($params);
+        if(!$us || count($us)==0){
             $this->err_descr = "ERROR: email is not correct";
             return false;
         }        
@@ -80,8 +88,10 @@ class associazione extends user
         return true;
     }
     
-    public function show_files(){        
-        if($this->attributes['id'] == -1){
+    public function show_files($id=-1){
+        if($id > -1){
+            $this->attributes['id'] = $id;
+        }else if($this->attributes['id'] == -1){
             $this->err_descr = 'ERROR: association is not initialized';
             return false;
         }
@@ -92,7 +102,7 @@ class associazione extends user
                 return false;
             }
         }
-        $query = "SELECT * FROM file_ass WHERE ".$this->table_descr['key']."=".$this->attributes['id'];
+        $query = "SELECT * FROM $this->table_descr_file[table] WHERE $this->table_descr[key]=$this->attributes[id]";
         
         $res = $this->conn->query($query);
         if(!$res || count($res)== 0){
@@ -104,6 +114,7 @@ class associazione extends user
             $res->data_seek($i);
             $files[$i] = $res->fetch_assoc();
         }
+        $this->err_descr = '';
         return $files;        
     }
 
@@ -151,6 +162,7 @@ class associazione extends user
             $this->err_descr=$this->conn->error;
             return false;
         }
+        $this->err_descr = '';
         return true;
     }
     
@@ -169,7 +181,8 @@ class associazione extends user
         if(!download($filename)){
            $this->err_descr='ERROR: Impossible download file';
            return false; 
-        }        
+        }
+        $this->err_descr = '';
         return true;                
     }
     
@@ -237,7 +250,11 @@ class associazione extends user
             $this->isok = 'Impossible to add an event';
             return false;
         }
-        
+                $this->attributes_descr['punteggio'] += 100;
+        $params_descr = array('punteggio' => $this->attributes_decr['punteggio']);
+        $this->update_user(array(), $params_descr);
+        if($this->err_descr != ''){return false;}
+        return true;        
     }
        
     public function register_assoc($params){
@@ -246,8 +263,8 @@ class associazione extends user
         }
         $i=0;
         $val= array();
-        $name=$this->table_descr_req['column_user'];
-        $type = $this->table_descr_req['column_type'];
+        $name = extract_node($this->table_descr_req['column_user'],0);
+        $type = extract_node($this->table_descr_req['column_type'],0);
         $keys = explode (',',$name);
         for($i=0;$i < count($keys);$i++){
             if(isset($params[$keys[$i]])){
@@ -260,7 +277,7 @@ class associazione extends user
         if(!$this->conn->statement_insert($this->table_descr_req['table'],$name,$val,$type)){
             $this->err_descr = $this->conn->error;
             return false;
-        }
+        }$this->err_descr = '';
         return true;
     }
 

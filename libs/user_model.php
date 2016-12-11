@@ -1,6 +1,9 @@
 <?php
-require_once 'gen_model.php';
-require_once 'admin/setup.php';
+if(!defined(user)){
+    require_once 'gen_model.php';
+    require_once 'admin/setup.php';
+    define('user',1);
+}
 
 //ancora da finire
 const limit_filesize = 4000000;
@@ -11,20 +14,21 @@ const types = array(
     2=>'micologo',
     3=>'botanico',
     4=>'associazione',
+    5=>'admin',
 );
-
 
 //normal user
 class user extends gen_model{       
     public $attributes_descr;
+    public $type;
     
     function __construct(){       
         
         parent::__construct();
+        $this->type ='utente';
         
         $this->table_descr=array(
-            'table' =>'utenti',
-            'type' =>'utente',
+            'table' =>'utenti',            
             'key' =>'id_user',
             'key_type'=>'i',
             'table_descr'=>'descr_user',
@@ -57,9 +61,14 @@ class user extends gen_model{
     
     public function check_pwd($password)
     {
-        if($this->table_descr['password'] == md5($password)){
+        if($this->attributes[$this->table_descr['key']] == -1){
+            $this->err_descr = "ERROR: user is not initialized";
+            return false;
+        }
+        if($this->attributes['password'] == md5($password)){
             return true;
         }
+        $this->err_descr = "ERROR: password is not correct";
         return false;
     }
     
@@ -80,9 +89,9 @@ class user extends gen_model{
         foreach($this->attributes as $key=>$value){
             if($key != $this->table_descr['key']){                
                 if(!isset($params[$key])){
-                    $val[$i]=$value;
+                    $value[$i]=$value;
                 }else{
-                    $val[$i]=$params[$key];
+                    $value[$i]=$params[$key];
                 }
             }
             $i++;
@@ -143,7 +152,7 @@ class user extends gen_model{
         $query = "SELECT * FROM $this->table_descr['table_descr'] AS U";
         if(count($params)>0){
             $query .= " WHERE ";
-            $column = explode(',',$this->table_descr['column_name']);
+            $column = extract_node(explode(',',$this->table_descr['column_name']),0);
             foreach($column as $key){
                 if(isset($params[$key])){
                     $query .= "U.$key=$params[$key] AND ";                 
@@ -181,18 +190,19 @@ class user extends gen_model{
         }
         $query = "SELECT * FROM $this->table_descr['table_descr'] AS U";
         if(count($params)>0){
-            $query .= " WHERE ";        
-
-            foreach($params as $key=>$value){              
-                $query .= "U.$key=$value AND "; 
+            $query .= " WHERE ";
+            $column = extract_node(explode(',',$this->table_descr['column_descr']),0);
+            foreach($column as $key){
+                if(isset($params[$key])){
+                    $query .= "U.$key=$params[$key] AND ";                 
+                }
             }        
-            $query = substr_replace($query, '', count($query)-6);
+            $query = substr_replace($query, '', count($query)-6);           
         }
         if($limit > 0){
             $query .= "LIMIT $limit;";            
         }
-        $query .= ";";
-        
+        $query .= ";";        
         $res = $this->conn->query($query);
         if (!$this->conn->status){                            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
@@ -214,6 +224,7 @@ class user extends gen_model{
    
     public function init($us, $us_descr){
         if(!is_array($us) || !is_array($us_descr)){
+            $this->err_descr = "ERROR: failed input";
             return false;
         }
         foreach($this->attributes as $key=>$value){
@@ -229,18 +240,17 @@ class user extends gen_model{
         return true;
     }
     
-    //metodo per aggiornare tutte le modifiche fatte nel DB
+    //metodo per aggiornare in modo dinamico i singoli campi nel DB
     public function update_user($params=array(), $params_descr=array()){
-        if ($this->attributes[$this->table_descr['key']] == -1){
-            $this->err_descr = 'ERROR: User is not initialized';
-            return false;
-        }
-        $value=array();$t=array();$i=0;
+        $value=array();
+        $t=array();
+        $i=0;
         $keys=explode(',',$this->table_descr['column_name']);
         $type=explode(',',$this->table_descr['column_type']);
         foreach($keys as $key){
             if(isset($params[$key])){
                 if($key == $this->table_descr['key']){
+                    $this->err_descr = "ERROR: failed input";
                     return false;
                 }
                 $value[$i]=$params[$key];
@@ -267,6 +277,7 @@ class user extends gen_model{
         foreach($name as $key){
             if(isset($params_descr[$key])){
                 if($key == $this->table_descr['key']){
+                    $this->err_descr = "ERROR: failed input";
                     return false;
                 }
                 $value[$i]=$params[$key];
@@ -314,7 +325,10 @@ class user extends gen_model{
             $this->err_descr = $p->err_descr;
             return false;
         }
-        $this->attributes['punteggio']+=1;
+        $this->attributes['punteggio']+=10;
+        $params_descr = array('punteggio'=> $this->attributes['punteggio'],);
+        $this->update_user(array(), $params_descr);
+        if($this->err_descr != ''){return false;}
         $this->err_descr = '';
         return true;              
     }
@@ -328,12 +342,16 @@ class user extends gen_model{
             return false;           
         }
         $ev = new evento();
-        if ( !$ev->register_evento($id_evento, $this->email) ){
+        if ( !$ev->register_evento($id_evento, $this->attributes['email']) ){
             $this->err_descr='Error: while adding an event';
             return false;     
         }
-        $this->err_descr='';
-        return true;             
+        $this->attributes['punteggio']+=10;
+        $params_descr = array('punteggio'=> $this->attributes['punteggio'],);
+        $this->update_user(array(), $params_descr);
+        if($this->err_descr != ''){return false;}
+        $this->err_descr = '';
+        return true;   
     }
     
     public function load_image($file_image)
@@ -346,8 +364,7 @@ class user extends gen_model{
             $this->err_descr = "Error, the file already exists";
             return false;            
         }
-        $path = IMG_USER.$this->attributes['user'];
-        $size = $file_image['userfile']['size'];
+        $path = IMG_USER.$this->attributes['user'];        
         if((file_exists($path))){
           if (!unlink($path)){
               $this->err_descr='Error, impossible delete a previous image file';
@@ -369,15 +386,15 @@ class inscritto extends user
 {   
     function __construct()
     {        
-        parent::__construct();        
+        parent::__construct();
+        $this->type ='inscritto';
         $this->table_descr['table'] = 'inscritti';
         $this->table_descr['table_descr'] = 'descr_inscr';
-        $this->table_descr['key'] = 'id_inscr';
-        $this->table_descr['type'] = 'inscritto';
-        $this->table_descr['column_name']='associzione,email,user,password,nome,cognome,residenza,data';
-        $this->table_descr['column_descr']='num_post,punteggio,patentino,esperto';
-        $this->table_descr['column_type']='i,s,s,s,s,s,s,da';
-        $this->table_descr['column_type_descr'] = 'i,i,i,i';                
+        $this->table_descr['key'] = 'id_inscr';        
+        $this->table_descr['column_name']='id_inscr,associzione,email,user,password,nome,cognome,residenza,data';
+        $this->table_descr['column_descr']='id_inscr,num_post,punteggio,patentino,esperto';
+        $this->table_descr['column_type']='i,i,s,s,s,s,s,s,da';
+        $this->table_descr['column_type_descr'] = 'i,i,i,i,i';                
         $this->attributes_descr['esperto'] = false;
         $this->attributes_descr['id_inscr'] = -1;
         $this->attributes['associazione'] = -1;
@@ -387,13 +404,13 @@ class inscritto extends user
 
 class micologo extends inscritto
 {    
-    function __construct(){
-        parent::__construct();        
+    function __construct(){        
+        parent::__construct();
+        $this->type ='micologo';
         $this->attributes_descr['esperto'] = true;
         $this->table_descr['table_name'] = 'micologi';
         $this->table_descr['table_descr'] = 'descr_mico';
         $this->table_descr['key_name'] = 'id_mico';
-        $this->table_descr['type'] = 'micologo';
         $this->attributes['id_mico'] = -1;
         $this->attributes_descr['id_mico'] = -1;
     }   
@@ -403,13 +420,13 @@ class micologo extends inscritto
 class botanico extends inscritto
 {   
     function __construct(){
-        parent::__construct();
         
+        parent::__construct();
+        $this->type ='botanico';        
         $this->attributes_descr['esperto'] = true;
         $this->table_descr['table_name'] = 'botanici';
         $this->table_descr['table_descr'] = 'descr_bot';
         $this->table_descr['key_name'] = 'id_bot';
-        $this->table_descr['type'] = 'botanico';
         $this->attributes['id_bot'] = -1;
         $this->attributes_descr['id_bot'] = -1;
     }

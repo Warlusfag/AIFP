@@ -1,10 +1,13 @@
 <?php
-
-require_once 'admin/setup.php';
-require_once 'admin/utils.php';
-require_once "user_model.php";
-require_once "associazione_model.php";
-require_once "evento_model.php";
+if(!defined(controller)){
+    require_once 'admin/setup.php';
+    require_once 'admin/utils.php';
+    require_once "user_model.php";
+    require_once "associazione_model.php";
+    require_once "evento_model.php";
+    require_once "admin_model.php";
+    define('controller',1);
+}
 
 //limit constant
 const limit_sez = 5;
@@ -81,24 +84,31 @@ class aifp_controller
     }
 
     function get_us_from_type($type){
-        if($type == 'utente'){
-            $us = new user();
+        $us = new user();
+        if($us->type == $type){
+            return $us;
         }
-        else if($type == 'inscritto'){
-            $us = new inscritto();
+        $us = new inscritto();
+        if($us->type == $type){
+            return $us;
         }
-        else if($type == 'micolgo'){
-            $us = new inscritto();
+        $us = new micologo();
+        if($us->type == $type){
+            return $us;
         }
-        else if($type == 'botanico'){
-            $us = new inscritto();
+        $us = new inscritto();
+        if($us->type == $type){
+           return $us; 
         }
-        else if($type == 'associazione'){
-            $us = new associazione();
+        $us = new associazione();
+        if($us->type == $type){
+            return $us;
         }
-        else{return null;}
-
-        return $us;    
+        $us = new admin();
+        if($us->type == $type){
+            return $us;
+        }
+        return null;   
     }
 
     function search_OnAll_users($params, $limit=-1, $type=-1){

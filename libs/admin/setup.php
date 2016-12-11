@@ -1,4 +1,8 @@
 <?php
+
+if(!define(setup)){
+    define('setup',1);
+}
 //Constanti per la trasportabilità del sito su diverse piattaforme
 $server_root='/srv/www/AIFP/';
 

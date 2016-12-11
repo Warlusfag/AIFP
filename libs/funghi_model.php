@@ -1,7 +1,9 @@
 <?php
-
-require_once 'admin/setup.php';
-require_once 'admin/utils.php';
+if(!defined(funghi)){
+    require_once 'admin/setup.php';
+    require_once 'admin/utils.php';
+    define('funghi',1);
+}
 
 class funghi extends gen_model{
     

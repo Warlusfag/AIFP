@@ -1,5 +1,7 @@
 <?php
-
+if(!defined(utils)){
+    define('utils',1);
+}
 function sanitaze_input($input)
 {
     $output='';        

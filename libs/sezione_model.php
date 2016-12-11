@@ -1,8 +1,10 @@
 <?php
-
-require_once 'gen_model.php';
-require_once 'admin/setup.php';
-
+if(!define(sezione)){
+    require_once 'gen_model.php';
+    require_once 'conversazione_model.php';
+    require_once 'admin/setup.php';
+    define('sezione',1);
+}
 
 const limit_conv = 15;
 const limit_page = 5;
@@ -44,6 +46,7 @@ class sezione extends gen_model{
                 $this->attributes[$key]=$params[$key];            
             }
         }
+        $this->err_descr = '';
         return true;
     }
      
@@ -52,9 +55,10 @@ class sezione extends gen_model{
             $this->err_descr = "ERROR: object is not initialized";
             return false;
         }
-        if($page > limit_conv){ return false;}
-        
-        require_once 'conversazione_model.php';
+        if($page > limit_conv){
+            $this->err_descr = 'ERROR:page out of bound';
+            return false;            
+        }       
         //Codice per assicurare un corretto caricamento della pagina
         if(isset($this->convs[0])){
             if(count($this->convs) >= $page){
@@ -75,7 +79,7 @@ class sezione extends gen_model{
         );        
         $convs = $t->search_conversazioni($params, $after, limit_conv);
         if(!$t){
-            $this->err_descr = GEN_ERROR;
+            $this->err_descr = $t->err_descr;
             return false;
         }
         if(count($convs)>= limit_conv){
