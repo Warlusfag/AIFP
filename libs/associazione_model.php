@@ -55,13 +55,9 @@ class associazione extends user
         $this->table_descr_req['table'] = 'ass_req';    
         $this->table_descr_req['column_name']='email,password,user,nome,regione,indirizzo,CAP,sito_web';
         $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s';
-    }   
-
+    }
+    
     public function upgrade_user($em, $type){
-        if($type == $this->$type){
-            $this->err_descr = 'ERROR: wrong type';
-            return false;
-        }
         $contr = new aifp_controller();
         $us_new = $contr->get_us_from_type($type);
         if($us_new == null){
@@ -79,14 +75,21 @@ class associazione extends user
         if(!$us->delete_user()){
             $this->err_descr = $us->err_descr;
             return false;
+        }        
+        $us->attributes['associazione'] = $this->attributes[$this->table_descr['key']];
+        $us->attributes_descr['punteggio'] += 300;       
+        if($us->upgrade_esperto()){
+            $us->attributes_descr['esperto'] = true;                        
         }
         if(!$us_new->insert_user($us->attributes, $us->attributes_descr)){
             $this->err_descr = $us->err_descr;
             return false;
         }
+        $this->attributes_descr['punteggio'] += 10;
         $this->err_descr = '';
         return true;
     }
+    
     
     public function show_files($id=-1){
         if($id > -1){
@@ -117,6 +120,7 @@ class associazione extends user
         $this->err_descr = '';
         return $files;        
     }
+    
 
     public function register_evento ()
     {
@@ -258,23 +262,20 @@ class associazione extends user
     }
        
     public function register_assoc($params){
-        if(!is_array($params)){
+        if(!is_array($params) || count($params)<=2){
             return false;
         }
         $i=0;
         $val= array();
-        $name = extract_node($this->table_descr_req['column_user'],0);
-        $type = extract_node($this->table_descr_req['column_type'],0);
-        $keys = explode (',',$name);
+        $keys = extract_node(explode(',',$this->table_descr_req['column_user']),0);
+        $type = extract_node(explode(',',$this->table_descr_req['column_type']),0);        
+        //non metto nessun controllo se tutti i campi sono presenti, in caso di errore sarà il DB a segnalarlo
         for($i=0;$i < count($keys);$i++){
             if(isset($params[$keys[$i]])){
                 $val[$i]=$params[$keys[$i]];
-            }else{
-                $this->err_descr = 'ERROR: parameters is not correct';
-                return false;
             }
         }
-        if(!$this->conn->statement_insert($this->table_descr_req['table'],$name,$val,$type)){
+        if(!$this->conn->statement_insert($this->table_descr_req['table'],$keys,$val,$type)){
             $this->err_descr = $this->conn->error;
             return false;
         }$this->err_descr = '';

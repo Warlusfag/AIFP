@@ -59,6 +59,11 @@ class user extends gen_model{
 
     }
     
+    public function upgrade_esperto(){
+        $this->err_descr = 'ERROR: user can not be espert if not subscribe into association';
+        return false;
+    }
+    
     public function check_pwd($password)
     {
         if($this->attributes[$this->table_descr['key']] == -1){
@@ -400,6 +405,18 @@ class inscritto extends user
         $this->attributes['associazione'] = -1;
         $this->attributes['id_inscr'] = -1;
     }
+    
+    public function upgrade_esperto(){
+        if($this->attributes_descr['esperto'] == true){
+            return false;
+        }
+        if($this->attributes['punteggio'] >= 1000 ){
+            return true;
+        }else{
+            return false;
+        }
+    } 
+    
 }
 
 class micologo extends inscritto

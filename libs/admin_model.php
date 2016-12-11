@@ -142,6 +142,10 @@ class admin extends user{
         return true;
     }
     
+    public function move_post(){
+        
+    }
+    public function delete_post(){}
     
 }
 

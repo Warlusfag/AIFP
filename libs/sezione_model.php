@@ -41,6 +41,10 @@ class sezione extends gen_model{
         if(!is_array($params) && count($params)>0 ){
             return false;
         }
+        if(count($this->attributes) != count($params)){
+            $this->err_descr['ERROR: Input is not correct'];
+            return false;
+        }
         foreach($this->attributes as $key=>$value){
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
@@ -75,14 +79,14 @@ class sezione extends gen_model{
         }
         $t = new conversazione();        
         $params = array(
-            $t->table_descr['fk_sez'] => $this->attributes[$this->table_descr['key']],            
+            $t->table_descr['sezione'] => $this->attributes[$this->table_descr['key']],            
         );        
         $convs = $t->search_conversazioni($params, $after, limit_conv);
         if(!$t){
             $this->err_descr = $t->err_descr;
             return false;
         }
-        if(count($convs)>= limit_conv){
+        if(count($convs)> limit_conv){
             $n = limit_conv;
         }else{
             $n = count($convs);
@@ -112,7 +116,7 @@ class sezione extends gen_model{
         }
         $convs = array();
         for($i=0;$i<count($this->convs[$page]);$i++){
-            $convs[$i] = $this->convs[$page]->attributes;
+            $convs[$i] = extract_node($this->convs[$page]->attributes,0);
         }
         return $convs;
     }

@@ -49,6 +49,10 @@ class conversazione extends gen_model
         if(!is_array($params) && count($params)>0 ){
             return false;
         }
+        if(count($params)!=count($this->attributes)){
+            $this->err_descr = "ERROR: failed input";
+            return false;
+        }
         foreach($this->attributes as $key=>$value){
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
@@ -65,13 +69,13 @@ class conversazione extends gen_model
                 return false;
             }
         }
-        $this->attributes['fk_sez'] = $fk_sez;
+        $this->attributes['sezione'] = $fk_sez;
         $this->attributes['titolo'] = $titolo;
         
         $name = extract_node($this->table_descr['column_name'], 0);
         $type = extract_node($this->table_descr['column_type'], 0);
         $value = array(
-            0 => $this->attributes['fk_sez'],
+            0 => $this->attributes['sezione'],
             1 => $this->attributes['titolo'],
             3 => $this->attributes['num_post'],
             4 => $this->attributes['data'] = $this->conn->get_timestamp(),
@@ -85,8 +89,7 @@ class conversazione extends gen_model
         if($p->new_post($text,$user,$this->conn->last_id)){
             self::$inserted = true;
             $this->err_descr = '';
-            return true;
-            
+            return true;            
         }else{
             self::$inserted = false;
             $this->err_descr = $p->err_descr;
@@ -123,7 +126,7 @@ class conversazione extends gen_model
             $this->err_descr = $t->err_descr;
             return false;
         }
-        if(count($posts)>= limit_conv){
+        if(count($posts)> limit_conv){
             $n = limit_conv;
         }else{
             $n = count($posts);
@@ -137,7 +140,7 @@ class conversazione extends gen_model
         $this->err_descr = '';
         return true;
     }
-    
+    //nel post riesco a mettere anche le informazioni degli utenti
     public function show_posts($page){
         if(isset($this->posts[$page])){
             $temp = array();
@@ -234,6 +237,10 @@ class post extends gen_model
         if(!is_array($params) && count($params)>0 ){
             return false;
         }
+        if(count($params) != count($this->attributes)){
+            $this->err_descr = "ERROR: failde input";
+            return false;
+        }
         foreach($this->attributes as $key=>$value){            
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
@@ -262,9 +269,9 @@ class post extends gen_model
             $this->err_descr='ERROR:post is not initialized';
             return false;
         }
-        return $this->attributes;        
+        return extract_node($this->attributes,0);
     }
-    
+
     public function new_post($text, $user, $fk_conv=-1){
         if($fk_conv == -1){
             if($this->attributes['fk_conversazione']==-1){

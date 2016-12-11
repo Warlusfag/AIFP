@@ -12,11 +12,17 @@ if(isset($_POST['email'])){
     if($ass instanceof associazione){
 
         $email = sanitaze_input($_POST['email']);
-        if($ass->upgrade_user($email)){
-
-        }else{
-            $smarty->assign('error', $ass->err_descr);
+        if(!isset($_POST['type'])){
+            $smarty->assign('error', GEN_ERROR);
             $smarty->display('error.tpl');
+        }else{
+            if($ass->upgrade_user($email, $_POST['type'])){
+                //successp nell'upgrade del nuovo utente
+                //biusogna richiedere un nuovo login
+            }else{
+                $smarty->assign('error', $ass->err_descr);
+                $smarty->display('error.tpl');
+            }
         }
     }else{
         $smarty->assign('error', GEN_ERROR);

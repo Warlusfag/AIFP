@@ -65,11 +65,13 @@ function extract_node($array, $node){
             return null;
         }else{
             $temp = array();
-            for($i=0;$i<count($temp);$i++){
-                if($i!=$node){
-                    $temp[$i] = $array[$i];
-                }        
-            }
+            $i=0;
+            foreach ($array as $key=>$value){
+                if($i == $node){
+                    continue;
+                }
+                $temp[$key]=$value;
+            }            
             return $temp;
         }
     }

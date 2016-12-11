@@ -25,8 +25,7 @@ class funghi extends gen_model{
             'column_name' =>$this->column,
             'column_type' => 'i,s,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
             'insert_column' => ',specie,sporata,viraggio,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,gambo,habitat',
-        );
-        
+        );        
         $this->column_view = 'genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
       
         $this->queries = array(
