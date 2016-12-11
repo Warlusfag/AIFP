@@ -1,21 +1,12 @@
 <?php
-if(!defined(user)){
-    require_once 'gen_model.php';
-    require_once 'admin/setup.php';
-    define('user',1);
-}
+
+require_once 'gen_model.php';
+require_once 'admin/setup.php';
 
 //ancora da finire
 const limit_filesize = 4000000;
 
-const types = array(
-    0 =>'utente',
-    1 =>'inscritto',
-    2=>'micologo',
-    3=>'botanico',
-    4=>'associazione',
-    5=>'admin',
-);
+
 
 //normal user
 class user extends gen_model{       

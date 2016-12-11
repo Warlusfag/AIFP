@@ -1,9 +1,9 @@
 <?php
 require_once 'libs/aifp_controller.php';
+//require_once 'libs/admin/setup.php';
+session_start();
 
-//session_start();
-
-$contr = new aifp_controller();
+//$contr = new aifp_controller();
 $smarty = new AIFP_Smarty();
 /*
  if(isset($_SESSION['user'])){

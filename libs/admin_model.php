@@ -1,11 +1,10 @@
 <?php
-if(!defined(admin)){    
-    require_once 'associazione_model.php';
-    require_once 'sezione_model.php';
-    require_once 'product_model.php';
-    require_once 'admin/utils.php';
-    define('admin',1);
-}
+
+require_once 'associazione_model.php';
+require_once 'sezione_model.php';
+require_once 'product_model.php';
+require_once 'admin/utils.php';
+
 
 class admin extends user{
     

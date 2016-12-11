@@ -1,9 +1,7 @@
 <?php
-if(!defined(evento)){
-    require_once 'gen_model.php';
-    require_once 'admin/setup.php';
-    define('evento',1);
-}
+
+require_once 'gen_model.php';
+require_once 'admin/setup.php';
 
 class evento extends gen_model
 {     

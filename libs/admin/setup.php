@@ -1,6 +1,6 @@
 <?php
 
-if(!define(setup)){
+if(!defined(setup)){
     define('setup',1);
 }
 //Constanti per la trasportabilità del sito su diverse piattaforme

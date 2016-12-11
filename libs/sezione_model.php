@@ -1,10 +1,8 @@
 <?php
-if(!define(sezione)){
-    require_once 'gen_model.php';
-    require_once 'conversazione_model.php';
-    require_once 'admin/setup.php';
-    define('sezione',1);
-}
+
+require_once 'gen_model.php';
+require_once 'conversazione_model.php';
+require_once 'admin/setup.php';
 
 const limit_conv = 15;
 const limit_page = 5;

@@ -1,13 +1,12 @@
 <?php
-if(!defined(controller)){
-    require_once 'admin/setup.php';
-    require_once 'admin/utils.php';
-    require_once "user_model.php";
-    require_once "associazione_model.php";
-    require_once "evento_model.php";
-    require_once "admin_model.php";
-    define('controller',1);
-}
+
+require_once 'admin/setup.php';
+require_once 'admin/utils.php';
+require_once "user_model.php";
+require_once "associazione_model.php";
+require_once "evento_model.php";
+require_once "admin_model.php";
+
 
 //limit constant
 const limit_sez = 5;
@@ -15,17 +14,27 @@ const limit_events = 20;
 const limit_session = 1000000;
 
 
+
 class aifp_controller
 {
     static public $collection_user;
     static public $collection_sez;
     static public $collection_news;
+    public $tipo;
     
     public $descritpion;
     
     function __constructor(){
         
         $this->descritpion = "";
+        $this->tipo = array(
+            0 =>'utente',
+            1 =>'inscritto',
+            2=>'micologo',
+            3=>'botanico',
+            4=>'associazione',
+            5=>'admin',
+        );
     }  
     
     public function login($password, $email=-1, $user=-1){        
@@ -127,14 +136,14 @@ class aifp_controller
                 }
                 $i = array_keys($ris, $type);
             }else{
-                $us = $this->get_us_from_type(types[$i]);
+                $us = $this->get_us_from_type($this->tipo[$i]);
             }        
             $t = $us->search_user($params);
             if($limit == -1 && $t){
                 array_merge($ris, $t);
             }else if ($limit == 1 && count($t)==1){
                 $id = array( $us->table_descr['key'] => $t[0][$us->table_descr['key']]);
-                $temp_descr = $us->search_descr_user($id,-1, types[$i]);
+                $temp_descr = $us->search_descr_user($id,-1, $this->tipo[$i]);
                 if(!$temp_descr){
                     return null;
                 }
@@ -172,14 +181,14 @@ class aifp_controller
                 }
                 $i = array_keys($ris, $type);
             }else{
-                $us = $this->get_us_from_type(types[$i]);
+                $us = $this->get_us_from_type($this->tipo[$i]);
             }        
             $t = $us->search_descr_user($params);
             if($limit == -1 && $t){
                 array_merge($ris, $t);
             }else if ($limit == 1 && count($t)==1){
                 $id = array( $us->table_descr['key'] => $t[0][$us->table_descr['key']]);
-                $temp_descr = $us->search_user($id,-1, type[$i]);
+                $temp_descr = $us->search_user($id,-1, $this->tipo[$i]);
                 if(!$temp_descr){
                     return null;
                 }

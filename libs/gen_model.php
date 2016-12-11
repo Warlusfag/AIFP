@@ -1,8 +1,7 @@
 <?php
-if(!defined(db_inter)){
+
     require_once 'admin/db_interface.php';
-    define('db_inter',1);
-}
+
 
 class gen_model{
     

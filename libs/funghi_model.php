@@ -1,9 +1,8 @@
 <?php
-if(!defined(funghi)){
-    require_once 'admin/setup.php';
-    require_once 'admin/utils.php';
-    define('funghi',1);
-}
+
+require_once 'admin/setup.php';
+require_once 'admin/utils.php';
+
 
 class funghi extends gen_model{
     
