@@ -73,15 +73,16 @@
 						<div class="4u">
 							<section>
 								<a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a>
-								<p>Pellentesque tristique ante ut risus. Quisque dictum. Integer sagittis convallis, rutrum elementum congue, nibh. Suspendisse dictum porta lectus.</p>
-								<a href="#" class="button">View Full Details</a>
+								<p>Consuluta il nostro forum in cui potresti lasdkfjdfkjbioadfjasbadfkblakldajvklsajl
+								asdjfkldsjfklasdjfkldsjflk .</p>
+								<a href="#" class="button">FORUM</a>
 							</section>
 						</div>
 						<div class="4u">
 							<section>
 								<a href="#" class="image full"><img src="images/pics03.jpg" alt=""></a>
-								<p>Pellentesque tristique ante ut risus. Quisque dictum. Integer sagittis convallis, rutrum elementum congue, nibh. Suspendisse dictum porta lectus.</p>
-								<a href="#" class="button">View Full Details</a>
+								<p>Chiedi all'esperto è il modo piu semplice per rispondere alle tue domande asdnjafkadsfkjsdajfk </p>
+								<a href="#" class="button">CHIEDI ALL'ESPERTO</a>
 							</section>
 						</div>
 					</div>
@@ -139,7 +140,7 @@
 					<div class="6u">
 						<section>
 							<header>
-								<h2></h2>
+								<h2>NEWS</h2>
 							</header>
 							<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
 							<p>This is <strong>Elemental</strong>, a responsive HTML5 site template freebie by <a href="http://templated.co">TEMPLATED</a>. Released for free under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so use it for whatever (personal or commercial) &ndash; just give us credit! Check out more of our stuff at <a href="http://templated.co">our site</a> or follow us on <a href="http://twitter.com/templatedco">Twitter</a>.</p>
