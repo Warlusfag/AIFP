@@ -38,14 +38,14 @@
                                                             <a class="dropbtn" href="funghi.php">Funghi</a>
                                                                 <div class="dropdown-content">
                                                                     <a href="storia.php">Storia del fungo</a>
-                                                                    <a href="schede.php">Schede funghi</a>
-                                                                    <a href="libri.php">Libri e guide</a>
+                                                                    <a href="funghi/schede_funghi.php">Schede funghi</a>
+                                                                    <a href="prodotti/libri.php">Libri e guide</a>
                                                                 </div>
                                                         </li>            
 							<li><a href="right-sidebar.html">Regolamenti</a></li>
-							<li><a href="no-sidebar.html">Eventi</a></li>
-							<li><a href="forum.php">Forum</a></li>
-							<li><a href="esperto.php">Chiedi all'esperto</a></li>
+							<li><a href="eventi/eventi.php">Eventi</a></li>
+							<li><a href="forum/forum.php">Forum</a></li>
+							<li><a href="lettera_esperto.php">Chiedi all'esperto</a></li>
                                                         <li class="dropdown">
                                                             <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
                                                             <div class="dropdown-content">
