@@ -34,16 +34,25 @@
 					<nav id="nav">
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li><a href="funghi.php">Funghi</a></li>
-								<!--<ul>
-									<li><a href="#">Storia del fungo</a></li>
-									<li><a href="#">Schede funghi</a></li>
-									<li><a href="#">Libri e guide</a></li>
-								</ul>-->
-							<li><a href="regol.php">Regolamenti</a></li>
-							<li><a href="eventi.php">Eventi</a></li>
+							<li class="dropdown">
+                                                            <a class="dropbtn" href="funghi.php">Funghi</a>
+                                                                <div class="dropdown-content">
+                                                                    <a href="storia.php">Storia del fungo</a>
+                                                                    <a href="schede.php">Schede funghi</a>
+                                                                    <a href="libri.php">Libri e guide</a>
+                                                                </div>
+                                                        </li>            
+							<li><a href="right-sidebar.html">Regolamenti</a></li>
+							<li><a href="no-sidebar.html">Eventi</a></li>
 							<li><a href="forum.php">Forum</a></li>
-							<li><a href="chiedi.php">Chiedi all'esperto</a></li>
+							<li><a href="esperto.php">Chiedi all'esperto</a></li>
+                                                        <li class="dropdown">
+                                                            <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
+                                                            <div class="dropdown-content">
+                                                                <a href="#">Accedi</a>
+                                                                <a href="#">Registrati</a>
+                                                            </div>
+                                                        </li>
 						</ul>	
 					</nav>
 			</div>
