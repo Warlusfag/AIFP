@@ -1,6 +1,6 @@
 <?php
-require_once 'libs/aifp_controller.php';
-require_once 'libs/funghi_model.php';
+require_once '../libs/aifp_controller.php';
+require_once '../libs/funghi_model.php';
 
 sessiona_start();
 

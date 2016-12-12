@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.30, created on 2016-12-11 20:43:27
+<?php /* Smarty version 2.6.30, created on 2016-12-11 21:21:46
          compiled from index.tpl */ ?>
 <!DOCTYPE HTML>
 
@@ -36,7 +36,7 @@
 					<nav id="nav" >
 						<ul>
 							<li><a href="index.php">Home</a></li>
-							<li class="dropdown"><a class="dropbtn" href="funghi.php">Funghi</a></li>
+							<li class="dropdown"><a class="dropbtn" href="funghi/funghi.php">Funghi</a></li>
 								<ul class="dropdown-content">
 									<li><a href="#">Storia del fungo</a></li>
 									<li><a href="#">Schede funghi</a></li>
