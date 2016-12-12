@@ -1,11 +1,9 @@
 <?php
 
-if(!defined(setup)){
-    define('setup',1);
-}
 //Constanti per la trasportabilità del sito su diverse piattaforme
-$server_root='/srv/www/AIFP/';
 
+
+$server_root = $_SESSION['proj_dir'];
 
 date_default_timezone_set('UTC');
 

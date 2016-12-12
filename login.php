@@ -1,6 +1,6 @@
 <?php
 
-require_once 'libs/aifp_controller.php';    
+require_once '../libs/aifp_controller.php';    
 
 function check_post($param){
     $app = array();    
