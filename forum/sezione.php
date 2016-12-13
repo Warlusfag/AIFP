@@ -1,6 +1,6 @@
 <?php
 //Questa pagina carica le conversazioni all'interno di una sezione
-require_once 'libs/aifp_controller.php';
+require_once '../libs/aifp_controller.php';
 
 if(isset($_GET['page'])){
     $page = $_GET['page'];    
