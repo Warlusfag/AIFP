@@ -1,6 +1,8 @@
 <?php
 
-require_once 'libs/aifp_controller.php';    
+require_once 'libs/aifp_controller.php'; 
+
+session_start();   
 
 function check_post($param){
     $app = array();    
@@ -26,30 +28,39 @@ if(isset($_GET['type']){
 
 $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
-
-if(($post = check_post($_POST)) ){
-	if(isset($post['password']){
-		$pwd = $post['password'];
-		if(isset($post['email']){
-			$em = $post['email'];
-			$token = $contr->login($pwd, $em, -1, $type);
-		}else if(isset($post['user'])){
-			$us = $post['user'];
-			$token = $contr->login($pwd, -1, $us, $type);
-		if($token){
-			session_start();
-			$_SESSION['user']= $token;           
-		}else{            
-			$smarty->assign('error', $contr->descritpion);
+if(isset($_SESSION['user'])){
+	if(($post = check_post($_POST)) ){
+		if(isset($post['password']){
+			$pwd = $post['password'];
+			if(isset($post['email']){
+				$em = $post['email'];
+				$token = $contr->login($pwd, $em, -1, $type);
+			}else if(isset($post['user'])){
+				$us = $post['user'];
+				$token = $contr->login($pwd, -1, $us, $type);
+			}
+			if($token){
+				session_start();
+				$_SESSION['user']= $token;           
+			}else{            
+				$smarty->assign('error', $contr->descritpion);
+				$smarty->display('error.tpl');
+			}
+		}else{
+			$smarty->assign('error', GEN_ERROR);
 			$smarty->display('error.tpl');
 		}
 	}else{
 		$smarty->assign('error', GEN_ERROR);
 		$smarty->display('error.tpl');
 	}
+}else{
+	if(isset(aifp_controller::$collection_user[$_SESSION['user']]){
+		//messaggio di benventuo
+	else{
+		session_destroy();
+	}
 }
-$smarty->assign('error', GEN_ERROR);
-$smarty->display('error.tpl');
 
 
   
