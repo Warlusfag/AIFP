@@ -1,42 +1,26 @@
 <?php
-require_once 'libs/aifp_controller.php';
-
+require_once '../libs/aifp_controller.php';
+require_once '../libs/evento_model.php';
 session_start();
-
-function check_post($param)
-{
-    $app = array();
-    foreach ($param as $key=>$value){
-        if( $key == 'nome_evento' ){
-            $app[$key] = sanitaze_input($value);
-        }
-        else if( $key == 'indirizzo' ){
-            $app[$key] = sanitaze_input($value);
-        }
-        else if( $key == 'regione' ){
-            $app[$key] = sanitaze_input($value);
-        }
-        else if( $key == 'provincia' ){
-            $app[$key] = sanitaze_input($value);
-        }
-        else if( $key == 'data_inizio' ){
-            $app[$key] = sanitaze_input($value);
-        }
-        else if( $key == 'data_fine' ){
-            $app[$key] = sanitaze_input($value);
-        } 
-    }
-    return $app;  
-}
 
 $smarty = new AIFP_smarty();
 
-if(($post = check_post($_POST))){
-    if(isset($_POST['email'])){
-        $email = sanitaze_input($_POST['email']);
-        $ev = new evento();
-        $ev->register_evento($email);
-    
-    }
+if(isset($_SESSION['user'])){
+	if(isset($_POST['evento'])){
+		$tok = $_SESSION['user'];
+		$user = aifp_controller::$collection_user[$tok];
+		
+		if(!$user->register_evento($_POST['evento'])){
+			$smarty->assign('error',$user->err_descr);
+			$smarty->display('error.tpl');
+		}else{
+			//sucesfull operation
+		}		
+	}else{
+		$smarty->assign('error', GEN_ERROR);
+        $smarty->display('error.tpl');
+	}	
+}else{
+	//force to login
 }
     

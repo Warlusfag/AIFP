@@ -1,12 +1,14 @@
 <?php
 
-require_once 'libs/aifp_controller.php';
+require_once '../libs/aifp_controller.php';
+require_once '../libs/evento_model.php';
 
 session_start();
 
 function check_post($param)
 {
     $app = array();
+	$flag = array();
     foreach ($param as $key=>$value){
         if( $key == 'nome_evento' ){
             $app[$key] = sanitaze_input($value);

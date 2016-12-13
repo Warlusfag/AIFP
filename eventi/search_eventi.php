@@ -1,5 +1,6 @@
 <?php
-require_once 'libs/aifp_controller.php';
+require_once '../libs/aifp_controller.php';
+require_once '../libs/evento_model.php';
 
 session_start();
 
@@ -33,12 +34,14 @@ $smarty = new AIFP_smarty();
 
 if(($post = check_post($_POST))){
     $ev = new evento();
-    $events = $ev->search_eventi($post);
-    if($ev->err_descr == ''){
+    if($events = $ev->search_eventi($post)){
         $smarty->assign($events);
+		$smarty->display('eventi.tpl');
     }else{
-        //smarty error
+        $smarty->assign('error', $ev->err_descr);
+        $smarty->display('error.tpl');
     }   
 }else{
-    //smarty error
+    $smarty->assign('error', GEN_ERROR);
+    $smarty->display('error.tpl');
 }
