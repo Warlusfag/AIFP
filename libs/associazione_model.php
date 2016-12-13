@@ -1,10 +1,9 @@
 <?php
 
-if(!defined('associazione')){
-    require_once 'user_model.php';
-    require_once 'aifp_controller.php';
-    define('associazione',1);    
-}
+
+require_once 'user_model.php';
+require_once 'aifp_controller.php';
+
 
 
 class associazione extends user
@@ -60,22 +59,27 @@ class associazione extends user
     public function upgrade_user($em, $type){
         $contr = new aifp_controller();
         $us_new = $contr->get_us_from_type($type);
-        if($us_new == null){
+        if($us_new == null || $us_new->table_descr['type'] == $this->table_descr['type']|| $us instance of user){
             $this->err_descr = 'ERROR: wrong type';
             return false;
         }
         $params=array(
             'email'=>$em,
         );  
-        $us = $contr->search_OnAll_users($params);
-        if(!$us || count($us)==0){
-            $this->err_descr = "ERROR: email is not correct";
-            return false;
-        }        
+        $us = $contr->search_OnAll_users($params, 1);
+		$k = array_keys($us);
+		$user = $contr->get_user_from_pkey($k[0]);
+		$params = array(
+			$k[0] => $us[$k[0]],
+		);
+		$us_descr = $user->search_descr_user($params, 1);
+		$user->init($us, $us_descr);
+    
         if(!$us->delete_user()){
             $this->err_descr = $us->err_descr;
             return false;
-        }        
+        }
+		
         $us->attributes['associazione'] = $this->attributes[$this->table_descr['key']];
         $us->attributes_descr['punteggio'] += 300;       
         if($us->upgrade_esperto()){
@@ -86,6 +90,8 @@ class associazione extends user
             return false;
         }
         $this->attributes_descr['punteggio'] += 10;
+		$params = array( 'punteggio'=>$this->$this->attributes_descr['punteggio'],);
+		$this->update($params);
         $this->err_descr = '';
         return true;
     }
