@@ -20,6 +20,7 @@ class aifp_controller
     static public $collection_user;
     static public $collection_sez;
     static public $collection_news;
+    static public $collection_funghi;
     public $tipo;
     
     public $descritpion;
@@ -38,41 +39,42 @@ class aifp_controller
     }  
     
     public function login($password, $email=-1, $user=-1, $type = -1){
-		if(!self::$collection_user){ 
-			self::$collection_user = array(); 
-		}
-		if($email==-1 && $user==-1){ 
-		 return false; 
-		} 
-		if($email!=-1){ 
-			$params = array( 
-				'email'=>$email, 
-				'password'=>md5($password), 
-			);             
-		}else if ($user != -1){ 
-			$params = array( 
-				'user'=>$user, 
-				'password'=>md5($password), 
-			);             
-		} 
-		$us = $this->search_OnAll_users($params, 1);
-		if(!$us || count($us)){
-			$this->description = "ERROR: mail|username or password are not correct";
-			return false;
-		}
-		$k = array_keys($us);
-		$user = $this->get_user_from_pkey($k[0]);
-		$params = array(
-			$k[0] => $us[$k[0]],
-		);
-		$us_descr= $user->search_descr_user($params, 1);		
-		$user->init($us, $us_descr);
-				 
-		$token = md5($email.$password); 
-		self::$collection_user[$token] = $user; 
-		$this->descritpion =''; 
-		return $token; 
-	} 
+        if(!self::$collection_user){ 
+                self::$collection_user = array(); 
+        }
+        if($email==-1 && $user==-1){ 
+         return false; 
+        } 
+        if($email!=-1){ 
+                $params = array( 
+                        'email'=>$email, 
+                        'password'=>md5($password), 
+                );             
+        }else if ($user != -1){ 
+                $params = array( 
+                        'user'=>$user, 
+                        'password'=>md5($password), 
+                );             
+        } 
+        $us = $this->search_OnAll_users($params, 1);
+        if(!$us || count($us)){
+                $this->description = "ERROR: mail|username or password are not correct";
+                return false;
+        }
+        $k = array_keys($us);
+        $user = $this->get_user_from_pkey($k[0]);
+        $params = array(
+                $k[0] => $us[$k[0]],
+        );
+        $us_descr= $user->search_descr_user($params, 1);		
+        $user->init($us, $us_descr);
+
+        $token = md5($email.$password); 
+        self::$collection_user[$token] = $user; 
+        $this->descritpion =''; 
+        return $token; 
+        
+    } 
 
     function get_user_from_pkey($primary_key){
         $us = new user();
@@ -134,39 +136,39 @@ class aifp_controller
     }else{ 
         $n = count(types); 
     } 
-	for($i=0;$i<$n;$i++){ 
-		if($type != -1){ 
-			 $us = $this->get_us_from_type($type); 
-			if($us == null){ 
-				 return null; 
-			} 
-			$i = array_search($ris, $type); 
-		}else{ 
-			 $us = $this->get_us_from_type($this->tipo[$i]); 
-		}         
-		$t = $us->search_user($params); 
-		if($limit == -1 && $t){ 
-			 array_merge($ris, $t); 
-			}else if($limit == 1 && $t){
-				if(count($t)==1){
-					return $t;
-				}else{
-					return false;
-				}
-			}else if($t){             
-		   if($count($t) + $count <= $limit){ 
-				 $count += count($t);            
-				 array_merge($ris, $t); 
-			}else{ 
-				 $diff = $limit - $count; 
-				 for($j=0;$j<$diff;$j++){ 
-					array_merge($ris,$t[$j]); 
-				} 
-				 return $ris; 
-			}      
-		} 
-	} 
-	return $ris;	 
+    for($i=0;$i<$n;$i++){ 
+        if($type != -1){ 
+                 $us = $this->get_us_from_type($type); 
+                if($us == null){ 
+                         return null; 
+                } 
+                $i = array_search($ris, $type); 
+        }else{ 
+                 $us = $this->get_us_from_type($this->tipo[$i]); 
+        }         
+        $t = $us->search_user($params); 
+        if($limit == -1 && $t){ 
+            array_merge($ris, $t); 
+        }else if($limit == 1 && $t){
+            if(count($t)==1){
+                    return $t;
+            }else{
+                    return false;
+            }
+        }else if($t){             
+           if($count($t) + $count <= $limit){ 
+                    $count += count($t);            
+                    array_merge($ris, $t); 
+            }else{ 
+                $diff = $limit - $count; 
+                for($j=0;$j<$diff;$j++){ 
+                       array_merge($ris,$t[$j]); 
+                } 
+                return $ris; 
+            }      
+        } 
+    } 
+    return $ris;	 
 }
 
 function search_OnAll_descr_users($params, $limit=-1, $type=-1){ 
@@ -177,39 +179,39 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
     }else{ 
         $n = count(types); 
     } 
-	for($i=0;$i<$n;$i++){ 
-		if($type != -1){ 
-			 $us = $this->get_us_from_type($type); 
-			if($us == null){ 
-				 return null; 
-			} 
-			$i = array_search($ris, $type); 
-		}else{ 
-			 $us = $this->get_us_from_type($this->tipo[$i]); 
-		}         
-		$t = $us->search_descr_user($params); 
-		if($limit == -1 && $t){ 
-			array_merge($ris, $t); 
-			}else if($limit == 1 && $t){
-				if(count($t)==1){
-					return $t;
-				}else{
-					return false;
-				}
-			}else if($t){             
-			if($count($t) + $count <= $limit){ 
-				 $count += count($t);            
-				 array_merge($ris, $t); 
-			}else{ 
-				 $diff = $limit - $count; 
-				 for($j=0;$j<$diff;$j++){ 
-					array_merge($ris,$t[$j]); 
-				} 
-				 return $ris; 
-			}      
-		} 
-	} 
-	return $ris;	 
+    for($i=0;$i<$n;$i++){ 
+        if($type != -1){ 
+            $us = $this->get_us_from_type($type); 
+            if($us == null){ 
+                return null; 
+            } 
+           $i = array_search($ris, $type); 
+        }else{ 
+            $us = $this->get_us_from_type($this->tipo[$i]); 
+        }         
+        $t = $us->search_descr_user($params); 
+        if($limit == -1 && $t){ 
+            array_merge($ris, $t); 
+        }else if($limit == 1 && $t){
+            if(count($t)==1){
+                    return $t;
+            }else{
+                    return false;
+            }
+        }else if($t){             
+            if($count($t) + $count <= $limit){ 
+                $count += count($t);            
+                array_merge($ris, $t); 
+            }else{ 
+                $diff = $limit - $count; 
+                for($j=0;$j<$diff;$j++){ 
+                       array_merge($ris,$t[$j]); 
+               } 
+                return $ris; 
+            }      
+        } 
+    } 
+    return $ris;	 
 }
     
     public function forum(){
@@ -238,5 +240,34 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
             $ev = new evento();
             self::$collection_news = $ev->show_news(20);
         }
+    }
+    
+    public function get_schede_funghi(){
+        if(!self::$collection_funghi){
+            self::$collection_funghi = array(
+                'ammanita'=>array(),
+                'boletus'=>array(),
+                'agaricus'=>array(),
+                'tricholoma'=>array(),
+                'clitocybe'=>array(),
+                'cantharrelus'=>array(),
+                'russula'=>array(),
+                'lactarius'=>array(),           
+            );       
+            $model_fungo = new funghi();
+            $genere = array_keys(self::$collection_funghi);
+            for($i=0;$i<count($genere);$i++){            
+                $params = array(
+                    'genere'=>$genere[$i],
+                );
+                self::$collection_funghi[$genere[$i]] = $model_fungo->search_funghi($params, -1, 10);
+                if(!self::$collection_funghi[$genere[$i]]){
+                    $this->descritpion = $model_fungo->err_descr;
+                    return false;
+                }
+            }
+            return true;
+        }
+        return true;
     }
 }

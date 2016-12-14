@@ -62,7 +62,7 @@ class funghi extends gen_model{
         return  md5($user.$i.$j);                
     }
     
-    public function search_funghi($params, $user, $limit = -1){
+    public function search_funghi($params, $user=-1, $limit = -1){
         if(!$this->conn->status){
             $this->conn = new db_interface();
             if(!$this->conn->status){
@@ -70,12 +70,15 @@ class funghi extends gen_model{
                 return false;
             }
         }
-        if(!isset($this->view_name)){
-            $this->view_name_old = $this->table_descr['table'];            
-        }else{$this->view_name_old = $this->view_name;}
-        $this->view_name = $this->generate_nameview($user);
-        $query = sprintf($this->queries['create'], $this->view_name, $this->view_name_old );
-        
+        if($user == -1){
+            $query = "SELECT * FROM $this->table_descr['table'] ";
+        }else{
+            if(!isset($this->view_name)){
+                $this->view_name_old = $this->table_descr['table'];            
+            }else{$this->view_name_old = $this->view_name;}
+            $this->view_name = $this->generate_nameview($user);
+            $query = sprintf($this->queries['create'], $this->view_name, $this->view_name_old );
+        }        
         if(count($params) > 0){             
             $column = explode(',', $this->table_descr['column_name']);
             foreach( $column as $key){
