@@ -59,7 +59,7 @@ class associazione extends user
     public function upgrade_user($em, $type){
         $contr = new aifp_controller();
         $us_new = $contr->get_us_from_type($type);
-        if($us_new == null || $us_new->table_descr['type'] == $this->table_descr['type']|| $us instance of user){
+        if($us_new == null || $us_new->table_descr['type'] == $this->table_descr['type']|| $us instanceof user){
             $this->err_descr = 'ERROR: wrong type';
             return false;
         }
