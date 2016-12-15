@@ -242,32 +242,31 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
         }
     }
     
-    public function get_schede_funghi(){
+    public function get_scheda_funghi($genere){
         if(!self::$collection_funghi){
-            self::$collection_funghi = array(
-                'ammanita'=>array(),
-                'boletus'=>array(),
-                'agaricus'=>array(),
-                'tricholoma'=>array(),
-                'clitocybe'=>array(),
-                'cantharrelus'=>array(),
-                'russula'=>array(),
-                'lactarius'=>array(),           
-            );       
-            $model_fungo = new funghi();
-            $genere = array_keys(self::$collection_funghi);
-            for($i=0;$i<count($genere);$i++){            
+            self::$collection_funghi = array();            
+        }        
+        $g = array_values(funghi::$generi);
+        if(array_search($genere,$g)){
+            if(isset(self::$collection_funghi[$genere])){
+                return self::$collection_funghi[$genere];
+            }else{
+                $model_fungo = new funghi();                         
                 $params = array(
-                    'genere'=>$genere[$i],
+                    'genere'=>$genere,
                 );
-                self::$collection_funghi[$genere[$i]] = $model_fungo->search_funghi($params, -1, 10);
-                if(!self::$collection_funghi[$genere[$i]]){
+                self::$collection_funghi[$genere] = $model_fungo->search_funghi($params, -1, 10);
+                if(!self::$collection_funghi[$genere]){
                     $this->descritpion = $model_fungo->err_descr;
-                    return false;
-                }
+                    return null;
+                }                
+                return self::$collection_funghi[$genere];
             }
-            return true;
+        }else{
+            $this->descritpion ="ERROR:wrong genere";
+            return null;
         }
-        return true;
-    }
+    }    
+        
+    
 }
