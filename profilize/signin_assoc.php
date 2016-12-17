@@ -14,7 +14,7 @@ function check_post($param){
         else if( $key == 'password' ){
             $app[$key] = sanitaze_input($value);
         }
-        else if( $key == 'residenza' ){
+        else if( $key == 'user' ){
             $app[$key] = sanitaze_input($value);
         }
         else if( $key == 'CAP' ){
@@ -24,6 +24,9 @@ function check_post($param){
             $app[$key] = sanitaze_input($value);
         }
         else if( $key == 'sito_web' ){
+            $app[$key] = sanitaze_input($value);
+        }
+        else if( $key == 'componenti' ){
             $app[$key] = sanitaze_input($value);
         }
     }

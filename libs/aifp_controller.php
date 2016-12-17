@@ -46,25 +46,25 @@ class aifp_controller
          return false; 
         } 
         if($email!=-1){ 
-                $params = array( 
-                        'email'=>$email, 
-                        'password'=>md5($password), 
-                );             
+            $params = array( 
+                    'email'=>$email, 
+                    'password'=>md5($password), 
+            );             
         }else if ($user != -1){ 
-                $params = array( 
-                        'user'=>$user, 
-                        'password'=>md5($password), 
-                );             
+            $params = array( 
+                    'user'=>$user, 
+                    'password'=>md5($password), 
+            );             
         } 
         $us = $this->search_OnAll_users($params, 1);
         if(!$us || count($us)){
-                $this->description = "ERROR: mail|username or password are not correct";
-                return false;
+            $this->description = "ERROR: mail|username or password are not correct";
+            return false;
         }
         $k = array_keys($us);
         $user = $this->get_user_from_pkey($k[0]);
         $params = array(
-                $k[0] => $us[$k[0]],
+            $k[0] => $us[$k[0]],
         );
         $us_descr= $user->search_descr_user($params, 1);		
         $user->init($us, $us_descr);
@@ -128,91 +128,91 @@ class aifp_controller
         return null;   
     }
 
- function search_OnAll_users($params, $limit=-1, $type=-1){ 
-    $count = 0; 
-    $ris = array(); 
-    if($type != -1){ 
-    $n = 1; 
-    }else{ 
-        $n = count(types); 
-    } 
-    for($i=0;$i<$n;$i++){ 
-        if($type != -1){ 
-                 $us = $this->get_us_from_type($type); 
-                if($us == null){ 
-                         return null; 
-                } 
-                $i = array_search($ris, $type); 
-        }else{ 
-                 $us = $this->get_us_from_type($this->tipo[$i]); 
-        }         
-        $t = $us->search_user($params); 
-        if($limit == -1 && $t){ 
-            array_merge($ris, $t); 
-        }else if($limit == 1 && $t){
-            if(count($t)==1){
-                    return $t;
-            }else{
-                    return false;
-            }
-        }else if($t){             
-           if($count($t) + $count <= $limit){ 
-                    $count += count($t);            
-                    array_merge($ris, $t); 
-            }else{ 
-                $diff = $limit - $count; 
-                for($j=0;$j<$diff;$j++){ 
-                       array_merge($ris,$t[$j]); 
-                } 
-                return $ris; 
-            }      
-        } 
-    } 
-    return $ris;	 
-}
+    function search_OnAll_users($params, $limit=-1, $type=-1){ 
+       $count = 0; 
+       $ris = array(); 
+       if($type != -1){ 
+       $n = 1; 
+       }else{ 
+           $n = count(types); 
+       } 
+       for($i=0;$i<$n;$i++){ 
+           if($type != -1){ 
+                    $us = $this->get_us_from_type($type); 
+                   if($us == null){ 
+                            return null; 
+                   } 
+                   $i = array_search($ris, $type); 
+           }else{ 
+                    $us = $this->get_us_from_type($this->tipo[$i]); 
+           }         
+           $t = $us->search_user($params); 
+           if($limit == -1 && $t){ 
+               array_merge($ris, $t); 
+           }else if($limit == 1 && $t){
+               if(count($t)==1){
+                       return $t;
+               }else{
+                       return false;
+               }
+           }else if($t){             
+              if($count($t) + $count <= $limit){ 
+                       $count += count($t);            
+                       array_merge($ris, $t); 
+               }else{ 
+                   $diff = $limit - $count; 
+                   for($j=0;$j<$diff;$j++){ 
+                          array_merge($ris,$t[$j]); 
+                   } 
+                   return $ris; 
+               }      
+           } 
+       } 
+       return $ris;	 
+    }
 
-function search_OnAll_descr_users($params, $limit=-1, $type=-1){ 
-    $count = 0; 
-    $ris = array(); 
-    if($type != -1){ 
-    $n = 1; 
-    }else{ 
-        $n = count(types); 
-    } 
-    for($i=0;$i<$n;$i++){ 
-        if($type != -1){ 
-            $us = $this->get_us_from_type($type); 
-            if($us == null){ 
-                return null; 
-            } 
-           $i = array_search($ris, $type); 
-        }else{ 
-            $us = $this->get_us_from_type($this->tipo[$i]); 
-        }         
-        $t = $us->search_descr_user($params); 
-        if($limit == -1 && $t){ 
-            array_merge($ris, $t); 
-        }else if($limit == 1 && $t){
-            if(count($t)==1){
-                    return $t;
-            }else{
-                    return false;
-            }
-        }else if($t){             
-            if($count($t) + $count <= $limit){ 
-                $count += count($t);            
-                array_merge($ris, $t); 
-            }else{ 
-                $diff = $limit - $count; 
-                for($j=0;$j<$diff;$j++){ 
-                       array_merge($ris,$t[$j]); 
+    function search_OnAll_descr_users($params, $limit=-1, $type=-1){ 
+       $count = 0; 
+       $ris = array(); 
+       if($type != -1){ 
+       $n = 1; 
+       }else{ 
+           $n = count(types); 
+       } 
+       for($i=0;$i<$n;$i++){ 
+           if($type != -1){ 
+               $us = $this->get_us_from_type($type); 
+               if($us == null){ 
+                   return null; 
                } 
-                return $ris; 
-            }      
-        } 
-    } 
-    return $ris;	 
-}
+              $i = array_search($ris, $type); 
+           }else{ 
+               $us = $this->get_us_from_type($this->tipo[$i]); 
+           }         
+           $t = $us->search_descr_user($params); 
+           if($limit == -1 && $t){ 
+               array_merge($ris, $t); 
+           }else if($limit == 1 && $t){
+               if(count($t)==1){
+                       return $t;
+               }else{
+                       return false;
+               }
+           }else if($t){             
+               if($count($t) + $count <= $limit){ 
+                   $count += count($t);            
+                   array_merge($ris, $t); 
+               }else{ 
+                   $diff = $limit - $count; 
+                   for($j=0;$j<$diff;$j++){ 
+                          array_merge($ris,$t[$j]); 
+                  } 
+                   return $ris; 
+               }      
+           } 
+       } 
+       return $ris;	 
+    }
     
     public function forum(){
         require_once "sezione_model.php";  
@@ -224,6 +224,7 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
         $t = $sez->search_sezioni(array(), -1, limit_sez);
         if(!$t){
             $this->descritpion = $sez->err_descr;
+            return false;
         }else{       
             for($i=0;$i<count($t);$i++){
                 $sez = new sezione();
@@ -238,8 +239,14 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
     public function get_news(){
         if(evento::$inserted || count(self::$collection_news)==0){
             $ev = new evento();
-            self::$collection_news = $ev->show_news(20);
+            $news = $ev->show_news(20);            
+            if(!$news){
+                $this->descritpion = $ev->err_descr;
+                return false;
+            }
         }
+        $this->descritpion = '';
+        return self::$collection_news;
     }
     
     public function get_scheda_funghi($genere){
@@ -249,6 +256,7 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
         $g = array_values(funghi::$generi);
         if(array_search($genere,$g)){
             if(isset(self::$collection_funghi[$genere])){
+                $this->descritpion = '';
                 return self::$collection_funghi[$genere];
             }else{
                 $model_fungo = new funghi();                         
@@ -259,7 +267,8 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
                 if(!self::$collection_funghi[$genere]){
                     $this->descritpion = $model_fungo->err_descr;
                     return null;
-                }                
+                }
+                $this->descritpion = '';
                 return self::$collection_funghi[$genere];
             }
         }else{
@@ -267,6 +276,4 @@ function search_OnAll_descr_users($params, $limit=-1, $type=-1){
             return null;
         }
     }    
-        
-    
 }
