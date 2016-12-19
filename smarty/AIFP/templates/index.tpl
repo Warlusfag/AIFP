@@ -12,6 +12,7 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
+		<script>src="js/login.js"</script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -35,9 +36,9 @@
 						<ul>
 							<li><a href="index.php">Home</a></li>
 							<li class="dropdown">
-                                                            <a class="dropbtn" href="funghi.php">Funghi</a>
+                                                            <a class="dropbtn" href="funghi/funghi.php">Funghi</a>
                                                                 <div class="dropdown-content">
-                                                                    <a href="storia.php">Storia del fungo</a>
+                                                                    <a href="funghi/storia.php">Storia del fungo</a>
                                                                     <a href="funghi/schede_funghi.php">Schede funghi</a>
                                                                     <a href="prodotti/libri.php">Libri e guide</a>
                                                                 </div>
@@ -46,20 +47,42 @@
 							<li><a href="eventi/eventi.php">Eventi</a></li>
 							<li><a href="forum/forum.php">Forum</a></li>
 							<li><a href="lettera_esperto.php">Chiedi all'esperto</a></li>
-                                                        <li class="dropdown">
-                                                            <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
-                                                            <div class="dropdown-content">
-                                                                <a href="#">Accedi</a>
-                                                                <a href="#">Registrati</a>
-                                                            </div>
-                                                        </li>
+                            <li class="dropdown">
+                                <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
+                                <div class="dropdown-content">
+                                    <a onclick="document.getElementById('id01').style.display='block'">Accedi</a>
+                                    <a href="#">Registrati</a>
+                                </div>
+                            </li>
 						</ul>
                                             
 					</nav> 
 			</div>
 			<div class="container">
                             <div id="banner"><a href="index.php" class="image featured"><img src="images/pics11_2.jpg" alt=""></a></div>
+            </div>
+            <!-- Login form -->
+                        <div id="id01" class="modal">
+                            <form class="modal-content animate">
+                                <div class="imgcontainer">
+                                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                    <img src="images/dito.jpg" alt="Avatar" class="avatar">
+                                </div>
+                                <div class="logcontainer">
+                                    <label><b>Username</b></label>
+                                    <input type="text" placeholder="Inserisci Username" name="uname" required>
+                                    <label><b>Password</b></label>
+                                    <input type="password" placeholder="Inserisci Password" name="psw" required>
+                                    <button class="loginbtn" type="submit">Login</button>
+                                    <input type="checkbox" checked="checked">Remember me
+                                </div>
+                                <div class="logcontainer" style="background-color:#f1f1f1">
+                                    <button class="cancelbtn" type="button" onclick="document.getElementById('id01').style.display='none'">Annulla</button>
+                                    <span class="psw"><a href="#">Password</a> dimenticata?</span>
+                                </div>
+                            </form>
                         </div>
+                     
 		</div>
 	<!-- Header -->
 		
@@ -70,7 +93,7 @@
 			<div class="container">
 				<section>
 					<header>
-						<h4>Scopri il fantastico moondo dei funghi!!</h4>
+						<h4>Scopri il fantastico mondo dei funghi!!</h4>
 					</header>
 					<div class="row">
 						<div class="4u">
