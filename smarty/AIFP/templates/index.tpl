@@ -12,7 +12,8 @@
 		<script src="js/skel.min.js"></script>
 		<script src="js/skel-panels.min.js"></script>
 		<script src="js/init.js"></script>
-		<script>src="js/login.js"</script>
+		<script src="js/login.js"></script>
+		<script src="js/slideshow.js"></script>
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
 			<link rel="stylesheet" href="css/style.css" />
@@ -38,7 +39,7 @@
 							<li class="dropdown">
                                                             <a class="dropbtn" href="funghi/funghi.php">Funghi</a>
                                                                 <div class="dropdown-content">
-                                                                    <a href="funghi/storia.php">Storia del fungo</a>
+                                                                    <a href="storia.php">Storia del fungo</a>
                                                                     <a href="funghi/schede_funghi.php">Schede funghi</a>
                                                                     <a href="prodotti/libri.php">Libri e guide</a>
                                                                 </div>
@@ -106,15 +107,14 @@
 						<div class="4u">
 							<section>
 								<a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a>
-								<p>Consuluta il nostro forum in cui potresti lasdkfjdfkjbioadfjasbadfkblakldajvklsajl
-								asdjfkldsjfklasdjfkldsjflk .</p>
+								<p>Consulta il nostro FORUM in cui potresti chiarire ogni dubbio sul mondo micologico. Non dimenticarti di effettuare l'accesso! </p>
 								<a href="#" class="button">FORUM</a>
 							</section>
 						</div>
 						<div class="4u">
 							<section>
 								<a href="#" class="image full"><img src="images/pics03.jpg" alt=""></a>
-								<p>Chiedi all'esperto è il modo piu semplice per rispondere alle tue domande asdnjafkadsfkjsdajfk </p>
+								<p>CHIEDI ALL'ESPERTO è il modo più semplice per rivolgere domande dirette ai nostri micologi professionisti pronti ad aiutarti!</p>
 								<a href="#" class="button">CHIEDI ALL'ESPERTO</a>
 							</section>
 						</div>
@@ -175,9 +175,38 @@
 							<header>
 								<h2>NEWS</h2>
 							</header>
-							<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
-							<p>This is <strong>Elemental</strong>, a responsive HTML5 site template freebie by <a href="http://templated.co">TEMPLATED</a>. Released for free under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so use it for whatever (personal or commercial) &ndash; just give us credit! Check out more of our stuff at <a href="http://templated.co">our site</a> or follow us on <a href="http://twitter.com/templatedco">Twitter</a>.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris.</p>
+							<div class="slideshow-container"> 
+								<div class="mySlides fade" style="display: block;">
+									<div class="numbertext">1 / 3</div>
+									<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
+									<p><b>TITOLO 1</b>
+										sottotitolo</P>
+
+								</div>
+								<div class="mySlides fade">
+									<div class="numbertext">2 / 3</div>
+									<a href="#" class="image full"><img src="images/pics10_1.jpg" alt=""></a>
+									<p><b>TITOLO 2</b>
+										sottotitolo</P>
+
+								</div>
+								<div class="mySlides fade">
+									<div class="numbertext">3 / 3</div>
+									<a href="#" class="image full"><img src="images/pics10_2.jpg" alt=""></a>
+									<p><b>TITOLO 3</b>
+										sottotitolo</P>
+
+								</div>
+								<a class="prev" onclick="plusSlides(-1)">❮</a>
+								<a class="next" onclick="plusSlides(1)">❯</a>
+							</div>
+							<br>
+
+							<div style="text-align:center">
+							  <span class="dot" onclick="currentSlide(1)"></span> 
+							  <span class="dot" onclick="currentSlide(2)"></span> 
+							  <span class="dot" onclick="currentSlide(3)"></span> 
+							</div>
 						</section>
 					</div>
 				</div>
