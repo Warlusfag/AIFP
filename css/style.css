@@ -931,9 +931,9 @@
 /*********************************************************************************/        
 
 input[type=text], input[type=password]{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    width: 60%;
+    padding: 6px 10px;
+    margin: 4px 0;
     display: inline-block;
     border: 1px soldi #ccc;
     box-sizing: border-box;
@@ -942,24 +942,28 @@ input[type=text], input[type=password]{
 .loginbtn{
     background-color: #4CAF50;
     color: white;
-    padding: 12px 20px;
-    margin: 8px 0;
+    padding: 6px 10px;
+    margin: 5px 0;
     border: none;
     display: inline-block;
     cursor: pointer;
-    width: 100%;
+    width: 80%;
 }
 
 .cancelbtn{
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
+	cursor: pointer;
+	background-color: #f44336;
+    width: 80%;
+    padding: 6px 10px;
+    margin: 5px 0;
+    border: none;
+    display: inline-block;
 }
 
 /*Center the image postion the close button*/
 .imgcontainer{
     text-align: center;
-    margin: 24px 0 12px 0;
+    margin: 20px 0 10px 0;
     position: relative;
     
 }
@@ -985,15 +989,15 @@ span.psw{
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4); /*fallback color*/
-    padding-top: 60px;
+    padding-top: 1px;
 }
 /* Modal content/box*/
 .modal-content{
     background-color: #fefefe;
     margin: 5% auto 15% auto;
     border: 1px solid #888;
-    width: 50%;
-}
+    width: 40%;
+  }
 /*The close button (x)*/
 .close{
     position: absolute;
