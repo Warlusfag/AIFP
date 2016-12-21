@@ -51,7 +51,7 @@
                             <li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
                                 <div class="dropdown-content">
-                                    <a onclick="document.getElementById('id01').style.display='block'">Accedi</a>
+                                    <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
                                     <a href="#">Registrati</a>
                                 </div>
                             </li>
@@ -65,32 +65,36 @@
             <!-- Login form -->
                         <div id="id01" class="modal">
                             <form class="modal-content animate">
+                            	 <div class="logcontainer" style="background-color: #f1f1f1">
+                                	
+                                	
+                                	<label><b>ACCEDI AD AIFP</b></label>
+                                </div>
                                 <div class="imgcontainer">
-                                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Chiudi">&times;</span>
                                     <img src="images/img_avatar.png" alt="Avatar" class="avatar">
                                 </div>
+
                                 <div class="logcontainer">
-                                	<label><b>Tipologia utente</b></label>
-                                	<br>
-                                	<input type="radio" name="type1" required>type1 
-                                	<input type="radio" name="type2" required>type2 
-                                	<input type="radio" name="type3" required>type3 
-                                	<input type="radio" name="type4" required>type4 
-                                	<br><br>
-                                    <label><b>Username</b></label>
-                                    <input type="text" placeholder="Inserisci Username" name="uname" required>
+                                	<input type="text" placeholder="Inserisci Username" name="uname" required>
                                     <br>
-                                    <label><b>Password</b></label>
                                     <input type="password" placeholder="Inserisci Password" name="psw" required>
-                                    <button class="loginbtn" type="submit">Login</button>
-                                    <button class="cancelbtn" type="button" onclick="document.getElementById('id01').style.display='none'">Annulla</button>
                                     <br>
-                                    <input type="checkbox" checked="checked">Remember me
-                                </div>
-                               <!-- <div class="logcontainer" style="background-color:#f1f1f1">
-                                   
+                                    <input type="radio" name="type1">Type1
+                                    <input type="radio" name="type2">Type2
+                                    <input type="radio" name="type3">Type3
+                                    <input type="radio" name="type4">Type4
+                                    <br>
+                                    <label class="rmbme"><input type="checkbox" checked="checked">Ricordami</label> 
                                     <span class="psw"><a href="#">Password</a> dimenticata?</span>
-                                </div>-->
+                                    <button class="loginbtn" type="submit">Login</button>
+                                    <br>
+                                    
+                                </div>
+                                <div class="logcontainer" style="background-color:#f1f1f1">
+                                	   <span>Non hai un account? <a href="#">Iscriviti >></a>
+                                    
+                                </div>
                             </form>
                         </div>
                      
