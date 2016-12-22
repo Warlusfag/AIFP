@@ -35,7 +35,7 @@ $smarty = new AIFP_smarty();
 if(($post = check_post($_POST))){
     $ev = new evento();
     if($events = $ev->search_eventi($post)){
-        $smarty->assign($events);
+        $smarty->assign('eventi',$events);
 		$smarty->display('eventi.tpl');
     }else{
         $smarty->assign('error', $ev->err_descr);

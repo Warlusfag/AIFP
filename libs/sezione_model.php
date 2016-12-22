@@ -148,7 +148,7 @@ class sezione extends gen_model{
                 return false;
             }
         }
-        $query = "SELECT * FROM $this->table_descr['table']";
+        $query = "SELECT * FROM ".$this->table_descr['table'];
         if(count($params) > 0 || $after > 0){
              $query .= " WHERE ";
             $column = explode(',', $this->table_descr['column_name']);
