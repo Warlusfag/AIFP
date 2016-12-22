@@ -6,9 +6,9 @@ session_start();
 
 
 $smarty = new AIFP_smarty();
-$contr = new aifp_controller()
+$contr = new aifp_controller();
 
-$news = $contr->get_news()
+$news = $contr->get_news();
 if($news){
     $smarty->assign('error', $ev->err_descr);
     $smarty->display('error.tpl');
