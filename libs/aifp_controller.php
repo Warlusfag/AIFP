@@ -81,7 +81,7 @@ class aifp_controller
         if($us->table_descr['key'] == $primary_key){
             return $us;
         }
-        $us = new iscritto();
+        $us = new inscritto();
         if($us->table_descr['key'] == $primary_key){
             return $us;
         }
