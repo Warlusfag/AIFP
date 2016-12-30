@@ -3,9 +3,9 @@
 //Constanti per la trasportabilità del sito su diverse piattaforme
 
 
-$server_root = "../../"
+$server_root = "/srv/www/AIFP/";
 
-date_default_timezone_set('UTC');
+//date_default_timezone_set('UTC');
 
 //constanti per la gestione del sito
 define('PROJ_DIR', $server_root);
