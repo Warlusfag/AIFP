@@ -5,7 +5,7 @@
 
 $server_root = "/srv/www/AIFP/";
 
-date_default_timezone_set('UTC');
+//date_default_timezone_set('UTC');
 
 //constanti per la gestione del sito
 define('PROJ_DIR', $server_root);

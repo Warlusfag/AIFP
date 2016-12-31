@@ -64,7 +64,7 @@
             </div>
             <!-- Login form -->
                         <div id="id01" class="modal">
-                            <form class="modal-content animate">
+                            <form class="modal-content animate" action="login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
                                 	
@@ -80,10 +80,10 @@
                                     <br>
                                     <input type="password" placeholder="Inserisci Password" name="psw" required>
                                     <br>
-                                    <input type="radio" name="type1">Type1
-                                    <input type="radio" name="type2">Type2
-                                    <input type="radio" name="type3">Type3
-                                    <input type="radio" name="type4">Type4
+                                    <input type="radio" name="type" value="t1" required>Type1
+                                    <input type="radio" name="type" value="t2">Type2
+                                    <input type="radio" name="type" value="t3">Type3
+                                    <input type="radio" name="type" value="t4">Type4
                                     <br>
                                     <label class="rmbme"><input type="checkbox" checked="checked">Ricordami</label> 
                                     <span class="psw"><a href="#">Password</a> dimenticata?</span>
@@ -120,7 +120,7 @@
 						</div>
 						<div class="4u">
 							<section>
-								<a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a>
+								<a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a> 
 								<p>Consulta il nostro FORUM in cui potresti chiarire ogni dubbio sul mondo micologico. Non dimenticarti di effettuare l'accesso! </p>
 								<a href="#" class="button">FORUM</a>
 							</section>
