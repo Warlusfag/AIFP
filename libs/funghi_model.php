@@ -9,12 +9,24 @@ class funghi extends gen_model{
     public $queries;
     public $view_name;
     public $view_name_old;
+    static public $generi;
     private $column_view;
-    private $column;            
+    private $column;           
     
     function __construct() {
         
         parent::__construct();
+        
+        self::$generi = array(
+            'ammanita',
+            'boletus',
+            'agaricus',
+            'tricholoma',
+            'clitocybe',
+            'cantharrelus',
+            'russula',
+            'lactarius',           
+        );
         
         $this->column='id_fungo,genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
         

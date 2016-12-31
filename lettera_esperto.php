@@ -36,7 +36,8 @@ if( ($post = check_post($_POST)) ){
                 $p = array($key => $id);
                 break;
             }
-            $u=  $contr->search_OnAll_users($p);
+            $us = $contr->get_user_from_pkey($key);
+            $u =  $us->search_users($p);
             $emails[$i] = $u['email'];
             $i++;
         }        

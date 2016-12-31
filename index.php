@@ -1,10 +1,7 @@
 <?php
 session_start();
-$_SESSION['proj_dir'] = "/srv/www/AIFP/";
 
 require_once 'libs/aifp_controller.php';
-//require_once 'libs/admin/setup.php';
-
 
 //$contr = new aifp_controller();
 $smarty = new AIFP_Smarty();
