@@ -14,16 +14,9 @@
 		<script src="../js/init.js"></script>
 		<script src="../js/login.js"></script>
 		<script src="../js/slideshow.js"></script>
-		<!--<noscript>
-			<link rel="stylesheet" href="../css/skel-noscript.css" />
-			<link rel="stylesheet" href="../css/style.css" />
-			<link rel="stylesheet" href="../css/style-desktop.css" />
-		</noscript>-->
-		<style>
-			@import url(../css/skel-noscript.css);
-			@import url(../css/style.css);
-			@import url(../css/style-desktop.css);
-		</style>
+    	<link rel="stylesheet" href="../css/skel-noscript.css" />
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="../css/style-desktop.css" />
 	</head>
 	<body>
 
