@@ -46,13 +46,14 @@
 							<li><a href="#">Eventi</a></li>
 							<li><a href="#">Forum</a></li>
 							<li><a href="#">Chiedi all'esperto</a></li>
-                            <li class="dropdown">
+							<li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="../css/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
                                     <a href="#">Registrati</a>
                                 </div>
                             </li>
+
 						</ul>
                                             
 					</nav> 
@@ -100,6 +101,7 @@
 		<!-- Body -->
 			<body>
 			{block name=main}
+
 			{/block}
 			</body>
 		<!-- /Body -->

@@ -37,7 +37,7 @@
 						<ul>
 							<li><a href="index.php">Home</a></li>
 							<li class="dropdown">
-                                                            <a class="dropbtn" href="funghi/funghi.php">Funghi</a>
+                                                            <a class="dropbtn" href="funghi/generic.php">Funghi</a>
                                                                 <div class="dropdown-content">
                                                                     <a href="storia.php">Storia del fungo</a>
                                                                     <a href="funghi/schede_funghi.php">Schede funghi</a>
