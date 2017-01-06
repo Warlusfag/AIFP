@@ -1,4 +1,4 @@
-{extends file="smarty/AIFP/templates/generic_page.tpl"}
+{extends file="generic_page.tpl"}
 	{block name=main}  
 	<!-- Main -->
 		<div id="main">
