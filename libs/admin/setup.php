@@ -24,12 +24,14 @@ class AIFP_smarty extends Smarty
 {    
     function __construct()
     {
-        parent::__construct();       
-     
-        $this->template_dir=PROJ_DIR.'smarty/AIFP/templates/';        
-        $this->_cache_include =PROJ_DIR.'smarty/AIFP/cache/';     
-        $this->compile_dir=PROJ_DIR.'smarty/AIFP/templates_c/';
-        $this->config_dir=PROJ_DIR.'smarty/AIFP/configs/';
+        parent::__construct();
+        
+        $this->setCacheDir(PROJ_DIR.'smarty/AIFP/cache/');
+        $this->setConfigDir(PROJ_DIR.'smarty/AIFP/configs/');
+        $this->setTemplateDir(PROJ_DIR.'smarty/AIFP/templates/');
+        $this->setCompileDir(PROJ_DIR.'smarty/AIFP/templates_c/');
+        
+        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
         
     }
 }
