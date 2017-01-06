@@ -37,14 +37,14 @@
 						<ul>
 							<li><a href="index.php">Home</a></li>
 							<li class="dropdown">
-                                                            <a class="dropbtn" href="funghi/generic.php">Funghi</a>
+                                                            <a class="dropbtn" href="funghi/funghi.php">Funghi</a>
                                                                 <div class="dropdown-content">
-                                                                    <a href="storia.php">Storia del fungo</a>
+                                                                    <a href="funghi/storia.php">Storia del fungo</a>
                                                                     <a href="funghi/schede_funghi.php">Schede funghi</a>
                                                                     <a href="prodotti/libri.php">Libri e guide</a>
                                                                 </div>
                                                         </li>            
-							<li><a href="right-sidebar.html">Regolamenti</a></li>
+							<li><a href="funghi/regolamento.php">Regolamenti</a></li>
 							<li><a href="eventi/eventi.php">Eventi</a></li>
 							<li><a href="forum/forum.php">Forum</a></li>
 							<li><a href="lettera_esperto.php">Chiedi all'esperto</a></li>
@@ -113,9 +113,9 @@
 					<div class="row">
 						<div class="4u">
 							<section>
-								<a href="funghi.php" class="image full"><img src="images/pics01.jpg" alt=""></a>
+								<a href="funghi/funghi.php" class="image full"><img src="images/pics01.jpg" alt=""></a>
 								<p>Entra nel fantastico mondo dei funghi. Scopri la loro storia e tutte le loro caratteristiche grazie alla nostra sezione dedicata al FUNGO</p>
-								<a href="funghi.php" class="button">Entra</a>
+								<a href="funghi/funghi.php" class="button">Entra</a>
 							</section>
 						</div>
 						<div class="4u">

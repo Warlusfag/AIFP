@@ -1,8 +1,9 @@
 <?php
-require_once 'libs/aifp_controller.php';
+require_once '../libs/aifp_controller.php';
 
 
-if(isset($_GET['genere'])){
+
+/*if(isset($_GET['genere'])){
     $smarty = new AIFP_Smarty();
     $contr = new aifp_controller();
     
@@ -14,6 +15,12 @@ if(isset($_GET['genere'])){
         $smarty->assign('funghi',$funghi);
         $smarty->display('generic_page.tpl');
     }
-    
-}
+   } 
+    */
+
+
+$smarty = new AIFP_Smarty();
+$smarty->display('schede.tpl');
+
+
 

@@ -64,14 +64,14 @@
 									<section>
 										<a href="schede.php" class="image full"><img src="../images/pics02.jpg" alt=""></a>
 										<p>Schede di tutti i fottuti funghi allucinogeni e non</p>
-										<a href="schede.php" class="button">SCHEDE</a>
+										<a href="schede_funghi.php" class="button">SCHEDE</a>
 									</section>
 								</div>
 								<div class="4u">
 									<section>
 										<a href="libri.php" class="image full"><img src="../images/pics03.jpg" alt=""></a>
 										<p>Libri consigliati dal nostro esperto, dott.Faggioni</p>
-										<a href="libri.php" class="button">LIBRI</a>
+										<a href="../prodotti/libri.php" class="button">LIBRI</a>
 									</section>
 								</div>
 

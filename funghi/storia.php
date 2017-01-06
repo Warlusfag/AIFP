@@ -2,4 +2,4 @@
 require_once '../libs/aifp_controller.php';
 
 $smarty = new AIFP_Smarty();
-$smarty->display('regolamento.tpl');
+$smarty->display('storia.tpl');
