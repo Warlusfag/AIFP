@@ -26,7 +26,7 @@
 					
 				<!-- Logo -->
 					<div id="logo">
-						<h1><a href="../index.php">AIFP</a></h1>
+						<h1><a href="../index.php">AIFP {$customerName}</a></h1>
 					</div>
 			</div>
 			<div id="nav-wrapper" class="container" >
@@ -46,13 +46,17 @@
 							<li><a href="#">Eventi</a></li>
 							<li><a href="#">Forum</a></li>
 							<li><a href="#">Chiedi all'esperto</a></li>
-							<li class="dropdown">
+							{if $user==null}
+                            	<li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="../css/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
                                     <a href="#">Registrati</a>
                                 </div>
-                            </li>
+                           		</li>
+                           	{else}
+                           		<li><a href="#"><img src="css/images/user.png"><p>Ciao {%user}</p></a></li>
+                           	{/if}
 
 						</ul>
                                             
@@ -61,7 +65,7 @@
 			
             <!-- Login form -->
                         <div id="id01" class="modal">
-                            <form class="modal-content animate" action="login.php">
+                            <form class="modal-content animate" method="post" action="login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
                                 	
@@ -77,10 +81,13 @@
                                     <br>
                                     <input type="password" placeholder="Inserisci Password" name="psw" required>
                                     <br>
-                                    <input type="radio" name="type" value="t1" required>Type1
-                                    <input type="radio" name="type" value="t2">Type2
-                                    <input type="radio" name="type" value="t3">Type3
-                                    <input type="radio" name="type" value="t4">Type4
+                                    <label>Accedi come: </label>
+                                    <br>
+                                    <input type="radio" name="type" value="utente">Utente
+                                    <input type="radio" name="type" value="iscritto">Iscritto
+                                    <input type="radio" name="type" value="micologo">Micologo
+                                    <input type="radio" name="type" value="botanico">Botanico
+                                    <input type="radio" name="type" value="associazione">Associazione
                                     <br>
                                     <label class="rmbme"><input type="checkbox" checked="checked">Ricordami</label> 
                                     <span class="psw"><a href="#">Password</a> dimenticata?</span>
