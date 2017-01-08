@@ -80,17 +80,17 @@
                                 </div>
 
                                 <div class="logcontainer">
-                                	<input type="text" placeholder="Inserisci Username" name="uname" required>
+                                	<input type="text" placeholder="Inserisci Username" name="email" required>
                                     <br>
-                                    <input type="password" placeholder="Inserisci Password" name="psw" required>
+                                    <input type="password" placeholder="Inserisci Password" name="password" required>
                                     <br>
                                     <label>Accedi come: </label>
                                     <br>
-                                    <input type="radio" name="type" value="utente">Utente
-                                    <input type="radio" name="type" value="iscritto">Iscritto
-                                    <input type="radio" name="type" value="micologo">Micologo
-                                    <input type="radio" name="type" value="botanico">Botanico
-                                    <input type="radio" name="type" value="associazione">Associazione
+                                    <input formmethod="get" type="radio" name="type" value="utente">Utente
+                                    <input formmethod="get" type="radio" name="type" value="iscritto">Iscritto
+                                    <input formmethod="get" type="radio" name="type" value="micologo">Micologo
+                                    <input formmethod="get" type="radio" name="type" value="botanico">Botanico
+                                    <input formmethod="get" type="radio" name="type" value="associazione">Associazione
                                     <br>
                                     <label class="rmbme"><input type="checkbox" checked="checked">Ricordami</label> 
                                     <span class="psw"><a href="#">Password</a> dimenticata?</span>
