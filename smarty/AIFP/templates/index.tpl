@@ -53,7 +53,7 @@
                                 <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
-                                    <a href="#">Registrati</a>
+                                    <a href="profilize/reg.php">Registrati</a>
                                 </div>
                            		</li>
                            	{else}

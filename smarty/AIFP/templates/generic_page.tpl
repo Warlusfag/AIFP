@@ -26,7 +26,7 @@
 					
 				<!-- Logo -->
 					<div id="logo">
-						<h1><a href="../index.php">AIFP {$customerName}</a></h1>
+						<h1><a href="../index.php">AIFP</a></h1>
 					</div>
 			</div>
 			<div id="nav-wrapper" class="container" >
@@ -51,11 +51,11 @@
                                 <a class="dropbtn "href="#"><img src="../css/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
-                                    <a href="#">Registrati</a>
+                                    <a href="reg.php">Registrati</a>
                                 </div>
                            		</li>
                            	{else}
-                           		<li><a href="#"><img src="css/images/user.png"><p>Ciao {%user}</p></a></li>
+                           		<li><a href="#"><img src="css/images/user.png"><p>Ciao {$user}</p></a></li>
                            	{/if}
 
 						</ul>
