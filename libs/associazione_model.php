@@ -128,7 +128,7 @@ class associazione extends user
     }
     
 
-    public function register_evento ()
+    public function register_evento ($id_evento)
     {
         $this->err_descr = 'The association can\'t register into an event';
         return false;
