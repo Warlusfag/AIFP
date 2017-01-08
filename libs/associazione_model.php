@@ -255,7 +255,7 @@ class associazione extends user
         require_once 'evento_class.php';
         
         $ev = new evento();
-        if( !($ev->add_evento($params['titolo'], $this, $params['indirizzo'], $params['data_inizio'], $params['data_fine'])) )
+        if( !($ev->add_evento($params, $this)) )
         {
             $this->isok = 'Impossible to add an event';
             return false;
