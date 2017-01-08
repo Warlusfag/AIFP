@@ -27,33 +27,40 @@ if(isset($_GET['type'])){
 }
 
 $smarty = new AIFP_smarty();
+//di default assumo che non ci siano errori
+$smarty->assign('error', '');
 $contr = new aifp_controller();
 if(isset($_SESSION['user'])){
-	if(($post = check_post($_POST)) ){		
-            $pwd = $post['password'];
-            if(isset($post['email'])){
-                    $em = $post['email'];
-                    $token = $contr->login($pwd, $em, -1, $type);
-            }else if(isset($post['user'])){
-                    $us = $post['user'];
-                    $token = $contr->login($pwd, -1, $us, $type);
-            }
-            if($token){
-                    session_start();
-                    $_SESSION['user']= $token;           
-            }else{            
-                    $smarty->assign('error', $contr->descritpion);
-                    $smarty->display('error.tpl');
-            }
-	}else{
-		$smarty->assign('error', GEN_ERROR);
-		$smarty->display('error.tpl');
-	}
+    if(($post = check_post($_POST)) ){		
+        $pwd = $post['password'];
+        if(isset($post['email'])){
+                $em = $post['email'];
+                $token = $contr->login($pwd, $em, -1, $type);
+        }else if(isset($post['user'])){
+                $us = $post['user'];
+                $token = $contr->login($pwd, -1, $us, $type);
+        }
+        if($token){
+                session_start();
+                $_SESSION['user']= $token;
+                $us = aifp_controller::$collection_user[$token];
+                $smarty->assign('user', $us->attributes['user'] );
+                $smarty->display('index.tpl');
+        }else{            
+                $smarty->assign('error', $contr->descritpion);
+                $smarty->display('index.tpl');
+        }
+    }else{
+            $smarty->assign('error', GEN_ERROR);
+            $smarty->display('index.tpl');
+    }
 }else{
 	if(isset(aifp_controller::$collection_user[$_SESSION['user']])){
-		//messaggio di benventuo
+            $us = aifp_controller::$collection_user[$token];
+            $smarty->assign('user', $us->attributes['user'] );
+            $smarty->display('index.tpl');
         }else{
-		session_destroy();
+            session_destroy();
 	}
 }
 
