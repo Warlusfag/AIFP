@@ -55,25 +55,31 @@ class aifp_controller
                     'user'=>$user, 
                     'password'=>md5($password), 
             );             
-        } 
-        $us = $this->search_OnAll_users($params, 1);
-        if(!$us || count($us)){
-            $this->description = "ERROR: mail|username or password are not correct";
+        }
+        //preparati i parametri li passo alla search on all user
+        $us = $this->search_OnAll_users($params, 1, $type);
+        if(!$us || count($us)== 0 || count($s)>1){
+            $this->description = "ERROR: mail or username or password are not correct";
             return false;
         }
+        //se la ricerca è andata a buon fine devo creare l'oggetto in questione
         $k = array_keys($us);
-        $user = $this->get_user_from_pkey($k[0]);
+        if($type == -1){
+            $user = $this->get_us_from_type($type);
+        }else{        
+            $user = $this->get_user_from_pkey($k[0]);
+        }
         $params = array(
             $k[0] => $us[$k[0]],
         );
+        //trovo ora il resto della descrizione dell'utente
         $us_descr= $user->search_descr_user($params, 1);		
         $user->init($us, $us_descr);
-
+        //preparo il token da mettere nell'array session
         $token = md5($email.$password); 
         self::$collection_user[$token] = $user; 
         $this->descritpion =''; 
-        return $token; 
-        
+        return $token;        
     } 
 
     function get_user_from_pkey($primary_key){
@@ -127,103 +133,126 @@ class aifp_controller
         }
         return null;   
     }
-
+    
+    /*@params=parametri passategli
+     *@limit=limita il numero dei risultati come output della ricerca. Se -1 non c'è limite ai risultati
+     * se liomit =1 ritorna l'ogetto relativo a quell'utente
+     * @type= determina se circoscrivere la ricerca ad una sola tabella data da tipo
+     */
     function search_OnAll_users($params, $limit=-1, $type=-1){ 
        $count = 0; 
-       $ris = array(); 
+       $ris = array();
+       //controllo se è stato passato un tipo ed imposto il limite del ciclo
        if($type != -1){ 
        $n = 1; 
        }else{ 
-           $n = count(types); 
+           $n = count($this->tipo); 
        } 
-       for($i=0;$i<$n;$i++){ 
+       for($i=0;$i<$n;$i++){
+           //Ora inzializzo l'ogetto a seconda del tipo
            if($type != -1){ 
-                    $us = $this->get_us_from_type($type); 
-                   if($us == null){ 
-                            return null; 
-                   } 
-                   $i = array_search($ris, $type); 
+                $us = $this->get_us_from_type($type); 
+                if($us == null){
+                    $this->descritpion = "ERROR:Wrong type";
+                    return false; 
+                }                 
            }else{ 
-                    $us = $this->get_us_from_type($this->tipo[$i]); 
-           }         
+                $us = $this->get_us_from_type($this->tipo[$i]); 
+           }      
+           //Ricerco l'utente
            $t = $us->search_user($params); 
+           //Caso in cui i risultati sono illimitati
            if($limit == -1 && $t){ 
-               array_merge($ris, $t); 
-           }else if($limit == 1 && $t){
-               if(count($t)==1){
-                       return $t;
-               }else{
-                       return false;
-               }
-           }else if($t){             
-              if($count($t) + $count <= $limit){ 
-                       $count += count($t);            
-                       array_merge($ris, $t); 
-               }else{ 
-                   $diff = $limit - $count; 
-                   for($j=0;$j<$diff;$j++){ 
-                          array_merge($ris,$t[$j]); 
-                   } 
-                   return $ris; 
-               }      
-           } 
+               array_merge($ris, $t);
+            //Caso in cui limit è settato   
+           }else if($t){
+               //status verifica contenitre del numero dei risultati ottenuti in questo ciclo
+               // e quelli predenti
+                $status = count($t) + $count;
+                if($status < $limit){ 
+                    $diff = count($t);
+                    $count = $status;
+                    array_merge($ris, $t);                    
+                //in questi casi interrompo il ciclo perchè ho raggiunto il limite
+                }else if($status == $limit){ 
+                    array_merge($ris, $t);
+                    break;
+                }else{ 
+                   $diff = $limit - $count;
+                   $temp = array_chunk($t, $diff);
+                   array_merge($ris, $temp);
+                   break;
+               }              
+           }else{
+               $this->descritpion = $us->err_descr;
+               return false;
+           }
        } 
        return $ris;	 
     }
 
     function search_OnAll_descr_users($params, $limit=-1, $type=-1){ 
        $count = 0; 
-       $ris = array(); 
+       $ris = array();
+       //controllo se è stato passato un tipo ed imposto il limite del ciclo
        if($type != -1){ 
        $n = 1; 
        }else{ 
-           $n = count(types); 
+           $n = count($this->tipo); 
        } 
-       for($i=0;$i<$n;$i++){ 
+       for($i=0;$i<$n;$i++){
+           //Ora inzializzo l'ogetto a seconda del tipo
            if($type != -1){ 
-               $us = $this->get_us_from_type($type); 
-               if($us == null){ 
-                   return null; 
-               } 
-              $i = array_search($ris, $type); 
+                $us = $this->get_us_from_type($type); 
+                if($us == null){ 
+                    $this->descritpion = "ERROR:Wrong type";
+                    return null; 
+                }                 
            }else{ 
-               $us = $this->get_us_from_type($this->tipo[$i]); 
-           }         
+                $us = $this->get_us_from_type($this->tipo[$i]); 
+           }      
+           //Ricerco l'utente
            $t = $us->search_descr_user($params); 
+           //Caso in cui i risultati sono illimitati
            if($limit == -1 && $t){ 
-               array_merge($ris, $t); 
-           }else if($limit == 1 && $t){
-               if(count($t)==1){
-                       return $t;
-               }else{
-                       return false;
-               }
-           }else if($t){             
-               if($count($t) + $count <= $limit){ 
-                   $count += count($t);            
-                   array_merge($ris, $t); 
-               }else{ 
-                   $diff = $limit - $count; 
-                   for($j=0;$j<$diff;$j++){ 
-                          array_merge($ris,$t[$j]); 
-                  } 
-                   return $ris; 
-               }      
-           } 
+               array_merge($ris, $t);
+            //Caso in cui limit è settato   
+           }else if($t){
+               //status contenine il numero dei risultati ottenuti in questo ciclo
+               // e quello predenti
+                $status = count($t) + $count;
+                if($status < $limit){ 
+                    $diff = count($t);
+                    $count = $status;
+                    array_merge($ris, $t);                    
+                //in questi casi interrompo il ciclo perchè ho raggiunto il limite
+                }else if($status == $limit){ 
+                    array_merge($ris, $t);
+                    break;
+                }else{ 
+                   $diff = $limit - $count;
+                   $temp = array_chunk($t, $diff);
+                   array_merge($ris, $temp);
+                   break;
+               }              
+           }else{
+               $this->descritpion = $us->err_descr;
+               return false;
+           }
        } 
        return $ris;	 
     }
-    
+    //popola la collection  per le sezioni
     public function forum(){
-        require_once "sezione_model.php";  
+        require_once "sezione_model.php";
         
         if(!self::$collection_sez){
             self::$collection_sez = array();
         }        
-        $sez = new sezione();        
-        $t = $sez->search_sezioni(array(), -1, limit_sez);
+        $temp = new sezione();        
+        $t = $temp->search_sezioni(array(), -1, limit_sez);
         if(!$t){
-            $this->descritpion = $sez->err_descr;
+            $this->descritpion = $temp->err_descr;
             return false;
         }else{       
             for($i=0;$i<count($t);$i++){
@@ -235,7 +264,7 @@ class aifp_controller
             return $t;
         }       
     }
-    
+    //Popola la collection delle news
     public function get_news(){
         if(evento::$inserted || count(self::$collection_news)==0){
             $ev = new evento();
@@ -248,16 +277,20 @@ class aifp_controller
         $this->descritpion = '';
         return self::$collection_news;
     }
-    
+    //Popola la collection dei funghi, cioè quei funghi visualizzati nella pagina principale e più famosi
+    //dal front end gliu viene passato il genere
     public function get_scheda_funghi($genere){
         if(!self::$collection_funghi){
             self::$collection_funghi = array();            
-        }        
+        }
+        //controlla se è presente
         $g = array_values(funghi::$generi);
         if(array_search($genere,$g)){
+            //se già è presente nella collection non c'è bisogno di ritrovarlo ma ritorna la collection
             if(isset(self::$collection_funghi[$genere])){
                 $this->descritpion = '';
                 return self::$collection_funghi[$genere];
+            //altrimenti lo devo scaricare
             }else{
                 $model_fungo = new funghi();                         
                 $params = array(
