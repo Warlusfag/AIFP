@@ -7,24 +7,24 @@ function check_post($param){
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'nome' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'cognome' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'password' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'residenza' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'user' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         } 
         else if( $key == 'data' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }else if( $key == 'email' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         } 
     }
     return $app;

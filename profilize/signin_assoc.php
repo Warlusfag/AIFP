@@ -6,34 +6,35 @@ function check_post($param){
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'nome' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'provincia' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'password' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'user' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'CAP' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         } 
         else if( $key == 'email' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'sito_web' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'componenti' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
     }
     return $app;
 }
 
 $smarty = new AIFP_smarty();
+$smarty->assign('error', '');
 
 if(($post = check_post($_POST))){           
 

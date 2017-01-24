@@ -9,22 +9,22 @@ function check_post($param)
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'nome_evento' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'indirizzo' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] =$value;
         }
         else if( $key == 'regione' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'provincia' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] =$value;
         }
         else if( $key == 'data_inizio' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'data_fine' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         } 
     }
     return $app;  

@@ -7,13 +7,13 @@ function check_post($param)
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'email' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'testo' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'nome' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
     }
     return $app;

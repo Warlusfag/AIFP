@@ -4,33 +4,29 @@ require_once '../libs/aifp_controller.php';
 
 function check_post($param){
     $app = array();
-    try{
-        foreach ($param as $key=>$value){
-            if( $key == 'nome' ){
-                $app[$key] = sanitaze_input($value);
-            }
-            else if( $key == 'cognome' ){
-                $app[$key] = sanitaze_input($value);
-            }
-            else if( $key == 'password' ){
-                $app[$key] = sanitaze_input($value);
-            }
-            else if( $key == 'residenza' ){
-                $app[$key] = sanitaze_input($value);
-            }
-            else if( $key == 'user' ){
-                $app[$key] = sanitaze_input($value);
-            } 
-            else if( $key == 'data' ){
-                $app[$key] = sanitaze_input($value);
-            }else if( $key == 'email' ){
-                $app[$key] = sanitaze_input($value);
-            } 
+    foreach ($param as $key=>$value){
+        if( $key == 'nome' ){
+            $app[$key] = $value;
         }
-        return $app;
-    }catch(Exception $ex){
-        return null;
-    }   
+        else if( $key == 'cognome' ){
+            $app[$key] = $value;
+        }
+        else if( $key == 'password' ){
+            $app[$key] = $value;
+        }
+        else if( $key == 'residenza' ){
+            $app[$key] = $value;
+        }
+        else if( $key == 'user' ){
+            $app[$key] = $value;
+        } 
+        else if( $key == 'data' ){
+            $app[$key] = $value;
+        }else if( $key == 'email' ){
+            $app[$key] = $value;
+        } 
+    }
+    return $app;
 }
 
 $smarty = new AIFP_smarty();

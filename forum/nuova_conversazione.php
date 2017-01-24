@@ -8,13 +8,13 @@ function check_post ($param)
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'titolo' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'text' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'sezione' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
     }
     return $app;
