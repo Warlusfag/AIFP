@@ -19,8 +19,9 @@ class db_interface
     );   
     
     function __construct(){       
-        if(!self::$connection){
+        if(!self::$connection){           
             self::$connection = new mysqli(self::$db_params['server'], self::$db_params['user'], self::$db_params['password'], self::$db_params['database']);
+            
         }
         if (self::$connection->connect_error){
             $this->status = false;
@@ -32,7 +33,28 @@ class db_interface
         $this->last_query = "";
         $this->last_id=-1;
     }
-
+    
+    /*mode può essere sia:
+     * sql
+     * html
+     * shell
+     * che l'uninonde delle stringhe esempio sqlhtml
+     */
+    public function sanitaze_input($input, $mode){
+        
+        if (strpos($input, 'html') !== false){
+            $input = htmlentities($input);
+        }
+        if (strpos($input, 'sql') !== false){
+            $input = self::$connection->real_escape_string($input);
+        }
+        if (strpos($input, 'shell') !== false){
+            $input = escapeshellcmd($input);
+        }
+        return $input;
+        
+    }
+    
     public function format_date($date){
         //Codice per rendere una data con gli / per SQL
         
