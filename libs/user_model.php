@@ -6,12 +6,11 @@ require_once 'admin/setup.php';
 //ancora da finire
 const limit_filesize = 4000000;
 
-
-
 //normal user
 class user extends gen_model{       
     public $attributes_descr;
     public $type;
+    public $default_col;
     
     function __construct(){       
         
@@ -28,12 +27,19 @@ class user extends gen_model{
             'column_type'=>'s,s,s,s,s,s,da',
             'column_type_descr'=>'i,i,i',
         );
+        $this->default_col = array(
+            'user' => 'user',
+            'num_post' => 0,
+            'punteggio' => 0,
+            'image' => DEFAULT_IMAGE,
+            'patentino' => 0,            
+        );  
         
         $this->attributes = array(
             'id_user' => -1,
             'email' => "",
             'password'=>"",
-            'user' => 'user',
+            'user' => $this->default_col['user'],
             'nome' => '',
             'cognome' => '',
             'residenza' => "",
@@ -42,12 +48,11 @@ class user extends gen_model{
         
         $this->attributes_descr = array(
             'id_user' => -1,
-            'num_post' => 0,
-            'punteggio' => 0,
-            'image' => DEFAULT_IMAGE,
-            'patentino' => 0,
+            'num_post' => $this->default_col['num_post'],
+            'punteggio' => $this->default_col['punteggio'],
+            'image' => $this->default_col['image'],
+            'patentino' => $this->default_col['patentino'],
         );
-
     }
     
     public function upgrade_esperto(){
@@ -75,15 +80,17 @@ class user extends gen_model{
     
     
     public function insert_user($params, $params_descr){
-        if(!is_array($params)|| !is_array($params_descr)){
+        if(!is_array($params) && !is_array($params_descr)){
             return false;
         }
         $i=0;
         $val= array();
+        //Nomi collonne della tabella user e descr
         $name=$this->table_descr['column_name'];
         $type = $this->table_descr['column_type'];
         foreach($this->attributes as $key=>$value){
-            if($key != $this->table_descr['key']){                
+            if($key != $this->table_descr['key']){
+                //se nei parametri quel valore non è settato allora lo prendo nei default, altrimento lo assegno
                 if(!isset($params[$key])){
                     $value[$i]=$value;
                 }else{
@@ -100,12 +107,14 @@ class user extends gen_model{
         $this->attributes_descr[$this->table_descr['key']]=$this->conn->last_id;        
         $i=0;
         $val= array();
+        //Aggiungo nella colonneanche la chiave foreign key all'inserimento fatto precedentemente
         $name=$this->table_descr['key'].','.$this->table_descr['column_descr'];
-        $type = $this->table_descr['column_type_descr'];
+        $type = $this->table_descr['key_type'].','.$this->table_descr['column_type_descr'];
         foreach($this->attributes_descr as $key=>$value){
             if(!isset($params_descr[$key])){
                 $val[$i]=$value;
             }else{
+                //controllo in caso se gli viene passata il nome della colonna per la PK
                 if($key != $this->table_descr['key']){
                     $val[$i]=$params_descr[$key];
                 }else{
@@ -139,25 +148,32 @@ class user extends gen_model{
         return false;        
     }
     
-    
+    //il parametro limit serve per limitare il numero dei risultati
     public function search_user($params, $limit=-1)
     {
-        if(!is_array($params) || !$this->conn->status ){
+         if(!is_array($params) || !$this->conn->status || $limit == 0){
             return false;
         }
-        $query = "SELECT * FROM $this->table_descr['table_descr'] AS U";
+        $query = "SELECT * FROM ".$this->table_descr['table']." AS U";
         if(count($params)>0){
             $query .= " WHERE ";
-            $column = extract_node(explode(',',$this->table_descr['column_name']),0);
-            foreach($column as $key){
+            //estraggo i nomi delle colonne, e verifico se sono presenti, se ci sono aggiungo la query
+            $column = explode(',',$this->table_descr['column_name']);
+            $c_type = explode(',',$this->table_descr['column_type']);
+            foreach($column as $i=>$key){
                 if(isset($params[$key])){
-                    $query .= "U.$key=$params[$key] AND ";                 
+                    if($c_type[$i] == 's'){
+                        $query .= "U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= "U.$key=$params[$key] AND ";
+                    }
                 }
-            }        
+            }
+            //elimino lo spazio
             $query = substr_replace($query, '', count($query)-6);
         }
         if($limit > 0){
-            $query .= "LIMIT $limit;";            
+            $query .= " LIMIT $limit";            
         }
         $query .= ";";
         
@@ -170,7 +186,7 @@ class user extends gen_model{
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();                
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }            
             return $app;
         }else{                
@@ -181,13 +197,13 @@ class user extends gen_model{
     
     public function search_descr_user($params, $limit=-1)
     {          
-        if(!is_array($params) || !$this->conn->status ){
+        if(!is_array($params) || !$this->conn->status  || $limit == 0 ){
             return false;
         }
-        $query = "SELECT * FROM $this->table_descr['table_descr'] AS U";
+        $query = "SELECT * FROM ".$this->table_descr['table_descr']." AS U";
         if(count($params)>0){
             $query .= " WHERE ";
-            $column = extract_node(explode(',',$this->table_descr['column_descr']),0);
+            $column = explode(',',$this->table_descr['column_descr']);
             foreach($column as $key){
                 if(isset($params[$key])){
                     $query .= "U.$key=$params[$key] AND ";                 
@@ -196,7 +212,7 @@ class user extends gen_model{
             $query = substr_replace($query, '', count($query)-6);           
         }
         if($limit > 0){
-            $query .= "LIMIT $limit;";            
+            $query .= "LIMIT $limit";            
         }
         $query .= ";";        
         $res = $this->conn->query($query);
@@ -209,7 +225,7 @@ class user extends gen_model{
             $nr = $res->num_rows;
             for ($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);
             }                
             return $app;
         }else{
@@ -238,60 +254,68 @@ class user extends gen_model{
     
     //metodo per aggiornare in modo dinamico i singoli campi nel DB
     public function update_user($params=array(), $params_descr=array()){
-        $value=array();
-        $t=array();
-        $i=0;
-        $keys=explode(',',$this->table_descr['column_name']);
-        $type=explode(',',$this->table_descr['column_type']);
-        foreach($keys as $key){
-            if(isset($params[$key])){
-                if($key == $this->table_descr['key']){
-                    $this->err_descr = "ERROR: failed input";
+        if(count($params)>0){
+            $value=array();
+            $t='';
+            $name = '';
+            $i=0;        
+            $keys=explode(',',$this->table_descr['column_name']);
+            $type=explode(',',$this->table_descr['column_type']);
+            foreach($keys as $key){
+                //controllo se è un calore di descr
+                if(isset($params[$key])){
+                    if($key == $this->table_descr['key']){
+                        $this->err_descr = "ERROR: failed input";
+                        return false;
+                    }
+                    $value[$i]=$params[$key];
+                    $name.=$key.',';
+                    $t .= $type[$i].',';                
+                }
+                $i++;
+            }
+            $name = substr_replace($name, '', count($name)-1);
+            $t = substr_replace($t, '', count($t)-1);
+            $id_arr= array(
+                0=>$this->table_descr['key_name'],
+                1=>$this->id,
+                2=>$this->table_descr['key_type'],
+            );
+            if(count($value)>0){
+                $this->conn = statement_update($this->table_descr['table_name'],$name,$value,$t,$id_arr);
+                if(!$this->conn->status){
+                    $this->err_descr = $this->conn->error;
                     return false;
                 }
-                $value[$i]=$params[$key];
-                $name[$i]=$key;
-                $t[$i]=$type[$i];                
-            }
-            $i++;
-        }       
-        $id_arr= array(
-            0=>$this->table_descr['key_name'],
-            1=>$this->id,
-            2=>'i',
-        );
-        if(count($value)>0){
-            $this->conn = statement_update($this->table_descr['table_name'],$name,$value,$type,$id_arr);
-            if(!$this->conn->status){
-                $this->err_descr = $this->conn->error;
-                return false;
-            }
-        }
-        $name=explode(',',$this->table_descr['column_descr_name']);
-        $type=explode(',',$this->table_descr['column_descr_type']);
-        $i=0;$value=array();
-        foreach($name as $key){
-            if(isset($params_descr[$key])){
-                if($key == $this->table_descr['key']){
-                    $this->err_descr = "ERROR: failed input";
+            }else{$this->err_descr = "ERROR:bad input"; return false;}
+        }else if(count($params_descr)>0){
+        //ora p
+            $name=explode(',',$this->table_descr['column_descr_name']);
+            $type=explode(',',$this->table_descr['column_descr_type']);
+            $i=0;$value=array();
+            foreach($name as $key){
+                if(isset($params_descr[$key])){
+                    if($key == $this->table_descr['key']){
+                        $this->err_descr = "ERROR: failed input";
+                        return false;
+                    }
+                    $value[$i]=$params[$key];
+                    $name[$i]=$key;
+                    $t[$i]=$type[$i];                
+                }
+                $i++;
+            }         
+            $id_arr= array(
+                0=>$this->table_descr['key_name'],
+                1=>$this->attributes[$this->table_descr['key']],
+                2=>'i',
+            );
+            if(count($value)>0){
+                $this->conn = statement_update($this->table_descr['table_descr'],$name,$value,$type,$id_arr);
+                if(!$this->conn->status){
+                    $this->err_descr = $this->conn->error;
                     return false;
                 }
-                $value[$i]=$params[$key];
-                $name[$i]=$key;
-                $t[$i]=$type[$i];                
-            }
-            $i++;
-        }         
-        $id_arr= array(
-            0=>$this->table_descr['key_name'],
-            1=>$this->attributes[$this->table_descr['key']],
-            2=>'i',
-        );
-        if(count($value)>0){
-            $this->conn = statement_update($this->table_descr['table_descr'],$name,$value,$type,$id_arr);
-            if(!$this->conn->status){
-                $this->err_descr = $this->conn->error;
-                return false;
             }
         }
         $this->err_descr = '';
@@ -306,7 +330,7 @@ class user extends gen_model{
             $this->err_descr = "Error: you have to initialize user class";
             return false;
         }        
-        if($fk_conv == -1 || !isset($fk_conv) ){
+        if($fk_conv <= -1 || !isset($fk_conv) ){
             $this->err_descr = "Error: conversaton id is not set";
             return false;                
         }
@@ -360,6 +384,7 @@ class user extends gen_model{
             $this->err_descr = "Error, the file already exists";
             return false;            
         }
+        //il nome della fotom sarà la sua primary key
         $path = IMG_USER.$this->attributes['user'];        
         if((file_exists($path))){
           if (!unlink($path)){
@@ -368,8 +393,7 @@ class user extends gen_model{
           }
         }
         //creazione del file
-        $upfile = $path.['userfile']['name'];
-        if (!move_uploaded_file($file_image['userfile']['temp_name'], $upfile)){
+        if (!move_uploaded_file($file_image['userfile']['temp_name'], $path)){
             $this->err_descr = 'ERROR: an erro occurred while uplloading file';            
             return false;            
         }
@@ -387,10 +411,10 @@ class inscritto extends user
         $this->table_descr['table'] = 'inscritti';
         $this->table_descr['table_descr'] = 'descr_inscr';
         $this->table_descr['key'] = 'id_inscr';        
-        $this->table_descr['column_name']='id_inscr,associzione,email,user,password,nome,cognome,residenza,data';
-        $this->table_descr['column_descr']='id_inscr,num_post,punteggio,patentino,esperto';
-        $this->table_descr['column_type']='i,i,s,s,s,s,s,s,da';
-        $this->table_descr['column_type_descr'] = 'i,i,i,i,i';                
+        $this->table_descr['column_name']='associzione,email,user,password,nome,cognome,residenza,data';
+        $this->table_descr['column_descr']='num_post,punteggio,patentino,esperto';
+        $this->table_descr['column_type']='i,s,s,s,s,s,s,da';
+        $this->table_descr['column_type_descr'] = 'i,i,i,i';                
         $this->attributes_descr['esperto'] = false;
         $this->attributes_descr['id_inscr'] = -1;
         $this->attributes['associazione'] = -1;
@@ -399,7 +423,7 @@ class inscritto extends user
     
     public function upgrade_esperto(){
         if($this->attributes_descr['esperto'] == true){
-            return false;
+            return true;
         }
         if($this->attributes['punteggio'] >= 1000 ){
             return true;
@@ -416,9 +440,9 @@ class micologo extends inscritto
         parent::__construct();
         $this->type ='micologo';
         $this->attributes_descr['esperto'] = true;
-        $this->table_descr['table_name'] = 'micologi';
+        $this->table_descr['table'] = 'micologi';
         $this->table_descr['table_descr'] = 'descr_mico';
-        $this->table_descr['key_name'] = 'id_mico';
+        $this->table_descr['key'] = 'id_mico';
         $this->attributes['id_mico'] = -1;
         $this->attributes_descr['id_mico'] = -1;
     }   
@@ -432,9 +456,9 @@ class botanico extends inscritto
         parent::__construct();
         $this->type ='botanico';        
         $this->attributes_descr['esperto'] = true;
-        $this->table_descr['table_name'] = 'botanici';
+        $this->table_descr['table'] = 'botanici';
         $this->table_descr['table_descr'] = 'descr_bot';
-        $this->table_descr['key_name'] = 'id_bot';
+        $this->table_descr['key'] = 'id_bot';
         $this->attributes['id_bot'] = -1;
         $this->attributes_descr['id_bot'] = -1;
     }

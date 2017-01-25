@@ -31,9 +31,15 @@ class AIFP_smarty extends Smarty
         $this->setTemplateDir(PROJ_DIR.'smarty/AIFP/templates/');
         $this->setCompileDir(PROJ_DIR.'smarty/AIFP/templates_c/');
         
-        $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+        //$this->caching = Smarty::CACHING_LIFETIME_CURRENT;
         $this->debugging = false;
         
+        $this->global_variable();
+        
+    }
+    
+    function global_variable(){
+        $this->assign('error', '');
     }
 }
 

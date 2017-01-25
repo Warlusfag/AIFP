@@ -140,7 +140,6 @@ class aifp_controller
      * @type= determina se circoscrivere la ricerca ad una sola tabella data da tipo
      */
     function search_OnAll_users($params, $limit=-1, $type=-1){ 
-       $count = 0; 
        $ris = array();
        //controllo se è stato passato un tipo ed imposto il limite del ciclo
        if($type != -1){ 
@@ -150,49 +149,37 @@ class aifp_controller
        } 
        for($i=0;$i<$n;$i++){
            //Ora inzializzo l'ogetto a seconda del tipo
-           if($type != -1){ 
-                $us = $this->get_us_from_type($type); 
-                if($us == null){
-                    $this->descritpion = "ERROR:Wrong type";
-                    return false; 
-                }                 
-           }else{ 
-                $us = $this->get_us_from_type($this->tipo[$i]); 
-           }      
+            if($type != -1){ 
+                 $us = $this->get_us_from_type($type); 
+                 if($us == null){
+                     $this->descritpion = "ERROR:Wrong type";
+                     return false; 
+                 }                 
+            }else{ 
+                 $us = $this->get_us_from_type($this->tipo[$i]); 
+            }      
            //Ricerco l'utente
-           $t = $us->search_user($params); 
-           //Caso in cui i risultati sono illimitati
-           if($limit == -1 && $t){ 
-               array_merge($ris, $t);
-            //Caso in cui limit è settato   
-           }else if($t){
-               //status verifica contenitre del numero dei risultati ottenuti in questo ciclo
-               // e quelli predenti
-                $status = count($t) + $count;
-                if($status < $limit){ 
-                    $diff = count($t);
-                    $count = $status;
-                    array_merge($ris, $t);                    
-                //in questi casi interrompo il ciclo perchè ho raggiunto il limite
-                }else if($status == $limit){ 
+            $t = $us->search_user($params, $limit);
+            if($t){
+               if($limit == -1){ 
+                    array_merge($ris, $t);
+                //Caso in cui limit è settato   
+               }else if(count($t) == $limit){
                     array_merge($ris, $t);
                     break;
-                }else{ 
-                   $diff = $limit - $count;
-                   $temp = array_chunk($t, $diff);
-                   array_merge($ris, $temp);
-                   break;
-               }              
-           }else{
+               }else if(count($t) < $limit){
+                    array_merge($ris, $t);
+                    $limit -= count($t);
+               }                       
+            }else{
                $this->descritpion = $us->err_descr;
                return false;
-           }
+            }
        } 
        return $ris;	 
     }
 
-    function search_OnAll_descr_users($params, $limit=-1, $type=-1){ 
-       $count = 0; 
+    function search_OnAll_descr_users($params, $limit=-1, $type=-1){  
        $ris = array();
        //controllo se è stato passato un tipo ed imposto il limite del ciclo
        if($type != -1){ 
@@ -214,31 +201,21 @@ class aifp_controller
            //Ricerco l'utente
            $t = $us->search_descr_user($params); 
            //Caso in cui i risultati sono illimitati
-           if($limit == -1 && $t){ 
-               array_merge($ris, $t);
-            //Caso in cui limit è settato   
-           }else if($t){
-               //status contenine il numero dei risultati ottenuti in questo ciclo
-               // e quello predenti
-                $status = count($t) + $count;
-                if($status < $limit){ 
-                    $diff = count($t);
-                    $count = $status;
-                    array_merge($ris, $t);                    
-                //in questi casi interrompo il ciclo perchè ho raggiunto il limite
-                }else if($status == $limit){ 
+           if($t){
+               if($limit == -1){ 
+                    array_merge($ris, $t);
+                //Caso in cui limit è settato   
+               }else if(count($t) == $limit){
                     array_merge($ris, $t);
                     break;
-                }else{ 
-                   $diff = $limit - $count;
-                   $temp = array_chunk($t, $diff);
-                   array_merge($ris, $temp);
-                   break;
-               }              
-           }else{
+               }else if(count($t) < $limit){
+                    array_merge($ris, $t);
+                    $limit -= count($t);
+               }                       
+            }else{
                $this->descritpion = $us->err_descr;
                return false;
-           }
+            }
        } 
        return $ris;	 
     }
