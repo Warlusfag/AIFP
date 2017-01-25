@@ -12,8 +12,8 @@ class gen_model{
     public $err_descr;
     
     function __construct(){
-        $this->connection = new db_interface();
-        if(!$this->connection->status){
+        $this->conn = new db_interface();
+        if(!$this->conn->status){
             return null;
         }
         
