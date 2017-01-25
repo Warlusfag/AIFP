@@ -26,11 +26,10 @@ function check_post($param){
 }
 
 $smarty = new AIFP_smarty();
-//di default assumo che non ci siano errori
-$smarty->assign('error', '');
 
 $contr = new aifp_controller();
 if(!isset($_SESSION['user'])){
+    
     if(($post = check_post($_POST)) ){		
         $pwd = $post['password'];
         if(isset($post['email'])){
@@ -44,25 +43,25 @@ if(!isset($_SESSION['user'])){
                 session_start();
                 $_SESSION['user']= $token;
                 $us = aifp_controller::$collection_user[$token];
+                
                 $smarty->assign('user', $us->attributes['user'] );
-                $smarty->display('index.tpl');
+
         }else{            
                 $smarty->assign('error', $contr->descritpion);
-                $smarty->display('index.tpl');
         }
     }else{
             $smarty->assign('error', GEN_ERROR);
-            $smarty->display('index.tpl');
     }
 }else{
-	if(isset(aifp_controller::$collection_user[$_SESSION['user']])){
-            $us = aifp_controller::$collection_user[$token];
-            $smarty->assign('user', $us->attributes['user'] );
-            $smarty->display('index.tpl');
-        }else{
-            session_destroy();
-	}
+    if(isset(aifp_controller::$collection_user[$_SESSION['user']])){
+        $us = aifp_controller::$collection_user[$token];
+        $smarty->assign('user', $us->attributes['user'] );
+
+    }else{            
+        $smarty->assign('error', GEN_ERROR);
+    }
 }
+$smarty->display('index.tpl');
 
 
   

@@ -6,6 +6,8 @@ $smarty = new AIFP_smarty();
 
 $user = $SESSION['user'];
 
- unset(aifp_controller::$collection_user[$user]);
+unset(aifp_controller::$collection_user[$user]);
 
-session_destroy();  
+session_destroy();
+
+$smarty->assign('message','log out avvenuto con successo, Arriverderci!');

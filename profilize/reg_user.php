@@ -1,7 +1,6 @@
 <?php
-require_once '../libs/aifp_controller.php';
 
-session_start();
+require_once '../libs/aifp_controller.php';
 
 function check_post($param){
     $app = array();
@@ -29,20 +28,20 @@ function check_post($param){
     }
     return $app;
 }
-$smart = new AIFP_smarty();
-if(isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];
-    $us = aifp_controller::$collection_user[$tok];
-    if(($post = check_post($_POST))){
-        if($us->update_user($post)){ 
-            $smart->assign('message','aggiornamento profilo eseguito con successo');
-        }else{
-            $smarty->assign('error',$us->err-descr);
-            
-        }
-        $smarty->display('update_profile.tpl');
-    }   
+
+$smarty = new AIFP_smarty();
+
+if(($post = check_post($_POST))){           
+
+    $user = new user();
+    
+    if($user->insert_user($post, array())){
+        
+    }else{
+        $smarty->assign('error', GEN_ERR);
+        $smarty->display('error.tpl');
+    }  
 }else{
-    $smarty->assign('error',GEN_ERROR);
-    $smarty->display('index.tpl');
+    $smarty->assign('error', GEN_ERR);
+    $smarty->display('error.tpl');
 }

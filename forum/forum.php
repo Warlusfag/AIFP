@@ -7,12 +7,8 @@ $smarty = new AIFP_smarty();
 
 $sez = $contr->forum();
 if($contr->descritpion != ''){
-    $smarty->assign(GEN_ERROR);
-    $smarty->display('error.tpl');
+    $smarty->assign('error',GEN_ERROR);
 }else{    
-    $smarty->assign($sez);
-    $smarty->display('forum.tpl');
+    $smarty->assign('sezioni',$sez);
 }
-
-
-
+$smarty->display('forum.tpl');

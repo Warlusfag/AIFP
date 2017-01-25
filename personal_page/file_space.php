@@ -4,7 +4,6 @@ require_once '../libs/aifp_controller.php';
 
 session_start();
 
-$contr = new aifp_controller();
 $smarty = new AIFP_smarty();
 
 $tok = $_SESSIONS['user'];
@@ -23,17 +22,17 @@ if( $ass instanceof associazioni){
             if(isset($_FILES)){
                 $ass->upload_file($_FILES);
             }
+        }else{
+            $smarty->assign('error',GEN_ERROR);
         }        
         if($ass->err_descr != ''){
             $smarty->assign('error',$ass->err_descr);
-            $smarty->display('error.tpl');
         }
     }else{
         $smarty->assign('error',GEN_ERROR);
-        $smarty->display('error.tpl');
     }
 }else{
     session_destroy();
     $smarty->assign('error',GEN_ERROR);
-    $smarty->display('error.tpl');
 }  
+$smarty->display('file_space.tpl');

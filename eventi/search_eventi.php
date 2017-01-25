@@ -34,14 +34,13 @@ $smarty = new AIFP_smarty();
 
 if(($post = check_post($_POST))){
     $ev = new evento();
-    if($events = $ev->search_eventi($post)){
-        $smarty->assign('eventi',$events);
-		$smarty->display('eventi.tpl');
+    $events = $ev->search_eventi($post, -1, 20);
+    if($events){
+        $smarty->assign('eventi',$events);	
     }else{
-        $smarty->assign('error', $ev->err_descr);
-        $smarty->display('error.tpl');
+        $smarty->assign('error', $ev->err_descr);        
     }   
 }else{
-    $smarty->assign('error', GEN_ERROR);
-    $smarty->display('error.tpl');
+    $smarty->assign('error', GEN_ERROR);    
 }
+$smarty->display('eventi.tpl');

@@ -19,13 +19,10 @@ if(isset($_POST['sezione']) && $_POST['conversazione'])
     
     if($conv->load_post($page)){
         $posts = $conv->show_posts($page);
-        $smarty->assign($posts);
-        //smarty display        
+        $smarty->assign('posts', $posts);
     }else{
-        $smarty->assign('error',GEN_ERROR);
-        $smarty->display('error.tpl');
+        $smarty->assign('error',GEN_ERROR);        
     }   
 }else{
-    $smarty->assign('error',GEN_ERROR);
-    $smarty->display('error.tpl');    
+    $smarty->assign('error',GEN_ERROR);    
 }

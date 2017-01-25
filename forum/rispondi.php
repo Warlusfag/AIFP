@@ -7,13 +7,13 @@ function check_post ($param)
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'conversazione' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'text' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'sezione' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
     }
     return $app;
@@ -28,19 +28,17 @@ if (isset($_SESSION['user'])){
         
         $sez = aifp_controller::$collection_sez[$post['sezione']];
         $conv = $sez->convs[$post['conversazione']];            
-        $us = $user->attributes['user'];
-        
+        $us = $user->attributes['user'];        
         $post = new post();
         if($post->new_post($post['text'], $us, $conv->attributes['key'])){
-                     
+            $smarty->assign('message','Post caricato con successo');                    
         }else{
             $smarty->assign('error',GEN_ERROR);
-            $smarty->display('error.tpl');
         }        
     }else{
-        $smarty->assign('error',GEN_ERROR);
-        $smarty->display('error.tpl');
+        $smarty->assign('error','BAD parameters');        
     }
+    $smarty->display('rispondi.tpl');
 }else{
-    //login
+    $smarty->display('index.tpl');
 }

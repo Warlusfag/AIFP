@@ -3,7 +3,6 @@ require_once '../libs/aifp_controller.php';
 
 session_start();
 
-$contr = new aifp_controller();
 $smarty = new AIFP_smarty();
 
 
@@ -15,9 +14,10 @@ if(isset($_SESSION['user'])){
     $attributes = $user->attributes;
     $attributes_descr = $user->attributes_descr;
     
-    //codice per la visualizzazione dell'utente
-            
+    $smarty->assign('personal_data',$attributes);
+    $smarty->assign('descr_data',$attributes_descr);
+    $smarty->display('personal_page.tpl');
 }else{
-    $smarty->assign('error',GEN_ERROR);
-    $smarty->display('error.tpl');
+    $smarty->display('index.tpl');
 }
+

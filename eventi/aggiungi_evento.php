@@ -8,47 +8,59 @@ session_start();
 function check_post($param)
 {
     $app = array();
-	$flag = array();
+    $i = 0;
     foreach ($param as $key=>$value){
         if( $key == 'nome_evento' ){
             $app[$key] = $value;
+            $i += 1;
         }
         else if( $key == 'indirizzo' ){
             $app[$key] = $value;
+            $i++;
         }
         else if( $key == 'regione' ){
             $app[$key] = $value;
+            $i++;
         }
         else if( $key == 'provincia' ){
             $app[$key] = $value;
+            $i++;
         }
         else if( $key == 'data_inizio' ){
             $app[$key] = $value;
+            $i++;
         }
         else if( $key == 'data_fine' ){
             $app[$key] = $value;
+            $i++;
         } 
     }
-    return $app;  
+    if(i == 6){
+        return $app;  
+    }else{
+        return null;
+    }
 }
 
 $smarty = new AIFP_smarty();
 $tok = $_SESSION['user']; 
 $ass = aifp_controller::$collection_user[$tok];
-    if( $ass instanceof associazione ){      
+if( $ass instanceof associazione ){      
 
-        if(($post = check_post($_POST))){            
+    if(($post = check_post($_POST))){            
 
-            if($ass->add_evento($post)){
-                
-            }else{
-                $smarty->assign('error', $ass->err_descr);
-                $smarty->display('error.tpl');
-            }
-        }    
-    }else
-    {
-        session_destroy();
-        $smarty->assign('error', GEN_ERROR);
-        $smarty->display('error.tpl');
+        if($ass->add_evento($post)){
+            $smarty->assign('error', $ass->err_descr);
+        }else{
+            $smarty->assign('error', $ass->err_descr);                
+        }
+    }else{
+        $smarty->assign('error', 'BAD parameters');
     }
+    $smarty->display('eventi.tpl');
+}else
+{
+    session_destroy();
+    $smarty->assign('error', GEN_ERROR);
+    $smarty->display('index.tpl');
+}

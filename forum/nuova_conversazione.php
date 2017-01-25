@@ -6,24 +6,31 @@ session_start();
 function check_post ($param)
 {
     $app = array();
+    $i = 0;
     foreach ($param as $key=>$value){
         if( $key == 'titolo' ){
             $app[$key] = $value;
+            $i++;
         }
         else if( $key == 'text' ){
             $app[$key] = $value;
+            $i++;
         }
         else if( $key == 'sezione' ){
             $app[$key] = $value;
+            $i++;
         }
     }
-    return $app;
+    if($i == 3){
+        return $app;
+    }else{
+        return null;
+    }
 }
 
 $smarty = new AIFP_smarty();
 
-if(isset($_SESSION['user']))
-{
+if(isset($_SESSION['user'])){
     $tok = $_SESSION['user'];
     $user = aifp_controller::$collection_user[$tok];
     if(($post=check_post($_POST))){
@@ -34,22 +41,18 @@ if(isset($_SESSION['user']))
         $title = $post['titolo'];
         $us = $user->attributes['user'];        
         
-        if($sez->new_conversazione($us, $text, $title))
-        {
-            //Codice dell'avenuta aggiunta della conversazione            
-        }
-        else
-        {
-            $smarty->assign('error',GEN_ERROR);
-            $smarty->display('error.tpl');        
+        if($sez->new_conversazione($us, $text, $title)){
+            $smarty->assign('message','Nuova conversazione aggiunta con successo');    
+        }else{
+            $smarty->assign('error',GEN_ERROR);        
         }
     }else{
-        $smarty->assign('error','POST array is setted in bad way');
-        $smarty->display('error.tpl');
-    }    
+        $smarty->assign('error','BAD parameters');        
+    }
+    $smarty->display('sezione.tpl');
 }
 else
 {
-    //codice per far effettura il login e il reindirizzamento    
+    $smarty->display('login.tpl');
 }
 
