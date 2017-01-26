@@ -204,15 +204,20 @@ class user extends gen_model{
         if(count($params)>0){
             $query .= " WHERE ";
             $column = explode(',',$this->table_descr['column_descr']);
-            foreach($column as $key){
+            $c_type = explode(',',$this->table_descr['column_type_descr']);
+            foreach($column as $i=>$key){
                 if(isset($params[$key])){
-                    $query .= "U.$key=$params[$key] AND ";                 
+                    if($c_type[$i] == 's'){
+                        $query .= "U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= "U.$key=$params[$key] AND ";
+                    }
                 }
             }        
             $query = substr_replace($query, '', count($query)-6);           
         }
         if($limit > 0){
-            $query .= "LIMIT $limit";            
+            $query .= " LIMIT $limit";            
         }
         $query .= ";";        
         $res = $this->conn->query($query);

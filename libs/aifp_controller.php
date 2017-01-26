@@ -7,13 +7,10 @@ require_once "associazione_model.php";
 require_once "evento_model.php";
 require_once "admin_model.php";
 
-
 //limit constant
 const limit_sez = 5;
 const limit_events = 20;
 const limit_session = 1000000;
-
-
 
 class aifp_controller
 {
@@ -63,14 +60,17 @@ class aifp_controller
             return false;
         }
         //se la ricerca è andata a buon fine devo creare l'oggetto in questione
-        $k = array_keys($us);
+        ////us è un array di array 
+        //sullo 0 c'è l'array con i risultati e ne estraggo le chiavi
+        $k = array_keys($us[0]);
         if($type == -1){
             $user = $this->get_us_from_type($type);
         }else{        
             $user = $this->get_user_from_pkey($k[0]);
         }
+        //allo 00 c'è il valore della chiave
         $params = array(
-            $k[0] => $us[$k[0]],
+            $k[0] => $us[0][0],
         );
         //trovo ora il resto della descrizione dell'utente
         $us_descr= $user->search_descr_user($params, 1);		
