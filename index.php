@@ -1,5 +1,4 @@
 <?php
-session_start();	$flag = array();
 
 require_once 'libs/aifp_controller.php';
 

@@ -13,7 +13,7 @@ define('PROJ_LIBS',PROJ_DIR.'libs/');
 define('PROJ_ADMIN', PROJ_LIBS.'admin/');
 define('FILE_ASS', PROJ_LIBS.'fuser/filespace_ass/');
 define('IMG_USER', PROJ_LIBS.'fuser/image_user/');
-define('IMG_MUSH',PROJ_LIBS.'/imgage_funghi/');
+define('IMG_MUSH',PROJ_LIBS.'image_funghi/');
 define('DEFAULT_IMG', IMG_USER.'default.png');
 define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com');
 
@@ -33,6 +33,7 @@ class AIFP_smarty extends Smarty
         
         //$this->caching = Smarty::CACHING_LIFETIME_CURRENT;
         $this->debugging = false;
+        $this->error_reporting = 0;
         
         $this->global_variable();
         

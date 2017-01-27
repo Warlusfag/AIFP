@@ -2,8 +2,6 @@
 
 require_once 'libs/aifp_controller.php'; 
 
-session_start();   
-
 function check_post($param){
     $app = array();
     if(isset($param['type'])){
@@ -45,7 +43,7 @@ if(!isset($_SESSION['user'])){
                 $us = aifp_controller::$collection_user[$token];
                 
                 $smarty->assign('user', $us->attributes['user'] );
-
+                $smarty->assign('image', $us->attributes_descr['image']);
         }else{            
                 $smarty->assign('error', $contr->descritpion);
         }
@@ -57,7 +55,8 @@ if(!isset($_SESSION['user'])){
         $us = aifp_controller::$collection_user[$token];
         $smarty->assign('user', $us->attributes['user'] );
 
-    }else{            
+    }else{
+        session_destroy();
         $smarty->assign('error', GEN_ERROR);
     }
 }
