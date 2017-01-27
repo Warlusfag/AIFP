@@ -23,15 +23,15 @@ class user extends gen_model{
             'key_type'=>'i',
             'table_descr'=>'descr_user',
             'column_name'=>'email,user,password,nome,cognome,residenza,data',
-            'column_descr'=>'user,num_post,punteggio,patentino',
+            'column_descr'=>'num_post,punteggio,image,patentino',
             'column_type'=>'s,s,s,s,s,s,da',
-            'column_type_descr'=>'i,i,i',
+            'column_type_descr'=>'i,i,s,i',
         );
         $this->default_col = array(
             'user' => 'user',
             'num_post' => 0,
             'punteggio' => 0,
-            'image' => DEFAULT_IMAGE,
+            'image' => DEFAULT_IMG,
             'patentino' => 0,            
         );  
         
@@ -158,8 +158,8 @@ class user extends gen_model{
         if(count($params)>0){
             $query .= " WHERE ";
             //estraggo i nomi delle colonne, e verifico se sono presenti, se ci sono aggiungo la query
-            $column = explode(',',$this->table_descr['column_name']);
-            $c_type = explode(',',$this->table_descr['column_type']);
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach($column as $i=>$key){
                 if(isset($params[$key])){
                     if($c_type[$i] == 's'){
@@ -182,17 +182,15 @@ class user extends gen_model{
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=1){
+        if(($nr = $res->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
                 $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
-            }            
+            }
+            $this->err_descr = '';
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
-        }     
+        }
     }
     
     public function search_descr_user($params, $limit=-1)
@@ -203,8 +201,8 @@ class user extends gen_model{
         $query = "SELECT * FROM ".$this->table_descr['table_descr']." AS U";
         if(count($params)>0){
             $query .= " WHERE ";
-            $column = explode(',',$this->table_descr['column_descr']);
-            $c_type = explode(',',$this->table_descr['column_type_descr']);
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_descr']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type_descr']);
             foreach($column as $i=>$key){
                 if(isset($params[$key])){
                     if($c_type[$i] == 's'){
@@ -225,18 +223,16 @@ class user extends gen_model{
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if (($nr = $res->num_rows) >= 1){
+        if (($nr = $res->num_rows) >= 0){
             $app=array();
             $nr = $res->num_rows;
             for ($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
                 $app[$j]=$res->fetch_array(MYSQLI_BOTH);
-            }                
+            }
+            $this->err_descr = '';
             return $app;
-        }else{
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
-        }       
+        }    
    }
    
     public function init($us, $us_descr){

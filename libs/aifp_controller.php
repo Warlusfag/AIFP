@@ -6,6 +6,7 @@ require_once "user_model.php";
 require_once "associazione_model.php";
 require_once "evento_model.php";
 require_once "admin_model.php";
+require_once 'funghi_model.php';
 
 //limit constant
 const limit_sez = 5;
@@ -33,19 +34,29 @@ class aifp_controller
             4=>'associazione',
             5=>'admin',
         );
+        if(!self::$collection_sez){
+            self::$collection_sez = array();
+        }
+        if(!self::$collection_funghi){
+            self::$collection_funghi = array();            
+        }
+        if(!self::$collection_user){ 
+            self::$collection_user = array(); 
+        }
+        if(!self::$collection_news){ 
+            self::$collection_news = array(); 
+        }
     }  
     
     public function login($password, $email=-1, $user=-1, $type = -1){
-        if(!self::$collection_user){ 
-                self::$collection_user = array(); 
-        }
+
         if($email==-1 && $user==-1){ 
          return false; 
         } 
         if($email!=-1){ 
             $params = array( 
                     'email'=>$email, 
-                    'password'=>md5($password), 
+                    'password'=>$password, 
             );             
         }else if ($user != -1){ 
             $params = array( 
@@ -55,26 +66,36 @@ class aifp_controller
         }
         //preparati i parametri li passo alla search on all user
         $us = $this->search_OnAll_users($params, 1, $type);
-        if(!$us || count($us)== 0 || count($s)>1){
-            $this->description = "ERROR: mail or username or password are not correct";
+        if(!$us || count($us)== 0 || count($us)>1){
+            $this->description = "ERROR: username or password are not correct, please try again";
             return false;
         }
         //se la ricerca è andata a buon fine devo creare l'oggetto in questione
-        ////us è un array di array 
-        //sullo 0 c'è l'array con i risultati e ne estraggo le chiavi
-        $k = array_keys($us[0]);
-        if($type == -1){
+        ////us è un array di array                                                                    
+        if($type != -1){
             $user = $this->get_us_from_type($type);
-        }else{        
-            $user = $this->get_user_from_pkey($k[0]);
+        }else{
+            //se non conosco il tipo a priori, devo ricercarlo tra le chiavi dell'array passatomi
+            //controllo se stringhe perchè la search mi ritorn sia associativo che numerale
+            $keys = array_keys($us[0]);
+            foreach($keys as $k){
+                if(is_string($k) ){
+                    $user = $this->get_user_from_pkey($k);
+                    if(is_object($user)){break;}
+                }
+            }            
         }
         //allo 00 c'è il valore della chiave
         $params = array(
-            $k[0] => $us[0][0],
+            $user->table_descr['key'] => $us[0][0],
         );
         //trovo ora il resto della descrizione dell'utente
-        $us_descr= $user->search_descr_user($params, 1);		
-        $user->init($us, $us_descr);
+        $us_descr= $user->search_descr_user($params, 1);
+        if(!$us_descr  || count($us_descr) == 0){
+            $this->err_descr ="ERROR: email is incorrect";
+            return false;
+        } 
+        $user->init($us[0], $us_descr[0]);
         //preparo il token da mettere nell'array session
         $token = md5($email.$password); 
         self::$collection_user[$token] = $user; 
@@ -160,15 +181,21 @@ class aifp_controller
             }      
            //Ricerco l'utente
             $t = $us->search_user($params, $limit);
+            //se type è uguale a meno uno e con un utente di una tipologia non l'ho trovato vado 
             if($t){
+                //se in una tabella non ho trovato niente e non conosco il tipo non significa che nella prossima
+               // non lo troverò
+                if(count($t) == 0 && $type == -1){
+                    continue;
+                }
                if($limit == -1){ 
-                    array_merge($ris, $t);
+                    $ris = array_merge($ris, $t);
                 //Caso in cui limit è settato   
                }else if(count($t) == $limit){
-                    array_merge($ris, $t);
+                    $ris = array_merge($ris, $t);
                     break;
                }else if(count($t) < $limit){
-                    array_merge($ris, $t);
+                    $ris = array_merge($ris, $t);
                     $limit -= count($t);
                }                       
             }else{
@@ -202,14 +229,19 @@ class aifp_controller
            $t = $us->search_descr_user($params); 
            //Caso in cui i risultati sono illimitati
            if($t){
+               //se in una tabella non ho trovato niente e non conosco il tipo non significa che nella prossima
+               // non lo troverò
+               if(count($t) == 0 && $type == -1){
+                    continue;
+                }
                if($limit == -1){ 
-                    array_merge($ris, $t);
+                    $ris = array_merge($ris, $t);
                 //Caso in cui limit è settato   
                }else if(count($t) == $limit){
-                    array_merge($ris, $t);
+                    $ris = array_merge($ris, $t);
                     break;
                }else if(count($t) < $limit){
-                    array_merge($ris, $t);
+                    $ris = array_merge($ris, $t);
                     $limit -= count($t);
                }                       
             }else{
@@ -221,11 +253,7 @@ class aifp_controller
     }
     //popola la collection  per le sezioni
     public function forum(){
-        require_once "sezione_model.php";
-        
-        if(!self::$collection_sez){
-            self::$collection_sez = array();
-        }        
+        require_once "sezione_model.php";              
         $temp = new sezione();        
         $t = $temp->search_sezioni(array(), -1, limit_sez);
         if(!$t){
@@ -257,9 +285,6 @@ class aifp_controller
     //Popola la collection dei funghi, cioè quei funghi visualizzati nella pagina principale e più famosi
     //dal front end gliu viene passato il genere
     public function get_scheda_funghi($genere){
-        if(!self::$collection_funghi){
-            self::$collection_funghi = array();            
-        }
         //controlla se è presente
         $g = array_values(funghi::$generi);
         if(array_search($genere,$g)){
