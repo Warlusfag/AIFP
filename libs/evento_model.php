@@ -46,7 +46,7 @@ class evento extends gen_model
         if(!self::$inserted){
             return true;
         }
-        $date = $this->conn->get_curdate();
+        $date = $this->conn->get_current_date();
         
         $params = array();
         $after = array(
@@ -122,10 +122,10 @@ class evento extends gen_model
                 $this->err_descr = "ERROR: DB is not ready";
                 return false;
             }
-        }
-        $query = "SELECT * FROM ". $this->table_descr['table']." AS U";
-        if(count($params) > 0){
-            $query .= " WHERE ";
+        }        
+        $query = "SELECT * FROM ". $this->table_descr['table'];
+        if(count($params) > 0 ||(is_array($after) && count($after)>0)){
+            $query .= " AS U WHERE ";
             $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
             $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach( $column as $i => $key){
@@ -137,14 +137,19 @@ class evento extends gen_model
                     }
                 }
             }
-            if(is_array($after)){
+            if(is_array($after) && count($after)>0){
                 foreach($after as $key=>$value){
-                    $query .= "$key >= $after AND ";
+                    if($key == 'data_inizio'){
+                        $query .= " '$key'>=$value AND ";
+                    }else if($key == 'data_fine'){
+                        $query .= " '$key'<=$value AND ";
+                    }
                 }
-            }            
-            $query = str_replace($query, '', count($query)-6);
+            }
         }
-        $query .= " ORDER BY ".$this->attributes['data_inzio'];
+        $query = substr_replace($query, '', count($query)-6);
+        
+        $query .= " ORDER BY 'data_inzio'";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }

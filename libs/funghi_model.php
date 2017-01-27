@@ -89,7 +89,8 @@ class funghi extends gen_model{
             $this->view_name = $this->generate_nameview($user);
             $query = sprintf($this->queries['create'], $this->view_name, $this->view_name_old );
         }        
-        if(count($params) > 0){             
+        if(count($params) > 0){
+            $query .= "WHERE ";
             $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
             $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach( $column as $i => $key){
@@ -100,8 +101,8 @@ class funghi extends gen_model{
                         $query .= "U.$key=$params[$key] AND ";
                     }
                 }
-            }            
-            $query = str_replace($query, '', count($query)-6);
+            }         
+            $query = substr_replace($query, '', count($query)-6);
         }else{ $this->err_descr = 'ERROR: no parameters'; return false;}
         
         if($limit > 0){

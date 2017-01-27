@@ -274,13 +274,14 @@ class aifp_controller
         if(evento::$inserted || count(self::$collection_news)==0){
             $ev = new evento();
             $news = $ev->show_news(20);            
-            if(!$news){
+            if($ev->err_descr != ''){
                 $this->descritpion = $ev->err_descr;
                 return false;
             }
         }
         $this->descritpion = '';
-        return self::$collection_news;
+        self::$collection_news = $news;
+        return $news;
     }
     //Popola la collection dei funghi, cioè quei funghi visualizzati nella pagina principale e più famosi
     //dal front end gliu viene passato il genere
@@ -299,7 +300,7 @@ class aifp_controller
                     'genere'=>$genere,
                 );
                 self::$collection_funghi[$genere] = $model_fungo->search_funghi($params, -1, 10);
-                if(!self::$collection_funghi[$genere]){
+                if($model_fungo->err_descr !=''){
                     $this->descritpion = $model_fungo->err_descr;
                     return null;
                 }
