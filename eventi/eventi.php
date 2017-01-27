@@ -2,18 +2,50 @@
 require_once '../libs/aifp_controller.php';
 require_once '../libs/evento_model.php';
 
-session_start();
-
+function check_post($param)
+{
+    $app = array();
+    foreach ($param as $key=>$value){
+        if( $key == 'nome_evento' ){
+            $app[$key] = $value;
+        }
+        else if( $key == 'indirizzo' ){
+            $app[$key] =$value;
+        }
+        else if( $key == 'regione' ){
+            $app[$key] = $value;
+        }
+        else if( $key == 'provincia' ){
+            $app[$key] =$value;
+        }
+        else if( $key == 'data_inizio' ){
+            $app[$key] = $value;
+        }
+        else if( $key == 'data_fine' ){
+            $app[$key] = $value;
+        } 
+    }
+    return $app;  
+}
 $smarty = new AIFP_smarty();
-$contr = new aifp_controller();
-
-$news = $contr->get_news();
-if($news){
-    $smarty->assign('news', $news);
-
+if(isset($_POST) && count($_POST)>0){
+    $ev = new evento();
+    $events = $ev->search_eventi($post, -1, 20);
+    if($events){
+        $smarty->assign('eventi',$events);	
+    }else{
+        $smarty->assign('error', $ev->err_descr);        
+    }    
 }else{
-    $smarty->assign('error', $ev->err_descr);
-    
+    $contr = new aifp_controller();
+
+    $news = $contr->get_news();
+    if($news){
+        $smarty->assign('news', $news);
+
+    }else{
+        $smarty->assign('error', $ev->err_descr);
+    }
 }
 $smarty->display('eventi.tpl'); 
 
