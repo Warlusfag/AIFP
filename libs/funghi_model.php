@@ -7,17 +7,11 @@ require_once 'admin/utils.php';
 class funghi extends gen_model{
     
     public $queries;
+    //name attuale della view
     public $view_name;
+    //name vecchia della view
     public $view_name_old;
-    static public $generi;
-    private $column_view;
-    private $column;           
-    
-    function __construct() {
-        
-        parent::__construct();
-        
-        self::$generi = array(
+    static public $generi= array(
             'ammanita',
             'boletus',
             'agaricus',
@@ -27,21 +21,28 @@ class funghi extends gen_model{
             'russula',
             'lactarius',           
         );
+    private $column_view;
+    private $column;           
+    
+    function __construct() {
         
-        $this->column='id_fungo,genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
+        parent::__construct();
+        
+        $this->column='genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
         
         $this->table_descr = array(
             'table' => 'funghi',
             'key' => 'id_fungo',
+            'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 'i,s,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
+            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
             'insert_column' => ',specie,sporata,viraggio,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,gambo,habitat',
         );        
         $this->column_view = 'genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
       
         $this->queries = array(
-            'create' => "CREATE VIEW %s ($this->column_view) AS SELECT * FROM %s WHERE ",
-            'drop' => "DROP VIEW %s ",
+            'create' => "CREATE VIEW %s (".$this->column_view.") AS SELECT * FROM %s WHERE ",
+            'drop' => "DROP VIEW %s; ",
         );        
     }
     
@@ -49,13 +50,10 @@ class funghi extends gen_model{
         $value = array();
         $keys = explode(',',$this->table_descr['column_name']);
         $i = 0;
-        $type = extract_node($this->table_descr['column_type'], 0);
+        $type = explode(',',$this->table_descr['column_type']);
         foreach($keys as $key){
             if(isset($params[$key])){
-                if($key == $this->table_descr['key']){
-                    continue;
-                }
-                $value[$i] = params[$key];
+                $value[$i] = $params[$key];
             }       
             $i++;            
         }
@@ -83,7 +81,7 @@ class funghi extends gen_model{
             }
         }
         if($user == -1){
-            $query = "SELECT * FROM $this->table_descr['table'] ";
+            $query = "SELECT * FROM ". $this->table_descr['table']." AS U ";
         }else{
             if(!isset($this->view_name)){
                 $this->view_name_old = $this->table_descr['table'];            
@@ -92,18 +90,24 @@ class funghi extends gen_model{
             $query = sprintf($this->queries['create'], $this->view_name, $this->view_name_old );
         }        
         if(count($params) > 0){             
-            $column = explode(',', $this->table_descr['column_name']);
-            foreach( $column as $key){
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    $query .= $key."=".$params[$key]." AND ";
+                    if($c_type[$i] == 's'){
+                        $query .= "U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= "U.$key=$params[$key] AND ";
+                    }
                 }
             }            
             $query = str_replace($query, '', count($query)-6);
-        }else{ $this->err_descr = 'ERROR: '; return false;}
+        }else{ $this->err_descr = 'ERROR: no parameters'; return false;}
         
         if($limit > 0){
-            $query .= " LIMIT $limit;";            
-        } else { $query .= ";";}
+            $query .= " LIMIT $limit";            
+        }  
+        $query .= ";";
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
@@ -114,16 +118,17 @@ class funghi extends gen_model{
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();                
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }
-            $this->conn->query(sprintf($this->queries['drop'],$this->view_name_old));
-            if(!$this->conn->status){
-                $this->err_descr = $this->conn->error;
-                return false;
-            }else{
-                $this->err_descr = '';
-                return $app;
+            if($user != -1){
+                $this->conn->query(sprintf($this->queries['drop'],$this->view_name_old));
+                if(!$this->conn->status){
+                    $this->err_descr = $this->conn->error;
+                    return false;
+                }
             }
+            $this->err_descr = '';
+            return $app;
         }else{                
             $this->err_descr=$this->conn->error;
             return false;
@@ -131,19 +136,25 @@ class funghi extends gen_model{
     }
     
     public function reset_search(){
-        if(isset($this->view_name)){
-            $this->view_name = null;
+        if(isset($this->view_name)){            
             $query = sprintf($this->queries['drop'], $this->view_name);
-            if($this->conn->status){
-                $this->conn->query($query);
-                if($this->conn->status == false){
-                    $this->err_descr = $this->conn->error;
+            if(!$this->conn->status){
+                $this->conn = new db_interface();
+                if(!$this->conn->status){
                     return false;
-                }else{
-                    $this->err_descr = '';
-                    return true;
                 }
             }
+            $this->conn->query($query);
+            if($this->conn->status == false){
+                $this->err_descr = $this->conn->error;
+                return false;
+            }else{
+                $this->view_name = null;
+                $this->err_descr = '';
+                return true;
+            }            
+        }else{
+            return true;
         }
     }    
 }
