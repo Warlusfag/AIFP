@@ -29,8 +29,8 @@ class evento extends gen_model
             'table' => 'eventi',
             'key'=>'id_evento',
             'key_type'=>'i',
-            'column_name' => 'id_eventi,id_ass,titolo,tipologia,regione,provincia,data_inizio,data_fine',
-            'colimn_type' => 'i,i,s,s,s,s,da,da',
+            'column_name' => 'id_ass,titolo,tipologia,regione,provincia,data_inizio,data_fine',
+            'colimn_type' => 'i,s,s,s,s,da,da',
         );
     }
     
@@ -71,8 +71,8 @@ class evento extends gen_model
         }
 
         $table=$this->table_descr['table'];
-        $name = extract_node($this->table_descr['column_name'], 0);        
-        $type = extract_node($this->table_descr['column_type'], 0);
+        $name = $this->table_descr['column_name'];
+        $type = $this->table_descr['column_type'];
         
         $keys = explode(',',$this->table_descr['column_name']);
         $values = array();
@@ -80,7 +80,7 @@ class evento extends gen_model
         foreach($keys as $key){
             if(isset($params[$key]) && $key != $this->table_descr['key']){
                 if($key == 'id_ass'){
-                    $values[$i] = $ass->attributes['key'];
+                    $values[$i] = $ass->attributes[$this->table_descr['key']];
                 }
                 $values[$i]=$params[$key];
                 $i++;
@@ -123,13 +123,18 @@ class evento extends gen_model
                 return false;
             }
         }
-        $query = "SELECT * FROM $this->table_descr['table']";
-        if(count($params) > 0 || is_array($after)){
-             $query .= " WHERE ";
-            $column = explode(',', $this->table_descr['column_name']);
-            foreach( $column as $key){
+        $query = "SELECT * FROM ". $this->table_descr['table']." AS U";
+        if(count($params) > 0){
+            $query .= " WHERE ";
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    $query .= $key."=".$params[$key]." AND ";
+                    if($c_type[$i] == 's'){
+                        $query .= " U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= " U.$key=$params[$key] AND ";
+                    }
                 }
             }
             if(is_array($after)){
@@ -139,27 +144,25 @@ class evento extends gen_model
             }            
             $query = str_replace($query, '', count($query)-6);
         }
+        $query .= " ORDER BY ".$this->attributes['data_inzio'];
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }
-        $query .= " ORDER BY $this->attributes['data_inzio];";
+        $query .= ';';        
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=1){
+        if(($nr = $res->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();                
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }
             $this->err_descr = '';
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
-        }      
+        }
     }   
 }
