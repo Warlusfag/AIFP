@@ -48,7 +48,7 @@
 							<li><a href="eventi/eventi.php">Eventi</a></li>
 							<li><a href="forum/forum.php">Forum</a></li>
 							<li><a href="lettera_esperto.php">Chiedi all'esperto</a></li>
-                            {if $user==null}
+                            {if isset($user)}
                             	<li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="css/images/user.png"></a>
                                 <div class="dropdown-content">
