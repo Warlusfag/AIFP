@@ -3,8 +3,9 @@ require_once '../libs/aifp_controller.php';
 
 
 $smarty = new AIFP_Smarty();
-/*if(isset($_GET['genere'])){
-    $smarty = new AIFP_Smarty();
+$_GET['genere'] = 'lactarius';
+if(isset($_GET['genere'])){
+
     $contr = new aifp_controller();
     
     $funghi = $contr->get_scheda_funghi($_GET['genere']);
@@ -16,7 +17,7 @@ $smarty = new AIFP_Smarty();
         $smarty->display('generic_page.tpl');
     }
    } 
-    */
+
 
 $smarty->display('schede.tpl');
 

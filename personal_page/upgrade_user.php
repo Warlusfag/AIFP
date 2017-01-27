@@ -1,8 +1,6 @@
 <?php
 require_once '../libs/aifp_controller.php';
 
-session_start();
-
 $smarty = new AIFP_smarty();
 
 if(isset($_POST['email'])){

@@ -2,16 +2,17 @@
 
 require_once '../libs/aifp_controller.php';
 
-session_start();
-
 $smarty = new AIFP_smarty();
 
 $tok = $_SESSIONS['user'];
-$ass = aifp_controller::$collection_user[$tok];
+if(isset(aifp_controller::$collection_user[$tok])){
+    $ass = aifp_controller::$collection_user[$tok];
+}else{
+    $ass = -1;    
+}
+
 if( $ass instanceof associazioni){           
-
-    if(isset($_POST['filename'])){    
-
+    if(isset($_POST['filename'])){
         if($_POST['action']=='delete'){
             $ass->delete_file($_POST['filename']);
         }

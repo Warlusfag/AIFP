@@ -45,7 +45,7 @@ function check_post($param)
 $smarty = new AIFP_smarty();
 $tok = $_SESSION['user']; 
 $ass = aifp_controller::$collection_user[$tok];
-if( $ass instanceof associazione ){      
+if( $ass instanceof associazione ){ 
 
     if(($post = check_post($_POST))){            
 

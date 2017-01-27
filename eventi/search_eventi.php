@@ -1,8 +1,5 @@
 <?php
 require_once '../libs/aifp_controller.php';
-require_once '../libs/evento_model.php';
-
-session_start();
 
 function check_post($param)
 {

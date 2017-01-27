@@ -2,12 +2,12 @@
 require_once '../libs/aifp_controller.php';
 require_once '../libs/funghi_model.php';
 
-sessiona_start();
 $smarty = new AIFP_smarty();
 
 if(isset($_SESSION['user'])){
     $tok = $_SESSION['user'];
     $us = aifp_controller::$collection_user[$tok];
+
     $username = $us->attributes['user'];
     
     $params = array();

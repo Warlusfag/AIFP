@@ -1,10 +1,7 @@
 <?php
 require_once '../libs/aifp_controller.php';
-require_once '../libs/evento_model.php';
-session_start();
 
 $smarty = new AIFP_smarty();
-
 if(isset($_SESSION['user'])){
     if(isset($_POST['evento'])){
         $tok = $_SESSION['user'];
