@@ -13,8 +13,9 @@ class prodotti extends gen_model{
         $this->table_descr = array(        
             'table' => 'prodotti',
             'key' => 'id_prod',
-            'column_name' => 'id_prod,nome,tipologia,descrizione',            
-            'column_type' => 'i,s,s,s',
+            'key_type' => 'i',
+            'column_name' => 'nome,tipologia,descrizione',            
+            'column_type' => 's,s,s',
         );
         
         $this->attributes=array(
@@ -35,33 +36,36 @@ class prodotti extends gen_model{
                 return false;
             }
         }
-        $query = "SELECT * FROM $this->table_descr['table']";
+        $query = "SELECT * FROM ". $this->table_descr['table'];
         if(count($params) > 0 || $after > 0){
-             $query .= " WHERE ";
-            $column = explode(',', $this->table_descr['column_name']);
-            foreach( $column as $key){
+            $query .= " AS U WHERE ";
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    if($key == $this->type){
-                        continue;
+                    if($c_type[$i] == 's'){
+                        $query .= " U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= " U.$key=$params[$key] AND ";
                     }
-                    $query .= $key."=".$params[$key]." AND ";
                 }
             }
             if($after > 0){
-                $query .= $this->table_descr['key']."> $after AND ";
+                $query .= "'".$this->table_descr['key']."'> $after AND ";
             }            
-            $query = str_replace($query, '', count($query)-6);
+            $query = substr_replace($query, '', count($query)-6);
         }
         if($limit > 0){
-            $query .= " LIMIT $limit;";            
-        } else { $query .= ";";}
+            $query .= " LIMIT $limit";            
+        }
+        $query .= ';';
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=1){
+        if(($nr = $res->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
@@ -69,9 +73,6 @@ class prodotti extends gen_model{
             }
             $this->err_descr = '';
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
         }
     }   
 }
