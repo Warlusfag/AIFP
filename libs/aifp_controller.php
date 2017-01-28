@@ -23,7 +23,7 @@ class aifp_controller
     
     public $descritpion;
     
-    function __constructor(){
+    function __construct(){
         
         $this->descritpion = "";
         $this->tipo = array(
@@ -164,7 +164,7 @@ class aifp_controller
        $ris = array();
        //controllo se è stato passato un tipo ed imposto il limite del ciclo
        if($type != -1){ 
-       $n = 1; 
+        $n = 1; 
        }else{ 
            $n = count($this->tipo); 
        } 
@@ -182,11 +182,15 @@ class aifp_controller
            //Ricerco l'utente
             $t = $us->search_user($params, $limit);
             //se type è uguale a meno uno e con un utente di una tipologia non l'ho trovato vado 
-            if($t){
+            if($us->err_descr == ''){
                 //se in una tabella non ho trovato niente e non conosco il tipo non significa che nella prossima
                // non lo troverò
-                if(count($t) == 0 && $type == -1){
-                    continue;
+                if(count($t) == 0){
+                    if($type == -1){
+                        continue;
+                    }else{
+                        break;
+                    }
                 }
                if($limit == -1){ 
                     $ris = array_merge($ris, $t);
@@ -228,11 +232,15 @@ class aifp_controller
            //Ricerco l'utente
            $t = $us->search_descr_user($params); 
            //Caso in cui i risultati sono illimitati
-           if($t){
-               //se in una tabella non ho trovato niente e non conosco il tipo non significa che nella prossima
+            if($us->err_descr == ''){
+                //se in una tabella non ho trovato niente e non conosco il tipo non significa che nella prossima
                // non lo troverò
-               if(count($t) == 0 && $type == -1){
-                    continue;
+                if(count($t) == 0){
+                    if($type == -1){
+                        continue;
+                    }else{
+                        break;
+                    }
                 }
                if($limit == -1){ 
                     $ris = array_merge($ris, $t);
