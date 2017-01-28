@@ -9,8 +9,7 @@ if(isset($_GET['genere'])){
     
     $funghi = $contr->get_scheda_funghi($genere);
     if(!$funghi){
-        $smarty->assign('error',$contr->descritpion);
-        
+        $smarty->assign('error',$contr->descritpion);        
     }else{
         $smarty->assign('genere',$funghi);
     }
@@ -20,6 +19,9 @@ if(isset($_GET['genere'])){
     $files = scandir($base_path);
     $i = 0;
     foreach($files as $file){
+        if($file == '.' || $file == '..'){
+            continue;
+        }
         $photo[$i] = $base_path.$file;
     }
     $smarty->assign('foto',$photo);

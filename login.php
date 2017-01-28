@@ -42,7 +42,7 @@ if(!isset($_SESSION['user'])){
                 $_SESSION['user']= $token;
                 $us = aifp_controller::$collection_user[$token];
                 
-                $smarty->assign('user', $us->attributes['user'] );
+                $smarty->assign('user', 'Benvenuto '.$us->attributes['user'] );
                 $smarty->assign('image', $us->attributes_descr['image']);
         }else{            
                 $smarty->assign('error', $contr->descritpion);
