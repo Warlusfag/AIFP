@@ -31,7 +31,7 @@ $smarty = new AIFP_smarty();
 if(isset($_POST) && count($_POST)>0){
     $ev = new evento();
     $events = $ev->search_eventi($post, -1, 20);
-    if($events){
+    if($ev->err_descr == ''){
         $smarty->assign('eventi',$events);	
     }else{
         $smarty->assign('error', $ev->err_descr);        
@@ -40,11 +40,11 @@ if(isset($_POST) && count($_POST)>0){
     $contr = new aifp_controller();
 
     $news = $contr->get_news();
-    if($news){
+    if($contr->descritpion == ''){
         $smarty->assign('news', $news);
 
     }else{
-        $smarty->assign('error', $ev->err_descr);
+        $smarty->assign('error', $contr->descritpion);
     }
 }
 $smarty->display('eventi.tpl'); 

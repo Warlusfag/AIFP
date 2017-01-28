@@ -30,7 +30,7 @@ class evento extends gen_model
             'key'=>'id_evento',
             'key_type'=>'i',
             'column_name' => 'id_ass,titolo,tipologia,regione,provincia,data_inizio,data_fine',
-            'colimn_type' => 'i,s,s,s,s,da,da',
+            'column_type' => 'i,s,s,s,s,da,da',
         );
     }
     
@@ -69,7 +69,6 @@ class evento extends gen_model
                 return false;
             }
         }
-
         $table=$this->table_descr['table'];
         $name = $this->table_descr['column_name'];
         $type = $this->table_descr['column_type'];
