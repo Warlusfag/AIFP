@@ -261,10 +261,11 @@ class aifp_controller
     }
     //popola la collection  per le sezioni
     public function forum(){
-        require_once "sezione_model.php";              
+        require_once "sezione_model.php";
+        
         $temp = new sezione();        
         $t = $temp->search_sezioni(array(), -1, limit_sez);
-        if(!$t){
+        if($temp->err_descr != ''){
             $this->descritpion = $temp->err_descr;
             return false;
         }else{       

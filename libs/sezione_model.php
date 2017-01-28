@@ -10,6 +10,7 @@ const limit_page = 5;
 class sezione extends gen_model{
     
     public $convs;
+    //flag per verificare se c'è stato un inserimento di una converszione
     static public $inserted;
     
     function __construct(){
@@ -22,15 +23,15 @@ class sezione extends gen_model{
             'id_sez'=>-1,
             'nome' => '',
             'moderatore' => '',            
-            'num_convs' => -1,            
+            'num_conv' => -1,            
         );
         
         $this->table_descr = array(
             'table' => 'sezioni',
             'key'=>'id_sez',
             'key_type'=>'i',
-            'column_name' => 'id_sez,nome,moderatore,num_conv',
-            'colimn_type' => 'i,s,s,i',
+            'column_name' => 'nome,moderatore,num_conv',
+            'column_type' => 's,s,i',
         );
         $this->convs = array();        
     }
@@ -39,11 +40,7 @@ class sezione extends gen_model{
         if(!is_array($params) && count($params)>0 ){
             return false;
         }
-        if(count($this->attributes) != count($params)){
-            $this->err_descr['ERROR: Input is not correct'];
-            return false;
-        }
-        foreach($this->attributes as $key=>$value){
+        foreach(array_keys($this->attributes) as $key){
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
             }
@@ -57,19 +54,21 @@ class sezione extends gen_model{
             $this->err_descr = "ERROR: object is not initialized";
             return false;
         }
-        if($page > limit_conv){
-            $this->err_descr = 'ERROR:page out of bound';
+        if($page > limit_conv || $page < 0){
+            $this->err_descr = 'ERROR:page out of range';
             return false;            
         }       
         //Codice per assicurare un corretto caricamento della pagina
         if(isset($this->convs[0])){
-            if(count($this->convs) >= $page){
-                $this->convs[$page] = array();
-            }else if(count($this->convs) < $page || self::$inserted == false){
+            //se ho già caricato le conv in quella pagina e non ci sono stati inserimenti
+            //non carico di nuovo le conversazioni
+            if(count($this->convs) >= $page && self::$inserted == false){
                 return true;
+            }else if(count($this->convs) < $page || self::$inserted == true ){
+                $this->convs[$page] = array();                
             }
         }else{ $this->convs[0] = array();}
-        
+        //after mi serve per dividere le varie conversazione nelle pagine
         $after = 0;
         if($page > 0){ 
             $after = $page*limit_conv;
@@ -77,18 +76,14 @@ class sezione extends gen_model{
         }
         $t = new conversazione();        
         $params = array(
-            $t->table_descr['sezione'] => $this->attributes[$this->table_descr['key']],            
+            'sezione' => $this->attributes[$this->table_descr['key']],            
         );        
         $convs = $t->search_conversazioni($params, $after, limit_conv);
-        if(!$t){
+        if($t->err_descr != ''){
             $this->err_descr = $t->err_descr;
             return false;
         }
-        if(count($convs)> limit_conv){
-            $n = limit_conv;
-        }else{
-            $n = count($convs);
-        }
+        $n = count($convs);
         for($i=0;$i<$n;$i++){
             $t = new conversazione();
             $t->init($convs[$i]);
@@ -100,11 +95,8 @@ class sezione extends gen_model{
     }    
     
     public function get_conversazioni($page){        
-        if($page > limit_page){
-            $this->err_descr = "ERROR: page over the limit";
-            return false;
-        }
-        if($page <= 0){
+        if($page > limit_page || $page <= 0 ){
+            $this->err_descr = "ERROR: page over the range";
             return false;
         }
         $page -= 1;
@@ -114,7 +106,8 @@ class sezione extends gen_model{
         }
         $convs = array();
         for($i=0;$i<count($this->convs[$page]);$i++){
-            $convs[$i] = extract_node($this->convs[$page]->attributes,0);
+            $gconv = $this->convs[$page][$i];
+            $convs[$i] = $gconv->attributes;
         }
         return $convs;
     }
@@ -126,7 +119,10 @@ class sezione extends gen_model{
             $this->err_descr = $c->err_descr;
             return false;
         }
-        $i = count($this->convs)-1;
+        self::$inserted = true;
+        $this->err_descr = '';
+        return true;
+        /*$i = count($this->convs)-1;
         if(count($this->convs[$i]) < limit_conv){
             array_push($this->convs[$i], $c);
             $this->attributes['num_convs']++;
@@ -137,7 +133,7 @@ class sezione extends gen_model{
         }
         self::$inserted = true;
         $this->err_descr = '';
-        return true;
+        return true;*/
     }
     
     public function search_sezioni($params, $after = -1, $limit=-1){
@@ -150,39 +146,42 @@ class sezione extends gen_model{
         }
         $query = "SELECT * FROM ".$this->table_descr['table'];
         if(count($params) > 0 || $after > 0){
-             $query .= " WHERE ";
-            $column = explode(',', $this->table_descr['column_name']);
-            foreach( $column as $key){
+            $query .= " AS U WHERE ";
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    $query .= $key."=".$params[$key]." AND ";
+                    if($c_type[$i] == 's'){
+                        $query .= " U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= " U.$key=$params[$key] AND ";
+                    }
                 }
             }
             if($after > 0){
-                $query .= $this->table_descr['key']."> $after AND ";
+                $query .= "'".$this->table_descr['key']."'> $after AND ";
             }            
-            $query = str_replace($query, '', count($query)-6);
+            $query = substr_replace($query, '', count($query)-6);
         }
         if($limit > 0){
-            $query .= " LIMIT $limit;";            
-        } else { $query .= ";";}
+            $query .= " LIMIT $limit";            
+        }
+        $query .= ";";
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=1){
+        if(($nr = $res->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();                
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }
             $this->err_descr = '';
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
-        }      
+        }
     }
     
     private function push_ahead_conv($c){
@@ -192,7 +191,7 @@ class sezione extends gen_model{
         for($p=0;$p<limit_page;$p++){
             for($i=0;$i<limit_conv;$i++){
                 if($i==limit_conv-1){
-                    if($p != limit_page){
+                    if($p < limit_page-1){
                         $convs[$p+1] = array();
                         $convs[$p+1][0] = $this->convs[$p][$i];
                     }

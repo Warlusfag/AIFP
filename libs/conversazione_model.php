@@ -12,8 +12,7 @@ class conversazione extends gen_model
         
         if(!isset(self::$inserted)){
             self::$inserted = true;
-        }
-        
+        }        
         $this->attributes = array(
             'id_conv'=>-1,
             'sezione' => -1,
@@ -25,8 +24,8 @@ class conversazione extends gen_model
             'table' => 'conversazioni',
             'key'=>'id_conv',
             'key_type'=>'i',
-            'column_name' => 'id_conv,sezione,titolo,num_post,data',
-            'colimn_type' => 'i,i,s,i,i,t',
+            'column_name' => 'sezione,titolo,num_post,data',
+            'column_type' => 'i,s,i,i,t',
         );        
         $this->posts = array();
         
@@ -49,15 +48,12 @@ class conversazione extends gen_model
         if(!is_array($params) && count($params)>0 ){
             return false;
         }
-        if(count($params)!=count($this->attributes)){
-            $this->err_descr = "ERROR: failed input";
-            return false;
-        }
-        foreach($this->attributes as $key=>$value){
+        foreach(array_keys($this->attributes) as $key){
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
             }
         }
+        $this->err_descr = '';
         return true;
     }  
     
@@ -72,21 +68,23 @@ class conversazione extends gen_model
         $this->attributes['sezione'] = $fk_sez;
         $this->attributes['titolo'] = $titolo;
         
-        $name = extract_node($this->table_descr['column_name'], 0);
-        $type = extract_node($this->table_descr['column_type'], 0);
+        $name = $this->table_descr['column_name'];
+        $type = $this->table_descr['column_type'];
         $value = array(
             0 => $this->attributes['sezione'],
             1 => $this->attributes['titolo'],
             3 => $this->attributes['num_post'],
             4 => $this->attributes['data'] = $this->conn->get_timestamp(),
         );
-        if(!$this->conn->statement_insert($this->table_descr['table_name'],$name, $value, $type) ){
-            $this->err_descr =$this->conn->error;
+        if(!$this->conn->statement_insert($this->table_descr['table'],$name, $value, $type) ){
+            $this->err_descr = $this->conn->error;
             return false;
         }
-        $p = new post();
-        $p->attributes['time'] = $this->attributes['data'];
-        if($p->new_post($text,$user,$this->conn->last_id)){
+        $id = $this->conn->last_id;
+        $this->attributes[$this->table_descr['key']] = $id;
+        $p = new post();        
+        if($p->new_post($text,$user,$id)){
+            $this->posts[0] = $p;
             self::$inserted = true;
             $this->err_descr = '';
             return true;            
@@ -102,35 +100,31 @@ class conversazione extends gen_model
             $this->err_descr = "ERROR: object is not initialized";
             return false;
         }
-        if($page > limit_post){ return false;}
+        if($page > limit_post || $page < 0){
+            $this->err_descr = 'ERROR:page out of range';
+            return false;            
+        }       
         //Codice per assicurare un corretto caricamento della pagina
         if(isset($this->posts[0])){
-            if(count($this->posts) >= $page){
-                $this->posts[$page] = array();
-            }else if(count($this->convs) < $page && self::$inserted == false){
+            //se ho già caricato i posts in quella pagina e non ci sono stati inserimenti
+            //non carico di nuovo le conversazioni
+            if(count($this->posts) >= $page && self::$inserted == false){
                 return true;
+            }else if(count($this->posts) < $page || self::$inserted == true ){
+                $this->posts[$page] = array();                
             }
         }else{ $this->posts[0] = array();}
-        //after serve per determinare nella query quali
-        $after = 0;
-        if($page > 0){ 
-            $after = $page*limit_post;
-            $page -= 1;            
-        }
         $t = new post();        
         $params = array(
-            $t->table_descr['fk_conversazione'] => $this->attributes[$this->table_descr['key']],            
+            'fk_conversazione' => $this->attributes[$this->table_descr['key']],            
         );        
-        $posts = $t->search_posts($params, $after, limit_post);
-        if($t->err_descr == ''){
+        $posts = $t->search_posts($params, -1, limit_post);
+        if($t->err_descr != ''){
             $this->err_descr = $t->err_descr;
             return false;
         }
-        if(count($posts)> limit_conv){
-            $n = limit_conv;
-        }else{
-            $n = count($posts);
-        }
+        $n = count($posts);
+        
         for($i=0;$i<$n;$i++){
             $t = new post();
             $t->init($posts[$i]);            
@@ -144,15 +138,15 @@ class conversazione extends gen_model
     public function show_posts($page){
         if(isset($this->posts[$page])){
             $temp = array();
-            $i=0;
-            foreach($this->posts as $post){
-                $temp[$i] = $post->get_post();
-                $user = $post->get_user();
-                foreach($user as $key=>$value){
-                    $temp[$i][$key] = $value;
-                }
+            $posts = $this->posts[$page];
+            for($i=0;$i<count($posts);$i++){
+                $temp[$i] = $posts[$i]->get_post();
             }
+            $this->err_descr = '';
             return $temp;
+        }else{
+            $this->err_descr = "ERROR: page doesn\'t load";
+            return false;
         }
     }
 
@@ -164,42 +158,44 @@ class conversazione extends gen_model
                 return false;
             }
         }
-        $query = "SELECT * FROM $this->table_descr['table']";
+        $query = "SELECT * FROM ". $this->table_descr['table'];
         if(count($params) > 0 || $after > 0){
-             $query .= " WHERE ";
-            $column = explode(',', $this->table_descr['column_name']);
-            foreach( $column as $key){
+            $query .= " AS U WHERE ";
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    $query .= $key."=".$params[$key]." AND ";
+                    if($c_type[$i] == 's'){
+                        $query .= " U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= " U.$key=$params[$key] AND ";
+                    }
                 }
             }
             if($after > 0){
-                $query .= $this->table_descr['key']."> $after AND ";
+                $query .= "'".$this->table_descr['key']."'> $after AND ";
             }            
-            $query = str_replace($query, '', count($query)-6);
+            $query = substr_replace($query, '', count($query)-6);
         }
+        $query .= " ORDER BY 'data'";
         if($limit > 0){
-            $query .= "LIMIT $limit";            
-        } 
-        $query .= " ORDER BY data;";
+            $query .= " LIMIT $limit";            
+        }
+        $query .= ';';        
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=1){
+        if(($nr = $res->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();                
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }            
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
-        }
-        
+        }        
     }
     
 }
@@ -213,6 +209,8 @@ class post extends gen_model
             'id_post'=>-1,
             'fk_conversazione' => -1,            
             'user' => 'user',
+            'image' => 'user',
+            'punteggio' => 'user',
             'text' => 'Hello World!',
             'time'=>'',
         );        
@@ -220,8 +218,8 @@ class post extends gen_model
             'table' => 'post',
             'key'=>'id_post',
             'key_type'=>'i',
-            'column_name' => 'id_post,fk_conversazione,user,text,time',
-            'colimn_type' => 'i,i,s,s,t',
+            'column_name' => 'fk_conversazione,user,image,punteggio,text,time',
+            'column_type' => 'i,s,s,,i,s,t',
         );        
 
         if($id != -1){
@@ -235,33 +233,16 @@ class post extends gen_model
     
     public function init ($params){
         if(!is_array($params) && count($params)>0 ){
+            $this->err_descr = 'ERROR: object not initialaized';
             return false;
-        }
-        if(count($params) != count($this->attributes)){
-            $this->err_descr = "ERROR: failde input";
-            return false;
-        }
-        foreach($this->attributes as $key=>$value){            
+        }        
+        foreach(array_keys($this->attributes) as $key){
             if(isset($params[$key])){
                 $this->attributes[$key]=$params[$key];            
             }
         }
+        $this->err_descr = '';
         return true;
-    }
-    
-    public function get_user(){
-        if($this->attributes['user'] == 'user'){
-            $this->err_descr = 'ERROR: post is not initialized';
-            return false;
-        }
-        $user = array();
-        if(!file_exists(IMG_USER.$this->attributes['user'])){
-            $user['image']=DEFAULT_IMG;
-        }else{
-            $user['image'] = IMG_USER.$this->attributes['user'];
-        }
-        $user['user']=$this->attributes['user'];
-        return $user;        
     }
     
     public function get_post(){
@@ -269,7 +250,7 @@ class post extends gen_model
             $this->err_descr='ERROR:post is not initialized';
             return false;
         }
-        return extract_node($this->attributes,0);
+        return $this->attributes;
     }
 
     public function new_post($text, $user, $fk_conv=-1){
@@ -281,25 +262,29 @@ class post extends gen_model
         }else{
             $this->attributes['fk_conversazione'] = $fk_conv;
         }
-        if(count($text)==0){
-            $this->err_descr = "ERROR: there is not text";
+        if(count($text)==0 || !is_array($user) || count($user)==3){
+            $this->err_descr = "ERROR: bad parameters";
             return false;
         }
-        $this->attributes['user'] = $user;
+        $this->attributes['user'] = $user['user'];
+        $this->attributes['text'] = $user['image'];
+        $this->attributes['text'] = $user['punteggio'];        
         $this->attributes['text'] = $text;
         if($this->attributes['time'] == ''){
             $this->attrubutes['time'] = $this->conn->get_timestamp();
         }
-        $name = extract_node($this->table_descr['column_name'],0);        
-        $type = extract_node($this->table_descr['column_type'],0);
+        $name = $this->table_descr['column_name'];
+        $type = $this->table_descr['column_type'];
         $value = array(
-            [0]=>$this->attributes['fk_conversazione'],
+            [0]=>$this->attributes['fk_conversazione'],            
             [1]=>$this->attributes['user'],
-            [2]=>$this->attributes['text'],
-            [3] => $this->attrubutes['time'],
+            [2]=>$this->attributes['image'],
+            [3]=>$this->attributes['punteggio'],
+            [4]=>$this->attributes['text'],
+            [5] => $this->attrubutes['time'],
         );        
         if(!$this->conn->statement_insert($this->table_descr['table'], $name, $value, $type)){
-            $this->err_descr = "ERROR: DB is not ready";
+            $this->err_descr = $this->conn->error;
             return false;
         }
         conversazione::$inserted = true;
@@ -314,44 +299,46 @@ class post extends gen_model
                  $this->err_descr = "ERROR: DB is not ready";
                  return false;
              }
-         }
-         $query = "SELECT * FROM $this->table_descr['table']";
-         if(count($params) > 0 || $after > 0){
-              $query .= " WHERE ";
-             $column = explode(',', $this->table_descr['column_name']);
-             foreach( $column as $key){
-                 if(isset($params[$key])){
-                     $query .= $key."=".$params[$key]." AND ";
-                 }
-             }
-             if($after > 0){
-                 $query .= $this->table_descr['key']."> $after AND ";
-             }            
-             $query = str_replace($query, '', count($query)-6);
-         }
-         if($limit > 0){
-             $query .= "LIMIT $limit ";            
-         } 
-         
-         $query .= "ORDER BY time";
+         }         
+        $query = "SELECT * FROM ". $this->table_descr['table'];
+        if(count($params) > 0 || $after > 0){
+            $query .= " AS U WHERE ";
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
+                if(isset($params[$key])){
+                    if($c_type[$i] == 's'){
+                        $query .= " U.$key='$params[$key]' AND ";                        
+                    }else{
+                        $query .= " U.$key=$params[$key] AND ";
+                    }
+                }
+            }
+            if($after > 0){
+                $query .= "'".$this->table_descr['key']."'> $after AND ";
+            }            
+            $query = substr_replace($query, '', count($query)-6);
+        }
+        $query .= " ORDER BY 'time'";
+        if($limit > 0){
+            $query .= " LIMIT $limit";            
+        }
+        $query .= ';';
 
-         $res = $this->conn->query($query);
-         if (!$this->conn->status){            
-             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
-             return false;
-         }
-         if(($nr = $res->num_rows) >=1){
-             $app=array();                
-             for($j=0; $j<$nr; $j++){
-                 $res->data_seek($j);
-                 $app[$j]=$res->fetch_assoc();                
-             }            
-             return $app;
-         }else{                
-             $this->err_descr="ERROR: No results found \n ";
-             return false;
-         }
-
+        $res = $this->conn->query($query);
+        if (!$this->conn->status){            
+            $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
+            return false;
+        }
+        if(($nr = $res->num_rows) >=0){
+            $app=array();                
+            for($j=0; $j<$nr; $j++){
+                $res->data_seek($j);
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
+            }            
+            $this->err_descr = '';
+            return $app;
+        }
      }
     
 }

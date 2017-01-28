@@ -24,24 +24,28 @@ function check_post ($param)
     if($i == 3){
         return $app;
     }else{
-        return null;
+        return false;
     }
 }
 
 $smarty = new AIFP_smarty();
 
 if(isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];
+    $tok = $_SESSION['user'];    
     $user = aifp_controller::$collection_user[$tok];
-    if(($post=check_post($_POST))){
-        
-        $sez = aifp_controller::$collection_sez[$post['sezione']];        
+    if(($post=check_post($_POST))){ 
+        $s = $post['sezione'];
+        $sez = aifp_controller::$collection_sez[$s];        
         
         $text = $post['text'];
         $title = $post['titolo'];
-        $us = $user->attributes['user'];        
-        
+        $us = array(
+            'user' => $user->attributes['user'],
+            'image'=> $user->attributes_descr['image'],
+            'punteggio'=>$user->attributes_descr['punteggio'],
+        );        
         if($sez->new_conversazione($us, $text, $title)){
+            $smarty->assign('sezione', $s);
             $smarty->assign('message','Nuova conversazione aggiunta con successo');    
         }else{
             $smarty->assign('error',GEN_ERROR);        
@@ -50,9 +54,7 @@ if(isset($_SESSION['user'])){
         $smarty->assign('error','BAD parameters');        
     }
     $smarty->display('sezione.tpl');
-}
-else
-{
+}else{
     $smarty->display('login.tpl');
 }
 
