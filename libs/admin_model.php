@@ -15,7 +15,7 @@ class admin extends user{
     function __construct(){
         
         parent::__construct();
-        $this->type = 'associazione';
+        $this->type = 'admin';
         
         $this->table_descr_assoc = array(        
             'table' => 'associazione',
@@ -144,6 +144,7 @@ class admin extends user{
     public function move_post(){
         
     }
+    
     public function delete_post(){}
     
 }
