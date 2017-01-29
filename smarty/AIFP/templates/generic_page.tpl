@@ -54,7 +54,7 @@
                                     <a href="{$root}prodotti/libri.php">Libri e guide</a>
                                 </div>
                             </li>            
-							<li><a href="{$root}regolamento.php">Regolamenti</a></li>
+							<li><a href="{$root}funghi/regolamento.php">Regolamenti</a></li>
 							<li><a href="{$root}eventi/eventi.php">Eventi</a></li>
 							<li><a href="{$root}forum/forum.php">Forum</a></li>
 							<li><a href="{$root}lettera_esperto.php">Chiedi all'esperto</a></li>
@@ -63,7 +63,7 @@
                                 <a class="dropbtn "href="#"><img src="{$root}css/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
-                                    <a href="reg.php">Registrati</a>
+                                    <a href="{$root}profilize/reg.php">Registrati</a>
                                 </div>
                            		</li>
                            	{else}
@@ -139,15 +139,15 @@
 								<h2>EVENTI & SAGRE</h2>
 							</header>
 							<ul class="default">
-								<li><img src="../images/pics04.jpg" width="78" height="78" alt="">
+								<li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
 									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
 									<span class="posted">May 9th  |  (10 )  Comments</span>
 								</li>
-								<li><img src="../images/pics05.jpg" width="78" height="78" alt="">
+								<li><img src="{$root}images/pics05.jpg" width="78" height="78" alt="">
 									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
 									<span class="posted">May 1st  |  (10 )  Comments</span>
 								</li>
-								<li><img src="../images/pics06.jpg" width="78" height="78" alt="">
+								<li><img src="{$root}images/pics06.jpg" width="78" height="78" alt="">
 									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
 									<span class="posted">April 28th  |  (10 )  Comments</span>
 								</li>
@@ -160,15 +160,15 @@
 								<h2>CORSI</h2>
 							</header>
 							<ul class="default">
-								<li><img src="../images/pics07.jpg" width="78" height="78" alt="">
+								<li><img src="{$root}images/pics07.jpg" width="78" height="78" alt="">
 									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
 									<span class="posted">May 9th  |  (10 )  Comments</span>
 								</li>
-								<li><img src="../images/pics08.jpg" width="78" height="78" alt="">
+								<li><img src="{$root}images/pics08.jpg" width="78" height="78" alt="">
 									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
 									<span class="posted">May 1st  |  (10 )  Comments</span>
 								</li>
-								<li><img src="../images/pics09.jpg" width="78" height="78" alt="">
+								<li><img src="{$root}images/pics09.jpg" width="78" height="78" alt="">
 									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
 									<span class="posted">April 28th  |  (10 )  Comments</span>
 								</li>
@@ -183,21 +183,21 @@
 							<div class="slideshow-container"> 
 								<div class="mySlides fade" style="display: block;">
 									<div class="numbertext">1 / 3</div>
-									<a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
+									<a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
 									<p><b>TITOLO 1</b>
 										sottotitolo</P>
 
 								</div>
 								<div class="mySlides fade">
 									<div class="numbertext">2 / 3</div>
-									<a href="#" class="image full"><img src="../images/pics10_1.jpg" alt=""></a>
+									<a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
 									<p><b>TITOLO 2</b>
 										sottotitolo</P>
 
 								</div>
 								<div class="mySlides fade">
 									<div class="numbertext">3 / 3</div>
-									<a href="#" class="image full"><img src="../images/pics10_2.jpg" alt=""></a>
+									<a href="#" class="image full"><img src="{$root}images/pics10_2.jpg" alt=""></a>
 									<p><b>TITOLO 3</b>
 										sottotitolo</P>
 

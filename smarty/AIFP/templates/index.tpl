@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="4u">
 							<section>
-								<a href="funghi/funghi.php" class="image full"><img src="images/pics01.jpg" alt=""></a>
+								<a href="{$root}funghi/funghi.php" class="image full"><img src="images/pics01.jpg" alt=""></a>
 								<p>Entra nel fantastico mondo dei funghi. Scopri la loro storia e tutte le loro caratteristiche grazie alla nostra sezione dedicata al FUNGO</p>
 								<a href="funghi/funghi.php" class="button">Entra</a>
 							</section>
