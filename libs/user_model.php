@@ -341,7 +341,7 @@ class user extends gen_model{
             'image'=>$this->attributes_descr['image'],
         );
         $p = new post();
-        $p->new_post( $user, $text, $fk_conv);
+        $p->new_post($text, $user, $fk_conv);
         if($p->err_descr != ''){
             $this->err_descr = $p->err_descr;
             return false;

@@ -270,7 +270,7 @@ class associazione extends user
     
     public function add_evento($params)
     {
-        if($this->attributes['id'] == -1)
+        if($this->attributes[$this->table_descr['key']] == -1)
         {
             $this->err_descr = 'Association class have to be initialize';
             return false;

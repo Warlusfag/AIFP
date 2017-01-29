@@ -1,7 +1,6 @@
 <?php
 
 require_once '../libs/aifp_controller.php';
-require_once '../libs/evento_model.php';
 
 session_start();
 
@@ -52,7 +51,7 @@ if( $ass instanceof associazione ){
         if($ass->add_evento($post)){
             $smarty->assign('error', $ass->err_descr);
         }else{
-            $smarty->assign('error', $ass->err_descr);                
+            $smarty->assign('message', 'evento aggiornato con successo');                
         }
     }else{
         $smarty->assign('error', 'BAD parameters');

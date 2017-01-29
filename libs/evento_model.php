@@ -69,7 +69,7 @@ class evento extends gen_model
                 return false;
             }
         }
-        $table=$this->table_descr['table'];
+        $table = $this->table_descr['table'];
         $name = $this->table_descr['column_name'];
         $type = $this->table_descr['column_type'];
         
@@ -77,9 +77,9 @@ class evento extends gen_model
         $values = array();
         $i=0;
         foreach($keys as $key){
-            if(isset($params[$key]) && $key != $this->table_descr['key']){
+            if(isset($params[$key])){
                 if($key == 'id_ass'){
-                    $values[$i] = $ass->attributes[$this->table_descr['key']];
+                    $values[$i] = $ass->attributes[$ass->table_descr['key']];
                 }
                 $values[$i]=$params[$key];
                 $i++;
