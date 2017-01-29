@@ -832,18 +832,21 @@
 	#nav
 	{
 		background: #272727;
+		background-size: cover;
         list-style: none;
+
 	}
 
 		#nav-wrapper
 		{
 			margin-top: -3em;
+			width: 100%;
 		}
 		
 		#nav > ul
 		{
-                        list-style: none;
-                        position: relative;
+            list-style: none;
+            position: relative;
 			margin: 0;
 			padding: 0;
 			text-align: center;
@@ -851,6 +854,7 @@
 
 		#nav > ul > li
 		{
+
 			display: inline-block;
 			border-right: 1px solid;
 			border-color: rgba(255,255,255,.1);
@@ -916,17 +920,33 @@
 		position: relative;
 		background: #fff;
 	}
-
+/*********************************************************************************/
+/* buttom_main                                                                    */
+/*********************************************************************************/
+	
+	#buttom_main
+	{
+		position: relative;
+		background: #f4f4f4;
+		border-top: 1px solid;
+		border-color: rgba(0,0,0,.1);
+	}
+	
+	#buttom_main header h2
+	{
+		font-size: 1.8em;
+	}
 /*********************************************************************************/
 /* Footer                                                                        */
 /*********************************************************************************/
 	
 	#footer
 	{
-		position: relative;
+		/*position: relative;*/
 		background: #f4f4f4;
 		border-top: 1px solid;
 		border-color: rgba(0,0,0,.1);
+		background: #272727;
 	}
 	
 	#footer header h2
@@ -1151,9 +1171,8 @@ span.psw{
 	#copyright
 	{
 		position: relative;
-		padding: 3em 0em;
-		text-align: center;
-		color: rgba(255,255,255,.2);
+		padding: 5em 0em;
+		text-align: center;		
 	}
 	
 	#copyright .container
@@ -1165,6 +1184,3 @@ span.psw{
 		text-decoration: none;
 		color: rgba(255,255,255,.4);
 	}
-        
-
-        
