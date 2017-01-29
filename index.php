@@ -1,17 +1,21 @@
 <?php
+
+session_start();
+
 require_once 'libs/aifp_controller.php';
+require_once 'libs/collection.php';
 
 $smarty = new AIFP_Smarty();
 
-if(isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];
-    if(isset(aifp_controller::$collection_user[$tok])){
-        $us = aifp_controller::$collection_user[$tok];
-        $smarty->assign('user', 'Benvenuto '.$us->attributes['user'] );
-        $smarty->assign('image', $us->attributes_descr['image']);
+if(isset($_SESSION['curr_user'])){
+    $tok = $_SESSION['curr_user'];
+    $coll = unserialize($_SESSION['users']);
+    if( ($us = $coll->getitem($tok)) ){        
+        $smarty->assign('user', $us->attributes['user'] );
+        $image = $us->get_image();
+        $smarty->assign('image',$image );
     }else{
-        unset($_SESSION['user']);
-        session_destroy();
+        unset($_SESSION['curr_user']);
     }
 }
 $contr = new aifp_controller();

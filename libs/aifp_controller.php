@@ -1,21 +1,25 @@
 <?php
-
 require_once 'admin/setup.php';
 require_once 'admin/utils.php';
-require_once "user_model.php";
-require_once "associazione_model.php";
-require_once "evento_model.php";
-require_once "admin_model.php";
-require_once 'funghi_model.php';
+require_once 'collection.php';
 
-//limit constant
-const limit_sez = 5;
-const limit_events = 20;
-const limit_session = 1000000;
+if (!isset($_SESSION['users'])){
+    $_SESSION['users']= serialize(new user_collection());
+}
+if (!isset($_SESSION['news'])){
+    $_SESSION['news'] = serialize(new news_collection());
+}
+if (!isset($_SESSION['funghi'])){
+    $_SESSION['funghi'] = serialize(new funghi_collection());
+}
+if (!isset($_SESSION['forum'])){
+    $_SESSION['forum'] = serialize(new sezioni_collection());
+}
+
+
 
 class aifp_controller
 {
-    static public $collection_user;
     static public $collection_sez;
     static public $collection_news;
     static public $collection_funghi;
@@ -34,15 +38,10 @@ class aifp_controller
             4=>'associazione',
             5=>'admin',
         );
-        if(!self::$collection_sez){
-            self::$collection_sez = array();
-        }
         if(!self::$collection_funghi){
             self::$collection_funghi = array();            
         }
-        if(!self::$collection_user){ 
-            self::$collection_user = array(); 
-        }
+
         if(!self::$collection_news){ 
             self::$collection_news = array(); 
         }
@@ -96,11 +95,8 @@ class aifp_controller
             return false;
         } 
         $user->init($us[0], $us_descr[0]);
-        //preparo il token da mettere nell'array session
-        $token = md5($email.$password); 
-        self::$collection_user[$token] = $user; 
         $this->descritpion =''; 
-        return $token;        
+        return $user;        
     } 
 
     function get_user_from_pkey($primary_key){
@@ -289,6 +285,7 @@ class aifp_controller
             }
         }
         $this->descritpion = '';
+        evento::$inserted = false;
         self::$collection_news = $news;
         return $news;
     }

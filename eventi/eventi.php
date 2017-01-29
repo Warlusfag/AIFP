@@ -1,6 +1,8 @@
 <?php
 require_once '../libs/aifp_controller.php';
 
+$user = new user();
+
 function check_post($param)
 {
     $app = array();
