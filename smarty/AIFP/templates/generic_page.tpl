@@ -1,65 +1,80 @@
-<!DOCTYPE HTML>
 
+<!DOCTYPE HTML>
+{assign "root" "/AIFP/"}
 <html>
 	<head>
-		<title>Generic Page</title>
+	{block name=head}
+		<title>{block name=title}Generic Page{/block}</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		{block name=js}
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="../js/skel.min.js"></script>
-		<script src="../js/skel-panels.min.js"></script>
-		<script src="../js/init.js"></script>
-		<script src="../js/login.js"></script>
-		<script src="../js/slideshow.js"></script>
-    	<link rel="stylesheet" href="../css/skel-noscript.css" />
-		<link rel="stylesheet" href="../css/style.css" />
-		<link rel="stylesheet" href="../css/style-desktop.css" />
+		<script src="{$root}js/skel.min.js"></script>
+		<script src="{$root}js/skel-panels.min.js"></script>
+		<script src="{$root}js/init.js"></script>
+		<script src="{$root}js/login.js"></script>
+		<script src="{$root}js/slideshow.js"></script>
+		{/block}
+		{block name=css}
+    	<link rel="stylesheet" href="{$root}css/skel-noscript.css" />
+		<link rel="stylesheet" href="{$root}css/style.css" />
+		<link rel="stylesheet" href="{$root}css/style-desktop.css" />
+		{/block}
+	{/block}
 	</head>
+	{block name=define_class}
 	<body>
-
-	<!-- Header -->
+	{/block}
+	{block name=general_body}
+	<!-- Header -->		
 		<div id="header">
+            {block name=header}
 			<div class="container">
 					
 				<!-- Logo -->
 					<div id="logo">
-						<h1><a href="../index.php">AIFP</a></h1>
+						<h1><a href="{$root}index.php">AIFP</a></h1>
 					</div>
 			</div>
 			<div id="nav-wrapper" class="container" >
+			
 				<!-- Nav -->
 					<nav id="nav">
+					{block name=menu}
 						<ul>
-							<li><a href="../index.php">Home</a></li>
+							<li><a href="{$root}index.php">Home</a></li>
 							<li class="dropdown">
-                                                            <a class="dropbtn" href="../funghi/funghi.php">Funghi</a>
-                                                                <div class="dropdown-content">
-                                                                    <a href="../funghi/storia.php">Storia del fungo</a>
-                                                                    <a href="../funghi/schede_funghi.php">Schede funghi</a>
-                                                                    <a href="../prodotti/libri.php">Libri e guide</a>
-                                                                </div>
-                                                        </li>            
-							<li><a href="../funghi/regolamento.php">Regolamenti</a></li>
-							<li><a href="#">Eventi</a></li>
-							<li><a href="#">Forum</a></li>
-							<li><a href="#">Chiedi all'esperto</a></li>
-				{if isset($user)}
+                                <a class="dropbtn" href="{$root}funghi/funghi.php">Funghi</a>
+                                <div class="dropdown-content">
+                                    <a href="{$root}funghi/storia.php">Storia del fungo</a>
+                                    <a href="{$root}schede_funghi.php">Schede funghi</a>
+                                    <a href="{$root}prodotti/libri.php">Libri e guide</a>
+                                </div>
+                            </li>            
+							<li><a href="{$root}regolamento.php">Regolamenti</a></li>
+							<li><a href="{$root}eventi/eventi.php">Eventi</a></li>
+							<li><a href="{$root}forum/forum.php">Forum</a></li>
+							<li><a href="{$root}lettera_esperto.php">Chiedi all'esperto</a></li>
+							{if !$user}
                             	<li class="dropdown">
-                                <a class="dropbtn "href="#"><img src="../css/images/user.png"></a>
+                                <a class="dropbtn "href="#"><img src="{$root}css/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
                                     <a href="reg.php">Registrati</a>
                                 </div>
                            		</li>
                            	{else}
-                           		<li><a href="#"><img src="css/images/user.png"><p>Ciao {$user}</p></a></li>
+                           		<li class="dropdown">                           			
+                           			<a onclick="document.getElementById('id01').style.display='block'"href="#">
+                           				<img src={$image}><p>Benvenuto {$user}</p></a>
+                           		</li>
                            	{/if}
 
 						</ul>
-                                            
+                    {/block}             
 					</nav> 
 			</div>
 			
@@ -101,7 +116,7 @@
                                 </div>
                             </form>
                         </div>
-                     
+        {/block}
 		</div>
 		<!-- Header -->
 
@@ -113,8 +128,9 @@
 			</body>
 		<!-- /Body -->
 
-		<!-- Footer -->
-		<div id="footer">
+		<!-- buttom_main -->
+		<div id="buttom_main">
+		{block name=buttom_main}
 			<div class="container">
 				<div class="row half">
 					<div class="3u">
@@ -200,15 +216,25 @@
 					</div>
 				</div>
 			</div>
+			<!--block buttom_main closed-->
+        {/block}
 		</div>
+		<!--block body closed-->
+    {/block}
 	<!-- /Footer -->
-
+	<div id="footer">
+	{block name=footer}
+		<div class="container">
 	<!-- Copyright -->
-		<div id="copyright">
-			<div class="container">
-				Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
+			<div id="copyright">
+				<div class="container">
+					Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
+				</div>
 			</div>
 		</div>
-
+	<!-- Copyright -->
+	{/block}
+	</div>
+	<!-- Footer -->
 	</body>
 </html>
