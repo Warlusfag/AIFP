@@ -1,15 +1,18 @@
 <?php
+session_start();
 require_once '../libs/aifp_controller.php';
 
 $smarty = new AIFP_Smarty();
 //$_GET['genere'] = 'lactarius';
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
-    $contr = new aifp_controller();
-    
-    $funghi = $contr->get_scheda_funghi($genere);
+    $collection = unserialize($_SESSION['funghi']);
+    if( ($funghi=$collection->getitem($genere))==false){
+        $contr = new aifp_controller();
+        $funghi = $contr->get_scheda_funghi($genere);
+    }
     if(!$funghi){
-        $smarty->assign('error',$contr->descritpion);        
+        $smarty->assign('error',$contr->description);    
     }else{
         $smarty->assign('genere',$funghi);
     }
@@ -27,6 +30,3 @@ if(isset($_GET['genere'])){
     $smarty->assign('foto',$photo);
 }
 $smarty->display('schede.tpl');
-
-
-
