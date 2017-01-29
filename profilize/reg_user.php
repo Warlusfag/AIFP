@@ -29,19 +29,16 @@ function check_post($param){
     return $app;
 }
 
-$smarty = new AIFP_smarty();
 
-if(($post = check_post($_POST))){           
-
-    $user = new user();
-    
-    if($user->insert_user($post, array())){
-        
+function reg_user($post){
+    if(($post = check_post($post))){
+        $user = new user();    
+        if($user->insert_user($post)){
+            return true;
+        }else{
+            return false;
+        }    
     }else{
-        $smarty->assign('error', GEN_ERR);
-        $smarty->display('error.tpl');
-    }  
-}else{
-    $smarty->assign('error', GEN_ERR);
-    $smarty->display('error.tpl');
+        return false;
+    }    
 }

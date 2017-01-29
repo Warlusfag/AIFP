@@ -1,11 +1,15 @@
 <?php
+session_start();
+
 require_once '../libs/aifp_controller.php';
 
 $smarty = new AIFP_smarty();
-if(isset($_SESSION['user'])){
+$contr = new aifp_controller();
+
+if(isset($_SESSION['curr_user'])){
     if(isset($_POST['evento'])){
-        $tok = $_SESSION['user'];
-        $user = aifp_controller::$collection_user[$tok];
+        $params = $_SESSION['curr_user']['token'];        
+        $user = $cont->get_user($params, $_SESSION['curr_user']['type']);
         if(!$user->register_evento($_POST['evento'])){
             $smarty->assign('error',$user->err_descr);            
         }else{
@@ -14,6 +18,8 @@ if(isset($_SESSION['user'])){
     }else{
         $smarty->assign('error', GEN_ERROR);        
     }
+    $smarty->assign('user',$user->attributes['user']);
+    $smarty->assign('user',$user->get_image());
     $smarty->display('eventi.tpl');
 }else{
     $smarty->display('index.tpl');
