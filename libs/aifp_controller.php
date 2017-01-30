@@ -9,17 +9,13 @@ if (!isset($_SESSION['news'])){
 if (!isset($_SESSION['funghi'])){
     $_SESSION['funghi'] = serialize(new funghi_collection());
 }
-if (!isset($_SESSION['forum'])){
-    $_SESSION['forum'] = serialize(new sezioni_collection());
-}
 
 
 
 class aifp_controller
 {
-    static public $collection_sez;
-    public $tipo;
-    
+
+    public $tipo;    
     public $description;
     
     function __construct(){
@@ -260,22 +256,21 @@ class aifp_controller
     }
     //popola la collection  per le sezioni
     public function forum(){
-        require_once "sezione_model.php";
         
-        $temp = new sezione();        
-        $t = $temp->search_sezioni(array(), -1, limit_sez);
-        if($temp->err_descr != ''){
-            $this->description = $temp->err_descr;
+        $sez = new sezione();        
+        $t = $sez->search_sezioni(array(), -1, limit_sez);
+        if($sez->err_descr != ''){
+            $this->description = $sez->err_descr;
             return false;
-        }else{       
-            for($i=0;$i<count($t);$i++){
-                $sez = new sezione();
-                $sez->init($t[$i]);
-                self::$collection_sez[$i] = $sez;
-            }
-            $this->description = '';
-            return $t;
-        }       
+        }
+        $temp = array();
+        for($i=0;$i<count($t);$i++){
+            $sez = new sezione();
+            $sez->init($t[$i]);
+            $temp[$i] = $sez;
+        }
+        $this->description = '';
+        return $temp;               
     }
     //Popola la collection delle news
     public function get_news(){

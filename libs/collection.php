@@ -43,7 +43,10 @@ class collection{
         }else{
             return $this->items[$key];
         }
-    } 
+    }
+    public function count(){
+        return count($this->items);
+    }
 }
 
 class sezioni_collection extends collection{
