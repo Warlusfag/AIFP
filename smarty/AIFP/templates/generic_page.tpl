@@ -114,7 +114,7 @@
                                     
                                 </div>
                                 <div class="logcontainer" style="background-color:#f1f1f1">
-                                	   <span>Non hai un account? <a href="#">Iscriviti >></a>
+                                	   <span>Non hai un account? <a href="{$root}profilize/reg.php">Iscriviti >></a>
                                     
                                 </div>
                             </form>
