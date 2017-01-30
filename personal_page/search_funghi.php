@@ -1,12 +1,23 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['view'])){
+    $_SESSION['view'] = 'funghi';
+}
 require_once '../libs/aifp_controller.php';
-require_once '../libs/funghi_model.php';
+
 
 $smarty = new AIFP_smarty();
+$controller = new aifp_controller();
 
-if(isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];
-    $us = aifp_controller::$collection_user[$tok];
+if(isset($_SESSION['curr_user'])){
+    
+    if( ($type = $_SESSION['curr_user']['type']) != 'user' ){
+        $smarty->assign('error',"ERROR: you are not authorized to perform this action");
+        $smarty->display('personal_page.tpl'); 
+    }
+    
+    $us = $_SESSION['curr_user']['user'];
 
     $username = $us->attributes['user'];
     
