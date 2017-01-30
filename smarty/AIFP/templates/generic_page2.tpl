@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-
+{assign "root" "/AIFP/"}
 <html>
 	<head>
 		<title>Generic Page</title>
@@ -65,7 +65,7 @@
 			
             <!-- Login form -->
                         <div id="id01" class="modal">
-                            <form class="modal-content animate" method="post" action="login.php">
+                            <form class="modal-content animate" method="post" action="../login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
                                 	
@@ -90,13 +90,13 @@
                                     <input type="radio" name="type" value="associazione">Associazione
                                     <br>
                                     <label class="rmbme"><input type="checkbox" checked="checked">Ricordami</label> 
-                                    <span class="psw"><a href="#">Password</a> dimenticata?</span>
+                                    <span class="psw"><a href="">Password</a> dimenticata?</span>
                                     <button class="loginbtn" type="submit">Login</button>
                                     <br>
                                     
                                 </div>
                                 <div class="logcontainer" style="background-color:#f1f1f1">
-                                	   <span>Non hai un account? <a href="#">Iscriviti >></a>
+                                	   <span>Non hai un account? <a href="{$root}profilize/reg.php">Iscriviti >></a>
                                     
                                 </div>
                             </form>

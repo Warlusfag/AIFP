@@ -25,7 +25,22 @@
 	}
 
 	/* Modifiers */
-	
+		.container.center{
+			padding: 0;
+			margin-left: : 100px auto;
+			margin-right: : 100px auto;
+			text-align: center;
+		}
+
+		.sin{
+			margin-left: 32%; 
+		}
+
+		.des{ 
+			margin-left: 2%; 
+		}		 
+
+
 		.container.small {
 			width: 900px;
 		}
@@ -64,6 +79,11 @@
 		.\-2u { margin-left: 16.6666666667% }
 		.\-1u { margin-left: 8.3333333333% }
 
+		.row.center{
+			margin-left: auto;
+
+		}
+
 		.row > * {
 			padding: 50px 0 0 50px;
 			float: left;
@@ -91,7 +111,8 @@
 			height: 0;
 		}
 
-		.row:first-child > * {
+		.row:fir
+		st-child > * {
 			padding-top: 0;
 		}
 
