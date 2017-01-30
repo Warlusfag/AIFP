@@ -68,7 +68,7 @@
                                 
                        <!-- Association registration -->
                         <div id="id03" class="modal">
-                            <form class="modal-content animate" method="post" action="{$root}profilize/reg_user.php">
+                            <form class="modal-content animate" method="post" action="{$root}profilize/reg_assoc.php">
                                 <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Chiudi">&times;</span>
                                 <div class="logcontainer" style="background-color: #f1f1f1">
                                     <label><b>REGISTRATI COME ASSOCIAZIONE</b></label>
