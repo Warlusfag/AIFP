@@ -122,6 +122,7 @@
 
 		<!-- Body -->
 			<body>
+                        
 			{block name=main}
 
 			{/block}

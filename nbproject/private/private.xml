@@ -3,28 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/srv/www/AIFP/personal_page/file_space.php</file>
-            <file>file:/srv/www/AIFP/libs/associazione_model.php</file>
-            <file>file:/srv/www/AIFP/libs/evento_model.php</file>
-            <file>file:/srv/www/AIFP/login.php</file>
-            <file>file:/srv/www/AIFP/libs/aifp_controller.php</file>
-            <file>file:/srv/www/AIFP/personal_page/personal_page.php</file>
+            <file>file:/srv/www/AIFP/smarty/AIFP/templates/reg.tpl</file>
+            <file>file:/srv/www/AIFP/smarty/AIFP/templates/generic_page2.tpl</file>
             <file>file:/srv/www/AIFP/index.php</file>
             <file>file:/srv/www/AIFP/smarty/AIFP/templates/funghi.tpl</file>
-            <file>file:/srv/www/AIFP/smarty/AIFP/templates/generic_page.tpl</file>
-            <file>file:/srv/www/AIFP/libs/admin/utils.php</file>
-            <file>file:/srv/www/AIFP/funghi/regolamento.php</file>
-            <file>file:/srv/www/AIFP/lettera_esperto.php</file>
-            <file>file:/srv/www/AIFP/schede.php</file>
-            <file>file:/srv/www/AIFP/libs/admin/setup.php</file>
-            <file>file:/srv/www/AIFP/libs/product_model.php</file>
-            <file>file:/srv/www/AIFP/libs/user_model.php</file>
-            <file>file:/srv/www/AIFP/libs/gen_model.php</file>
-            <file>file:/srv/www/AIFP/libs/admin/db_interface.php</file>
             <file>file:/srv/www/AIFP/smarty/AIFP/templates/index.tpl</file>
-            <file>file:/srv/www/AIFP/libs/sezione_model.php</file>
-            <file>file:/srv/www/AIFP/libs/admin_model.php</file>
-            <file>file:/srv/www/AIFP/funghi/funghi.php</file>
+            <file>file:/srv/www/AIFP/smarty/AIFP/templates/generic_page.tpl</file>
         </group>
     </open-files>
 </project-private>
