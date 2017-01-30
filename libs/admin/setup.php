@@ -2,7 +2,6 @@
 
 //Constanti per la trasportabilità del sito su diverse piattaforme
 
-
 $server_root = "/srv/www/AIFP/";
 
 //date_default_timezone_set('UTC');
@@ -43,5 +42,7 @@ class AIFP_smarty extends Smarty
         $this->assign('error', '');
     }
 }
+
+
 
 

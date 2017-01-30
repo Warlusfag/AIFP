@@ -46,16 +46,16 @@ function check_post($param){
     }    
 }
 
-$smarty = new AIFP_smarty();
-
-if(($post = check_post($_POST))){
-    $user = new associazione();    
-    if($user->register_assoc($post)){
-        $smarty->assign('message', 'Registrazione avvenuta con successo');
+function reg_assoc($post){
+    if(($post = check_post($post))){
+        $user = new associazione();    
+        if($user->register_assoc($post)){
+            return true;
+        }else{
+            return false;
+        }    
     }else{
-        $smarty->assign('error', GEN_ERR);
+        return false;
     }    
-}else{
-    $smarty->assign('error', GEN_ERR);    
 }
-$smarty->display('reg.tpl');
+

@@ -50,7 +50,7 @@
                                 <a class="dropbtn" href="{$root}funghi/funghi.php">Funghi</a>
                                 <div class="dropdown-content">
                                     <a href="{$root}funghi/storia.php">Storia del fungo</a>
-                                    <a href="{$root}schede_funghi.php">Schede funghi</a>
+                                    <a href="{$root}funghi/schede_funghi.php">Schede funghi</a>
                                     <a href="{$root}prodotti/libri.php">Libri e guide</a>
                                 </div>
                             </li>            
@@ -68,8 +68,11 @@
                            		</li>
                            	{else}
                            		<li class="dropdown">                           			
-                           			<a onclick="document.getElementById('id01').style.display='block'"href="#">
-                           				<img src={$image}><p>Benvenuto {$user}</p></a>
+                           			 <a class="dropbtn "href="#"><img src={$image}><p>Benvenuto {$user}</p></a>
+	                           		<div class="dropdown-content">
+	                                    <a  href="{$root}personal_page/personal_page.php">Pagina personale</a>
+	                                    <a href="{$root}logout.php">logout</a>                                
+	                                </div>                           				
                            		</li>
                            	{/if}
 
@@ -80,7 +83,7 @@
 			
             <!-- Login form -->
                         <div id="id01" class="modal">
-                            <form class="modal-content animate" method="post" action="login.php">
+                            <form class="modal-content animate" method="post" action="{$root}login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
                                 	
@@ -88,13 +91,13 @@
                                 </div>
                                 <div class="imgcontainer">
                                 	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Chiudi">&times;</span>
-                                    <img src="../images/img_avatar.png" alt="Avatar" class="avatar">
+                                    <img src="{$root}images/img_avatar.png" alt="Avatar" class="avatar">
                                 </div>
 
                                 <div class="logcontainer">
-                                	<input type="text" placeholder="Inserisci Username" name="uname" required>
+                                	<input type="text" placeholder="Inserisci Username" name="email" required>
                                     <br>
-                                    <input type="password" placeholder="Inserisci Password" name="psw" required>
+                                    <input type="password" placeholder="Inserisci Password" name="password" required>
                                     <br>
                                     <label>Accedi come: </label>
                                     <br>

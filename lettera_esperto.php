@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once 'libs/aifp_controller.php';
 
@@ -27,7 +28,7 @@ if( ($post = check_post($_POST)) ){
         'esperto' => 1,
     );    
     $list_user = $contr->search_OnAll_descr_users($params, 20);
-    if($contr->descritpion == ''){
+    if($contr->description == ''){
         $emails = array();
         $i=0;
         foreach($list_user as $value){
@@ -70,6 +71,10 @@ if( ($post = check_post($_POST)) ){
     }
 }else{
     $smarty->assign('error', GEN_ERROR);    
+}
+if(isset($_SESSION['curr_user'])){
+    $smarty->assign('user',$_SESSION['curr_user']['user']);
+    $smarty->assign('image',$_SESSION['curr_user']['image']);
 }
 $smarty->display('lettera_esperto.tpl');
 

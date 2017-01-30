@@ -1,31 +1,30 @@
 <?php
-
 require_once 'admin/setup.php';
 require_once 'admin/utils.php';
-require_once "user_model.php";
-require_once "associazione_model.php";
-require_once "evento_model.php";
-require_once "admin_model.php";
-require_once 'funghi_model.php';
+require_once 'collection.php';
 
-//limit constant
-const limit_sez = 5;
-const limit_events = 20;
-const limit_session = 1000000;
+if (!isset($_SESSION['news'])){
+    $_SESSION['news'] = serialize(new news_collection());
+}
+if (!isset($_SESSION['funghi'])){
+    $_SESSION['funghi'] = serialize(new funghi_collection());
+}
+if (!isset($_SESSION['forum'])){
+    $_SESSION['forum'] = serialize(new sezioni_collection());
+}
+
+
 
 class aifp_controller
 {
-    static public $collection_user;
     static public $collection_sez;
-    static public $collection_news;
-    static public $collection_funghi;
     public $tipo;
     
-    public $descritpion;
+    public $description;
     
     function __construct(){
         
-        $this->descritpion = "";
+        $this->description = "";
         $this->tipo = array(
             0 =>'utente',
             1 =>'inscritto',
@@ -34,18 +33,7 @@ class aifp_controller
             4=>'associazione',
             5=>'admin',
         );
-        if(!self::$collection_sez){
-            self::$collection_sez = array();
-        }
-        if(!self::$collection_funghi){
-            self::$collection_funghi = array();            
-        }
-        if(!self::$collection_user){ 
-            self::$collection_user = array(); 
-        }
-        if(!self::$collection_news){ 
-            self::$collection_news = array(); 
-        }
+
     }  
     
     public function login($password, $email=-1, $user=-1, $type = -1){
@@ -65,9 +53,23 @@ class aifp_controller
             );             
         }
         //preparati i parametri li passo alla search on all user
+        $us = $this->get_user($params, $type);
+        if($this->description != ''){
+            return false;
+        }       
+        $this->description =''; 
+        return $us;        
+    } 
+    
+    public function get_user($params, $type=-1){
+        
+        if(!is_array($params)||count($params) == 0){
+            $this->description = 'ERROR:Bad parameters';
+            return false;
+        }
         $us = $this->search_OnAll_users($params, 1, $type);
         if(!$us || count($us)== 0 || count($us)>1){
-            $this->description = "ERROR: username or password are not correct, please try again";
+            $this->description = "ERROR:Bad parameters";
             return false;
         }
         //se la ricerca è andata a buon fine devo creare l'oggetto in questione
@@ -96,12 +98,9 @@ class aifp_controller
             return false;
         } 
         $user->init($us[0], $us_descr[0]);
-        //preparo il token da mettere nell'array session
-        $token = md5($email.$password); 
-        self::$collection_user[$token] = $user; 
-        $this->descritpion =''; 
-        return $token;        
-    } 
+        $this->description =''; 
+        return $user;            
+    }
 
     function get_user_from_pkey($primary_key){
         $us = new user();
@@ -173,7 +172,7 @@ class aifp_controller
             if($type != -1){ 
                  $us = $this->get_us_from_type($type); 
                  if($us == null){
-                     $this->descritpion = "ERROR:Wrong type";
+                     $this->description = "ERROR:Wrong type";
                      return false; 
                  }                 
             }else{ 
@@ -203,7 +202,7 @@ class aifp_controller
                     $limit -= count($t);
                }                       
             }else{
-               $this->descritpion = $us->err_descr;
+               $this->description = $us->err_descr;
                return false;
             }
        } 
@@ -223,7 +222,7 @@ class aifp_controller
            if($type != -1){ 
                 $us = $this->get_us_from_type($type); 
                 if($us == null){ 
-                    $this->descritpion = "ERROR:Wrong type";
+                    $this->description = "ERROR:Wrong type";
                     return null; 
                 }                 
            }else{ 
@@ -253,7 +252,7 @@ class aifp_controller
                     $limit -= count($t);
                }                       
             }else{
-               $this->descritpion = $us->err_descr;
+               $this->description = $us->err_descr;
                return false;
             }
        } 
@@ -266,7 +265,7 @@ class aifp_controller
         $temp = new sezione();        
         $t = $temp->search_sezioni(array(), -1, limit_sez);
         if($temp->err_descr != ''){
-            $this->descritpion = $temp->err_descr;
+            $this->description = $temp->err_descr;
             return false;
         }else{       
             for($i=0;$i<count($t);$i++){
@@ -274,22 +273,20 @@ class aifp_controller
                 $sez->init($t[$i]);
                 self::$collection_sez[$i] = $sez;
             }
-            $this->descritpion = '';
+            $this->description = '';
             return $t;
         }       
     }
     //Popola la collection delle news
     public function get_news(){
-        if(evento::$inserted || count(self::$collection_news)==0){
-            $ev = new evento();
-            $news = $ev->show_news(20);            
-            if($ev->err_descr != ''){
-                $this->descritpion = $ev->err_descr;
-                return false;
-            }
+
+        $ev = new evento();
+        $news = $ev->show_news(20);            
+        if($ev->err_descr != ''){
+            $this->description = $ev->err_descr;
+            return false;
         }
-        $this->descritpion = '';
-        self::$collection_news = $news;
+        $this->description = '';
         return $news;
     }
     //Popola la collection dei funghi, cioè quei funghi visualizzati nella pagina principale e più famosi
@@ -299,26 +296,21 @@ class aifp_controller
         $g = array_values(funghi::$generi);
         if(array_search($genere,$g)){
             //se già è presente nella collection non c'è bisogno di ritrovarlo ma ritorna la collection
-            if(isset(self::$collection_funghi[$genere])){
-                $this->descritpion = '';
-                return self::$collection_funghi[$genere];
-            //altrimenti lo devo scaricare
-            }else{
-                $model_fungo = new funghi();                         
-                $params = array(
-                    'genere'=>$genere,
-                );
-                self::$collection_funghi[$genere] = $model_fungo->search_funghi($params, -1, 10);
-                if($model_fungo->err_descr !=''){
-                    $this->descritpion = $model_fungo->err_descr;
-                    return null;
-                }
-                $this->descritpion = '';
-                return self::$collection_funghi[$genere];
+            $model_fungo = new funghi();                         
+            $params = array(
+                'genere'=>$genere,
+            );
+            $funghi = $model_fungo->search_funghi($params, -1, 10);
+            if($model_fungo->err_descr !=''){
+                $this->description = $model_fungo->err_descr;
+                return false;
             }
+            $this->description = '';
+            return $funghi;
+            
         }else{
-            $this->descritpion ="ERROR:wrong genere";
-            return null;
+            $this->description ="ERROR:bad parameters";
+            return false;
         }
     }    
 }

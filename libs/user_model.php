@@ -60,6 +60,14 @@ class user extends gen_model{
         return false;
     }
     
+    public function make_token(){
+        if($this->attributes[$this->table_descr['key']] == -1){
+            $this->err_descr = 'ERROR: user is not initialized';
+            return false;                    
+        }
+        return md5($this->attributes['email'].$this->attributes['password']); 
+    }
+
     public function check_pwd($password)
     {
         if($this->attributes[$this->table_descr['key']] == -1){
@@ -71,6 +79,12 @@ class user extends gen_model{
         }
         $this->err_descr = "ERROR: password is not correct";
         return false;
+    }
+    
+    public function get_image(){
+        $path = $this->attributes_descr['image'];        
+        $path = str_replace('/srv/www', '',$path);
+        return $path;
     }
     
     public function change_pwd($password){

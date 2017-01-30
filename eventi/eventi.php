@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once '../libs/aifp_controller.php';
 
 function check_post($param)
@@ -26,6 +28,7 @@ function check_post($param)
     }
     return $app;  
 }
+
 $smarty = new AIFP_smarty();
 if(isset($_POST) && count($_POST)>0){
     $ev = new evento();
@@ -36,15 +39,21 @@ if(isset($_POST) && count($_POST)>0){
         $smarty->assign('error', $ev->err_descr);        
     }    
 }else{
-    $contr = new aifp_controller();
-
-    $news = $contr->get_news();
-    if($contr->descritpion == ''){
-        $smarty->assign('news', $news);
-
+    $new_col = unserialize($_SESSION['news']);
+    if($new_col->is_load()){
+        $contr = new aifp_controller();
+        $news = $contr->get_news();
+        if($contr->description != ''){
+            $smarty->assign('error', $contr->description);
+        }
+        $new_col->add_all_news($news);
     }else{
-        $smarty->assign('error', $contr->descritpion);
+        $news = $new_col->get_all_news();
     }
+}
+if(isset($_SESSION['curr_user'])){
+    $smarty->assign('user',$_SESSION['curr_user']['user']);
+    $smarty->assign('image',$_SESSION['curr_user']['image']);
 }
 $smarty->display('eventi.tpl'); 
 

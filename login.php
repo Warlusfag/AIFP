@@ -1,6 +1,7 @@
 <?php
+session_start();
 
-require_once 'libs/aifp_controller.php'; 
+require_once 'libs/aifp_controller.php';
 
 function check_post($param){
     $app = array();
@@ -24,39 +25,35 @@ function check_post($param){
 }
 
 $smarty = new AIFP_smarty();
-
 $contr = new aifp_controller();
-if(!isset($_SESSION['user'])){
-    
+
+
+if(isset($_SESSION['curr_user'])){   
+    $smarty->assign('user', $_SESSION['curr_user']['user'] );
+    $smarty->assign('image', $_SESSION['curr_user']['image']);   
+}else{
     if(($post = check_post($_POST)) ){		
         $pwd = $post['password'];
         if(isset($post['email'])){
-                $em = $post['email'];
-                $token = $contr->login($pwd, $em, -1, $post['type']);
-        }else if(isset($post['user'])){
-                $us = $post['user'];
-                $token = $contr->login($pwd, -1, $us, $post['type']);
+            $em = $post['email'];
+            $user = $contr->login($pwd, $em, -1, $post['type']);           
+        }else if(isset($post['user'])){            
+            $us = $post['user'];
+            $user = $contr->login($pwd, -1, $us, $post['type']);
         }
-        if($token){
-                session_start();
-                $_SESSION['user']= $token;
-                $us = aifp_controller::$collection_user[$token];
-                
-                $smarty->assign('user', 'Benvenuto '.$us->attributes['user'] );
-                $smarty->assign('image', $us->attributes_descr['image']);
+        if($user){
+            $_SESSION['curr_user'] = array();
+            $pk = array($user->table_descr['key'] => $user->attributes[$user->table_descr['key']]);
+            $_SESSION['curr_user']['token'] = $pk;
+            $_SESSION['curr_user']['user'] =$user->attributes['user'];
+            $_SESSION['curr_user']['image'] =$user->get_image();
+            $_SESSION['curr_user']['type'] =$user->type;            
+            $smarty->assign('user', $user->attributes['user'] );
+            $smarty->assign('image', $user->get_image());
         }else{            
-                $smarty->assign('error', $contr->descritpion);
+            $smarty->assign('error', $contr->description);
         }
     }else{
-            $smarty->assign('error', GEN_ERROR);
-    }
-}else{
-    if(isset(aifp_controller::$collection_user[$_SESSION['user']])){
-        $us = aifp_controller::$collection_user[$token];
-        $smarty->assign('user', $us->attributes['user'] );
-
-    }else{
-        session_destroy();
         $smarty->assign('error', GEN_ERROR);
     }
 }

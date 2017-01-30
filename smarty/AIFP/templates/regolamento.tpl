@@ -1,4 +1,6 @@
 {extends file="generic_page.tpl"}
+
+	{block "title"}AIFP{/block}
 	{block name=main}  
 	<!-- Main -->
 <!-- Main -->
