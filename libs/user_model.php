@@ -106,14 +106,14 @@ class user extends gen_model{
             if($key != $this->table_descr['key']){
                 //se nei parametri quel valore non è settato allora lo prendo nei default, altrimento lo assegno
                 if(!isset($params[$key])){
-                    $value[$i]=$value;
+                    $val[$i]=$value;
                 }else{
-                    $value[$i]=$params[$key];
+                    $val[$i]=$params[$key];
                 }
-            }
-            $i++;
+                $i++;
+            }            
         }
-        if(!$this->conn->statement_insert($this->table_descr['table'],$name,$value,$type)){
+        if(!$this->conn->statement_insert($this->table_descr['table'],$name,$val,$type)){
             $this->err_descr = $this->conn->error;
             return false;
         }
@@ -134,10 +134,11 @@ class user extends gen_model{
                 }else{
                     $val[$i]=$value;
                 }
+                
             }
-            $i++;
+            $i++;            
         }
-        if(!$this->conn->statement_insert($this->table_descr['table_descr'],$name,$value,$type)){
+        if(!$this->conn->statement_insert($this->table_descr['table_descr'],$name,$val,$type)){
             $this->err_descr = $this->conn->error;
             return false;
         }
