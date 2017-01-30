@@ -29,16 +29,17 @@ function check_post($param){
     return $app;
 }
 
+$message = "Congratulazioni, lei si è appena registrato al nostro sito";
 
-function reg_user($post){
-    if(($post = check_post($post))){
-        $user = new user();    
-        if($user->insert_user($post)){
-            return true;
-        }else{
-            return false;
-        }    
+$smarty = new AIFP_Smarty();
+
+if( (($post= check_post($_POST))) ){
+    $user = new user();    
+    if($user->insert_user($post, array())){
+        $smarty->assign('message',$message);
     }else{
-        return false;
+        $smarty->assign('error', $user->err_descr);
     }    
-}
+}else{
+    $smarty->assign('error', GEN_ERROR);
+}    
