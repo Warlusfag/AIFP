@@ -1,7 +1,7 @@
 {extends file="generic_page.tpl"}
 {$sb = 'true'}
 
-{block "title"}AIFP{/block}
+{block "title"}Storia{/block}
 
 {block name=main}
     <div id="content" class="9u skel-cell-important">

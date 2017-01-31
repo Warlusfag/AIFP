@@ -1,6 +1,6 @@
 {extends file="generic_page.tpl"}
 {$sb = 'true'}
-	{block "title"}AIFP{/block}
+	{block "title"}Schede Funghi{/block}
 	
 	{block name=main}  
 	<!-- Main -->

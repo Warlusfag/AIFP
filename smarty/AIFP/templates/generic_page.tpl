@@ -139,7 +139,7 @@
                                                 <div id="sidebar" class="3u">
                                                 <section>
                                                 <header>
-                                                        <h2>GABRI GAY</h2>
+                                                        <h2></h2>
                                                 </header>
                                                 <p>Questa left-sidebar la possiamo sfruttare in qualche modo?? dal punto di vista estetico non dispiace.</p>
                                                 <ul class="style1">
@@ -180,7 +180,7 @@
                             {/if}
 						</body>
 		<!-- /Body -->
-
+                
 		<!-- buttom_main -->
 		<div id="buttom_main">
 		{block name=buttom_main}
