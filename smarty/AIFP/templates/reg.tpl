@@ -1,6 +1,6 @@
-{extends file="generic_page2.tpl"}
+{extends file="generic_page.tpl"}
 {assign	"root" "/AIFP/"}
-
+{$sb = 'false'}
 	{block name=main}  
 		<div id="main">
 		

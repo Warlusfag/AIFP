@@ -126,10 +126,59 @@
 		<!-- Body -->
 			<body>
                         
-			{block name=main}
+                                             
+                            {if $sb=='true'}
+                                {block name=sidebar}
+                                    <div id="main">
+                                        <div class="container">
+                                            <div id="banner"></div>
+                                        </div>
+			
+                                        <div class="container">
+                                            <div class="row">
+                                                <div id="sidebar" class="3u">
+                                                <section>
+                                                <header>
+                                                        <h2>GABRI GAY</h2>
+                                                </header>
+                                                <p>Questa left-sidebar la possiamo sfruttare in qualche modo?? dal punto di vista estetico non dispiace.</p>
+                                                <ul class="style1">
+                                                        <li><a href="#">Vestibulum luctus venenatis dui</a></li>
+                                                        <li><a href="#">Integer rutrum nisl in mi</a></li>
+                                                        <li><a href="#">Etiam malesuada rutrum enim</a></li>
+                                                        <li><a href="#">Aenean elementum facilisis ligula</a></li>
+                                                        <li><a href="#">Ut tincidunt elit vitae augue</a></li>
+                                                        <li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
+                                                </ul>
+                                                </section>
+                                                <section>
+                                                <header>
+                                                        <h2>Sagittis convallis</h2>
+                                                </header>
+                                                <p>Quisque dictum. Integer nisl risus, sagittis convallis elementum.</p>
+                                                <ul class="style1">
+                                                        <li><a href="#">Vestibulum luctus venenatis dui</a></li>
+                                                        <li><a href="#">Integer rutrum nisl in mi</a></li>
+                                                        <li><a href="#">Etiam malesuada rutrum enim</a></li>
+                                                        <li><a href="#">Aenean elementum facilisis ligula</a></li>
+                                                        <li><a href="#">Ut tincidunt elit vitae augue</a></li>
+                                                        <li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
+                                                </ul>
+                                                </section>
+                                                </div>
+                                        {/block}
+                                                {block name=main}
 
-			{/block}
-			</body>
+                                                {/block}
+                                            </div>
+                                        </div>
+                                    </div>
+                            {else}
+                            {block name=main}
+
+                            {/block}
+                            {/if}
+						</body>
 		<!-- /Body -->
 
 		<!-- buttom_main -->

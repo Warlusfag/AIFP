@@ -1,6 +1,5 @@
 
 {extends file="generic_page.tpl"}
-
 	{block "title"}AIFP{/block}
 
 	{block name=define_class}
@@ -14,7 +13,7 @@
         		<div id="banner"><a href="index.php" class="image featured"><img src="images/pics11_2.jpg" alt=""></a></div>
     		</div>
 			<div class="container">
-				<section>
+                            <section>
 					<header>
 						<h4>Scopri il fantastico mondo dei funghi!!</h4>
 					</header>
