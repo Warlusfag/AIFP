@@ -7,6 +7,8 @@ require_once 'libs/collection.php';
 
 $smarty = new AIFP_Smarty();
 
+$smarty->assign('sb', 'false');
+
 if(isset($_SESSION['curr_user'])){         
     $smarty->assign('user', $_SESSION['curr_user']['user'] );
     $image = $_SESSION['curr_user']['image'];
