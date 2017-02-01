@@ -834,6 +834,7 @@
 		background: #272727;
 		background-size: cover;
         list-style: none;
+       
 
 	}
 
@@ -920,6 +921,15 @@
 		position: relative;
 		background: #fff;
 	}
+
+	#index{
+		align-content: center;
+		margin-left: auto;
+		margin-right: auto;
+		background: #fff;
+		position: relative;
+		text-align: center;
+	}
 /*********************************************************************************/
 /* buttom_main                                                                    */
 /*********************************************************************************/
@@ -986,7 +996,6 @@ input[type=text], input[type=password]{
     border-radius: 3%;
     display: inline-block;
     cursor: pointer;
-   
     height: 50px;
 
 }
