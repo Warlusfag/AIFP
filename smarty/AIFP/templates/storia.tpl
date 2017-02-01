@@ -1,5 +1,4 @@
-{extends file="generic_page.tpl"}
-{$sb = 'true'}
+{extends file="generic_page_sidebar.tpl"}
 
 {block "title"}Storia{/block}
 

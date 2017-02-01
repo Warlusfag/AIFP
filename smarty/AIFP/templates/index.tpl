@@ -7,11 +7,11 @@
 	{/block}
 
 	{block name=main}
-	<div id="main">
+            <div id="index">
 			<!--central image-->
 			<div class="container">
-        		<div id="banner"><a href="index.php" class="image featured"><img src="images/pics11_2.jpg" alt=""></a></div>
-    		</div>
+                            <div id="banner"><a href="index.php" class="image featured"><img src="images/pics11_2.jpg" alt=""></a></div>
+                        </div>
 			<div class="container">
                             <section>
 					<header>

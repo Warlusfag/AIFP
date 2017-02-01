@@ -1,50 +1,12 @@
-{extends file="generic_page.tpl"}
+{extends file="generic_page_sidebar.tpl"}
 	{block name=main}  
 	<!-- Main -->
 <!-- Main -->
-		<div id="main">
-		
-			<div class="container">
-				<div id="banner"></div>
-			</div>
-			
-			<div class="container">
-				<div class="row">
-					<div id="sidebar" class="3u">
+
+			<div id="content" class="9u skel-cell-important">
 						<section>
 							<header>
-								<h2>Donec dictum</h2>
-							</header>
-							<p>Pellentesque viverra  enim.Tristique ante ut risus. Quisque dictum. Integer nisl elementum.</p>
-							<ul class="style1">
-								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
-								<li><a href="#">Integer rutrum nisl in mi</a></li>
-								<li><a href="#">Etiam malesuada rutrum enim</a></li>
-								<li><a href="#">Aenean elementum facilisis ligula</a></li>
-								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
-								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
-							</ul>
-						</section>
-						<section>
-							<header>
-								<h2>Sagittis convallis</h2>
-							</header>
-							<p>Quisque dictum. Integer nisl risus, sagittis convallis elementum.</p>
-							<ul class="style1">
-								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
-								<li><a href="#">Integer rutrum nisl in mi</a></li>
-								<li><a href="#">Etiam malesuada rutrum enim</a></li>
-								<li><a href="#">Aenean elementum facilisis ligula</a></li>
-								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
-								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
-							</ul>
-						</section>
-					</div>
-					
-					<div id="content" class="9u skel-cell-important">
-						<section>
-							<header>
-								<h2>Left Sidebar</h2>
+								<h2>EVENTI</h2>
 							</header>
 							<a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
 							<p>
@@ -56,9 +18,6 @@
 						</section>
 					</div>
 					
-				</div>
-			</div>
-		</div>
 	<!-- /Main -->
 
 {/block}

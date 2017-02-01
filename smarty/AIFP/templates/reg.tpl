@@ -1,12 +1,11 @@
 {extends file="generic_page.tpl"}
 {assign	"root" "/AIFP/"}
-{$sb = 'false'}
+
 	{block name=main}  
-		<div id="main">
-		
+		<div id="index">
 					
-			<div class="container center">
-                            <section class="container center">
+			<div class="container">
+                            <section>
 					<header>
 						<h2>Registrazione</h2>
 					</header>

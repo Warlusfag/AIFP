@@ -1,5 +1,5 @@
-{extends file="generic_page.tpl"}
-{$sb='true'}
+{extends file="generic_page_sidebar.tpl"}
+
 {block name=title}Libri{/block}
 	{block name=main}  
 
