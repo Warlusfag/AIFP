@@ -62,11 +62,14 @@
 
 	#main
 	{
-		padding: 0em 0em;
+		padding: 2em 2em;
 	}
 	
+        
+        
 	.homepage #main
 	{
+                padding: 0em 0em;
 		text-align: center;
 	}
 
