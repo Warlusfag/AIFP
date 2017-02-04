@@ -15,7 +15,7 @@
 			<div class="container">
                             <section>
 					<header>
-						<h4>Scopri il fantastico mondo dei funghi!!</h4>
+                                            <br><h4>Scopri il fantastico mondo dei funghi!!</h4>
 					</header>
 					<div class="row">
 						<div class="4u">
@@ -42,5 +42,6 @@
 					</div>
 				</section>
 			</div>
+                                                                <br>
 		</div>
 	{/block}

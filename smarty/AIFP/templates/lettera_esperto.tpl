@@ -1,18 +1,26 @@
 {extends file="generic_page_sidebar.tpl"}
 
 {block "title"}Lettera esperto{/block}
-
+{assign 'root' '/AIFP/'}
 {block name=main}
 					
 <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h2>STORIA DEL FUNGO</h2>
+                        <h2>Chiede all'esperto</h2>
                 </header>
-                <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
-                <p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                <p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-                <p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
+            <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a><br>
+                <form method='POST' action='{$roor}lettera_esperto.php'>
+                    <label><b>Inserire email e nome, un esperto le risponderà il prima possibile!</b></label><br><br>   
+                    <label>E-Mail</label><br>
+                    <input type="email" placeholder="Inserisci Email" name="email" required><br><br>
+                    <label>Nome</label><br>
+                    <input type="text" placeholder="Inserisci Nome" name="nome" required><br><br>
+                    <label>Testo</label><br>
+                    <textarea rows='6' cols='77' placeholder="Inserisci Testo" name="testo" required></textarea><br>
+                   
+                    <button type="submit" class="button">Invia</button>
+                </form>
         </section>
 </div>
 		
