@@ -26,6 +26,7 @@ if(isset($_GET['genere'])){
             continue;
         }
         $photo[$i] = $base_path.$file;
+        $i++;
     }
     $smarty->assign('foto',$photo);
 }
