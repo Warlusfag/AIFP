@@ -27,11 +27,23 @@ if( $ass instanceof associazioni){
                 $ass->upload_file($_FILES);
             }
         }else if ($_POST['action']=='show'){
-            if(isset($_FILES)){
-                $files = $ass->show_files();
+            $path = FILE_ASS.$ass->attributes['id'].'/';
+            $files = array();
+            if(!(file_exists($path))){
+                mkdir($path, 0777, true);
+            }else{
+                $temp = scandir($base_path);                
+                foreach($temp as $i=>$file){
+                    $files[$i] = array();
+                    if($file == '.' || $file == '..'){
+                        continue;
+                    }
+                    $files[$i][] = $base_path.$file;
+                    $files[$i][] = filesize($base_path.$file);                    
+                }
             }
-        }
-        else{
+            $smarty->assign('files',$files);
+        }else{
             $smarty->assign('error',GEN_ERROR);
         }        
         if($ass->err_descr != ''){
