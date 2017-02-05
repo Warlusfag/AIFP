@@ -45,17 +45,19 @@ function check_post($param){
         return null;
     }    
 }
+$message = "Congratulazioni, lei si è appena registarto al nostro sito";
 
-function reg_assoc($post){
-    if(($post = check_post($post))){
-        $user = new associazione();    
-        if($user->register_assoc($post)){
-            return true;
-        }else{
-            return false;
-        }    
+$smarty = new AIFP_Smarty();
+
+if( (($post= check_post($_POST))) ){
+    $user = new associazione();    
+    if($user->register_assoc($post)){
+        $smarty->assign('message',$message);
     }else{
-        return false;
+        $smarty->assign('error', $user->err_descr);
     }    
-}
+}else{
+    $smarty->assign('error', GEN_ERROR);
+}    
+
 

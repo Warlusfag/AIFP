@@ -42,24 +42,28 @@ function check_post($param)
 }
 
 $smarty = new AIFP_smarty();
-$tok = $_SESSION['user']; 
-$ass = aifp_controller::$collection_user[$tok];
-if( $ass instanceof associazione ){ 
+$c = new aifp_controller();
 
-    if(($post = check_post($_POST))){            
+if(isset($_SESSION['curr_user'])){    
+    $tok = $_SESSION['curr_user']['token'];
+    $t = $_SESSION['curr_user']['type'];        
+    if( ($ass = $c->get_user($tok, $t)) ){   
+        if(($post = check_post($_POST))){            
 
-        if($ass->add_evento($post)){
-            $smarty->assign('error', $ass->err_descr);
+            if($ass->add_evento($post)){
+                $smarty->assign('error', $ass->err_descr);
+            }else{
+                $smarty->assign('message', 'evento aggiornato con successo');                
+            }
         }else{
-            $smarty->assign('message', 'evento aggiornato con successo');                
+            $smarty->assign('error', 'BAD parameters');
         }
+        $smarty->assign('user', $user->attributes['user'] );
+        $smarty->assign('image', $user->get_image());
+        $smarty->assign('type', $user->type);
+        $smarty->display('personal_page.tpl');
     }else{
-        $smarty->assign('error', 'BAD parameters');
+        $smarty->assign('error', $ass->err_descr);
+        $smarty->display('index.tpl');
     }
-    $smarty->display('eventi.tpl');
-}else
-{
-    session_destroy();
-    $smarty->assign('error', GEN_ERROR);
-    $smarty->display('index.tpl');
 }

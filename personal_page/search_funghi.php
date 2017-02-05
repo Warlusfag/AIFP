@@ -1,22 +1,37 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['view'])){
+    $_SESSION['view'] = 'funghi';
+}
 require_once '../libs/aifp_controller.php';
-require_once '../libs/funghi_model.php';
+
 
 $smarty = new AIFP_smarty();
-
-if(isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];
-    $us = aifp_controller::$collection_user[$tok];
-
-    $username = $us->attributes['user'];
+$fungo = new funghi();
+if(isset($_POST['reset'])){
+    if($_SESSION['view'] != $fungo->table_descr['table']){   
+        $fungo->set_view($_SESSION['view']);
+        if($fungo->reset_search()){
+            $_SESSION['view'] = $fungo->table_descr['table'];
+        }
+    }
+}
+else if(isset($_SESSION['curr_user'])){    
+    if( ($type = $_SESSION['curr_user']['type']) != 'user' ){
+        $smarty->assign('error',"ERROR: you are not authorized to perform this action");
+        $smarty->display('personal_page.tpl'); 
+    }
     
+    $username = $_SESSION['curr_user']['user'];
+        
     $params = array();
     foreach($_POST as $key=>$value){
         $params[$key] = $value;
-    }
+    }    
     
-    $fungo = new funghi();
-    $fung = $fungo->search_funghi($params, $username);
+    $_SESSION['view'] = $fungo->preapare_dynaimic_search($_SESSION['view'], $username);
+    $fung = $fungo->search_funghi($params, 20);
     
     if($fungo->err_descr != ''){
         $smarty->assign('error',$funghi->err_descr);

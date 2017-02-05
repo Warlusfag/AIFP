@@ -1,7 +1,7 @@
 <?php
-require_once '../libs/aifp_controller.php';
-
 session_start();
+
+require_once '../libs/aifp_controller.php';
 
 function check_post ($param)
 {
@@ -29,13 +29,15 @@ function check_post ($param)
 }
 
 $smarty = new AIFP_smarty();
+$controller = new aifp_controller();
 
-if(isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];    
-    $user = aifp_controller::$collection_user[$tok];
+if(isset($_SESSION['curr_user'])){
+    $tok = $_SESSION['curr_user']['token'];    
+    $user = $contr->get_user($tok);
     if(($post=check_post($_POST))){ 
         $s = $post['sezione'];
-        $sez = aifp_controller::$collection_sez[$s];        
+        $coll_s = unserialize($_SESSION['forum']);
+        $sez = $coll_s->getitem($s);
         
         $text = $post['text'];
         $title = $post['titolo'];
@@ -43,10 +45,14 @@ if(isset($_SESSION['user'])){
             'user' => $user->attributes['user'],
             'image'=> $user->attributes_descr['image'],
             'punteggio'=>$user->attributes_descr['punteggio'],
-        );        
-        if($sez->new_conversazione($us, $text, $title)){
+        );     
+        
+        if($sez->add_conversazione($us, $text, $title)){
+            unset($_SESSION['convs']);
+            $coll_s->updateitem($s, $sez);
+            $_SESSION['sezione'] = serialize($coll_s);
             $smarty->assign('sezione', $s);
-            $smarty->assign('message','Nuova conversazione aggiunta con successo');    
+            $smarty->assign('message','Nuova conversazione aggiunta con successo');
         }else{
             $smarty->assign('error',GEN_ERROR);        
         }
@@ -55,6 +61,6 @@ if(isset($_SESSION['user'])){
     }
     $smarty->display('sezione.tpl');
 }else{
-    $smarty->display('login.tpl');
+    $smarty->display('index.tpl');
 }
 

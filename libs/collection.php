@@ -43,7 +43,22 @@ class collection{
         }else{
             return $this->items[$key];
         }
-    } 
+    }
+    public function count(){
+        return count($this->items);
+    }
+    public function erase(){
+        foreach(array_keys($this->items) as $key){
+            unset($this->items[$key]);
+        }
+    }
+    public function updateitem($key, $obj){
+        if(!isset($this->items[$key])){
+            return false;
+        }
+        $this->items[$key] = $obj;
+        return true;
+    }
 }
 
 class sezioni_collection extends collection{
@@ -58,6 +73,18 @@ class funghi_collection extends collection{
         parent::__construct();
     }
 
+}
+
+class conv_collection extends collection {
+    public $sezione;
+    public $curr_page;
+    
+    function __construct(){
+        parent:: __construct();
+        $this->sezione = 0;
+        $this->curr_page = 0;
+    }    
+    
 }
 
 class news_collection extends collection{

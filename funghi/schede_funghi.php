@@ -26,7 +26,12 @@ if(isset($_GET['genere'])){
             continue;
         }
         $photo[$i] = $base_path.$file;
+        $i++;
     }
     $smarty->assign('foto',$photo);
+}
+if(isset($_SESSION['curr_user'])){
+    $smarty->assign('user',$_SESSION['curr_user']['user']);
+    $smarty->assign('image',$_SESSION['curr_user']['image']);
 }
 $smarty->display('schede.tpl');

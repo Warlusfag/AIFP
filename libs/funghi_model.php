@@ -41,9 +41,26 @@ class funghi extends gen_model{
         $this->column_view = 'genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
       
         $this->queries = array(
-            'create' => "CREATE VIEW %s (".$this->column_view.") AS SELECT * FROM %s WHERE ",
+            'create' => "CREATE VIEW %s (".$this->column_view.") AS SELECT * FROM %s AS U ",
             'drop' => "DROP VIEW %s; ",
+            'select' => "SELECT * FROM %s AS U ",
         );        
+    }
+    
+    public function preapare_dynaimic_search($name, $username){
+        $this->view_name_old = $name;
+        $this->view_name = $this->generate_nameview($username);
+        return $this->view_name;
+    }
+    
+    public function set_view($name){
+        $this->view_name = $name;
+    }
+    
+    private function generate_nameview($user){
+        $i = rand(0, 5000);
+        $j = rand(0, 5000);
+        return  md5($user.$i.$j);                
     }
     
     public function insert_fungo($params){
@@ -54,8 +71,8 @@ class funghi extends gen_model{
         foreach($keys as $key){
             if(isset($params[$key])){
                 $value[$i] = $params[$key];
-            }       
-            $i++;            
+                $i++;
+            }                       
         }
         if(!$this->conn->insert_statement($this->table_descr['table'],$keys, $value, $type)){
             $this->err_descr = $this->conn->error;
@@ -66,13 +83,9 @@ class funghi extends gen_model{
         }
     }
     
-    private function generate_nameview($user){
-        $i = rand(0, 5000);
-        $j = rand(0, 5000);
-        return  md5($user.$i.$j);                
-    }
+
     
-    public function search_funghi($params, $user=-1, $limit = -1){
+    public function search_funghi($params, $limit = -1){
         if(!$this->conn->status){
             $this->conn = new db_interface();
             if(!$this->conn->status){
@@ -80,17 +93,13 @@ class funghi extends gen_model{
                 return false;
             }
         }
-        if($user == -1){
-            $query = "SELECT * FROM ". $this->table_descr['table']." AS U ";
-        }else{
-            if(!isset($this->view_name)){
-                $this->view_name_old = $this->table_descr['table'];            
-            }else{$this->view_name_old = $this->view_name;}
-            $this->view_name = $this->generate_nameview($user);
-            $query = sprintf($this->queries['create'], $this->view_name, $this->view_name_old );
-        }        
+        if(isset($this->view_name) && isset($this->view_name_old)){
+            $query = sprintf($this->queries['create'], $this->view_name, $this->view_name_old );         
+        }else{            
+            $query = sprintf($this->queries['select'], $this->table_descr['table']);
+        }              
         if(count($params) > 0){
-            $query .= "WHERE ";
+            $query .= " WHERE ";
             $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
             $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach( $column as $i => $key){
@@ -103,8 +112,11 @@ class funghi extends gen_model{
                 }
             }         
             $query = substr_replace($query, '', count($query)-6);
-        }else{ $this->err_descr = 'ERROR: no parameters'; return false;}
-        
+        }
+        else{
+            //se non ci sono parametri devo limitare il numero dei risultati
+            if($limit == -1){ $limit = 30;}
+        }        
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }  

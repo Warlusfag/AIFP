@@ -1,10 +1,6 @@
 <?php
-
-
 require_once 'user_model.php';
 require_once 'aifp_controller.php';
-
-
 
 class associazione extends user
 {   
@@ -107,7 +103,7 @@ class associazione extends user
     }
     
     
-    public function show_files(){
+    public function get_files(){
         if($this->attributes['id'] == -1){
             $this->err_descr = 'ERROR: association is not initialized';
             return false;
@@ -166,7 +162,7 @@ class associazione extends user
             $this->err_descr = 'ERROR: an error occurred while uploading file';            
             return false;            
         }        
-        $files = $this->show_files();        
+        $files = $this->get_files();        
         if(!$files){
             $this->err_descr ='ERROR: db is not ready';
             return false;
