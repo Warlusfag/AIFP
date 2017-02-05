@@ -45,7 +45,7 @@ class conversazione extends gen_model
     }
     
     public function init ($params){
-        if(!is_array($params) && count($params)>0 ){
+        if(!is_array($params) && count($params) == 0 ){
             return false;
         }
         foreach(array_keys($this->attributes) as $key){
@@ -82,72 +82,45 @@ class conversazione extends gen_model
         }
         $id = $this->conn->last_id;
         $this->attributes[$this->table_descr['key']] = $id;
-        $p = new post();        
-        if($p->new_post($text,$user,$id)){
-            $this->posts[0] = $p;
-            self::$inserted = true;
+        $this->add_post($text, $user);
+        if($this->err_descr == ''){
+            return true;
+        }else{ return false; }
+    }
+    
+    public function add_post($text, $user){
+        if(!is_array($user) || !is_string($text)){
+            $this->err_descr = 'ERROR:Bad parameters';
+            return false;
+        }
+        $p = new post();
+        $fk = $this->attributes[$this->table_descr['key']];
+        if($p->new_post($text,$user,$fk)){           
+            $this->attributes['num_post']++;
             $this->err_descr = '';
             return true;            
         }else{
-            self::$inserted = false;
             $this->err_descr = $p->err_descr;
             return false;
         }
     }
     
-    public function load_posts($page){
+    public function get_posts(){
         if($this->attributes[$this->table_descr['key']]==-1){
             $this->err_descr = "ERROR: object is not initialized";
             return false;
         }
-        if($page > limit_post || $page < 0){
-            $this->err_descr = 'ERROR:page out of range';
-            return false;            
-        }       
-        //Codice per assicurare un corretto caricamento della pagina
-        if(isset($this->posts[0])){
-            //se ho già caricato i posts in quella pagina e non ci sono stati inserimenti
-            //non carico di nuovo le conversazioni
-            if(count($this->posts) >= $page && self::$inserted == false){
-                return true;
-            }else if(count($this->posts) < $page || self::$inserted == true ){
-                $this->posts[$page] = array();                
-            }
-        }else{ $this->posts[0] = array();}
         $t = new post();        
         $params = array(
             'fk_conversazione' => $this->attributes[$this->table_descr['key']],            
         );        
-        $posts = $t->search_posts($params, -1, limit_post);
+        $posts = $t->search_posts($params);
         if($t->err_descr != ''){
             $this->err_descr = $t->err_descr;
             return false;
         }
-        $n = count($posts);
-        
-        for($i=0;$i<$n;$i++){
-            $t = new post();
-            $t->init($posts[$i]);            
-            $this->$posts[$page][$i] = $t;
-        }
-        self::$inserted = false;
         $this->err_descr = '';
-        return true;
-    }
-    //nel post riesco a mettere anche le informazioni degli utenti
-    public function show_posts($page){
-        if(isset($this->posts[$page])){
-            $temp = array();
-            $posts = $this->posts[$page];
-            for($i=0;$i<count($posts);$i++){
-                $temp[$i] = $posts[$i]->get_post();
-            }
-            $this->err_descr = '';
-            return $temp;
-        }else{
-            $this->err_descr = "ERROR: page doesn\'t load";
-            return false;
-        }
+        return $posts;
     }
 
     public function search_conversazioni($params, $after=-1, $limit=-1){

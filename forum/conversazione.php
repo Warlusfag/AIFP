@@ -10,30 +10,24 @@ if(isset($_GET['page'])){
     $page = 1;
 }
 
-if(isset($_POST['sezione']) && isset($_POST['conversazione']))
-{   
-    $s = $_POST['sezione'];
-    $c = $_POST['conversazione'];
-    if(isset(aifp_controller::$collection_sez[$i])){
-        $sez = aifp_controller::$collection_sez[$i];
-        $page = $_GET['page'];
-        if(isset($sez->convs[$page][$c])){
-            $conv = $sez->convs[$page][$c];            
-        }else{
-            $smarty->assign('error',GEN_ERROR);
-        }
-    }else{
-        //le sezioni devono essere tutte caricate
-        $smarty->assign('error',GEN_ERROR);
-    }   
-    if($conv->load_post($page)){
-        $posts = $conv->show_posts($page);
-        $smarty->assign('sezione',$s);
-        $smarty->assign('conversazione',$c);
-        $smarty->assign('posts', $posts);
-    }else{
-        $smarty->assign('error',$conv->err_descr);        
-    }   
+$smarty = new AIFP_smarty();
+$coll_c = unserialize($_SESSION['convs']);
+$convs = array();
+$s = $_POST['sezione'];
+$c = $_POST['conversazione'];
+$cpage = $_POST['page_conv'];
+    
+$t = $coll_c->getitem($cpage);
+$attr = $t[$c];
+$conv = new conversazione();
+$conv->init($attr);
+
+$posts = $conv->get_post();
+if($posts == false){
+    $smarty->assign('error',$conv->err_descr);  
 }else{
-    $smarty->assign('error',GEN_ERROR);    
+    $smarty->assign('sezione',$s);
+    $smarty->assign('conversazione',$c);
+    $smarty->assign('posts', $posts);
 }
+$smarty->display('conversazione.tpl');

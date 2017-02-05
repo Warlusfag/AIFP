@@ -286,9 +286,9 @@ class user extends gen_model{
                     }
                     $value[$i]=$params[$key];
                     $name.=$key.',';
-                    $t .= $type[$i].',';                
-                }
-                $i++;
+                    $t .= $type[$i].',';
+                    $i++;
+                }                
             }
             $name = substr_replace($name, '', count($name)-1);
             $t = substr_replace($t, '', count($t)-1);

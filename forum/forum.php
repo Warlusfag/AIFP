@@ -10,7 +10,7 @@ require_once '../libs/aifp_controller.php';
 
 $contr = new aifp_controller();
 $smarty = new AIFP_smarty();
-$coll_s = serialize($_SESSION['forum']);
+$coll_s = unserialize($_SESSION['forum']);
 $sez = array();
 
 if($coll_s->is_load()){    
@@ -19,8 +19,8 @@ if($coll_s->is_load()){
         $sez[$i] = $s->attributes;
     }
 }else{
-    $tem = $contr->forum();
-    for($i=0;$i<count($sez);$i++){
+    $temp = $contr->forum();
+    for($i=0;$i<count($temp);$i++){
         $s = $sez[$i];
         $coll_s->additem($s,$i);
         $sez[$i] = $s->attributes;

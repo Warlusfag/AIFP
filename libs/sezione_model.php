@@ -49,77 +49,32 @@ class sezione extends gen_model{
         return true;
     }
      
-    public function load_conv ($page){
+    public function get_conversazioni(){
         if($this->attributes[$this->table_descr['key']]==-1){
             $this->err_descr = "ERROR: object is not initialized";
             return false;
-        }
-        if($page > limit_conv || $page < 0){
-            $this->err_descr = 'ERROR:page out of range';
-            return false;            
-        }       
-        //Codice per assicurare un corretto caricamento della pagina
-        if(isset($this->convs[0])){
-            //se ho già caricato le conv in quella pagina e non ci sono stati inserimenti
-            //non carico di nuovo le conversazioni
-            if(count($this->convs) >= $page && self::$inserted == false){
-                return true;
-            }else if(count($this->convs) < $page || self::$inserted == true ){
-                $this->convs[$page] = array();                
-            }
-        }else{ $this->convs[0] = array();}
-        //after mi serve per dividere le varie conversazione nelle pagine
-        $after = 0;
-        if($page > 0){ 
-            $after = $page*limit_conv;
-            $page -= 1;
         }
         $t = new conversazione();        
         $params = array(
             'sezione' => $this->attributes[$this->table_descr['key']],            
         );        
-        $convs = $t->search_conversazioni($params, $after, limit_conv);
+        $convs = $t->search_conversazioni($params);
         if($t->err_descr != ''){
             $this->err_descr = $t->err_descr;
             return false;
-        }
-        $n = count($convs);
-        for($i=0;$i<$n;$i++){
-            $t = new conversazione();
-            $t->init($convs[$i]);
-            $this->$convs[$page][$i] = $t;
-        }
-        self::$inserted = false;
+        }               
         $this->err_descr = '';
-        return true;
-    }    
-    
-    public function get_conversazioni($page){        
-        if($page > limit_page || $page <= 0 ){
-            $this->err_descr = "ERROR: page over the range";
-            return false;
-        }
-        $page -= 1;
-        if(!isset($this->convs[$page])){
-            $this->err_descr = "ERROR: page selected is not right";
-            return false;
-        }
-        $convs = array();
-        for($i=0;$i<count($this->convs[$page]);$i++){
-            $gconv = $this->convs[$page][$i];
-            $convs[$i] = $gconv->attributes;
-        }
         return $convs;
     }
-    
-    public function new_conversazione($user, $titolo, $text){
+        
+    public function add_conversazione($user, $titolo, $text){
         $c = new conversazione();
         $c->new_conv($this->attributes[$this->table_descr['key']], $user, $titolo, $text);
         if($c->err_descr != ''){
             $this->err_descr = $c->err_descr;
             return false;
         }
-        self::$inserted = true;
+        $this->attributes['num_conv']++;
         $this->err_descr = '';
         return true;
         /*$i = count($this->convs)-1;
