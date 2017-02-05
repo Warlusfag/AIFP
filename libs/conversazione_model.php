@@ -4,15 +4,10 @@ const limit_post = 10;
 
 class conversazione extends gen_model
 {
-    public $posts;
-    static public $inserted;
-    
     function __construct($id=-1, $titolo=-1){
         parent::__construct();
         
-        if(!isset(self::$inserted)){
-            self::$inserted = true;
-        }        
+      
         $this->attributes = array(
             'id_conv'=>-1,
             'sezione' => -1,
@@ -26,8 +21,8 @@ class conversazione extends gen_model
             'key_type'=>'i',
             'column_name' => 'sezione,titolo,num_post,data',
             'column_type' => 'i,s,i,i,t',
-        );        
-        $this->posts = array();
+        );    
+
         
         if($id != -1 || $titolo != -1){
             if($id != -1 ){
@@ -43,20 +38,7 @@ class conversazione extends gen_model
             $this->init($conv[0]);
         }
     }
-    
-    public function init ($params){
-        if(!is_array($params) && count($params) == 0 ){
-            return false;
-        }
-        foreach(array_keys($this->attributes) as $key){
-            if(isset($params[$key])){
-                $this->attributes[$key]=$params[$key];            
-            }
-        }
-        $this->err_descr = '';
-        return true;
-    }  
-    
+     
     public function new_conv($fk_sez, $user, $titolo, $text){
         if(!$this->conn->status){
             $this->conn = new db_interface();
@@ -97,8 +79,13 @@ class conversazione extends gen_model
         $fk = $this->attributes[$this->table_descr['key']];
         if($p->new_post($text,$user,$fk)){           
             $this->attributes['num_post']++;
-            $this->err_descr = '';
-            return true;            
+            $param = array('num_post' => $this->attributes['num_post']);
+            if($this->update($param)){
+                $this->err_descr = '';
+                return true;
+            }else{
+                return false;
+            }                        
         }else{
             $this->err_descr = $p->err_descr;
             return false;

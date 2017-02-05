@@ -12,14 +12,10 @@ class associazione extends user
         parent::__construct();
         $this->type= 'associazione';        
         
-        $this->table_descr['table'] = 'associazione';
-        $this->table_descr['table_descr'] = 'descr_ass';       
+        $this->table_descr['table'] = 'associazione';      
         $this->table_descr['key'] = 'ID_ass';
         $this->table_descr['key_type'] = 'i';
-        $this->table_descr['column_name']='email,password,user,nome,regione,indirizzo,CAP';
-        $this->table_descr['column_descr']='sito_web,num_post,punteggio,componenti,esperto';
-        $this->table_descr['column_type']='s,s,s,s,s,s,s';
-        $this->table_descr['column_type_descr'] = 's,i,i,i,i';
+        $this->table_descr['column_name']='email,password,user,nome,regione,indirizzo,CAP,sito_web,num_post,punteggio,componenti,esperto';
                 
         $this->attributes = array(
             'ID_ass' => -1,
@@ -29,15 +25,12 @@ class associazione extends user
             'nome' => 'associazione',
             'regione' => 'regione',
             'indirizzo' => 'indirizzo',
-            'CAP' => '00000',        
-        );
-        $this->attributes_descr = array(
-            'ID_ass' => -1,
+            'CAP' => '00000',
             'sito_web'=> 'default.aifp.com',
             'num_post' => 0,
             'punteggio' => 1,
             'componenti' => 2,
-            'esperto' => 1,            
+            'esperto' => 1, 
         );
         
         $this->table_descr_file = array(
@@ -65,24 +58,8 @@ class associazione extends user
         $params=array(
             'email'=>$em,
         );  
-        $us = $contr->search_OnAll_users($params, 1);
-        if(!$us  || count($us) == 0){
-            $this->err_descr ="ERROR: email is incorrect";
-            return false;
-        }
-        $keys = array_keys($us[0]);
-        foreach($keys as $k){
-            if(is_string($k) ){
-                $user = $this->get_user_from_pkey($k);
-                if(is_object($user)){break;}
-            }
-        }
-        $us_descr = $user->search_descr_user($params, 1);
-        if(!$us_descr  || count($us_descr) == 0){
-            $this->err_descr ="ERROR: email is incorrect";
-            return false;
-        }        
-        $user->init($us[0], $us_descr[0]);
+        $us = $contr->get_user($params);
+
         //cancello il vecchio utente
         if(!$us->delete_user()){
             $this->err_descr = $us->err_descr;
@@ -90,21 +67,26 @@ class associazione extends user
         }
         //Aggiorno i punteggi di entrambi 
         $us->attributes['associazione'] = $this->attributes[$this->table_descr['key']];
-        $us->attributes_descr['punteggio'] += 300;       
+        $us->attributes['punteggio'] += 300;       
         $us->upgrade_esperto();
-        if(!$us_new->insert_user($us->attributes, $us->attributes_descr)){
+        if(!$us_new->insert_user($us->attributes)){
             $this->err_descr = $us->err_descr;
             return false;
         }        
-        $params = array( 'punteggio'=>$this->$this->attributes_descr['punteggio'],);
-        $this->update(array(), $params);
-        $this->err_descr = '';
-        return true;
+        $params = array( 'punteggio'=> $this->attributes['punteggio'],);
+        if($this->update($params)){
+            $this->err_descr = '';
+            return true;            
+        }else{
+            return false;
+        }
+        
     }
     
     
     public function get_files(){
-        if($this->attributes['id'] == -1){
+        $key = $this->attributes[$this->table_descr['key']]; 
+        if( $key == -1){
             $this->err_descr = 'ERROR: association is not initialized';
             return false;
         }
@@ -115,12 +97,12 @@ class associazione extends user
                 return false;
             }
         }
-        $path = FILE_ASS.$this->attributes['id'].'/';
+        $path = FILE_ASS.$key.'/';
         if(!(file_exists($path))){
            mkdir($path, 0777, true);
            return array();
         }
-        $query = "SELECT * FROM ".$this->table_descr_file['table']." WHERE ".$this->table_descr['key']."=".$this->attributes['id'].";";
+        $query = "SELECT * FROM ".$this->table_descr_file['table']." WHERE ".$this->table_descr['key']."=".$key.";";
         
         $res = $this->conn->query($query);
         if(!$res){
@@ -145,11 +127,12 @@ class associazione extends user
     
     public function upload_file($file_descr)
     {
-        if($this->attributes['id'] == -1){
-            $this->err_descr = 'Error, association is not initialize';
+        $key = $this->attributes[$this->table_descr['key']]; 
+        if( $key == -1){
+            $this->err_descr = 'ERROR: association is not initialized';
             return false;
         }
-        $path = FILE_ASS.$this->attributes['id'].'/';
+        $path = FILE_ASS.$key.'/';
         if(!(file_exists($path))){
            mkdir($path, 0777, true);           
         }
@@ -176,7 +159,7 @@ class associazione extends user
         ); 
         $id_arr = array(
             0 => $this->table_descr_file['key'],
-            1 => $this->attributes['id'],
+            1 => $key,
             2 => $this->atributes['key_type'],
         );        
         if(!$this->conn->statement_update($this->tabe_descr_file['table'],$name,$value,$type,$id_arr)){
@@ -189,11 +172,12 @@ class associazione extends user
     
     public function download_file($filename)
     {
-        if($this->attributes['id'] == -1){
-            $this->err_descr = 'Error, association is not initialize';
+        $key = $this->attributes[$this->table_descr['key']]; 
+        if( $key == -1){
+            $this->err_descr = 'ERROR: association is not initialized';
             return false;
         }
-        $path = FILE_ASS.$this->attributes['id'].'/';
+        $path = FILE_ASS.$key.'/';
         if(!(file_exists($path))){
            mkdir($path, 0777, true);
            $this->err_descr='ERROR: no such file or directory';
@@ -215,13 +199,14 @@ class associazione extends user
     
     public function delete_file($filename)
     {
-        if($this->attributes['id'] == -1){
-            $this->err_descr = 'ERROR: association is not initialize';
+        $key = $this->attributes[$this->table_descr['key']]; 
+        if( $key == -1){
+            $this->err_descr = 'ERROR: association is not initialized';
             return false;
         }
         $filename = basename($filename);
-        $path = FILE_ASS.$this->attributes['id'].'/'.$filename;
-        if(!(file_exists($path)))        {
+        $path = FILE_ASS.$key.'/'.$filename;
+        if(!(file_exists($path))){
            $this->err_descr='ERROR: we don\'t find any files for this association ';
            return false;
         }
@@ -253,7 +238,7 @@ class associazione extends user
         );
         $id_arr = array(
             0 => $this->table_descr_file['key'],
-            1=> $this->attributes['id'],
+            1=> $key,
             2 => $this->table_descr_file['key_type'],
         );
         if(!$this->conn->statement_update($this->table_descr['table'],$name,$value,$type,$id_arr)){

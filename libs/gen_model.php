@@ -22,6 +22,19 @@ class gen_model{
         $this->err_descr="";
     }   
     
+    public function init($params){
+        if(!is_array($params)){
+            $this->err_descr = "ERROR: failed input";
+            return false;
+        }
+        foreach(array_keys($this->attributes) as $key){
+            if(isset($us[$key])){
+                $this->attributes[$key]=$us[$key];            
+            }
+        }
+        return true;
+    }
+    
     public function insert($params){
         if(!is_array($params)){
             return false;
@@ -54,41 +67,41 @@ class gen_model{
     }
     
     public function update($params=array()){
-        if(count($params)>0){
-            $value=array();
-            $t='';
-            $name = '';
-            $i=0;        
-            $keys=explode(',',$this->table_descr['column_name']);
-            $type=explode(',',$this->table_descr['column_type']);
-            foreach($keys as $key){
-                //controllo se è un calore di descr
-                if(isset($params[$key])){
-                    if($key == $this->table_descr['key']){
-                        $this->err_descr = "ERROR: failed input";
-                        return false;
-                    }
-                    $value[$i]=$params[$key];
-                    $name.=$key.',';
-                    $t .= $type[$i].',';
-                    $i++;
-                }                
-            }
-            $name = substr_replace($name, '', count($name)-1);
-            $t = substr_replace($t, '', count($t)-1);
-            $id_arr= array(
-                0=>$this->table_descr['key_name'],
-                1=>$this->id,
-                2=>$this->table_descr['key_type'],
-            );
-            if(count($value)>0){
-                $this->conn = statement_update($this->table_descr['table_name'],$name,$value,$t,$id_arr);
-                if(!$this->conn->status){
-                    $this->err_descr = $this->conn->error;
+        if(count($params)==0){
+            $params = $this->attributes;
+        }
+        $value=array();
+        $t='';
+        $name = '';
+        $i=0;        
+        $keys=explode(',',$this->table_descr['column_name']);
+        $type=explode(',',$this->table_descr['column_type']);
+        foreach($keys as $key){
+            //controllo se è un calore di descr
+            if(isset($params[$key])){
+                if($key == $this->table_descr['key']){
+                    $this->err_descr = "ERROR: failed input";
                     return false;
                 }
-            }else{$this->err_descr = "ERROR:bad input"; return false;}
+                $value[$i]=$params[$key];
+                $name .= $key.',';
+                $t .= $type[$i].',';
+                $i++;
+            }                
         }
+        $name = substr_replace($name, '', count($name)-1);
+        $t = substr_replace($t, '', count($t)-1);
+        $id_arr= array(
+            0=>$this->table_descr['key'],
+            1=>$this->attributes[$this->table_descr['key']],
+            2=>$this->table_descr['key_type'],
+        );
+        if(count($value)>0){
+            if(!$this->conn->statement_update($this->table_descr['table'],$name,$value,$t,$id_arr)){            
+                $this->err_descr = $this->conn->error;
+                return false;
+            }
+        }else{$this->err_descr = "ERROR:bad input"; return false;}        
         $this->err_descr = '';
         return true;       
     }
@@ -109,9 +122,10 @@ class gen_model{
         return false;        
     }
     
-    public function search($params, $limit=-1)
+    public function search($params, $limit=-1, $order = -1)
     {
          if(!is_array($params) || $limit == 0){
+             $this->err_descr = 'ERROR:Bad input';
             return false;
         }
         $query = "SELECT * FROM ".$this->table_descr['table']." AS U";
@@ -131,6 +145,9 @@ class gen_model{
             }
             //elimino lo spazio
             $query = substr_replace($query, '', count($query)-6);
+        }
+        if($order != -1){
+            $query .= " ORDER BY \'$order\' ";
         }
         if($limit > 0){
             $query .= " LIMIT $limit";            

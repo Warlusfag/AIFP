@@ -75,8 +75,13 @@ class sezione extends gen_model{
             return false;
         }
         $this->attributes['num_conv']++;
-        $this->err_descr = '';
-        return true;
+        $param = array('num_conv' => $this->attributes['num_conv']);
+        if($this->update($param)){
+            $this->err_descr = '';
+            return true;
+        }else{
+            return false;
+        }
         /*$i = count($this->convs)-1;
         if(count($this->convs[$i]) < limit_conv){
             array_push($this->convs[$i], $c);

@@ -83,17 +83,7 @@ class aifp_controller
                 }
             }            
         }
-        //allo 00 c'è il valore della chiave
-        $params = array(
-            $user->table_descr['key'] => $us[0][0],
-        );
-        //trovo ora il resto della descrizione dell'utente
-        $us_descr= $user->search_descr_user($params, 1);
-        if(!$us_descr  || count($us_descr) == 0){
-            $this->err_descr ="ERROR: email is incorrect";
-            return false;
-        } 
-        $user->init($us[0], $us_descr[0]);
+        $user->init($us[0]);
         $this->description =''; 
         return $user;            
     }
@@ -204,56 +194,7 @@ class aifp_controller
        } 
        return $ris;	 
     }
-
-    function search_OnAll_descr_users($params, $limit=-1, $type=-1){  
-       $ris = array();
-       //controllo se è stato passato un tipo ed imposto il limite del ciclo
-       if($type != -1){ 
-       $n = 1; 
-       }else{ 
-           $n = count($this->tipo); 
-       } 
-       for($i=0;$i<$n;$i++){
-           //Ora inzializzo l'ogetto a seconda del tipo
-           if($type != -1){ 
-                $us = $this->get_us_from_type($type); 
-                if($us == null){ 
-                    $this->description = "ERROR:Wrong type";
-                    return null; 
-                }                 
-           }else{ 
-                $us = $this->get_us_from_type($this->tipo[$i]); 
-           }      
-           //Ricerco l'utente
-           $t = $us->search_descr_user($params); 
-           //Caso in cui i risultati sono illimitati
-            if($us->err_descr == ''){
-                //se in una tabella non ho trovato niente e non conosco il tipo non significa che nella prossima
-               // non lo troverò
-                if(count($t) == 0){
-                    if($type == -1){
-                        continue;
-                    }else{
-                        break;
-                    }
-                }
-               if($limit == -1){ 
-                    $ris = array_merge($ris, $t);
-                //Caso in cui limit è settato   
-               }else if(count($t) == $limit){
-                    $ris = array_merge($ris, $t);
-                    break;
-               }else if(count($t) < $limit){
-                    $ris = array_merge($ris, $t);
-                    $limit -= count($t);
-               }                       
-            }else{
-               $this->description = $us->err_descr;
-               return false;
-            }
-       } 
-       return $ris;	 
-    }
+    
     //popola la collection  per le sezioni
     public function forum(){
         
@@ -307,5 +248,13 @@ class aifp_controller
             $this->description ="ERROR:bad parameters";
             return false;
         }
-    }    
+    }
+    
+    public function get_schede_piante($genere){
+        
+    }
+    //Se non gli passo niente ricerco i primi n prodotti che trovo nel DB
+    public function get_prodotti($genere=-1){
+        
+    }
 }

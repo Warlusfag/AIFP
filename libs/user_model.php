@@ -90,155 +90,27 @@ class user extends gen_model{
     
     public function change_pwd($password){
         $params = array('password' => md5($password));
-        $this->update_user($params);
+        return $this->update_user($params);
     }
     
     
     public function insert_user($params){
-        if(!is_array($params)){
-            return false;
-        }
-        $i=0;
-        $val= array();
-        //Nomi collonne della tabella user e descr
-        $name=$this->table_descr['column_name'];
-        $type = $this->table_descr['column_type'];
-        foreach($this->attributes as $key=>$value){
-            if($key != $this->table_descr['key']){
-                //se nei parametri quel valore non è settato allora lo prendo nei default, altrimento lo assegno
-                if(!isset($params[$key])){
-                    $val[$i]=$value;
-                }else{
-                    $val[$i]=$params[$key];
-                }
-                $i++;
-            }            
-        }
-        if(!$this->conn->statement_insert($this->table_descr['table'],$name,$val,$type)){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }
-        $this->err_descr='';
-        return true;       
+        return $this->insert($params);   
     }
     
     
     public function delete_user(){
-        if($this->attributes[$this->table_descr['key']] == -1){
-            $this->err_descr = "ERROR: user is not initialized";
-            return false;
-        }        
-        $name=$this->table_descr['key'];
-        $type=$this->table_descr['key_type'];
-        $value=array( 0=>$this->attributes[$this->table_descr['key']],);
-        if(!$this->conn->statement_delete($this->table_descr['table'], $name, $value, $type)){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }
-        $this->err_descr = '';
-        return false;        
+        return $this->delete();                
     }
     
     //il parametro limit serve per limitare il numero dei risultati
-    public function search_user($params, $limit=-1)
-    {
-         if(!is_array($params) || $limit == 0){
-            return false;
-        }
-        $query = "SELECT * FROM ".$this->table_descr['table']." AS U";
-        if(count($params)>0){
-            $query .= " WHERE ";
-            //estraggo i nomi delle colonne, e verifico se sono presenti, se ci sono aggiungo la query
-            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
-            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
-            foreach($column as $i=>$key){
-                if(isset($params[$key])){
-                    if($c_type[$i] == 's'){
-                        $query .= "U.$key='$params[$key]' AND ";                        
-                    }else{
-                        $query .= "U.$key=$params[$key] AND ";
-                    }
-                }
-            }
-            //elimino lo spazio
-            $query = substr_replace($query, '', count($query)-6);
-        }
-        if($limit > 0){
-            $query .= " LIMIT $limit";            
-        }
-        $query .= ";";
-        
-        $res = $this->conn->query($query);
-        if (!$this->conn->status){            
-            $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
-            return false;
-        }
-        if(($nr = $res->num_rows) >=0){
-            $app=array();                
-            for($j=0; $j<$nr; $j++){
-                $res->data_seek($j);
-                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
-            }
-            $this->err_descr = '';
-            return $app;
-        }
+    public function search_user($params, $limit=-1){
+        return $this->search($params, $limit);       
     }  
-   
-    public function init($us, $us_descr){
-        if(!is_array($us) || !is_array($us_descr)){
-            $this->err_descr = "ERROR: failed input";
-            return false;
-        }
-        foreach($this->attributes as $key=>$value){
-            if(isset($us[$key])){
-                $this->attributes[$key]=$us[$key];            
-            }
-        }
-        foreach($this->attributes_descr as $key=>$value){
-            if(isset($us_descr[$key])){
-                $this->attributes_descr[$key]=$us_descr[$key];            
-            }
-        }
-        return true;
-    }
     
     //metodo per aggiornare in modo dinamico i singoli campi nel DB
-    public function update_user($params=array(), $params_descr=array()){
-        if(count($params)>0){
-            $value=array();
-            $t='';
-            $name = '';
-            $i=0;        
-            $keys=explode(',',$this->table_descr['column_name']);
-            $type=explode(',',$this->table_descr['column_type']);
-            foreach($keys as $key){
-                //controllo se è un calore di descr
-                if(isset($params[$key])){
-                    if($key == $this->table_descr['key']){
-                        $this->err_descr = "ERROR: failed input";
-                        return false;
-                    }
-                    $value[$i]=$params[$key];
-                    $name.=$key.',';
-                    $t .= $type[$i].',';
-                    $i++;
-                }                
-            }
-            $name = substr_replace($name, '', count($name)-1);
-            $t = substr_replace($t, '', count($t)-1);
-            $id_arr= array(
-                0=>$this->table_descr['key_name'],
-                1=>$this->id,
-                2=>$this->table_descr['key_type'],
-            );
-            if(count($value)>0){
-                $this->conn = statement_update($this->table_descr['table_name'],$name,$value,$t,$id_arr);
-                if(!$this->conn->status){
-                    $this->err_descr = $this->conn->error;
-                    return false;
-                }
-            }else{$this->err_descr = "ERROR:bad input"; return false;}
-        }   
+    public function update_user($params=array()){
+        return $this->update($params);  
     }    
     
     public function write_post($fk_conv, $text)            

@@ -64,23 +64,7 @@ class funghi extends gen_model{
     }
     
     public function insert_fungo($params){
-        $value = array();
-        $keys = explode(',',$this->table_descr['column_name']);
-        $i = 0;
-        $type = explode(',',$this->table_descr['column_type']);
-        foreach($keys as $key){
-            if(isset($params[$key])){
-                $value[$i] = $params[$key];
-                $i++;
-            }                       
-        }
-        if(!$this->conn->insert_statement($this->table_descr['table'],$keys, $value, $type)){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }else{
-            $this->err_descr = '';
-            return false;
-        }
+        return $this->insert($params);
     }
     
 
