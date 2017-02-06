@@ -7,7 +7,7 @@
 <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h2>Chiede all'esperto</h2>
+                        <h2>Chiedi all'esperto</h2>
                 </header>
             <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a><br>
                 <form method='POST' action='{$roor}lettera_esperto.php'>

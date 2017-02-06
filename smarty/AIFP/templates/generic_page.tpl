@@ -57,13 +57,13 @@
                                                     </li>            
                                                     <li><a href="{$root}piante/schede_piante.php">Piante</a></li>
                                                     <li><a href="{$root}funghi/regolamento.php">Regolamenti</a></li>
-                                                    <li><a href="#">Prodotti</a></li>
+                                                    <li><a href="{$root}prodotti/prodotti.php">Prodotti</a></li>
                                                     <li><a href="{$root}eventi/eventi.php">Eventi</a></li>
                                                     <li><a href="{$root}forum/forum.php">Forum</a></li>
                                                     <li><a href="{$root}lettera_esperto.php">Chiedi all'esperto</a></li>
 							{if !$user}
                             	<li class="dropdown">
-                                <a class="dropbtn "href="#"><img src="{$root}css/images/user.png"></a>
+                                <a class="dropbtn "href="#"><img src="{$root}/images/user.png"></a>
                                 <div class="dropdown-content">
                                     <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
                                     <a href="{$root}profilize/reg.php">Registrati</a>

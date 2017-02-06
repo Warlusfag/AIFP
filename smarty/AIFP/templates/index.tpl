@@ -27,16 +27,16 @@
 						</div>
 						<div class="4u">
 							<section>
-								<a href="#" class="image full"><img src="images/pics02.jpg" alt=""></a> 
+								<a href="forum/forum.php" class="image full"><img src="images/pics02.jpg" alt=""></a> 
 								<p>Consulta il nostro FORUM in cui potresti chiarire ogni dubbio sul mondo micologico. Non dimenticarti di effettuare l'accesso! </p>
-								<a href="#" class="button">FORUM</a>
+								<a href="forum/forum.php" class="button">FORUM</a>
 							</section>
 						</div>
 						<div class="4u">
 							<section>
-								<a href="#" class="image full"><img src="images/pics03.jpg" alt=""></a>
+								<a href="lettera_esperto.php" class="image full"><img src="images/pics03.jpg" alt=""></a>
 								<p>CHIEDI ALL'ESPERTO è il modo più semplice per rivolgere domande dirette ai nostri micologi professionisti pronti ad aiutarti!</p>
-								<a href="#" class="button">CHIEDI ALL'ESPERTO</a>
+								<a href="lettera_esperto.php" class="button">CHIEDI ALL'ESPERTO</a>
 							</section>
 						</div>
 					</div>
