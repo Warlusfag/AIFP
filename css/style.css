@@ -134,11 +134,15 @@
 
 	/* Images */
 
+		img.pic{
+    		width: 50%;
+    		border-radius: 25%;
+		}	
+
 		.image
 		{
 			display: inline-block;
 		}
-		
 			.image img
 			{
 				display: block;
