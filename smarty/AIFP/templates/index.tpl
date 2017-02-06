@@ -1,5 +1,5 @@
 
-{extends file="generic_page.tpl"}
+{extends file="generic_page_news.tpl"}
 	{block "title"}AIFP{/block}
 
 	{block name=define_class}
