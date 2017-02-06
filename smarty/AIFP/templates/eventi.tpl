@@ -1,23 +1,90 @@
-{extends file="generic_page_sidebar.tpl"}
-	{block name=main}  
-	<!-- Main -->
-<!-- Main -->
+{extends file="generic_page.tpl"}
+{block "title"}Eventi{/block}
 
-			<div id="content" class="9u skel-cell-important">
-						<section>
-							<header>
-								<h2>EVENTI</h2>
-							</header>
-							<a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
-							<p>
+{block name=main}  
+    
+        <div class="row half">
+                <div class="3u">
+                        <section>
+                                <header>
+                                        <h2>EVENTI & SAGRE</h2>
+                                </header>
+                                <ul class="default">
+                                        <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
+                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
+                                                <span class="posted">May 9th  |  (10 )  Comments</span>
+                                        </li>
+                                        <li><img src="{$root}images/pics05.jpg" width="78" height="78" alt="">
+                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
+                                                <span class="posted">May 1st  |  (10 )  Comments</span>
+                                        </li>
+                                        <li><img src="{$root}images/pics06.jpg" width="78" height="78" alt="">
+                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
+                                                <span class="posted">April 28th  |  (10 )  Comments</span>
+                                        </li>
+                                </ul>
+                        </section>
+                </div>
+                <div class="3u">
+                        <section>
+                                <header>
+                                        <h2>CORSI</h2>
+                                </header>
+                                <ul class="default">
+                                        <li><img src="{$root}images/pics07.jpg" width="78" height="78" alt="">
+                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
+                                                <span class="posted">May 9th  |  (10 )  Comments</span>
+                                        </li>
+                                        <li><img src="{$root}images/pics08.jpg" width="78" height="78" alt="">
+                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
+                                                <span class="posted">May 1st  |  (10 )  Comments</span>
+                                        </li>
+                                        <li><img src="{$root}images/pics09.jpg" width="78" height="78" alt="">
+                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
+                                                <span class="posted">April 28th  |  (10 )  Comments</span>
+                                        </li>
+                                </ul>
+                        </section>
+                </div>
+                <div class="6u">
+                        <section>
+                                <header>
+                                        <h2>NEWS</h2>
+                                </header>
+                                <div class="slideshow-container"> 
+                                        <div class="mySlides fade" style="display: block;">
+                                                <div class="numbertext">1 / 3</div>
+                                                <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
+                                                <p><b>TITOLO 1</b>
+                                                        sottotitolo</P>
 
-							<b>SCHEDE FUNGHI</b>
-							Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-						</section>
-					</div>
-					
-	<!-- /Main -->
+                                        </div>
+                                        <div class="mySlides fade">
+                                                <div class="numbertext">2 / 3</div>
+                                                <a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
+                                                <p><b>TITOLO 2</b>
+                                                        sottotitolo</P>
+
+                                        </div>
+                                        <div class="mySlides fade">
+                                                <div class="numbertext">3 / 3</div>
+                                                <a href="#" class="image full"><img src="{$root}images/pics10_2.jpg" alt=""></a>
+                                                <p><b>TITOLO 3</b>
+                                                        sottotitolo</P>
+
+                                        </div>
+                                        <a class="prev" onclick="plusSlides(-1)">❮</a>
+                                        <a class="next" onclick="plusSlides(1)">❯</a>
+                                </div>
+                                <br>
+
+                                <div style="text-align:center">
+                                  <span class="dot" onclick="currentSlide(1)"></span> 
+                                  <span class="dot" onclick="currentSlide(2)"></span> 
+                                  <span class="dot" onclick="currentSlide(3)"></span> 
+                                </div>
+                        </section>
+                </div>
+        </div>
 
 {/block}

@@ -3,6 +3,7 @@ session_start();
 
 require_once '../libs/aifp_controller.php';
 
+
 $contr = new aifp_controller();
 $smarty = new AIFP_smarty();
 
@@ -21,4 +22,7 @@ if(isset($_SESSION['curr_user'])){
     $smarty->assign('user',$_SESSION['curr_user']['user']);
     $smarty->assign('image',$_SESSION['curr_user']['image']);
 }
+
+$smarty = new AIFP_Smarty();
+
 $smarty->display('prodotti.tpl');
