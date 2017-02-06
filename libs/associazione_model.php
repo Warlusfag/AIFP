@@ -15,7 +15,7 @@ class associazione extends user
         $this->table_descr['table'] = 'associazione';      
         $this->table_descr['key'] = 'ID_ass';
         $this->table_descr['key_type'] = 'i';
-        $this->table_descr['column_name']='email,password,user,nome,regione,indirizzo,CAP,sito_web,num_post,punteggio,componenti,esperto';
+        $this->table_descr['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,sito_web,num_post,punteggio,componenti,esperto';
                 
         $this->attributes = array(
             'ID_ass' => -1,
@@ -43,8 +43,8 @@ class associazione extends user
         
         $this->table_descr_req = clone $this->table_descr;
         $this->table_descr_req['table'] = 'ass_req';    
-        $this->table_descr_req['column_name']='email,password,user,nome,regione,indirizzo,CAP,sito_web';
-        $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s';
+        $this->table_descr_req['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,sito_web';
+        $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s,s';
     }
     
     public function upgrade_user($em, $type){

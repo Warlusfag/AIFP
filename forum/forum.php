@@ -21,11 +21,11 @@ if($coll_s->is_load()){
 }else{
     $temp = $contr->forum();
     for($i=0;$i<count($temp);$i++){
-        $s = $sez[$i];
+        $s = $temp[$i];
         $coll_s->additem($s,$i);
-        $sez[$i] = $s->attributes;
-        $_SESSION['forum'] = serialize($col_s);
+        $sez[$i] = $s->attributes;        
     }
+    $_SESSION['forum'] = serialize($col_s);
 }
 if($contr->descritpion != ''){
     $smarty->assign('error',GEN_ERROR);

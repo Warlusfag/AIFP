@@ -25,7 +25,9 @@ if(isset($_GET['genere'])){
         if($file == '.' || $file == '..'){
             continue;
         }
-        $photo[$i] = $base_path.$file;
+        $t = explode('.',$file);
+        $f = $base_path.$file;
+        $photo[$i] = array($t[0], $f);
         $i++;
     }
     $smarty->assign('foto',$photo);

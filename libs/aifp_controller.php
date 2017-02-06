@@ -14,7 +14,6 @@ if (!isset($_SESSION['funghi'])){
 
 class aifp_controller
 {
-
     public $tipo;    
     public $description;
     
@@ -213,6 +212,7 @@ class aifp_controller
         $this->description = '';
         return $temp;               
     }
+    
     //Popola la collection delle news
     public function get_news(){
 
@@ -256,5 +256,28 @@ class aifp_controller
     //Se non gli passo niente ricerco i primi n prodotti che trovo nel DB
     public function get_prodotti($genere=-1){
         
+    }
+    
+    public function get_regolamento($provincia){
+        $db = new db_interface();
+        
+        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.provincia = \'$provincia\';";        
+        $res = $db->query($query);
+        if(($nr = $res->num_rows) >=0){            
+            $res->data_seek(0);
+            $app = $res->fetch_array(MYSQLI_NUM);
+            if(count($app)==1){
+                return $app[0];
+            }else if(count($app) == 0){
+                $this->description = 'ERROR: nessun regolamento troato per la tua provincia';
+                return false;
+            }else{
+                $this->description = GEN_ERROR;
+                return false;
+            }
+        }else{
+            $this->description = $db->error;
+            return false;
+        }       
     }
 }

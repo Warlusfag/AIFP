@@ -27,23 +27,13 @@ if( ($post = check_post($_POST)) ){
     $params = array(
         'esperto' => 1,
     );    
-    $list_user = $contr->search_OnAll_descr_users($params, 20);
+    $list_user = $contr->search_OnAll_users($params, 20);
     if($contr->description == ''){
         $emails = array();
         $i=0;
         foreach($list_user as $value){
-            foreach($value as $k){
-                if(is_string($k) ){
-                    $user = $contr->get_user_from_pkey($k);
-                    if(is_object($user)){
-                        $u =  $us->search_users($p);
-                        $emails[$i] = $u['email'];
-                        $i++;
-                        
-                    }
-                }
-            }
-            
+            $emails[$i] = $value['email'];
+            $i++;           
         }        
     }else{
         $smarty->assign('error', GEN_ERROR);

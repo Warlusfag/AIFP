@@ -12,7 +12,7 @@ class funghi extends gen_model{
     //name vecchia della view
     public $view_name_old;
     static public $generi= array(
-            'ammanita',
+            'amanita',
             'boletus',
             'agaricus',
             'tricholoma',
