@@ -65,7 +65,7 @@
                             	<li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="{$root}/images/user.png"></a>
                                 <div class="dropdown-content">
-                                    <a onclick="document.getElementById('alert').style.display='block'" href="#">Accedi</a>
+                                    <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi</a>
                                     <a href="{$root}profilize/reg.php">Registrati</a>
                                 </div>
                            		</li>
@@ -93,7 +93,7 @@
                                 	<label><b>ACCEDI AD AIFP</b></label>
                                 </div>
                                 <div class="imgcontainer">
-                                	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Chiudi">&times;</span>
+                                	<span onclick="document.getElementById('login').style.display='none'" class="close" title="Chiudi">&times;</span>
                                     <img src="{$root}images/img_avatar.png" alt="Avatar" class="avatar">
                                 </div>
 
