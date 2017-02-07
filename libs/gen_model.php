@@ -38,6 +38,11 @@ class gen_model{
     public function get_attributes($way = -1){
         if($way == -1){
             return $this->attributes;
+        }else if(isset($this->attributes[$way])){
+            $t = array($way => $this->attributes[$way]);
+            return $t;
+        }else{
+            return false;
         }
     }
     

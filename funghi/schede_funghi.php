@@ -12,14 +12,23 @@ $smarty = new AIFP_Smarty();
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
     $collection = unserialize($_SESSION['funghi']);
+    
     if( ($funghi=$collection->getitem($genere))==false){
         $contr = new aifp_controller();
         $funghi = $contr->get_scheda_funghi($genere);
     }
-    if(!$funghi){
+    if($contr->description != ''){
         $smarty->assign('error',$contr->description);    
     }else{
-        $smarty->assign('genere',$funghi);
+        $smarty->assign('genere',$_GET['genere']);
+        //preparo i dati iin uscita
+        $temp = array();
+        for($i=0;$i<count($funghi);$i++){
+            $f = new funghi();
+            $f->init($funghi[$i]);
+            $temp[$i] = $f->get_attributes('genere,specie,foto1');
+        }
+        $smarty->assign('funghi',$temp);
     }
 }else{
     $photo = array();

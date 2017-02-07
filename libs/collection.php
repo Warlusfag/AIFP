@@ -74,7 +74,12 @@ class funghi_collection extends collection{
     }
 
 }
+class piante_collection extends collection{
+    function __construct(){
+        parent::__construct();
+    }
 
+}
 class conv_collection extends collection {
     public $sezione;
     public $curr_page;

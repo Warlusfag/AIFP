@@ -16,19 +16,18 @@ $smarty = new AIFP_smarty();
 $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
 $i = $_POST['sezione'];  
-    
+//
 if( $coll_c->sezione == $i){
     if( ($convs = $coll_c->getitem($page)) != false){
         $smarty->assign('convs',$convs);
         $smarty->assign('sezione',$i);
-        $smarty->display('sezione.tpl');
     }
 }else{
+    //l'utente ha cambiato sezione e devo caricare tutte le conversazioni di quella sezione
     $coll_c->sezione = $i;
     $coll_c->erase();
-}
-$c_sez = unserialize($_SESSION['forum']);
-if(($temp = $c_sez->getitem($i)) == false){
+    $c_sez = unserialize($_SESSION['forum']);
+    $temp = $c_sez->getitem($i);
     $sez = new sezione();
     $sez->init($temp);
     $convs = $sez->get_conversazioni();

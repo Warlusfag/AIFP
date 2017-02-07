@@ -37,7 +37,9 @@ if(isset($_SESSION['curr_user'])){
     if(($post=check_post($_POST))){ 
         $s = $post['sezione'];
         $coll_s = unserialize($_SESSION['forum']);
-        $sez = $coll_s->getitem($s);
+        $t = $coll_s->getitem($s);
+        $sez = new sezione();
+        $sez->init($t);
         
         $text = $post['text'];
         $title = $post['titolo'];
@@ -48,8 +50,9 @@ if(isset($_SESSION['curr_user'])){
         );     
         
         if($sez->add_conversazione($us, $text, $title)){
+            //cancello convs così forzo il refresh
             unset($_SESSION['convs']);
-            $coll_s->updateitem($s, $sez);
+            $coll_s->updateitem($s, $sez->get_attributes());
             $_SESSION['sezione'] = serialize($coll_s);
             $smarty->assign('sezione', $s);
             $smarty->assign('message','Nuova conversazione aggiunta con successo');

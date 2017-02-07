@@ -21,30 +21,47 @@ class funghi extends gen_model{
             'russula',
             'lactarius',           
         );
-    private $column_view;
     private $column;           
     
     function __construct() {
         
         parent::__construct();
         
-        $this->column='genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
+        $this->column='genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,descrizione,foto1,foto2';
         
         $this->table_descr = array(
             'table' => 'funghi',
             'key' => 'id_fungo',
             'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
+            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s,s',            
             'insert_column' => ',specie,sporata,viraggio,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,gambo,habitat',
         );        
-        $this->column_view = 'genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,foto1,foto2';
+        
       
         $this->queries = array(
-            'create' => "CREATE VIEW %s (".$this->column_view.") AS SELECT * FROM %s AS U ",
+            'create' => "CREATE VIEW %s (".$this->column.") AS SELECT * FROM %s AS U ",
             'drop' => "DROP VIEW %s; ",
             'select' => "SELECT * FROM %s AS U ",
         );        
+    }
+    
+    function get_attributes($way = -1) {
+        if(($t = parent::get_attributes($way)) != false){
+            return $t;
+        }else if(strpos($way,',')){
+            $t = array();
+            $keys = split($way, ',');
+            foreach($keys as $i=>$key){
+                if(isset($this->attributes[$key])){
+                    $t[$i] = $this->attributes[$key];
+                    $t[$key] = $this->attributes[$key];
+                }
+            }
+            return $t;
+        }else{
+            parent::get_attributes($way);
+        }
     }
     
     public function preapare_dynaimic_search($name, $username){

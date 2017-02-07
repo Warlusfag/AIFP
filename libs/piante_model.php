@@ -42,6 +42,24 @@ class piante extends gen_model{
         );        
     }
     
+    function get_attributes($way = -1) {
+        if(($t = parent::get_attributes($way)) != false){
+            return $t;
+        }else if(strpos($way,',')){
+            $t = array();
+            $keys = split($way, ',');
+            foreach($keys as $i=>$key){
+                if(isset($this->attributes[$key])){
+                    $t[$i] = $this->attributes[$key];
+                    $t[$key] = $this->attributes[$key];
+                }
+            }
+            return $t;
+        }else{
+            parent::get_attributes($way);
+        }
+    }
+    
     public function preapare_dynaimic_search($name, $username){
         $this->view_name_old = $name;
         $this->view_name = $this->generate_nameview($username);
