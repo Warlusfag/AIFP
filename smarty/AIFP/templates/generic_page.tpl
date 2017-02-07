@@ -130,6 +130,14 @@
                                 <strong>Attenzione!<strong> 
                             </div>
                         </div>
+                        
+                        <!-- Success Form -->
+                        <div id="success" class="modal">
+                            <div class="modal-content animate alert success">
+                                <span onclick="document.getElementById('success').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
+                                <strong>Successo!<strong> 
+                            </div>
+                        </div>
                                            
         {/block}
 		</div>

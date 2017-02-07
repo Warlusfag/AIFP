@@ -16,8 +16,10 @@
                     {foreach $genere as $gen}
                     <div class="4u">
                             <section>
-                                    <a href="" class="image full"><img src="{$root}{$gen[1]}" alt=""></a>
-                                    <a href="{$root}funghi/{$gen[0]}.php" class="button">{$gen}</a>
+                                <form action="{$root}funghi/schede_funghi.php" method="POST">
+                                    <a type="submit" class="image full"><img src="{$root}{$gen[1]}" alt=""></a>
+                                    <a type="submit" class="button">{$gen[0]}</a>
+                                </form>
                             </section>
                     </div>
                     {/foreach}
