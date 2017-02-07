@@ -117,7 +117,7 @@ class funghi extends gen_model{
                 $res->data_seek($j);
                 $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }
-            if($user != -1){
+            if(isset($this->view_name) && isset($this->view_name_old)){
                 $this->conn->query(sprintf($this->queries['drop'],$this->view_name_old));
                 if(!$this->conn->status){
                     $this->err_descr = $this->conn->error;

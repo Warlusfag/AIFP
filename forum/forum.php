@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if(!isset($_SESSION['curr_user'])){
+    $smarty = new AIFP_smarty();
+    $smarty->assign('login',1);
+    $smarty->display('index.tpl');
+}
+
 if (!isset($_SESSION['forum'])){
     $_SESSION['forum'] = serialize(new sezioni_collection());
 }
@@ -15,15 +21,14 @@ $sez = array();
 
 if($coll_s->is_load()){    
     for($i=0;$i<$coll_s->count();$i++){
-        $s = $coll_s->getitem($i);
-        $sez[$i] = $s->attributes;
+        $sez[$i] = $coll_s->getitem($i);        
     }
 }else{
     $temp = $contr->forum();
     for($i=0;$i<count($temp);$i++){
         $s = $temp[$i];
         $coll_s->additem($s,$i);
-        $sez[$i] = $s->attributes;        
+        $sez[$i] = $s;        
     }
     $_SESSION['forum'] = serialize($col_s);
 }
@@ -32,4 +37,6 @@ if($contr->descritpion != ''){
 }else{    
     $smarty->assign('sezioni',$sez);
 }
+$smarty->assign('user',$_SESSION['curr_user']['user']);
+$smarty->assign('image',$_SESSION['curr_user']['image']);
 $smarty->display('forum.tpl');

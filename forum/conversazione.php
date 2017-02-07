@@ -15,7 +15,11 @@ $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
 $s = $_POST['sezione'];
 $c = $_POST['conversazione'];
-$cpage = $_POST['page_conv'];
+if(isset($_POST['page_conv'])){
+    $cpage = $_POST['page_conv'];
+}else{ 
+    $cpage = 0;
+}
     
 $t = $coll_c->getitem($cpage);
 $attr = $t[$c];
@@ -30,4 +34,6 @@ if($posts == false){
     $smarty->assign('conversazione',$c);
     $smarty->assign('posts', $posts);
 }
+$smarty->assign('user',$_SESSION['curr_user']['user']);
+$smarty->assign('image',$_SESSION['curr_user']['image']);
 $smarty->display('conversazione.tpl');

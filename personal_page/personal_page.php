@@ -9,15 +9,13 @@ if(isset($_SESSION['curr_user'])){
     $tok = $_SESSION['curr_user']['token'];
     $t = $_SESSION['curr_user']['type'];        
     if( ($user = $c->get_user($tok, $t)) ){   
-        $attributes = $user->attributes;
-        $attributes_descr = $user->attributes_descr;
+        $attributes = $user->get_attributes();
         
-        $smarty->assign('user', $user->attributes['user'] );
-        $smarty->assign('image', $user->get_image());
+        $smarty->assign('user',$_SESSION['curr_user']['user']);
+        $smarty->assign('image',$_SESSION['curr_user']['image']);
         $smarty->assign('type', $user->type);
         
         $smarty->assign('personal_data',$attributes);
-        $smarty->assign('descr_data', $attributes_descr);
                 
         $smarty->display('personal_page.tpl');
     }else{
@@ -25,6 +23,7 @@ if(isset($_SESSION['curr_user'])){
         $smarty->display('index.tpl');
     }
 }else{
+    $smarty->assign('login',1);
     $smarty->display('index.tpl');
 }
 

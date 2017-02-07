@@ -202,15 +202,9 @@ class aifp_controller
         if($sez->err_descr != ''){
             $this->description = $sez->err_descr;
             return false;
-        }
-        $temp = array();
-        for($i=0;$i<count($t);$i++){
-            $sez = new sezione();
-            $sez->init($t[$i]);
-            $temp[$i] = $sez;
-        }
+        }        
         $this->description = '';
-        return $temp;               
+        return $t;               
     }
     
     //Popola la collection delle news
@@ -252,16 +246,48 @@ class aifp_controller
     
     public function get_schede_piante($genere){
         
+        $g = array_values(piante::$generi);
+        if(array_search($genere,$g)){
+            //se già è presente nella collection non c'è bisogno di ritrovarlo ma ritorna la collection
+            $p = new piante();                         
+            $params = array(
+                'genere'=>$genere,
+            );
+            $piante = $p->search_piante($params, -1, 10);
+            if($p->err_descr !=''){
+                $this->description = $p->err_descr;
+                return false;
+            }
+            $this->description = '';
+            return $piante;
+            
+        }else{
+            $this->description ="ERROR:bad parameters";
+            return false;
+        }
     }
     //Se non gli passo niente ricerco i primi n prodotti che trovo nel DB
     public function get_prodotti($genere=-1){
-        
+        $pr = new prodotti();
+        if($genere == -1){
+            $params = array();
+        }else{
+            $params = array('tipologia' => $genere);
+        }
+        $prodotti = $pr->search($params);
+        if($pr->err_descr == ''){
+            $this->description = '';
+            return $prodotti;
+        }else{
+            $this->description = $pr->err_descr;
+            return false;
+        }
     }
     
     public function get_regolamento($provincia){
         $db = new db_interface();
         
-        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.provincia = \'$provincia\';";        
+        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.provincia=\'$provincia\';";        
         $res = $db->query($query);
         if(($nr = $res->num_rows) >=0){            
             $res->data_seek(0);

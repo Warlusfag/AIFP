@@ -18,8 +18,8 @@ if(isset($_SESSION['curr_user'])){
     }else{
         $smarty->assign('error', GEN_ERROR);        
     }
-    $smarty->assign('user',$user->attributes['user']);
-    $smarty->assign('user',$user->get_image());
+    $smarty->assign('user',$_SESSION['curr_user']['user']);
+    $smarty->assign('image',$_SESSION['curr_user']['image']);
     $smarty->display('eventi.tpl');
 }else{
     $smarty->display('index.tpl');
