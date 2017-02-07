@@ -127,7 +127,7 @@
                         <div id="alert" class="modal">
                             <div class="modal-content animate alert">
                                 <span onclick="document.getElementById('alert').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
-                                <strong>Attenzione!<strong> 
+                                <strong>Attenzione!</strong> 
                             </div>
                         </div>
                         
@@ -135,7 +135,7 @@
                         <div id="success" class="modal">
                             <div class="modal-content animate alert success">
                                 <span onclick="document.getElementById('success').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
-                                <strong>Successo!<strong> 
+                                <strong>Successo!</strong> 
                             </div>
                         </div>
                                            
