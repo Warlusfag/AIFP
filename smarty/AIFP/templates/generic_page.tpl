@@ -65,7 +65,7 @@
                             	<li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="{$root}/images/user.png"></a>
                                 <div class="dropdown-content">
-                                    <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
+                                    <a onclick="document.getElementById('alert').style.display='block'" href="#">Accedi</a>
                                     <a href="{$root}profilize/reg.php">Registrati</a>
                                 </div>
                            		</li>
@@ -122,10 +122,19 @@
                                 </div>
                             </form>
                         </div>
+                        
+                        <!-- Allert form -->
+                        <div id="alert" class="modal">
+                            <div class="modal-content animate alert">
+                                <span onclick="document.getElementById('alert').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
+                                <strong>Attenzione!<strong> 
+                            </div>
+                        </div>
+                                           
         {/block}
 		</div>
 		<!-- Header -->
-
+                
 		<!-- Body -->
             <body>
                 <div id="main">

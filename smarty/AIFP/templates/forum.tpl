@@ -15,6 +15,8 @@
                     <a type="button" onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
                 {else}
                     <p> Benvenuto {$user} </p>
+                    
+                    
                 {/if}
 
               
