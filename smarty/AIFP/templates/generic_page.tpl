@@ -85,7 +85,7 @@
 			</div>
 			
             <!-- Login form -->
-                        <div id="id01" class="modal">
+                        <div id="login" class="modal">
                             <form class="modal-content animate" method="post" action="{$root}login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
