@@ -6,11 +6,6 @@ require_once 'collection.php';
 if (!isset($_SESSION['news'])){
     $_SESSION['news'] = serialize(new news_collection());
 }
-if (!isset($_SESSION['funghi'])){
-    $_SESSION['funghi'] = serialize(new funghi_collection());
-}
-
-
 
 class aifp_controller
 {
@@ -195,10 +190,9 @@ class aifp_controller
     }
     
     //popola la collection  per le sezioni
-    public function forum(){
-        
+    public function forum(){        
         $sez = new sezione();        
-        $t = $sez->search_sezioni(array(), -1, limit_sez);
+        $t = $sez->search_sezioni(array());
         if($sez->err_descr != ''){
             $this->description = $sez->err_descr;
             return false;
