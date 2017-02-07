@@ -28,11 +28,17 @@ class gen_model{
             return false;
         }
         foreach(array_keys($this->attributes) as $key){
-            if(isset($us[$key])){
-                $this->attributes[$key]=$us[$key];            
+            if(isset($params[$key])){
+                $this->attributes[$key]=$params[$key];            
             }
         }
         return true;
+    }
+    
+    public function get_attributes($way = -1){
+        if($way == -1){
+            return $this->attributes;
+        }
     }
     
     public function insert($params){

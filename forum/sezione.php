@@ -28,12 +28,16 @@ if( $coll_c->sezione == $i){
     $coll_c->erase();
 }
 $c_sez = unserialize($_SESSION['forum']);
-if(($sez = $c_sez->getitem($i)) == false){
+if(($temp = $c_sez->getitem($i)) == false){
+    $sez = new sezione();
+    $sez->init($temp);
     $convs = $sez->get_conversazioni();
     $coll_c->additem($page, $convs);
     $_SESSION['convs'] = serialize($coll_c);
 }
 $smarty->assign('sezione',$i);
-$smarty->assign('convs',$convs);
+$smarty->assign('convs', $convs);
+$smarty->assign('user',$_SESSION['curr_user']['user']);
+$smarty->assign('image',$_SESSION['curr_user']['image']);
 $smarty->display('sezione.tpl');               
 
