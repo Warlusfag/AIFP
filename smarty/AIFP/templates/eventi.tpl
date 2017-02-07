@@ -2,8 +2,8 @@
 {block "title"}Eventi{/block}
 
 {block name=main}  
-    
-        <div class="row half">
+    <div class="container">
+         <div class="row half">
                 <div class="3u">
                         <section>
                                 <header>
@@ -86,5 +86,6 @@
                         </section>
                 </div>
         </div>
+</div>
 
 {/block}

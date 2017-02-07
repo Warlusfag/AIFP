@@ -1,6 +1,6 @@
 {extends file="generic_page_sidebar.tpl"}
 {assign	"root" "/AIFP/"}
-	{block "title"}AIFP{/block}
+	{block "title"}Regolamento{/block}
 	{block name=main}  
 	<!-- Main -->
 <!-- Main -->

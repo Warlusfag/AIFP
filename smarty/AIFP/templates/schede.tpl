@@ -13,11 +13,13 @@
                 <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
                 
                 <div class="row">
-                    {foreach $genere as $value}
+                    {foreach $genere as $gen}
                     <div class="4u">
                             <section>
-                                    <a href="#" class="image full"><img src="{$root}images/pics01.jpg" alt=""></a>
-                                    <a href="#" class="button">{$genere}</a>
+                                <form action="{$root}funghi/schede_funghi.php" method="POST">
+                                    <a type="submit" class="image full"><img src="{$root}{$gen[1]}" alt=""></a>
+                                    <a type="submit" class="button">{$gen[0]}</a>
+                                </form>
                             </section>
                     </div>
                     {/foreach}

@@ -65,7 +65,7 @@
                             	<li class="dropdown">
                                 <a class="dropbtn "href="#"><img src="{$root}/images/user.png"></a>
                                 <div class="dropdown-content">
-                                    <a onclick="document.getElementById('id01').style.display='block'" href="#">Accedi</a>
+                                    <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi</a>
                                     <a href="{$root}profilize/reg.php">Registrati</a>
                                 </div>
                            		</li>
@@ -85,7 +85,7 @@
 			</div>
 			
             <!-- Login form -->
-                        <div id="id01" class="modal">
+                        <div id="login" class="modal">
                             <form class="modal-content animate" method="post" action="{$root}login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
@@ -93,7 +93,7 @@
                                 	<label><b>ACCEDI AD AIFP</b></label>
                                 </div>
                                 <div class="imgcontainer">
-                                	<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Chiudi">&times;</span>
+                                	<span onclick="document.getElementById('login').style.display='none'" class="close" title="Chiudi">&times;</span>
                                     <img src="{$root}images/img_avatar.png" alt="Avatar" class="avatar">
                                 </div>
 
@@ -122,10 +122,27 @@
                                 </div>
                             </form>
                         </div>
+                        
+                        <!-- Allert form -->
+                        <div id="alert" class="modal">
+                            <div class="modal-content animate alert">
+                                <span onclick="document.getElementById('alert').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
+                                <strong>Attenzione!<strong> 
+                            </div>
+                        </div>
+                        
+                        <!-- Success Form -->
+                        <div id="success" class="modal">
+                            <div class="modal-content animate alert success">
+                                <span onclick="document.getElementById('success').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
+                                <strong>Successo!<strong> 
+                            </div>
+                        </div>
+                                           
         {/block}
 		</div>
 		<!-- Header -->
-
+                
 		<!-- Body -->
             <body>
                 <div id="main">
