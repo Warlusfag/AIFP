@@ -34,8 +34,6 @@ class AIFP_smarty extends Smarty
         $this->debugging = true;
         $this->error_reporting = 0;
         
-        $this->global_variable();
-        
     }
     
     function global_variable(){
