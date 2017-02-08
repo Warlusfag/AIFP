@@ -11,7 +11,10 @@
                         <h2>REGOLAMENTO</h2>
                 </header>
                 <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
+               
                 <ul class="default">
+                     {foreach $path ah $reg}
+                         {$reg}
                      <a href="{$root}funghi/regolamenti/abruzzo.pdf" download>
                         <li  style="background-color: #eeeff2;"><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
                             Abruzzo<br>
@@ -19,12 +22,8 @@
                         </li>
                      </a>
                     <br>
-                     <a href="{$root}funghi/regolamenti/basilicata.pdf" download>
-                        <li  style="background-color: #eeeff2;"><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                            Basilicata<br>
-                            <span class="posted">Clicca per download</span>
-                        </li>
-                     </a>
+                    {/foreach}
+                    
                 </ul>
         </section>
 </div>

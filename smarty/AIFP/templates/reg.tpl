@@ -36,7 +36,7 @@
                          <!-- User registration -->
                         <div id="id02" class="modal">
                         
-                            <form class="modal-content animate" method="post" action="{$root}profilize/reg_user.php">
+                            <form class="modal-content reg animate " method="post" action="{$root}profilize/reg_user.php">
                                 <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Chiudi">&times;</span>
                                 <div class="logcontainer" style="background-color: #f1f1f1">
                                     <label><b>REGISTRATI COME UTENTE</b></label>
@@ -45,15 +45,16 @@
 
                                 <div class="logcontainer">
                                     <label><b>Dettagli Account</b></label><br>
-                                    <input type="text" placeholder="Inserisci Nome Utente" name="user" required>*<br>
-                                    <input type="text" placeholder="Inserisci E-Mail" name="email" required>*<br>    
-                                    <input type="password" placeholder="Inserisci Password" name="password" required>*<br>
-                                    <input type="password" placeholder="Conferma Password" name="psw-repeat" required>*<br>
+                                    <p> * Informazioni richieste</p>
+                                    <input type="text" class="reg"  placeholder="Inserisci Nome Utente: "name="user" required>*<br>
+                                    <input type="text" class="reg" placeholder="Inserisci E-Mail: "  name="email" required>*<br>
+                                    <input type="password" class="reg"  placeholder="Password " name="password" required>*<br>
+                                    <input type="password" class="reg"  placeholder="Ripeti Passwsord" name="psw-repeat" required>*<br>
                                     
                                     <label><b>Dettagli Profilo</b></label><br>
-                                    <input type="text" placeholder="Inserisci Nome" name="nome" required>*<br>
-                                    <input type="text" placeholder="Inserisci Cognome" name="cognome" required>*<br>
-                                    <input type="text" placeholder="Inserisci Residenza" name="residenza" required>*<br>
+                                    <input type="text" class="reg" placeholder="Inserisci Nome" name="nome" required>*<br>
+                                    <input type="text" class="reg" placeholder="Inserisci Cognome" name="cognome" required>*<br>
+                                    <input type="text" class="reg" placeholder="Inserisci Residenza" name="residenza" required>*<br>
                                     Data di nascita  <input type="date" placeholder="Inserisci Data di Nascita" name="data"><br>
                                                                   
                                     
