@@ -45,15 +45,16 @@
 
                                 <div class="logcontainer">
                                     <label><b>Dettagli Account</b></label><br>
-                                    <input type="text" placeholder="Inserisci Nome Utente" name="user" required><br>
-                                    <input type="text" placeholder="Inserisci E-Mail" name="email" required><br>    
-                                    <input type="password" placeholder="Inserisci Password" name="password" required><br>
-                                    <input type="password" placeholder="Conferma Password" name="psw-repeat" required><br>
+                                    <input type="text" placeholder="Inserisci Nome Utente" name="user" required>*<br>
+                                    <input type="text" placeholder="Inserisci E-Mail" name="email" required>*<br>    
+                                    <input type="password" placeholder="Inserisci Password" name="password" required>*<br>
+                                    <input type="password" placeholder="Conferma Password" name="psw-repeat" required>*<br>
                                     
                                     <label><b>Dettagli Profilo</b></label><br>
-                                    <input type="text" placeholder="Inserisci Nome" name="nome" required><br>
-                                    <input type="text" placeholder="Inserisci Cognome" name="cognome" required><br>
-                                    <input type="text" placeholder="Inserisci Residenza" name="residenza" required><br>
+                                    <input type="text" placeholder="Inserisci Nome" name="nome" required>*<br>
+                                    <input type="text" placeholder="Inserisci Cognome" name="cognome" required>*<br>
+                                    <input type="text" placeholder="Inserisci Residenza" name="residenza" required>*<br>
+                                    Data di nascita  <input type="date" placeholder="Inserisci Data di Nascita" name="data"><br>
                                                                   
                                     
                                     <div class="clearfix">
@@ -87,8 +88,8 @@
                                     <input type="text" placeholder="Inserisci CAP" name="cap" required><br>
                                     <input type="text" placeholder="Inserisci Sito Web" name="sito_web" required><br>
                                     <input type="text" placeholder="Inserisci Componenti" name="componenti" required><br>
-                                    
-                                                                  
+                             
+                                                    
                                     
                                     <div class="clearfix">
                                         <button type="submit" class="signupbtn">Registrati</button>
@@ -99,6 +100,16 @@
                             </form>
                             
                         </div>
+                                {if $message != null}
+                                    <script>
+                                        document.getElementById('success').style.display='block';
+                                    </script>
+                                {/if}
+                                {if $error != null}
+                                    <script>
+                                        document.getElementById('alert').style.display='block';
+                                    </script>
+                                {/if}
 		</div>
 	<!-- /Main -->
 
