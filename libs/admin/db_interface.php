@@ -42,13 +42,13 @@ class db_interface
      */
     public function sanitaze_input($input, $mode){
         
-        if (strpos($input, 'html') !== false){
+        if (strpos($mode, 'html') !== false){
             $input = htmlentities($input);
         }
-        if (strpos($input, 'sql') !== false){
+        if (strpos($mode, 'sql') !== false){
             $input = self::$connection->real_escape_string($input);
         }
-        if (strpos($input, 'shell') !== false){
+        if (strpos($mode, 'shell') !== false){
             $input = escapeshellcmd($input);
         }
         return $input;
