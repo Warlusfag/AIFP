@@ -1,14 +1,17 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['funghi'])){
-    $_SESSION['funghi'] = serialize(new funghi_collection());
-}
 
 require_once '../libs/aifp_controller.php';
 
 $smarty = new AIFP_Smarty();
 //$_GET['genere'] = 'lactarius';
+if (!isset($_SESSION['funghi'])){
+    $_SESSION['funghi'] = serialize(new funghi_collection());
+}
+
+
+
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
     $collection = unserialize($_SESSION['funghi']);
