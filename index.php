@@ -9,7 +9,6 @@ if (!isset($_SESSION['news'])){
 }
 
 $smarty = new AIFP_Smarty();
-$smarty->display('index.tpl');
 
 if(isset($_SESSION['curr_user'])){         
     $smarty->assign('user', $_SESSION['curr_user']['user'] );
