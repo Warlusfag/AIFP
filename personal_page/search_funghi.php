@@ -1,11 +1,12 @@
 <?php
 session_start();
 
+require_once '../libs/aifp_controller.php';
+
+
 if (!isset($_SESSION['view'])){
     $_SESSION['view'] = 'funghi';
 }
-require_once '../libs/aifp_controller.php';
-
 
 $smarty = new AIFP_smarty();
 $fungo = new funghi();

@@ -1,10 +1,12 @@
 <?php
 session_start();
+
+require_once '../libs/aifp_controller.php';
+
 if (!isset($_SESSION['piante'])){
     $_SESSION['piante'] = serialize(new piante_collection());
 }
 
-require_once '../libs/aifp_controller.php';
 
 $smarty = new AIFP_Smarty();
 //$_GET['genere'] = 'lactarius';

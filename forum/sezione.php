@@ -1,10 +1,12 @@
 <?php
-if (!isset($_SESSION['convs'])){
-    $_SESSION['convs'] = serialize(new conv_collection());
-}
 
 //nel forum io faccio l'elenco delle sezioni che ci stano
 require_once '../libs/aifp_controller.php';
+
+
+if (!isset($_SESSION['convs'])){
+    $_SESSION['convs'] = serialize(new conv_collection());
+}
 
 //La prima volta che apro una sezione l'utente  non ha potuto selezionare la pagina
 if(isset($_GET['page'])){

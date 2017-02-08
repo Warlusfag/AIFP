@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+//nel forum io faccio l'elenco delle sezioni che ci stano
+require_once '../libs/aifp_controller.php';
+
 if(!isset($_SESSION['curr_user'])){
     $smarty = new AIFP_smarty();
     $smarty->assign('login',1);
@@ -11,8 +14,6 @@ if (!isset($_SESSION['forum'])){
     $_SESSION['forum'] = serialize(new sezioni_collection());
 }
 
-//nel forum io faccio l'elenco delle sezioni che ci stano
-require_once '../libs/aifp_controller.php';
 
 $contr = new aifp_controller();
 $smarty = new AIFP_smarty();

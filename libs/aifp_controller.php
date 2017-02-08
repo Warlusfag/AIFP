@@ -3,10 +3,6 @@ require_once 'admin/setup.php';
 require_once 'admin/utils.php';
 require_once 'collection.php';
 
-if (!isset($_SESSION['news'])){
-    $_SESSION['news'] = serialize(new news_collection());
-}
-
 class aifp_controller
 {
     public $tipo;    

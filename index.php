@@ -3,10 +3,13 @@
 session_start();
 
 require_once 'libs/aifp_controller.php';
-require_once 'libs/collection.php';
+
+if (!isset($_SESSION['news'])){
+    $_SESSION['news'] = serialize(new news_collection());
+}
 
 $smarty = new AIFP_Smarty();
-
+$smarty->display('index.tpl');
 
 if(isset($_SESSION['curr_user'])){         
     $smarty->assign('user', $_SESSION['curr_user']['user'] );
