@@ -19,14 +19,15 @@ class associazione extends user
                 
         $this->attributes = array(
             'ID_ass' => -1,
-            'email'=> 'default@aifp.com',
-            'user' =>'user',
+            'email'=> 'default@aifp.com',            
             'password' => 'password',
+            'user' =>'user',
             'nome' => 'associazione',
             'regione' => 'regione',
+            'provincia' => 'provincia',
             'indirizzo' => 'indirizzo',
             'CAP' => '00000',
-            'sito_web'=> 'default.aifp.com',
+            'sito_web'=> 'www.aifp.com',
             'num_post' => 0,
             'punteggio' => 1,
             'componenti' => 2,

@@ -16,7 +16,7 @@ class evento extends gen_model
         
         $this->attributes = array(
             'id_evento'=>-1,
-            'titolo' => '',
+            'nome' => '',
             'id_ass' => -1,
             'tipologia' => '',
             'regione' => '',
@@ -29,7 +29,7 @@ class evento extends gen_model
             'table' => 'eventi',
             'key'=>'id_evento',
             'key_type'=>'i',
-            'column_name' => 'id_ass,titolo,tipologia,regione,provincia,data_inizio,data_fine',
+            'column_name' => 'id_ass,nome,tipologia,regione,provincia,data_inizio,data_fine',
             'column_type' => 'i,s,s,s,s,da,da',
         );
     }

@@ -21,7 +21,7 @@ class user extends gen_model{
             'table' =>'utenti',            
             'key' =>'id_user',
             'key_type'=>'i',
-            'column_name'=>'email,user,password,nome,cognome,residenza,provincia,data,num_post,punteggio,image,patentino',
+            'column_name'=>'email,password,user,nome,cognome,regione,residenza,data,num_post,punteggio,image,patentino',
             'column_type'=>'s,s,s,s,s,s,s,da,i,i,s,i',
         );
         $this->default_col = array(
@@ -39,6 +39,7 @@ class user extends gen_model{
             'user' => $this->default_col['user'],
             'nome' => '',
             'cognome' => '',
+            'regione' => '',
             'residenza' => "",
             'data'=>"",
             'num_post' => $this->default_col['num_post'],
@@ -193,7 +194,7 @@ class inscritto extends user
         $this->type ='inscritto';
         $this->table_descr['table'] = 'inscritti';
         $this->table_descr['key'] = 'id_inscr';        
-        $this->table_descr['column_name']='associazione,email,user,password,nome,cognome,residenza,provincia,data,num_post,punteggio,image,patentino,esperto';
+        $this->table_descr['column_name']='associazione,email,user,password,nome,cognome,regione,residenza,data,num_post,punteggio,image,patentino,esperto';
         $this->table_descr['column_type']='i,s,s,s,s,s,s,s,da,i,i,s,i,i';             
         $this->attributes['esperto'] = false;
         $this->attributes['id_inscr'] = -1;
