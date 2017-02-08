@@ -7,39 +7,47 @@
 	
         <div id="content" class="9u skel-cell-important">
             <section>
-                <header>
-                    <h2>SCHEDE FUNGHI</h2>
-                </header>
-                <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
+                {if $funghi==null}
+                    <header>
+                        <h2>SCHEDE FUNGHI</h2>
+                    </header>
+                    <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
                 
-                <div class="row">
-                    {if $funghi==null}
-                        
-                        {foreach $genere as $gen}
+                    <div class="row">
+                        {foreach $foto as $gen}
+                            <div class="4u">
+                                    <section>
+                                        <form action="{$root}funghi/schede_funghi.php" method="get">
+                                            <img src="{$gen[1]}" alt="{$gen[1]}" class="image full">
+                                            <button class="button" type="submit" value="{$gen[0]}" name="genere">{$gen[0]}</button>
+                                            <br>
+                                        </form>
+
+                                    </section>
+                                            <br>    
+                            </div>
+                        {/foreach}
+                    </div>
+                {else}
+                    <header>
+                        <h2>{$fun[2]}</h2>
+                    </header>
+                    <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
+                
+                    <div class="row">
+                        {foreach $funghi as $fun}
                         <div class="4u">
                                 <section>
                                     <form action="{$root}funghi/schede_funghi.php" method="get">
-                                        <img src="{$root}{$gen[1]}">
-                                        <button class="button" type="submit">{$gen[0]}</button>
+                                        <img src="{$fun[1]}" alt="{$fun[1]}" class="image full">
+                                        <button class="button" type="submit">{$fun[0]}</button>
+                                        <br>
                                     </form>
+                                        
                                 </section>
+                                        <br>    
                         </div>
-                                    
-                        {/foreach}
-                    {else}
-                        {foreach $funghi as $fun}
-                            <div class="4u">
-                                <section>
-                                    <header>
-                                        <h4>{$fun[0]}</h4>
-                                    </header>
-                                    <form action="{root}funghi/fungo.php" method="get">
-                                        <img src="{root}{$fun[2]}">
-                                        <button class="button" type="submit">{$fun[1]}</button>
-                                    </form>
-                                </section>
-                            </div>
-                        {/foreach}
+                    {/foreach}
                         
                     {/if}
                 </div>

@@ -23,9 +23,10 @@
                                 
                                     <ul class="default">
                                         {foreach $sez as $s}
-                                            <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                                                    <p>{$s.name}</p>
-                                                    <span class="posted">{$s.date}  |  {$s.commenti}</span>
+                                            <li  style="background-color: #eeeff2;">
+                                                <img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
+                                                <p>Id:{$s[0]} Nome:{$s[1]}</p><br>
+                                                <span class="posted">Moderatore: {$s[3]}  |  {$s[3]} commenti</span>
                                             </li>
                                         {/foreach}
                                     </ul>
