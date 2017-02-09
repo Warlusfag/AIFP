@@ -38,7 +38,7 @@
 
 	a
 	{
-		color: #389709;
+		cursor: pointer;
 	}
 	
 	a:hover
@@ -987,6 +987,12 @@ input[type=text], input[type=email], input[type=password]{
     box-sizing: border-box;
 }
 
+input[type=text].reg, input[type=email].reg, input[type=password].reg{
+    width: 50%;
+   ;
+   font-size: 9pt;
+}
+
 .loginbtn{
     background-color: #4CAF50;
     color: white;
@@ -1022,7 +1028,7 @@ input[type=text], input[type=email], input[type=password]{
 .cancelbtn,.signupbtn {
 
 	float:center;
-	width:80%}
+	width:50%}
 
 .cancelbtn{
 	cursor: pointer;
@@ -1048,7 +1054,7 @@ img.avatar{
 }
 .logcontainer{
 	text-align: center;
-    padding:16px;
+        padding:16px;
 }
 
 .rmbme{
@@ -1080,6 +1086,10 @@ span.psw{
     border: 1px solid #888;
     width: 50%;
   }
+  .modal-content.reg{
+      width: 60%;
+  }  
+ 
 /*The close button (x)*/
 .close{
     position: absolute;
