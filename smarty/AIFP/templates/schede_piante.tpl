@@ -17,7 +17,7 @@
                         {foreach $foto as $gen}
                             <div class="4u">
                                     <section>
-                                        <form action="{$root}funghi/schede_piante.php" method="get">
+                                        <form action="{$root}piante/schede_piante.php" method="get">
                                             <button class="button" type="submit" value="{$gen[0]}" name="genere">
                                                 <img src="{$gen[1]}"class="image full">
                                                 {$gen[0]}
@@ -40,7 +40,7 @@
                         {foreach $piante as $pianta}
                         <div class="4u">
                                 <section>
-                                    <form action="{$root}funghi/pianta.php" method="get">
+                                    <form action="{$root}piante/pianta.php" method="get">
                                         <img src="{$pianta[1]}" alt="{$pianta[1]}" class="image full">
                                         <button class="button" type="submit" value="{$pianta[0]}">{$pianta[0]}</button>
                                         <br>

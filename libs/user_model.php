@@ -39,7 +39,7 @@ class user extends gen_model{
             'user' => $this->default_col['user'],
             'nome' => '',
             'cognome' => '',
-            'regione' => '',
+            'regione' => "",
             'residenza' => "",
             'data'=>"",
             'num_post' => $this->default_col['num_post'],

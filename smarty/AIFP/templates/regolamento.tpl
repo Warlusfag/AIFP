@@ -13,11 +13,10 @@
                 <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
                
                 <ul class="default">
-                     {foreach $path ah $reg}
-                         {$reg}
-                     <a href="{$root}funghi/regolamenti/abruzzo.pdf" download>
-                        <li  style="background-color: #eeeff2;"><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                            Abruzzo<br>
+                     {foreach $path as $regione}
+                     <a href="{$regione}" download>
+                        <li  style="background-color: #eeeff2;"><img src="{$root}images/foto_regioni/{$regione}.jpg" width="78" height="78" alt="">
+                            {$regione}<br>
                             <span class="posted">Clicca per download</span>
                         </li>
                      </a>

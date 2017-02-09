@@ -13,6 +13,11 @@
                     document.getElementById('alert').style.display='block';
                 </script>
             {/if}
+            {if $message != null}
+                <script>
+                    document.getElementById('success').style.display='block';
+                </script>
+            {/if}
             <div id="index">
 			<!--central image-->
 			<div class="container">
