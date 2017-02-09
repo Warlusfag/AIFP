@@ -18,6 +18,7 @@
 		<script src="{$root}js/login.js"></script>
 		<script src="{$root}js/slideshow.js"></script>
                 <script src="{$root}js/fixed_scrollable_bar.js"></script>
+                <script src="{$root}js/reg.js"></script>
 		{/block}
 		{block name=css}
     	<link rel="stylesheet" href="{$root}css/skel-noscript.css" />

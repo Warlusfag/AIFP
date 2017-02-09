@@ -36,7 +36,7 @@
                          <!-- User registration -->
                         <div id="id02" class="modal">
                         
-                            <form class="modal-content reg animate " method="post" id="regform" action="{$root}profilize/reg_user.php">
+                            <form name="regu" class="modal-content reg animate " method="post" id="regform" onsubmit="return testpass()" action="{$root}profilize/reg_user.php">
                                 <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Chiudi">&times;</span>
                                 <div class="logcontainer" style="background-color: #f1f1f1">
                                     <label><b>REGISTRATI COME UTENTE</b></label>
