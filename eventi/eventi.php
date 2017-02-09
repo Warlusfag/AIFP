@@ -44,13 +44,14 @@ if(isset($_POST) && count($_POST)>0){
     }    
 }else{
     $new_col = unserialize($_SESSION['news']);
-    if($new_col->is_load()){
+    if(!$new_col->is_load()){
         $contr = new aifp_controller();
         $news = $contr->get_news();
         if($contr->description != ''){
             $smarty->assign('error', $contr->description);
         }
         $new_col->add_all_news($news);
+        $_SESSION['news'] = serialize($new_col);
     }else{
         $news = $new_col->get_all_news();
     }

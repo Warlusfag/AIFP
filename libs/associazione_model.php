@@ -42,7 +42,7 @@ class associazione extends user
             'column_type' => 'i,s',
         );
         
-        $this->table_descr_req = clone $this->table_descr;
+        $this->table_descr_req = $this->table_descr;
         $this->table_descr_req['table'] = 'ass_req';    
         $this->table_descr_req['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,sito_web';
         $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s,s';

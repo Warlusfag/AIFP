@@ -139,9 +139,9 @@ class evento extends gen_model
             if(is_array($after) && count($after)>0){
                 foreach($after as $key=>$value){
                     if($key == 'data_inizio'){
-                        $query .= " '$key'>=$value AND ";
+                        $query .= " '$key'>='$value' AND ";
                     }else if($key == 'data_fine'){
-                        $query .= " '$key'<=$value AND ";
+                        $query .= " '$key'<='$value' AND ";
                     }
                 }
             }

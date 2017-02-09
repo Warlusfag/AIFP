@@ -14,6 +14,9 @@ function check_post($param){
         else if( $key == 'password' ){
             $app[$key] = $value;
         }
+        else if( $key == 'regione' ){
+            $app[$key] = $value;
+        }
         else if( $key == 'residenza' ){
             $app[$key] = $value;
         }

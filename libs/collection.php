@@ -100,7 +100,7 @@ class news_collection extends collection{
     }
     public function add_all_news($news){
         $this->items = array_merge($this->items, $news);
-        $this->is_load();
+        $this->is_load = true;
     }
     public function get_all_news(){
         if($this->is_load){

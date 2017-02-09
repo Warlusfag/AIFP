@@ -34,6 +34,10 @@ function check_post($param){
             $app[$key] = $value;
             $i++;
         }
+        else if( $key == 'regione' ){
+            $app[$key] = $value;
+            $i++;
+        }
         else if( $key == 'componenti' ){
             $app[$key] = $value;
             $i++;
