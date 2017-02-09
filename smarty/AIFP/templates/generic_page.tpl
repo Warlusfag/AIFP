@@ -18,6 +18,7 @@
 		<script src="{$root}js/login.js"></script>
 		<script src="{$root}js/slideshow.js"></script>
                 <script src="{$root}js/fixed_scrollable_bar.js"></script>
+                <script src="{$root}js/reg.js"></script>
 		{/block}
 		{block name=css}
     	<link rel="stylesheet" href="{$root}css/skel-noscript.css" />
@@ -135,7 +136,7 @@
                         <div id="success" class="modal">
                             <div class="modal-content animate alert success">
                                 <span onclick="document.getElementById('success').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
-                                <strong>Successo!</strong> 
+                                <strong>Successo!</strong> {$message}
                             </div>
                         </div>
                                            

@@ -7,21 +7,17 @@
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h2>EVENTI & SAGRE</h2>
+                                        <h2>SAGRE</h2>
                                 </header>
                                 <ul class="default">
+                                    {foreach $eventi as $ev}
+                                        {if $ev[4] == 'sagra'}
                                         <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 9th  |  (10 )  Comments</span>
+                                                <p>{$ev[2}</p>
+                                                <span class="posted">Dal {$ev[6]} al {$ev[7]}  | {$ev[5]}-{$ev[4]}</span>
                                         </li>
-                                        <li><img src="{$root}images/pics05.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 1st  |  (10 )  Comments</span>
-                                        </li>
-                                        <li><img src="{$root}images/pics06.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">April 28th  |  (10 )  Comments</span>
-                                        </li>
+                                        {/if}
+                                    {/foreach}
                                 </ul>
                         </section>
                 </div>
@@ -31,25 +27,21 @@
                                         <h2>CORSI</h2>
                                 </header>
                                 <ul class="default">
-                                        <li><img src="{$root}images/pics07.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 9th  |  (10 )  Comments</span>
+                                    {foreach $eventi as $ev}
+                                        {if $ev[4] == 'corso'}
+                                        <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
+                                                <p>{$ev[2}</p>
+                                                <span class="posted">Dal {$ev[6]} al {$ev[7]}  | {$ev[5]}-{$ev[4]}</span>
                                         </li>
-                                        <li><img src="{$root}images/pics08.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 1st  |  (10 )  Comments</span>
-                                        </li>
-                                        <li><img src="{$root}images/pics09.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">April 28th  |  (10 )  Comments</span>
-                                        </li>
+                                        {/if}
+                                    {/foreach}
                                 </ul>
                         </section>
                 </div>
                 <div class="6u">
                         <section>
                                 <header>
-                                        <h2>NEWS</h2>
+                                        <h2>MOSTRE</h2>
                                 </header>
                                 <div class="slideshow-container"> 
                                         <div class="mySlides fade" style="display: block;">

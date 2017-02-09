@@ -20,6 +20,9 @@ function check_post($param){
         else if( $key == 'residenza' ){
             $app[$key] = $value;
         }
+        else if( $key == 'regione' ){
+            $app[$key] = $value;
+        }
         else if( $key == 'user' ){
             $app[$key] = $value;
         } 
@@ -40,6 +43,7 @@ if( (($post= check_post($_POST))) ){
     $user = new user();    
     if($user->insert_user($post, array())){
         $smarty->assign('message',$message);
+        $smarty->display('index.tpl');
     }else{
         $smarty->assign('error', $user->err_descr);
     }    
