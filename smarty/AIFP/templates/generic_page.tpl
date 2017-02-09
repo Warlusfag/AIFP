@@ -58,7 +58,7 @@
                                                     </li>            
                                                     <li><a href="{$root}piante/schede_piante.php">Piante</a></li>
                                                     <li><a href="{$root}funghi/regolamento.php">Regolamenti</a></li>
-                                                    <li><a href="{$root}prodotti/prodotti.php">Prodotti</a></li>
+                                                    
                                                     <li><a href="{$root}eventi/eventi.php">Eventi</a></li>
                                                     <li><a href="{$root}forum/forum.php">Forum</a></li>
                                                     <li><a href="{$root}lettera_esperto.php">Chiedi all'esperto</a></li>

@@ -1,4 +1,6 @@
 {extends file="generic_page.tpl"}
+{assign	"root" "/AIFP/"}
+
 {block "title"}Eventi{/block}
 
 {block name=main}  
