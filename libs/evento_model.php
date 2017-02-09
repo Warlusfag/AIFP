@@ -4,15 +4,10 @@ require_once 'gen_model.php';
 require_once 'admin/setup.php';
 
 class evento extends gen_model
-{     
-    
-    static public $inserted;
-    
+{   
     function __construct()
     {        
         parent::__construct(); 
-        
-        self::$inserted = true;
         
         $this->attributes = array(
             'id_evento'=>-1,
@@ -42,10 +37,6 @@ class evento extends gen_model
                 return false;
             }
         }
-        //If tinserted is false i have already update all my news
-        if(!self::$inserted){
-            return true;
-        }
         $date = $this->conn->get_current_date();
         
         $params = array();
@@ -56,7 +47,6 @@ class evento extends gen_model
        if($this->err_descr != ''){
            return false;
        }
-       self::$inserted = false;
        return $news;               
     }
     
@@ -91,7 +81,6 @@ class evento extends gen_model
         }
         
         //send email to confirm
-        self::$inserted = true;
         $this->err_descr = '';
         return true;
         
@@ -129,7 +118,7 @@ class evento extends gen_model
             $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    if($c_type[$i] == 's'){
+                    if($c_type[$i] == 's' || $c_type[$i] == 'da'){
                         $query .= " U.$key='$params[$key]' AND ";                        
                     }else{
                         $query .= " U.$key=$params[$key] AND ";

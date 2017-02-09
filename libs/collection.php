@@ -14,13 +14,16 @@ const limit_session = 1000000;
 class collection{
     
     protected $items;
+    protected $is_load;
     
     function __construct(){
         $this->items = array();
+        $this->is_load = false;
     }    
 
     public function additem($obj, $key) {
         if(isset($this->items[$key])){
+            $this->is_load = true;
             return false;
         }else{
             $this->items[$key] = $obj;
@@ -33,6 +36,9 @@ class collection{
             return false;
         }else{
             unset($this->items[$key]);
+            if($this->count() == 0){
+                $this->is_load = false;                
+            }
             return true;
         }
     }
@@ -58,6 +64,10 @@ class collection{
         }
         $this->items[$key] = $obj;
         return true;
+    }
+    
+    public function is_load(){
+        return $this->is_load;
     }
 }
 
@@ -93,10 +103,9 @@ class conv_collection extends collection {
 }
 
 class news_collection extends collection{
-    protected $is_load;
+    
     function __construct(){
-        parent::__construct();
-        $this->is_load = false;
+        parent::__construct();        
     }
     public function add_all_news($news){
         $this->items = array_merge($this->items, $news);
@@ -108,8 +117,4 @@ class news_collection extends collection{
         }
         return false;
     }
-    public function is_load(){
-        return $this->is_load;
-    }
-
 }

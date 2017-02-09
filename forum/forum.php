@@ -31,12 +31,12 @@ if($coll_s->is_load()){
         $coll_s->additem($s,$i);
         $sez[$i] = $s;        
     }
-    $_SESSION['forum'] = serialize($col_s);
+    $_SESSION['forum'] = serialize($coll_s);
 }
-if($contr->descritpion != ''){
+if($contr->description != ''){
     $smarty->assign('error',GEN_ERROR);
 }else{    
-    $smarty->assign('sezioni',$sez);
+    $smarty->assign('sez',$sez);
 }
 $smarty->assign('user',$_SESSION['curr_user']['user']);
 $smarty->assign('image',$_SESSION['curr_user']['image']);
