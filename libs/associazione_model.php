@@ -12,7 +12,7 @@ class associazione extends user
         parent::__construct();
         $this->type= 'associazione';        
         
-        $this->table_descr['table'] = 'associazione';      
+        $this->table_descr['table'] = 'associazioni';      
         $this->table_descr['key'] = 'ID_ass';
         $this->table_descr['key_type'] = 'i';
         $this->table_descr['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,sito_web,num_post,punteggio,componenti,esperto';
