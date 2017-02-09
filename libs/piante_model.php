@@ -11,11 +11,14 @@ class piante extends gen_model{
     public $view_name;
     //name vecchia della view
     public $view_name_old;
-    static public $generi= array(
+    static public $tipologia= array(
            0 => 'conifere',
-           1 => 'fagacee',
-           2 => 'rosacee',
-           3 => 'orchidacee',
+           1 => 'arbusti',
+           2 => 'cactus',
+           3 => 'alberi da frutto',
+           4 => 'alberi da bosco',
+           5 => 'piante carnivore',
+           6 => 'erbe',
         );
     private $column_view;
     private $column;           
@@ -24,14 +27,14 @@ class piante extends gen_model{
         
         parent::__construct();
         
-        $this->column='';
+        $this->column='id_pianta,tipologia,genere,specie,fusto,radici,foglie,infiorescenze,margine_fogliare,num_petali,spine,corteccia';
         
         $this->table_descr = array(
             'table' => 'piante',
             'key' => 'id_pianta',
             'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
+            'column_type' => 's,s,s,s,s,s,s,s,i,i,s',            
         );        
         $this->column_view = '';
       

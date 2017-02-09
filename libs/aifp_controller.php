@@ -236,12 +236,12 @@ class aifp_controller
     
     public function get_schede_piante($genere){
         
-        $g = array_values(piante::$generi);
+        $g = array_values(piante::$tipologia);
         if(array_search($genere,$g)){
             //se già è presente nella collection non c'è bisogno di ritrovarlo ma ritorna la collection
             $p = new piante();                         
             $params = array(
-                'genere'=>$genere,
+                'tipologia'=>$genere,
             );
             $piante = $p->search_piante($params, -1, 10);
             if($p->err_descr !=''){

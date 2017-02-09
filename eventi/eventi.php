@@ -3,6 +3,10 @@ session_start();
 
 require_once '../libs/aifp_controller.php';
 
+if (!isset($_SESSION['news'])){
+    $_SESSION['news'] = serialize(new news_collection());
+}
+
 function check_post($param)
 {
     $app = array();
@@ -55,6 +59,7 @@ if(isset($_SESSION['curr_user'])){
     $smarty->assign('user',$_SESSION['curr_user']['user']);
     $smarty->assign('image',$_SESSION['curr_user']['image']);
 }
+$smarty->assign('eventi',$news);
 $smarty->display('eventi.tpl'); 
 
    

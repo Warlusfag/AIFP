@@ -27,15 +27,14 @@ class funghi extends gen_model{
         
         parent::__construct();
         
-        $this->column='genere,specie,sporata,viraggio,lattice,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,descrizione,foto1,foto2';
+        $this->column='genere,specie,sporata,viraggio,lattice,commestibile,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,descrizione,foto1,foto2';
         
         $this->table_descr = array(
             'table' => 'funghi',
             'key' => 'id_fungo',
             'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s,s',            
-            'insert_column' => ',specie,sporata,viraggio,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,gambo,habitat',
+            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s',            
         );        
         
       

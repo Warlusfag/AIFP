@@ -26,7 +26,7 @@ if(isset($_GET['genere'])){
         for($i=0;$i<count($piante);$i++){
             $p = new piante();
             $p->init($piante[$i]);
-            $temp[$i] = $p->get_attributes('genere,specie,foto1');
+            $temp[$i] = $p->get_attributes('get,specie,foto1');
         }
         $smarty->assign('piante',$temp);
     }
