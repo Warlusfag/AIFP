@@ -56,9 +56,11 @@ if(isset($_POST) && count($_POST)>0){
         $news = $new_col->get_all_news();
     }
 }
-if(isset($_SESSION['curr_user'])){
-    $smarty->assign('user',$_SESSION['curr_user']['user']);
-    $smarty->assign('image',$_SESSION['curr_user']['image']);
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
 }
 $smarty->assign('eventi',$news);
 $smarty->display('eventi.tpl'); 

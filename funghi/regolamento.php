@@ -22,9 +22,11 @@ if(isset($_GET['regione'])){
         $smarty->assign('error', $controller->description);
     }
 }
-if(isset($_SESSION['curr_user']) ){
-    $smarty->assign('user',$_SESSION['curr_user']['user']);
-    $smarty->assign('image',$_SESSION['curr_user']['image']);
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
 }
 
 $smarty = new AIFP_Smarty();

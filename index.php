@@ -10,10 +10,11 @@ if (!isset($_SESSION['news'])){
 
 $smarty = new AIFP_Smarty();
 
-if(isset($_SESSION['curr_user'])){         
-    $smarty->assign('user', $_SESSION['curr_user']['user'] );
-    $image = $_SESSION['curr_user']['image'];
-    $smarty->assign('image',$image );
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
 }
 $new_col = unserialize($_SESSION['news']);
 if(!$new_col->is_load()){

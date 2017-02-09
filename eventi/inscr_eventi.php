@@ -17,9 +17,12 @@ if(isset($_SESSION['curr_user'])){
         }		
     }else{
         $smarty->assign('error', GEN_ERROR);        
+    } 
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
     }
-    $smarty->assign('user',$_SESSION['curr_user']['user']);
-    $smarty->assign('image',$_SESSION['curr_user']['image']);
+    $smarty->assign('profilo', $t );    
+
     $smarty->display('eventi.tpl');
 }else{
     $smarty->display('index.tpl');

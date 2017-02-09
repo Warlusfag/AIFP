@@ -34,6 +34,8 @@ if($posts == false){
     $smarty->assign('conversazione',$c);
     $smarty->assign('posts', $posts);
 }
-$smarty->assign('user',$_SESSION['curr_user']['user']);
-$smarty->assign('image',$_SESSION['curr_user']['image']);
+foreach($_SESSION['curr_user'] as $key=>$value){
+    $t[$key] = $value;
+}
+$smarty->assign('profilo', $t );
 $smarty->display('conversazione.tpl');

@@ -38,6 +38,9 @@ if($contr->description != ''){
 }else{    
     $smarty->assign('sez',$sez);
 }
-$smarty->assign('user',$_SESSION['curr_user']['user']);
-$smarty->assign('image',$_SESSION['curr_user']['image']);
+
+foreach($_SESSION['curr_user'] as $key=>$value){
+    $t[$key] = $value;
+}
+$smarty->assign('profilo', $t );
 $smarty->display('forum.tpl');

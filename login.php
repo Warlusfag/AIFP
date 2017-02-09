@@ -27,10 +27,11 @@ function check_post($param){
 $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
 
-
 if(isset($_SESSION['curr_user'])){   
-    $smarty->assign('user', $_SESSION['curr_user']['user'] );
-    $smarty->assign('image', $_SESSION['curr_user']['image']);   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
 }else{
     if(($post = check_post($_POST)) ){		
         $pwd = $post['password'];
@@ -47,7 +48,9 @@ if(isset($_SESSION['curr_user'])){
             $_SESSION['curr_user']['token'] = $pk;
             $_SESSION['curr_user']['user'] =$user->attributes['user'];
             $_SESSION['curr_user']['image'] =$user->get_image();
-            $_SESSION['curr_user']['type'] =$user->type;            
+            $_SESSION['curr_user']['type'] =$user->type;
+            $_SESSION['curr_user']['num_post'] =$user->attributes['num_post'];
+            $_SESSION['curr_user']['punteggio'] =$user->attributes['punteggio'];
             $smarty->assign('user', $user->attributes['user'] );
             $smarty->assign('image', $user->get_image());
         }else{            

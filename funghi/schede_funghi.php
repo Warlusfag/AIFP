@@ -10,12 +10,6 @@ if (!isset($_SESSION['funghi'])){
 
 
 $smarty = new AIFP_Smarty();
-//$_GET['genere'] = 'lactarius';
-if (!isset($_SESSION['funghi'])){
-    $_SESSION['funghi'] = serialize(new funghi_collection());
-}
-
-
 
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
@@ -54,8 +48,10 @@ if(isset($_GET['genere'])){
     }
     $smarty->assign('foto',$photo);
 }
-if(isset($_SESSION['curr_user'])){
-    $smarty->assign('user',$_SESSION['curr_user']['user']);
-    $smarty->assign('image',$_SESSION['curr_user']['image']);
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
 }
 $smarty->display('schede.tpl');
