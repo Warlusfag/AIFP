@@ -5,9 +5,6 @@
 {/block}
 
 {block name=mainside}
-    <script>
-    
-    </script>
     
     <section>
         <header>
@@ -16,9 +13,9 @@
         <img src="{$root}images/img_avatar.png" class="pic">
         <ul class="style1">
             <li><button class="button" onclick="show('form1')" >Modifica Profilo</button></li>
-            <li><button class="button" onclick="show('form2')" >FORM 2</button></li>
-            <li><button class="button" onclick="show('form3')" >FORM 3</button></li>
-            <li><button class="button" onclick="show('form4')" >FORM 4</button></li>
+            <li><button class="button" onclick="show('form2')" >Ricerca</button></li>
+            <li><button class="button" onclick="show('form3')" >Aggiungi Evento</button></li>
+            <li><button class="button" onclick="show('form4')" >File Space</button></li>
         </ul>
     </section>
 
