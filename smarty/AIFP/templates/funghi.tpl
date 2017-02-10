@@ -1,6 +1,7 @@
 {extends file="generic_page_sidebar.tpl"}
 {assign	"root" "/AIFP/"}
 {block name=title}Funghi{/block}
+
 {block name=main}  
 	<!-- Main -->
     <div id="content" class="9u skel-cell-important">
@@ -43,3 +44,4 @@
     </div>
 <!-- /Main -->
 {/block}
+

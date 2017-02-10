@@ -13,9 +13,9 @@
                                 </header>
                                 <ul class="default">
                                     {foreach $eventi as $ev}
-                                        {if $ev[4] == 'sagra'}
+                                        {if $ev[3] == 'sagra'}
                                         <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                                                <p>{$ev[2}</p>
+                                                <p>{$ev[2]}</p>
                                                 <span class="posted">Dal {$ev[6]} al {$ev[7]}  | {$ev[5]}-{$ev[4]}</span>
                                         </li>
                                         {/if}
@@ -30,7 +30,7 @@
                                 </header>
                                 <ul class="default">
                                     {foreach $eventi as $ev}
-                                        {if $ev[4] == 'corso'}
+                                        {if $ev[3] == 'corso'}
                                         <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
                                                 <p>{$ev[2}</p>
                                                 <span class="posted">Dal {$ev[6]} al {$ev[7]}  | {$ev[5]}-{$ev[4]}</span>

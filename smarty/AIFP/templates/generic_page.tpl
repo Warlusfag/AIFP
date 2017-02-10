@@ -1,6 +1,10 @@
 
 <!DOCTYPE HTML>
 
+
+
+
+{assign	"root" "/AIFP/"}
 <html>
 	<head>
 	{block name=head}
@@ -17,6 +21,7 @@
 		<script src="{$root}js/init.js"></script>
 		<script src="{$root}js/login.js"></script>
 		<script src="{$root}js/slideshow.js"></script>
+                <script src="{$root}js/personal_page.js"></script>
                 <script src="{$root}js/fixed_scrollable_bar.js"></script>
                 <script src="{$root}js/reg.js"></script>
 		{/block}

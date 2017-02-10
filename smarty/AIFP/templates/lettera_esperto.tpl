@@ -2,6 +2,7 @@
 
 {block "title"}Lettera esperto{/block}
 {assign 'root' '/AIFP/'}
+
 {block name=main}
 					
 <div id="content" class="9u skel-cell-important">
