@@ -1,6 +1,5 @@
 {extends file="generic_page.tpl"}
-{assign	"root" "/AIFP/"}
-
+{block "title"}Registrazione{/block}
 	{block name=main}  
 		<div id="index">
 					

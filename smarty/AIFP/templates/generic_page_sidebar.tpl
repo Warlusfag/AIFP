@@ -1,5 +1,5 @@
 {extends file="generic_page_news.tpl"}
-{assign	"root" "/AIFP/"}
+
 
 {block name=sidebar}  
     <div id="sidebar" class="3u">

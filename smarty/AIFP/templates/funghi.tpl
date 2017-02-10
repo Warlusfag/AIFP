@@ -1,5 +1,5 @@
 {extends file="generic_page_sidebar.tpl"}
-{assign	"root" "/AIFP/"}
+
 {block name=title}Funghi{/block}
 
 {block name=main}  

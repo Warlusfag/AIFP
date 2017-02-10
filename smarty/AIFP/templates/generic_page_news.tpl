@@ -1,5 +1,5 @@
 {extends file="generic_page.tpl"}
-{assign	"root" "/AIFP/"}
+
 {block name=buttom_main}
         <br>
         <div class="container">

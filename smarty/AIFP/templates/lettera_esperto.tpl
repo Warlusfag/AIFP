@@ -1,7 +1,6 @@
 {extends file="generic_page_sidebar.tpl"}
 
 {block "title"}Lettera esperto{/block}
-{assign 'root' '/AIFP/'}
 
 {block name=main}
 					
