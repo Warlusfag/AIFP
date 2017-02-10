@@ -10,7 +10,7 @@
                         
                         
         {block name=userside}
-             {if $user==null}
+             {if !$profilo.user}
             <section>
 
             <header>
@@ -34,7 +34,7 @@
                     <li>Punteggio: {$profilo.punteggio}</li>
                     <li>Numero post: {$profilo.num_post}</li>
                 </ul>
-                    <button class="loginbtn" href="{$root}/personal_page/personal_page.php"> Visita profilo </button>
+                    <button class="button" href="{$root}personal_page/personal_page.php"> Visita profilo </button>
                 </section>
                 {/if}
                 </section>

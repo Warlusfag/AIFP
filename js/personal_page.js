@@ -1,5 +1,7 @@
 $(document).ready(function(){
+    
     hide();
+    document.getElementById("form").style.display="block";
 })
 
 function show(id){
@@ -8,6 +10,7 @@ function show(id){
 }
 
 function hide(){
+    document.getElementById("form").style.display="none";
     document.getElementById("form1").style.display="none";
     document.getElementById("form2").style.display="none";
     document.getElementById("form3").style.display="none";
