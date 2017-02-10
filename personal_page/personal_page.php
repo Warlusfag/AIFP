@@ -10,11 +10,7 @@ if(isset($_SESSION['curr_user'])){
     $t = $_SESSION['curr_user']['type'];        
     if( ($user = $c->get_user($tok, $t)) ){   
         $attributes = $user->get_attributes();
-        
-        $smarty->assign('user',$_SESSION['curr_user']['user']);
-        $smarty->assign('image',$_SESSION['curr_user']['image']);
-        $smarty->assign('type', $user->type);
-        
+        $smarty->assign('type',$user->type);
         $smarty->assign('personal_data',$attributes);
                 
         $smarty->display('personal_page.tpl');
