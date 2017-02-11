@@ -1,21 +1,24 @@
 {extends file="generic_page.tpl"}
-
 {block "title"}Eventi{/block}
 
+
 {block name=main}  
+    {assign $i 0}
+    {assign $count 0}
     <div class="container">
          <div class="row half">
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h2>SAGRE</h2>
+                                        <h3>SAGRE</h3>
                                 </header>
                                 <ul class="default">
                                     {foreach $eventi as $ev}
-                                        {if $ev[3] == 'sagra'}
-                                        <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                                                <p>{$ev[2]}</p>
-                                                <span class="posted">Dal {$ev[6]} al {$ev[7]}  | {$ev[5]}-{$ev[4]}</span>
+                                        {$i}
+                                        {if $ev.tipologia == 'sagra'}
+                                        <li><img src="{$root}images/news.ico" width="78" height="78" alt="">
+                                                <p>{$ev.nome}</p>
+                                                <span class="posted">Dal {$ev.data_inzio} al {$ev.data_fine}   {$ev.provincia}-{$ev.regione}</span>
                                         </li>
                                         {/if}
                                     {/foreach}
@@ -25,14 +28,14 @@
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h2>CORSI</h2>
+                                        <h3>CORSI</h3>
                                 </header>
                                 <ul class="default">
                                     {foreach $eventi as $ev}
                                         {if $ev[3] == 'corso'}
-                                        <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                                                <p>{$ev[2}</p>
-                                                <span class="posted">Dal {$ev[6]} al {$ev[7]}  | {$ev[5]}-{$ev[4]}</span>
+                                        <li><img src="{$root}images/news.ico" width="78" height="78" alt="">
+                                                <p>{$ev[2]}</p>
+                                                <span class="posted">Dal {$ev[6]} al {$ev[7]} {$ev[5]}-{$ev[4]}</span>
                                         </li>
                                         {/if}
                                     {/foreach}
@@ -42,39 +45,45 @@
                 <div class="6u">
                         <section>
                                 <header>
-                                        <h2>MOSTRE</h2>
+                                        <h3>MOSTRE </h3>
                                 </header>
                                 <div class="slideshow-container"> 
-                                        <div class="mySlides fade" style="display: block;">
-                                                <div class="numbertext">1 / 3</div>
-                                                <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
-                                                <p><b>TITOLO 1</b>
-                                                        sottotitolo</P>
-
-                                        </div>
+                                    {$i=0}
+                                    {$count=0}
+                                    {while $i < 20}
+                                        {if $eventi[$i].tipologia == 'mostra' && $count!=0}
                                         <div class="mySlides fade">
-                                                <div class="numbertext">2 / 3</div>
+                                                {$count=$count+1}
+                                                <div class="numbertext">{$count}/ 3</div>
                                                 <a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
-                                                <p><b>TITOLO 2</b>
-                                                        sottotitolo</P>
-
+                                                <p>{$eventi[$i].nome}</p>
+                                                <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
                                         </div>
-                                        <div class="mySlides fade">
-                                                <div class="numbertext">3 / 3</div>
-                                                <a href="#" class="image full"><img src="{$root}images/pics10_2.jpg" alt=""></a>
-                                                <p><b>TITOLO 3</b>
-                                                        sottotitolo</P>
-
-                                        </div>
-                                        <a class="prev" onclick="plusSlides(-1)">❮</a>
-                                        <a class="next" onclick="plusSlides(1)">❯</a>
+                                        {/if}
+                                        
+                                        {if $eventi[$i].tipologia=='mostra' && $count==0}
+                                            {$count=$count+1}
+                                            <div class="mySlides fade" style="display: block;">
+                                                    <div class="numbertext">1 / 3</div>
+                                                    <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
+                                                    <p>{$eventi[$i].nome}</p>
+                                                    <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
+                                            </div>
+                                        {/if}
+                                        
+                                        {$i=$i+1}
+                                    {/while}
+                                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                                    <a class="next" onclick="plusSlides(1)">❯</a>
                                 </div>
                                 <br>
-
+                                
                                 <div style="text-align:center">
-                                  <span class="dot" onclick="currentSlide(1)"></span> 
-                                  <span class="dot" onclick="currentSlide(2)"></span> 
-                                  <span class="dot" onclick="currentSlide(3)"></span> 
+                                    {$i=0}
+                                    {while $i < $count}
+                                        <span class="dot" onclick="currentSlide({$i})"></span> 
+                                        {$i=$i+1}
+                                    {/while}
                                 </div>
                         </section>
                 </div>

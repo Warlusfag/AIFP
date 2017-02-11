@@ -1,80 +1,84 @@
 {extends file="generic_page.tpl"}
 
 {block name=buttom_main}
+
         <br>
         <div class="container">
         <div class="row half">
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h2>EVENTI & SAGRE</h2>
+                                        <h3>SAGRE</h3>
                                 </header>
                                 <ul class="default">
-                                        <li><img src="{$root}images/pics04.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 9th  |  (10 )  Comments</span>
-                                        </li>
-                                        <li><img src="{$root}images/pics05.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 1st  |  (10 )  Comments</span>
-                                        </li>
-                                        <li><img src="{$root}images/pics06.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">April 28th  |  (10 )  Comments</span>
-                                        </li>
+                                    {$i=0}
+                                    {$count=0}
+                                    {while $i < 20 && $count < 3}
+                                        {if $news[$i].tipologia=='sagra'}
+                                            {$count=$count+1}
+                                            <li><img src="{$root}images/news.ico" width="78" height="78" alt="">
+                                                <p><b>{$news[$i].nome}</b></p>
+                                                <span class="posted">Dal <b>{$news[$i].data_inzio}</b>  al <b>{$news[$i].data_fine}</b><br><b>{$news[$i].provincia}</b>-<b>{$news[$i].regione}</b></span>
+                                            </li>
+                                        {/if}
+                                        {$i=$i+1}
+                                    {/while}
                                 </ul>
                         </section>
                 </div>
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h2>CORSI</h2>
+                                        <h3>CORSI</h3>
                                 </header>
                                 <ul class="default">
-                                        <li><img src="{$root}images/pics07.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 9th  |  (10 )  Comments</span>
-                                        </li>
-                                        <li><img src="{$root}images/pics08.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">May 1st  |  (10 )  Comments</span>
-                                        </li>
-                                        <li><img src="{$root}images/pics09.jpg" width="78" height="78" alt="">
-                                                <p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-                                                <span class="posted">April 28th  |  (10 )  Comments</span>
-                                        </li>
-                                </ul>
+                                    {$i = 0}
+                                    {$count = 0}
+                                    {while $i < 20 && $count < 3}
+                                        {if $news[$i].tipologia=='corso'}
+                                            {$count=$count+1}
+                                            <li><img src="{$root}images/news.ico" width="78" height="78" alt="">
+                                                <p><b>{$news[$i].nome}</b></p>
+                                                <span class="posted">Dal <b>{$news[$i].data_inzio}</b>  al <b>{$news[$i].data_fine}</b><br><b>{$news[$i].provincia}</b>-<b>{$news[$i].regione}</b></span>
+                                            </li>
+                                        {/if}
+                                        {$i=$i+1}
+                                    {/while}
                         </section>
                 </div>
                 <div class="6u">
                         <section>
                                 <header>
-                                        <h2>NEWS</h2>
+                                        <h3>MOSTRE</h3>
                                 </header>
                                 <div class="slideshow-container"> 
-                                        <div class="mySlides fade" style="display: block;">
+                                    {$i=0}
+                                    {$count=0}
+                                    {while $i < 20 && $count < 3}
+                                        {if $news[$i].tipologia=='mostra' && $count!=0}
+                                            {$count=$count+1}
+                                            <div class="mySlides fade">
+                                                <div class="numbertext">{$count} / 3</div>
+                                                <a href="#" class="image full"><img src="{$root}images/pics10_{$count-1}.jpg" alt=""></a>
+                                                <p><b>{$news[$i].nome}</b></p>
+                                                <span class="posted">Dal <b>{$news[$i].data_inzio}</b> al <b>{$news[$i].data_fine}</b><br><b>{$news[$i].provincia}</b>-<b>{$news[$i].regione}</b></span>
+                                            </div>
+                                        {/if}
+                                        {if $news[$i].tipologia=='mostra' && $count==0}
+                                            {$count=$count+1}
+                                            <div class="mySlides fade" style="display: block;">
                                                 <div class="numbertext">1 / 3</div>
                                                 <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
-                                                <p><b>TITOLO 1</b>
-                                                        sottotitolo</P>
-
-                                        </div>
-                                        <div class="mySlides fade">
-                                                <div class="numbertext">2 / 3</div>
-                                                <a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
-                                                <p><b>TITOLO 2</b>
-                                                        sottotitolo</P>
-
-                                        </div>
-                                        <div class="mySlides fade">
-                                                <div class="numbertext">3 / 3</div>
-                                                <a href="#" class="image full"><img src="{$root}images/pics10_2.jpg" alt=""></a>
-                                                <p><b>TITOLO 3</b>
-                                                        sottotitolo</P>
-
-                                        </div>
-                                        <a class="prev" onclick="plusSlides(-1)">❮</a>
-                                        <a class="next" onclick="plusSlides(1)">❯</a>
+                                                <p><b>{$news[$i].nome}</b></p>
+                                                <span class="posted">Dal <b>{$news[$i].data_inzio}</b> al <b>{$news[$i].data_fine}</b><br><b>{$news[$i].provincia}</b>-<b>{$news[$i].regione}</b></span>
+                                            </div>
+                                        {/if}
+                                        
+                                        {$i=$i+1}
+                                    {/while}
+                                    
+                                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                                    <a class="next" onclick="plusSlides(1)">❯</a>
                                 </div>
                                 <br>
 
@@ -85,6 +89,7 @@
                                 </div>
                         </section>
                 </div>
+                
         </div>
     </div>
 			<!--block buttom_main closed-->

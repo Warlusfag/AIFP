@@ -1,4 +1,4 @@
-
+    
 {extends file="generic_page_news.tpl"}
 
 	{block "title"}AIFP{/block}

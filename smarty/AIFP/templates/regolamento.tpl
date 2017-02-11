@@ -8,7 +8,7 @@
 <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h2>REGOLAMENTi</h2>
+                        <h2>REGOLAMENTI</h2>
                 </header>
                 <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
                {if $path!=null}

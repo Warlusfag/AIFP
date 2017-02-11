@@ -30,5 +30,7 @@ if(!is_array($news)){
 }else{
     $smarty->assign('news',$news);
 }
+
+
 $smarty->display('index.tpl');
 

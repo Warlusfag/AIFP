@@ -7,9 +7,9 @@
 	
         <div id="content" class="9u skel-cell-important">
             <section>
-                {if $funghi==null}
+                {if !$genere}
                     <header>
-                        <h2>SCHEDE FUNGHI</h2>
+                        <h2>schede funghi</h2>
                     </header>
                     
                 
@@ -32,7 +32,7 @@
                     </div>
                 {else}
                     <header>
-                        <h2>{$fun[2]}</h2>
+                        <h2>{$genere}</h2>
                     </header>
                     <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
                 

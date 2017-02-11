@@ -27,8 +27,8 @@
                                                     <button class="sezione" type="submit">
                                                     <li>
                                                         <br>
-                                                        <p style="font-size:20px;">{$s[0]} {$s[1]}</p>
-                                                        <span> Moderatore: {$s[2]}  |  {$s[3]} commenti</span>
+                                                        <p style="font-size:20px;"><strong>{$s[0]} {$s[1]}</strong></p>
+                                                        <span> Moderatore:<strong> {$s[2]}  |  {$s[3]}</strong> commenti</span>
                                                       
 
                                                     </li>

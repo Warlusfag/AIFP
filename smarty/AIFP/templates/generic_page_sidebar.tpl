@@ -18,7 +18,7 @@
             </header>
 
             <p>Esegui l'accesso per utilizzare al meglio AIFP.it </p>
-            <form method="POST" action="login.php">
+            <form method="POST" action="{$root}login.php">
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                  <button class="loginbtn" type="submit"> Login </button>
