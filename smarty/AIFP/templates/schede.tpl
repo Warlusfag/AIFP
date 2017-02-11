@@ -49,15 +49,24 @@
                     <header>
                         <h2>{$genere}</h2>
                     </header>
-                    <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
-                
+                   
                     <div class="row">
                         {foreach $funghi as $fun}
                         <div class="4u">
                                 <section>
                                     <form action="{$root}funghi/fungo.php" method="get">
-                                        <img src="{$fun[1]}" alt="{$fun[1]}" class="image full">
-                                        <button class="button" type="submit" value="{$fun[0]}">{$fun[0]}</button>
+                                        {if $fun.commestibile == "mortale"}
+                                            {$color = "red"}
+                                        {/if}
+                                        {if $fun.commestibile == "immangiabile"}
+                                                {$color = "grey"}
+                                        {/if}
+                                        {if $fun.commestibile == "velenoso"}
+                                                {$color = "yellow"}
+                                        {/if}
+                                        <button style="background-color:{$color};" class="button" type="submit" value="{$fun.specie}">
+                                        <img src="{$root}funghi/foto_generi/amanita.jpeg" alt="{$fun.specie}" class="image full">
+                                        {$fun.genere} {$fun.specie}</button>
                                         <br>
                                     </form>
                                         

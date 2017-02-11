@@ -5,6 +5,11 @@
 {block name=main}  
     {assign $i 0}
     {assign $count 0}
+    {if $message != null}
+        <script>
+            document.getElementById('success').style.display='block';
+        </script>
+    {/if}
     <div class="container">
         <section>
                 <header> 

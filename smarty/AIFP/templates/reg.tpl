@@ -57,26 +57,26 @@
 
                                     <label>Inserisci regione</label>
                                     <select name="regione" form="regform" required>
-                                        <option value=”abruzzo”>Abruzzo</option>
-                                        <option value=”basilicata”>Basilicata</option>
-                                        <option value=”calabria”>Calabria</option>
-                                        <option value=”campania”>Campania</option>
-                                        <option value=”emiliaromagna”>Emilia Romagna</option>
-                                        <option value=”friuliveneziagiulia”>Friuli Venezia Giulia</option>
-                                        <option value=”lazio”>Lazio</option>
-                                        <option value=”liguria”>Liguria</option>
-                                        <option value=”lombardia”>Lombardia</option>
-                                        <option value=”marche”>Marche</option>
-                                        <option value=”molise”>Molise</option>
-                                        <option value=”piemonte”>Piemonte</option>
-                                        <option value=”puglia”>Puglia</option>
-                                        <option value=”sardegna”>Sardegna</option>
-                                        <option value=”sicilia”>Sicilia</option>
-                                        <option value=”toscana”>Toscana</option>
-                                        <option value=”trentinoaltoadige”>Trentino Alto Adige</option>
-                                        <option value=”umbria”>Umbria</option>
-                                        <option value=”valledaosta”>Valle d’Aosta</option>
-                                        <option value=”veneto”>Veneto</option>
+                                        <option value="abruzzo">Abruzzo</option>
+                                        <option value="basilicata">Basilicata</option>
+                                        <option value="calabria">Calabria</option>
+                                        <option value="campania">Campania</option>
+                                        <option value="emiliaromagna">Emilia Romagna</option>
+                                        <option value="friuliveneziagiulia">Friuli Venezia Giulia</option>
+                                        <option value="lazio">Lazio</option>
+                                        <option value="liguria">Liguria</option>
+                                        <option value="lombardia">Lombardia</option>
+                                        <option value="marche">Marche</option>
+                                        <option value="molise">Molise</option>
+                                        <option value="piemonte">Piemonte</option>
+                                        <option value="puglia">Puglia</option>
+                                        <option value="sardegna">Sardegna</option>
+                                        <option value="sicilia">Sicilia</option>
+                                        <option value="toscana">Toscana</option>
+                                        <option value="trentinoaltoadige">Trentino Alto Adige</option>
+                                        <option value="umbria">Umbria</option>
+                                        <option value="valledaosta">Valle d’Aosta</option>
+                                        <option value="veneto">Veneto</option>
                                         
                                     </select><br><br>
                                     Data di nascita  <input type="date" placeholder="Inserisci Data di Nascita" name="data" required><br>
