@@ -3,6 +3,7 @@ session_start();
 require_once '../libs/aifp_controller.php';
 
 $controller = new aifp_controller();
+$smarty = new AIFP_smarty();
 
 if(isset($_GET['regione'])){
     $path = $controller->get_regolamento($_GET['regione']);
@@ -30,7 +31,7 @@ if(isset($_SESSION['curr_user'])){
 }
 $new_col = unserialize($_SESSION['news']);
 $news = $new_col->get_all_news();
+$smarty->assign('news', $news );
 
-$smarty->assign('eventi', $news );
 $smarty = new AIFP_Smarty();
 $smarty->display('regolamento.tpl');

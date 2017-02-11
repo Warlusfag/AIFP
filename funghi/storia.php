@@ -11,6 +11,5 @@ if(isset($_SESSION['curr_user'])){
 }
 $new_col = unserialize($_SESSION['news']);
 $news = $new_col->get_all_news();
-
-$smarty->assign('eventi', $news );
+$smarty->assign('news', $news );
 $smarty->display('storia.tpl');

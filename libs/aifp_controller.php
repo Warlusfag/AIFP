@@ -274,10 +274,10 @@ class aifp_controller
         }
     }
     
-    public function get_regolamento($provincia){
+    public function get_regolamento($regione){
         $db = new db_interface();
         
-        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.provincia=\'$provincia\';";        
+        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.regione=\'$regione\';";        
         $res = $db->query($query);
         if(($nr = $res->num_rows) >=0){            
             $res->data_seek(0);
@@ -285,7 +285,7 @@ class aifp_controller
             if(count($app)==1){
                 return $app[0];
             }else if(count($app) == 0){
-                $this->description = 'ERROR: nessun regolamento troato per la tua provincia';
+                $this->description = 'ERROR: nessun regolamento trovato per la tua regione';
                 return false;
             }else{
                 $this->description = GEN_ERROR;
