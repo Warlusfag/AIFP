@@ -10,7 +10,7 @@
 	{block name=main}
             {if $login == 1}
                 <script>
-                    document.getElementById('alert').style.display='block';
+                    document.getElementById('alert_login').style.display='block';
                 </script>
             {/if}
             {if $message != null}

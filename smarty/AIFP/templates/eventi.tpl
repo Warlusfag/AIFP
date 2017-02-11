@@ -107,11 +107,22 @@
                                                  {if !$profilo}
                                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
                                                     {else}
-                                                        <button class="button evento" type="submit" value="{$ev.id_evento}">partecipa</button>
+                                                        {foreach $partecipati as $p}
+                                                            {if $p==$ev.id_evento}
+                                                                {$status="disabled"}
+                                                                {$color="grey"}
+                                                            
+                                                            {/if}
+                                                        {/foreach}
+                                                        <button class="button evento" style="background-color:{$color};" name="evento" type="submit" value="{$ev.id_evento}" {$status}> partecipa</button>
                                                     {/if}
+                                                    
+                                                    {$status=""}
+                                                    {$color="#389709"}
                                             </form>
                                         </li>
                                         {/if}
+                                       
                                     {/foreach}
                                 </ul>
                         </section>
@@ -131,11 +142,22 @@
                                                 {if !$profilo}
                                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
                                                     {else}
-                                                        <button class="button evento" type="submit" value="{$ev.id_evento}">partecipa</button>
-                                                    {/if}   
+                                                        {foreach $partecipati as $p}
+                                                            {if $p==$ev.id_evento}
+                                                                {$status="disabled"}
+                                                                {$color="grey"}
+                                                            
+                                                            {/if}
+                                                        {/foreach}
+                                                            
+                                                        <button class="button evento" type="submit" style="background-color:{$color};" name="evento" value="{$ev.id_evento}" {$status}>partecipa</button>
+                                                    {/if}
+                                                    {$status=""}
+                                                    {$color="#389709"}
                                             </form>
                                         </li>
                                         {/if}
+                                        
                                     {/foreach}
                                 </ul>
                         </section>
@@ -155,29 +177,48 @@
                                                 {$count=$count+1}
                                                 <div class="numbertext">{$count}/ 3</div>
                                                 <a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
-                                                <p>{$eventi[$i].nome}</p>
+                                                <br><p><b>{$eventi[$i].nome}</b></p>
                                                 <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
                                                 {if !$profilo}
                                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
-                                                    {else}
-                                                        <button class="button evento" type="submit" value="{$eventi[$i].id_evento}">partecipa</button>
-                                                    {/if}
+                                                {else}
+                                                    {foreach $partecipati as $p}
+                                                        {if $p==$eventi[$i].id_evento}
+                                                            {$status="disabled"}
+                                                            {$color="grey"}
+                                                        {/if}
+                                                    {/foreach}
+                                                    <button class="button evento" type="submit" name="evento" style="background-color:{$color};" value="{$eventi[$i].id_evento}" {$status}>partecipa</button>
+                                                {/if}
+                                                
                                         </div>
                                         {/if}
                                         
                                         {if $eventi[$i].tipologia=='mostra' && $count==0}
+                                            {$status=""}
+                                            {$color="#389709"}
                                             {$count=$count+1}
                                             <div class="mySlides fade" style="display: block;">
                                                     <div class="numbertext">1 / 3</div>
                                                     <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
-                                                    <p>{$eventi[$i].nome}</p>
+                                                    <br><p><b>{$eventi[$i].nome}</b></p>
                                                     <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
                                                     {if !$profilo}
                                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
                                                     {else}
-                                                        <button class="button evento" type="submit" value="{$eventi[$i].id_evento}">partecipa</button>
+                                                        {foreach $partecipati as $p}
+                                                            {if $p==$eventi[$i].id_evento}
+                                                                {$status="disabled"}
+                                                                {$color="grey"}
+                                                            
+                                                            {/if}
+                                                        {/foreach}
+                                                        <button class="button evento" type="submit" style="background-color:{$color};" name="evento" value="{$eventi[$i].id_evento}" {$status}>partecipa</button>
                                                     {/if}
+                                                    {$status=""}
+                                                    {$color="#389709"}
                                             </div>
+                                            
                                         {/if}
                                         
                                         {$i=$i+1}
