@@ -30,8 +30,8 @@ class sezione extends gen_model{
             'table' => 'sezioni',
             'key'=>'id_sez',
             'key_type'=>'i',
-            'column_name' => 'nome,moderatore,num_conv',
-            'column_type' => 's,s,i',
+            'column_name' => 'nome,moderatore,num_conv,descrizione',
+            'column_type' => 's,s,i,s',
         );
         $this->convs = array();        
     }

@@ -147,7 +147,7 @@ class gen_model{
             $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach($column as $i=>$key){
                 if(isset($params[$key])){
-                    if($c_type[$i] == 's'){
+                    if($c_type[$i] == 's' || $c_type[$i] == 'da' || $c_type[$i] == 't'){
                         $query .= "U.$key='$params[$key]' AND ";                        
                     }else{
                         $query .= "U.$key=$params[$key] AND ";
