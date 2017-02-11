@@ -26,9 +26,19 @@
                                             {foreach $sez as $s}
                                                     <button class="sezione" type="submit">
                                                     <li>
-                                                        <br>
-                                                        <p style="font-size:20px;"><strong>{$s[0]} {$s[1]}</strong></p>
-                                                        <span> Moderatore:<strong> {$s[2]}  |  {$s[3]}</strong> commenti</span>
+                                                        <div class="row half">
+                                                            <div class="7u" style="float:left;">
+                                                                <br>
+                                                                <span style="font-size:20px;"><strong>{$s[0]} {$s[1]}</strong></span>
+                                                            </div>
+                                                            <div class="3u" style="float:right;">
+                                                                <br>
+                                                                <span> Moderatore:<strong> {$s[2]}  <br>  {$s[3]}</strong> commenti</span>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                        
                                                       
 
                                                     </li>

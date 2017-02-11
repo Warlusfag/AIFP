@@ -1,7 +1,22 @@
 {extends file="generic_page_sidebar.tpl"}
 
-	{block "title"}Regolamento{/block}
-	{block name=main}  
+{block "title"}Regolamento{/block}
+
+{block name=mainside}
+     <section>
+        <header>
+            <h2>Overview</h2>
+        </header>
+        <ul class="style1"> 
+            <li><a href="{$root}funghi/storia.php">Storia del fungo</a></li>
+            <li><a href="{$root}funghi/schede_funghi.php">Schede Funghi</a></li>
+            <li><a href="{$root}prodotti/libri.php">Libri e Guide</a></button></li>
+            <li><a href="{$root}funghi/regolamento.php">Regolamenti</a></button></li>
+        </ul>
+    </section>
+{/block}
+        
+{block name=main}  
 	<!-- Main -->
 <!-- Main -->
 

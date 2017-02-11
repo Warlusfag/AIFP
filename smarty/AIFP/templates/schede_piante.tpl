@@ -7,7 +7,7 @@
 	
         <div id="content" class="9u skel-cell-important">
             <section>
-                {if $piante==null}
+                {if !$genere}
                     <header>
                         <h2>SCHEDE PIANTE</h2>
                     </header>
@@ -32,7 +32,7 @@
                     </div>
                 {else}
                     <header>
-                        <h2>{$fun[2]}</h2>
+                        <h2>{$genere}</h2>
                     </header>
                     <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
                 
@@ -40,9 +40,11 @@
                         {foreach $piante as $pianta}
                         <div class="4u">
                                 <section>
-                                    <form action="{$root}piante/pianta.php" method="get">
-                                        <img src="{$pianta[1]}" alt="{$pianta[1]}" class="image full">
-                                        <button class="button" type="submit" value="{$pianta[0]}">{$pianta[0]}</button>
+                                    <form action="{$root}funghi/fungo.php" method="get">
+                                        
+                                        <button class="button" type="submit" value="{$pianta.specie}">
+                                        <img src="{$root}funghi/foto_generi/amanita.jpeg" alt="{$pianta.specie}" class="image full">
+                                        {$pianta.genere} {$pianta.specie}</button>
                                         <br>
                                     </form>
                                         

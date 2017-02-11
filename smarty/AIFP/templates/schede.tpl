@@ -1,6 +1,21 @@
 {extends file="generic_page_sidebar.tpl"}
-	{block "title"}Schede Funghi{/block}
+{block "title"}Schede Funghi{/block}
 	
+{block name=mainside}
+     <section>
+        <header>
+            <h2>Overview</h2>
+        </header>
+        <ul class="style1"> 
+            <li><a href="{$root}funghi/storia.php">Storia del fungo</a></li>
+            <li><a href="{$root}funghi/schede_funghi.php">Schede Funghi</a></li>
+            <li><a href="{$root}prodotti/libri.php">Libri e Guide</a></button></li>
+            <li><a href="{$root}funghi/regolamento.php">Regolamenti</a></button></li>
+        </ul>
+    </section>
+{/block}        
+        
+        
 	{block name=main}  
 	<!-- Main -->
 <!-- Main -->
@@ -34,15 +49,24 @@
                     <header>
                         <h2>{$genere}</h2>
                     </header>
-                    <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
-                
+                   
                     <div class="row">
                         {foreach $funghi as $fun}
                         <div class="4u">
                                 <section>
                                     <form action="{$root}funghi/fungo.php" method="get">
-                                        <img src="{$fun[1]}" alt="{$fun[1]}" class="image full">
-                                        <button class="button" type="submit" value="{$fun[0]}">{$fun[0]}</button>
+                                        {if $fun.commestibile == "mortale"}
+                                            {$color = "red"}
+                                        {/if}
+                                        {if $fun.commestibile == "immangiabile"}
+                                                {$color = "grey"}
+                                        {/if}
+                                        {if $fun.commestibile == "velenoso"}
+                                                {$color = "yellow"}
+                                        {/if}
+                                        <button style="background-color:{$color};" class="button" type="submit" value="{$fun.specie}">
+                                        <img src="{$root}funghi/foto_generi/amanita.jpeg" alt="{$fun.specie}" class="image full">
+                                        {$fun.genere} {$fun.specie}</button>
                                         <br>
                                     </form>
                                         
