@@ -27,16 +27,29 @@ class piante extends gen_model{
         
         parent::__construct();
         
-        $this->column='id_pianta,tipologia,genere,specie,fusto,radici,foglie,infiorescenze,margine_fogliare,num_petali,spine,corteccia';
-        
+        $this->column='id_pianta,tipologia,genere,specie,fusto,radici,foglie,infiorescenze,margine_fogliare,num_petali,spine,corteccia,descrizione';
+        $this->default = array(
+            'margine fogliare' => 'intero',
+            'spine' => 0,
+            'num_petali' => NULL,
+            'corteccia' => 'rugosa',
+        );
         $this->table_descr = array(
             'table' => 'piante',
             'key' => 'id_pianta',
             'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 's,s,s,s,s,s,s,s,i,i,s',            
-        );        
-        $this->column_view = '';
+            'column_type' => 's,s,s,s,s,s,s,s,i,i,s,s',            
+        );  
+        
+        $t = explode(',',$this->column);
+        foreach($t as $i => $key){
+            if(isset($this->default[$key])){
+                $this->attributes[$key] = $this->default[$key];
+            }else{
+                $this->attributes[$key] = '';
+            }
+        }
       
         $this->queries = array(
             'create' => "CREATE VIEW %s (".$this->column_view.") AS SELECT * FROM %s AS U ",
@@ -61,6 +74,19 @@ class piante extends gen_model{
         }else{
             parent::get_attributes($way);
         }
+    }
+    
+    function get_photos($genspec=-1){
+        if($genspec != -1){
+            $file = $genspec;
+        }else{
+            if($this->attributes[$this->table_descr['key']] == ''){
+                return false;
+            }
+            $file = $this->attributes['genere'].'-'.$this->attributes['specie'];
+        }
+        $photos = load_file(IMG_MUSH.$file);
+        return $photos;
     }
     
     public function preapare_dynaimic_search($name, $username){

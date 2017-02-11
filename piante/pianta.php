@@ -32,5 +32,7 @@ if($flag == false){
     $pianta = new piante();
     $pianta->init($p[$i]);
     $smarty->assign('descrizione',$pianta->get_attributes());
+    $photos = $pianta->get_photos();
+    $smarty->assign('foto',$photos);
 }
 $smarty->display('pianta.tpl');

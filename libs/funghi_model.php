@@ -27,16 +27,29 @@ class funghi extends gen_model{
         
         parent::__construct();
         
-        $this->column='genere,specie,sporata,viraggio,lattice,commestibile,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,descrizione,foto1,foto2';
-        
+        $this->column='genere,specie,sporata,viraggio,lattice,commestibile,cassante,cappello,cuticola_pelosità,cuticola_umidità,colore,imenio,attaccatura lamelle,anello,gambo,volva,pianta,habitat,descrizione';
+        $this->default= array(
+            'viraggio' => 0,
+            'lattice' => 0,
+            'cassante' => 0,            
+        );
         $this->table_descr = array(
             'table' => 'funghi',
             'key' => 'id_fungo',
             'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s',            
-        );        
+            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
+        );
         
+        $t = explode(',',$this->column);
+        foreach($t as $i => $key){
+            if(isset($this->default[$key])){
+                $this->attributes[$key] = $this->default[$key];
+            }else{
+                $this->attributes[$key] = '';
+            }
+        }
+       
       
         $this->queries = array(
             'create' => "CREATE VIEW %s (".$this->column.") AS SELECT * FROM %s AS U ",
@@ -61,6 +74,19 @@ class funghi extends gen_model{
         }else{
             parent::get_attributes($way);
         }
+    }
+    
+    function get_photos($genspec=-1){
+        if($genspec != -1){
+            $file = $genspec;
+        }else{
+            if($this->attributes[$this->table_descr['key']] == ''){
+                return false;
+            }
+            $file = $this->attributes['genere'].'-'.$this->attributes['specie'];
+        }
+        $photos = load_file(IMG_MUSH.$file);
+        return $photos;
     }
     
     public function preapare_dynaimic_search($name, $username){
@@ -131,7 +157,7 @@ class funghi extends gen_model{
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
+                $app[$j]=$res->fetch_array(MYSQLI_ASSOC);                
             }
             if(isset($this->view_name) && isset($this->view_name_old)){
                 $this->conn->query(sprintf($this->queries['drop'],$this->view_name_old));
