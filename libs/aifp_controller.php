@@ -277,7 +277,7 @@ class aifp_controller
     public function get_regolamento($regione){
         $db = new db_interface();
         
-        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.regione=\'$regione\';";        
+        $query = "SELECT regolamento FROM regolamenti AS U WHERE U.regione='$regione';";        
         $res = $db->query($query);
         if(($nr = $res->num_rows) >=0){            
             $res->data_seek(0);
