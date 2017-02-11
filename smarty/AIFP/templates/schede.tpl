@@ -65,7 +65,7 @@
                                                 {$color = "yellow"}
                                         {/if}
                                         <button style="background-color:{$color};" class="button" type="submit" value="{$fun.specie}">
-                                        <img src="{$root}funghi/foto_generi/amanita.jpeg" alt="{$fun.specie}" class="image full">
+                                        <img src="{$root}{$fun.foto}" alt="{$fun.specie}" class="image full">
                                         {$fun.genere} {$fun.specie}</button>
                                         <br>
                                     </form>

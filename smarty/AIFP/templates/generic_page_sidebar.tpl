@@ -34,7 +34,8 @@
                     <li>Punteggio: {$profilo.punteggio}</li>
                     <li>Numero post: {$profilo.num_post}</li>
                 </ul>
-                    <button class="button" href="{$root}personal_page/personal_page.php"> Visita profilo </button>
+                    <form action="{$root}personal_page/personal_page.php">
+                    <button class="button">Visita profilo </button></form>
                 </section>
                 {/if}
                 </section>
