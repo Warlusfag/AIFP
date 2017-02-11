@@ -107,7 +107,7 @@
                                                  {if !$profilo}
                                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
                                                     {else}
-                                                        <button class="button evento" type="submit" value="{$ev[$i].id_evento}">partecipa</button>
+                                                        <button class="button evento" type="submit" value="{$ev.id_evento}">partecipa</button>
                                                     {/if}
                                             </form>
                                         </li>
@@ -131,7 +131,7 @@
                                                 {if !$profilo}
                                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
                                                     {else}
-                                                        <button class="button evento" type="submit" value="{$ev[$i].id_evento}">partecipa</button>
+                                                        <button class="button evento" type="submit" value="{$ev.id_evento}">partecipa</button>
                                                     {/if}   
                                             </form>
                                         </li>
