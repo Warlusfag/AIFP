@@ -10,6 +10,11 @@
             document.getElementById('success').style.display='block';
         </script>
     {/if}
+    {if $error != null}
+        <script>
+            document.getElementById('alert').style.display='block';
+        </script>
+    {/if}     
     <div class="container">
         <section>
                 <header> 
