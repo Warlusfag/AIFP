@@ -64,7 +64,7 @@ class funghi extends gen_model{
             return $t;
         }else if(strpos($way,',')){
             $t = array();
-            $keys = split($way, ',');
+            $keys = explode(',',$way);
             foreach($keys as $i=>$key){
                 if(isset($this->attributes[$key])){
                     $t[$i] = $this->attributes[$key];
@@ -87,6 +87,9 @@ class funghi extends gen_model{
             $file = $this->attributes['genere'].'-'.$this->attributes['specie'].'/';
         }
         $photos = load_file(IMG_MUSH.$file);
+        foreach ($photos as $i => $file){
+            $photos[$i] = str_replace(PROJ_DIR, '',$photos[$i]);
+        }
         return $photos;
     }
     

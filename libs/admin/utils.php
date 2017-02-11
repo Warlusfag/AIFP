@@ -14,6 +14,7 @@ function load_file($base_path)
         $f = $base_path.$file;
         $photo[] =  $f;
     }
+    return $photo;
 }
 
 function find_values($input, $array){

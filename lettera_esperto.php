@@ -68,6 +68,10 @@ if(isset($_SESSION['curr_user'])){
     }
     $smarty->assign('profilo', $t );    
 }
+$new_col = unserialize($_SESSION['news']);
+$news = $new_col->get_all_news();
+
+$smarty->assign('eventi', $news );
 $smarty->display('lettera_esperto.tpl');
 
 

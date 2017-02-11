@@ -12,8 +12,8 @@ define('PROJ_LIBS',PROJ_DIR.'libs/');
 define('PROJ_ADMIN', PROJ_LIBS.'admin/');
 define('FILE_ASS', PROJ_LIBS.'fuser/filespace_ass/');
 define('IMG_USER', PROJ_LIBS.'fuser/image_user/');
-define('IMG_MUSH', 'libs/image_funghi/');
-define('IMG_PLANT','libs/image_piante/');
+define('IMG_MUSH', PROJ_LIBS.'image_funghi/');
+define('IMG_PLANT',PROJ_LIBS.'image_piante/');
 define('DEFAULT_IMG', IMG_USER.'default.png');
 define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com');
 

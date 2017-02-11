@@ -13,6 +13,7 @@ if(isset($_SESSION['curr_user'])){
         if(!$user->register_evento($_POST['evento'])){
             $smarty->assign('error',$user->err_descr);            
         }else{
+            $_SESSION['partecipati'][] = $_POST['evento'];
             $smarty->assign('message','Inscrizione all\'evento avvenuta con successo');    
         }		
     }else{
@@ -26,6 +27,8 @@ if(isset($_SESSION['curr_user'])){
     $news = $new_col->get_all_news();
     
     $smarty->assign('eventi', $news );
+    $part = $_SESSION['partecipati'];
+    $smarty->assign('partecipati',$part);
 
     $smarty->display('eventi.tpl');
 }else{

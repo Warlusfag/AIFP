@@ -31,8 +31,7 @@ if(isset($_GET['genere'])){
             $temp[$i] = $f->get_attributes('genere,specie,commestibile');
             //aggiungo la foto
             $p = $f->get_photos();            
-            $temp[$i]['foto'] = $p[0];
-            
+            $temp[$i]['foto'] = $p[0];            
         }
         $smarty->assign('funghi',$temp);
     }

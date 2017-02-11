@@ -6,6 +6,11 @@ require_once '../libs/aifp_controller.php';
 if (!isset($_SESSION['news'])){
     $_SESSION['news'] = serialize(new news_collection());
 }
+
+if (!isset($_SESSION['partecipati'])){
+    $_SESSION['partecipati'] = array();
+}
+
 $smarty = new AIFP_Smarty();
 $new_col = unserialize($_SESSION['news']);
 if(!$new_col->is_load()){
@@ -26,6 +31,8 @@ if(isset($_SESSION['curr_user'])){
     }
     $smarty->assign('profilo', $t );    
 }
+$part = $_SESSION['partecipati'];
+$smarty->assign('partecipati',$part);
 $smarty->assign('eventi',$news);
 $smarty->display('eventi.tpl'); 
 

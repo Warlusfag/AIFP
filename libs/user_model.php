@@ -2,7 +2,7 @@
 
 require_once 'gen_model.php';
 require_once 'admin/setup.php';
-require_once 'conversazione_model.php';
+
 
 //ancora da finire
 const limit_filesize = 4000000;
@@ -116,7 +116,9 @@ class user extends gen_model{
     }    
     
     public function write_post($fk_conv, $text)            
-    {       
+    {     
+        require_once 'conversazione_model.php';
+        
         if($this->attributes[$this->table_descr['key']] == -1){
             $this->err_descr = "Error: you have to initialize user class";
             return false;
