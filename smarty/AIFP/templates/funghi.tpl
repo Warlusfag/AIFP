@@ -19,23 +19,23 @@
                     <div class="row">
                             <div class="4u">
                                     <section>
-                                            <a href="{root}funghi/storia.php" class="image full"><img src="../images/pics01.jpg" alt=""></a>
+                                            <a href="{$root}funghi/storia.php" class="image full"><img src="../images/pics01.jpg" alt=""></a>
                                             <p>La micologia e le sue scoperte scientifiche </p>
-                                            <a href="{root}funghi/storia.php" class="button">STORIA</a>
+                                            <a href="{$root}funghi/storia.php" class="button">STORIA</a>
                                     </section>
                             </div>
                             <div class="4u">
                                     <section>
-                                            <a href="{root}funghi/schede_funghi.php" class="image full"><img src="../images/pics02.jpg" alt=""></a>
+                                            <a href="{$root}funghi/schede_funghi.php" class="image full"><img src="../images/pics02.jpg" alt=""></a>
                                             <p>Schede di tutti i fottuti funghi allucinogeni e non</p>
-                                            <a href="{root}funghi/schede_funghi.php" class="button">SCHEDE</a>
+                                            <a href="{$root}funghi/schede_funghi.php" class="button">SCHEDE</a>
                                     </section>
                             </div>
                             <div class="4u">
                                     <section>
-                                            <a href="{root}prodotti/libri.php" class="image full"><img src="../images/pics03.jpg" alt=""></a>
+                                            <a href="{$root}prodotti/libri.php" class="image full"><img src="../images/pics03.jpg" alt=""></a>
                                             <p>Libri consigliati dal nostro esperto, dott.Faggioni</p>
-                                            <a href="{root} prodotti/libri.php" class="button">LIBRI</a>
+                                            <a href="{$root} prodotti/libri.php" class="button">LIBRI</a>
                                     </section>
                             </div>
 
