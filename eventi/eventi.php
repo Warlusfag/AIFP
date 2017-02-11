@@ -6,7 +6,7 @@ require_once '../libs/aifp_controller.php';
 if (!isset($_SESSION['news'])){
     $_SESSION['news'] = serialize(new news_collection());
 }
-
+$smarty = new AIFP_Smarty();
 $new_col = unserialize($_SESSION['news']);
 if(!$new_col->is_load()){
     $contr = new aifp_controller();
