@@ -8,6 +8,6 @@ function testpass(){
     document.forms["regu"]["password"].select();
     return false;
   }
-  return true;
+  return false;
 }
 
