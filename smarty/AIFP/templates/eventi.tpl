@@ -6,6 +6,9 @@
     {assign $i 0}
     {assign $count 0}
     <div class="container">
+ 
+        
+        
          <div class="row half">
                 <div class="3u">
                         <section>
@@ -14,11 +17,18 @@
                                 </header>
                                 <ul class="default">
                                     {foreach $eventi as $ev}
-                                        {$i}
+                                        
                                         {if $ev.tipologia == 'sagra'}
                                         <li><img src="{$root}images/news.ico" width="78" height="78" alt="">
-                                                <p>{$ev.nome}</p>
-                                                <span class="posted">Dal {$ev.data_inzio} al {$ev.data_fine}   {$ev.provincia}-{$ev.regione}</span>
+                                            <form action="{$root}eventi/inscr_eventi.php" method="post">
+                                                <p><b>{$ev.nome}</b></p>
+                                                <span class="posted">Dal <b>{$ev.data_inzio}</b> al <b>{$ev.data_fine}   {$ev.provincia}</b>-<b>{$ev.regione}</b></span><br>
+                                                 {if !$profilo}
+                                                        <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
+                                                    {else}
+                                                        <button class="button evento" type="submit" value="{$eventi[$i].id_evento}">partecipa</button>
+                                                    {/if}
+                                            </form>
                                         </li>
                                         {/if}
                                     {/foreach}
@@ -34,8 +44,15 @@
                                     {foreach $eventi as $ev}
                                         {if $ev[3] == 'corso'}
                                         <li><img src="{$root}images/news.ico" width="78" height="78" alt="">
-                                                <p>{$ev[2]}</p>
-                                                <span class="posted">Dal {$ev[6]} al {$ev[7]} {$ev[5]}-{$ev[4]}</span>
+                                            <form action="{$root}eventi/inscr_eventi.php" method="post">
+                                                <p><b>{$ev.nome}</b></p>
+                                                <span class="posted">Dal <b>{$ev.data_inzio}</b> al <b>{$ev.data_fine}   {$ev.provincia}</b>-<b>{$ev.regione}</b></span><br>
+                                                {if !$profilo}
+                                                        <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
+                                                    {else}
+                                                        <button class="button evento" type="submit" value="{$eventi[$i].id_evento}">partecipa</button>
+                                                    {/if}   
+                                            </form>
                                         </li>
                                         {/if}
                                     {/foreach}
@@ -51,6 +68,7 @@
                                     {$i=0}
                                     {$count=0}
                                     {while $i < 20}
+                                        <form action="{$root}eventi/inscr_eventi.php" method="post">
                                         {if $eventi[$i].tipologia == 'mostra' && $count!=0}
                                         <div class="mySlides fade">
                                                 {$count=$count+1}
@@ -58,6 +76,11 @@
                                                 <a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
                                                 <p>{$eventi[$i].nome}</p>
                                                 <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
+                                                {if !$profilo}
+                                                        <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
+                                                    {else}
+                                                        <button class="button evento" type="submit" value="{$eventi[$i].id_evento}">partecipa</button>
+                                                    {/if}
                                         </div>
                                         {/if}
                                         
@@ -68,10 +91,16 @@
                                                     <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
                                                     <p>{$eventi[$i].nome}</p>
                                                     <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
+                                                    {if !$profilo}
+                                                        <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi per Iscriverti</a>
+                                                    {else}
+                                                        <button class="button evento" type="submit" value="{$eventi[$i].id_evento}">partecipa</button>
+                                                    {/if}
                                             </div>
                                         {/if}
                                         
                                         {$i=$i+1}
+                                        </form>
                                     {/while}
                                     <a class="prev" onclick="plusSlides(-1)">❮</a>
                                     <a class="next" onclick="plusSlides(1)">❯</a>
@@ -84,9 +113,12 @@
                                         <span class="dot" onclick="currentSlide({$i})"></span> 
                                         {$i=$i+1}
                                     {/while}
+                                    
                                 </div>
                         </section>
                 </div>
+            
+                <!-- EVENTO FORM -->
         </div>
 </div>
 

@@ -8,7 +8,7 @@
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h3>SAGRE</h3>
+                                    <h3><a href={$root}eventi/eventi.php>SAGRE</a></h3>
                                 </header>
                                 <ul class="default">
                                     {$i=0}
@@ -29,7 +29,7 @@
                 <div class="3u">
                         <section>
                                 <header>
-                                        <h3>CORSI</h3>
+                                    <h3><a href={$root}eventi/eventi.php>CORSI</a></h3>
                                 </header>
                                 <ul class="default">
                                     {$i = 0}
@@ -49,7 +49,7 @@
                 <div class="6u">
                         <section>
                                 <header>
-                                        <h3>MOSTRE</h3>
+                                        <h3><a href={$root}eventi/eventi.php>MOSTRE</a></h3>
                                 </header>
                                 <div class="slideshow-container"> 
                                     {$i=0}

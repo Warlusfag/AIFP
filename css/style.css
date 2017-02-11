@@ -302,7 +302,12 @@
 			transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
 			cursor: pointer;
 		}
-
+                
+                .button.evento{
+                    font-size: 0.9em;
+                    text-transform: lowercase;
+                    width: 100%;
+                }
 			.button:hover
 			{
 				background: #307d09;
@@ -1198,7 +1203,7 @@ span.psw{
 	width: auto;
 	padding: 16px;
 	margin-top: -22px;
-	color: white;
+	color: black;
 	font-weight: bold;
 	font-size:18px;
 	transition: 0.6s ease;
