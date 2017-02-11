@@ -9,11 +9,11 @@ $contr = new aifp_controller();
 if(isset($_SESSION['curr_user'])){
     if(isset($_POST['evento'])){
         $params = $_SESSION['curr_user']['token'];        
-        $user = $cont->get_user($params, $_SESSION['curr_user']['type']);
+        $user = $contr->get_user($params, $_SESSION['curr_user']['type']);
         if(!$user->register_evento($_POST['evento'])){
             $smarty->assign('error',$user->err_descr);            
         }else{
-            $smarty->assign('message','Inscrizione avvenuta con successo');    
+            $smarty->assign('message','Inscrizione all\'evento avvenuta con successo');    
         }		
     }else{
         $smarty->assign('error', GEN_ERROR);        
@@ -21,7 +21,11 @@ if(isset($_SESSION['curr_user'])){
     foreach($_SESSION['curr_user'] as $key=>$value){
         $t[$key] = $value;
     }
-    $smarty->assign('profilo', $t );    
+    $smarty->assign('profilo', $t ); 
+    $new_col = unserialize($_SESSION['news']);
+    $news = $new_col->get_all_news();
+    
+    $smarty->assign('eventi', $news );
 
     $smarty->display('eventi.tpl');
 }else{

@@ -131,7 +131,7 @@ class db_interface
             $this->error='Error, in the number of parameters';
             return false;
         }
-        $query="UPDATE '$table ";        
+        $query="UPDATE $table ";        
         $set="SET ";
         $ptype='';
         $g_param= array();
@@ -139,24 +139,23 @@ class db_interface
         $param_name = explode(',', $param_name);
         for( $i=0; $i<count($param_name);$i++){               
             if($param_type[$i] == 'da'){
-                $set.=$param_name[$i]."= str_to_date(?,\'%Y-%m-%d\'), ";
+                $set.=$param_name[$i]." = str_to_date(?,\'%Y-%m-%d\'), ";
                 $ptype .= 's';
             }
             else if($param_type[$i] == 't'){
-                $query_val.='str_to_date(?,\'%Y-%m-%d %H:$i:%s\'), ';
+                $set .=$param_name[$i]." = str_to_date(?,\'%Y-%m-%d %H:%i:%s\'), ";
                 $ptype .= 's';                    
             }
             else{
-                $set .= $param_name[$i]."= ?, ";
+                $set .= $param_name[$i]." = ?, ";
                 $ptype .= $param_type[$i];
             }
         }
         //codice per inserire uno spazio al posto della virgola finale
         $set = substr_replace($set, ' ', count($set)-3);
         
-        $where = ' WHERE '.$id_arr[0].'='.$id_arr[2].';';
-        $q = $query.$set.$where;        
-        $ptype .= $id_arr[1];
+        $where = ' WHERE '.$id_arr[0].'='.$id_arr[1].';';
+        $q = $query.$set.$where;                
 
         $g_param[] = & $ptype;
         for($i=0;$i<count($param_value);$i++){

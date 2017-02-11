@@ -4,6 +4,9 @@ require_once 'associazione_model.php';
 require_once 'sezione_model.php';
 require_once 'product_model.php';
 require_once 'admin/utils.php';
+require_once 'evento_model.php';
+require_once 'conversazione_model.php';
+
 
 
 class admin extends user{
@@ -146,6 +149,10 @@ class admin extends user{
     }
     
     public function delete_post(){}
+    
+    public function search_user($params, $limit=-1){
+        return $this->search($params, $limit);       
+    }  
     
 }
 

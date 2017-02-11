@@ -1,6 +1,10 @@
 <?php
 require_once 'user_model.php';
 require_once 'aifp_controller.php';
+require_once 'evento_model.php';
+require_once 'conversazione_model.php';
+
+
 
 class associazione extends user
 {   

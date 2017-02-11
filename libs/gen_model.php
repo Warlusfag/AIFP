@@ -83,25 +83,23 @@ class gen_model{
         }
         $value=array();
         $t='';
-        $name = '';
-        $i=0;        
+        $name = '';       
         $keys=explode(',',$this->table_descr['column_name']);
         $type=explode(',',$this->table_descr['column_type']);
-        foreach($keys as $key){
+        foreach($keys as $i => $key){
             //controllo se è un calore di descr
             if(isset($params[$key])){
                 if($key == $this->table_descr['key']){
                     $this->err_descr = "ERROR: failed input";
                     return false;
                 }
-                $value[$i]=$params[$key];
+                $value[]=$params[$key];
                 $name .= $key.',';
                 $t .= $type[$i].',';
-                $i++;
             }                
         }
-        $name = substr_replace($name, '', count($name)-1);
-        $t = substr_replace($t, '', count($t)-1);
+        $name = substr_replace($name, '', count($name)-2);
+        $t = substr_replace($t, '', count($t)-2);
         $id_arr= array(
             0=>$this->table_descr['key'],
             1=>$this->attributes[$this->table_descr['key']],

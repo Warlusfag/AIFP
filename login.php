@@ -51,8 +51,10 @@ if(isset($_SESSION['curr_user'])){
             $_SESSION['curr_user']['type'] =$user->type;
             $_SESSION['curr_user']['num_post'] =$user->attributes['num_post'];
             $_SESSION['curr_user']['punteggio'] =$user->attributes['punteggio'];
-            $smarty->assign('user', $user->attributes['user'] );
-            $smarty->assign('image', $user->get_image());
+            foreach($_SESSION['curr_user'] as $key=>$value){
+                $t[$key] = $value;
+            }
+            $smarty->assign('profilo', $t );
         }else{            
             $smarty->assign('error', $contr->description);
         }

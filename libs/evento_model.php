@@ -87,19 +87,27 @@ class evento extends gen_model
     }
     
     //Ancora da finire
-    public function register_evento( $email)
+    public function register_evento($id, $email)
     {     
-            
-        $titolo = $ev['titolo'];
+        require_once 'associazione_model.php';
+        
+        $params = array($this->table_descr['key'] => $id);        
+        $data = $this->search_eventi($params);
+        $this->init($data);
+        
+        $ass = new associazione();
+        $params = array($ass->table_descr['key'] => $this->attributes['id_ass']);
+        $ass->search_user($params);
+           
+        $titolo = $this->attributes['nome'];
+        $em_ass = $ass->attributes['email'];
         $subject="AIFP: un utente si è inscritto al tuo evento: $titolo ";
-        $text= "Gentile associazione ".$ass['nome'].","
+        $text= "Gentile associazione ".$ass->attributes['nome'].",\n"
                 . "con la presente email le vogliamo comunicare che un utente si appena inscritto "
-                . "al suo evento ";
-
-        $subject="AIFP: email di conferma dell\'avenuta inscrizione all\'evento: $titolo ";
-        $text= "Gentile utente,"
-                . "con la presente email le confermiamo l'avvenuta registrazione ";
-            
+                . "al suo evento, la sua email e' ".$email;
+        //incio della email
+        
+        return true;
         
     }
     

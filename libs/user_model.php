@@ -2,6 +2,7 @@
 
 require_once 'gen_model.php';
 require_once 'admin/setup.php';
+require_once 'conversazione_model.php';
 
 //ancora da finire
 const limit_filesize = 4000000;
@@ -115,9 +116,7 @@ class user extends gen_model{
     }    
     
     public function write_post($fk_conv, $text)            
-    {
-        require_once 'post_class.php';
-        
+    {       
         if($this->attributes[$this->table_descr['key']] == -1){
             $this->err_descr = "Error: you have to initialize user class";
             return false;
@@ -146,8 +145,8 @@ class user extends gen_model{
     }
     
     public function register_evento($id_evento)
-    {
-        require_once 'evento_class.php';
+    {   
+        require_once 'evento_model.php';
         
         if($this->attributes[$this->table_descr['key']] == -1){        
             $this->err_descr='Error: user have to be initializate';
@@ -155,11 +154,11 @@ class user extends gen_model{
         }
         $ev = new evento();
         if ( !$ev->register_evento($id_evento, $this->attributes['email']) ){
-            $this->err_descr='Error: while adding an event';
+            $this->err_descr=$ev->err_descr;
             return false;     
         }
         $this->attributes['punteggio']+=10;
-        $params = array('punteggio'=> $this->attributes['punteggio'],);
+        $params = array('punteggio'=> $this->attributes['punteggio']);
         $this->update_user($params);
         if($this->err_descr != ''){return false;}
         $this->err_descr = '';
