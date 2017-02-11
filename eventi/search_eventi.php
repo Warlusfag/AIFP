@@ -8,11 +8,8 @@ function check_post($param)
 {
     $app = array();
     foreach ($param as $key=>$value){
-        if( $key == 'nome_evento' ){
+        if( $key == 'nome' ){
             $app[$key] = $value;
-        }
-        else if( $key == 'indirizzo' ){
-            $app[$key] =$value;
         }
         else if( $key == 'regione' ){
             $app[$key] = $value;
