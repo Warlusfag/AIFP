@@ -15,6 +15,17 @@ function load_file($base_path)
         $photo[] =  $f;
     }
 }
+
+function find_values($input, $array){
+    
+    foreach($array as $key => $value){
+        if($value == $input){
+            return $key;
+        }
+    }
+    return -1;
+}
+
 function download ($file)
 {   
 

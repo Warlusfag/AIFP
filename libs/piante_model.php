@@ -43,7 +43,8 @@ class piante extends gen_model{
         );  
         
         $t = explode(',',$this->column);
-        foreach($t as $i => $key){
+        $this->attributes[$this->table_descr['key']] = -1;
+        foreach(array_values($t) as $key){
             if(isset($this->default[$key])){
                 $this->attributes[$key] = $this->default[$key];
             }else{
@@ -83,7 +84,7 @@ class piante extends gen_model{
             if($this->attributes[$this->table_descr['key']] == ''){
                 return false;
             }
-            $file = $this->attributes['genere'].'-'.$this->attributes['specie'];
+            $file = $this->attributes['genere'].'-'.$this->attributes['specie'].'/';
         }
         $photos = load_file(IMG_MUSH.$file);
         return $photos;

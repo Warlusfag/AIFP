@@ -214,7 +214,7 @@ class aifp_controller
     public function get_scheda_funghi($genere){
         //controlla se è presente
         $g = array_values(funghi::$generi);
-        if(array_search($genere,$g)){
+        if(find_values($genere,$g)!= -1){
             //se già è presente nella collection non c'è bisogno di ritrovarlo ma ritorna la collection
             $model_fungo = new funghi();                         
             $params = array(
@@ -237,7 +237,7 @@ class aifp_controller
     public function get_schede_piante($genere){
         
         $g = array_values(piante::$tipologia);
-        if(array_search($genere,$g)){
+        if(find_values($genere,$g) != -1){
             //se già è presente nella collection non c'è bisogno di ritrovarlo ma ritorna la collection
             $p = new piante();                         
             $params = array(
