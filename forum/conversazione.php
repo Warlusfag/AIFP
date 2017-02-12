@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../libs/aifp_controller.php';
 
 if(isset($_GET['page'])){
@@ -34,7 +34,12 @@ if($posts == false){
         $us = $controller->get_us_from_type($posts[$i]['tipo_user']);
         $params = array($us->table_descr['key'] => $posts[$i]['user']);
         $user = $controller->get_user($params);
-        $posts[$i] = array_merge($posts[$i], $user->get_attributes('post'));
+        if($controller->description != ''){
+            $smarty->assign('error', $controller->description);
+        }else{
+            unset($posts[$i]['user']);
+            $posts[$i] = array_merge($posts[$i], $user->get_attributes('post'));
+        }
     }
     $smarty->assign('posts', $posts);
 }

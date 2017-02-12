@@ -158,7 +158,11 @@ class user extends gen_model{
             return false;
         }
         $this->attributes['punteggio']+=20;
-        $params = array('punteggio'=> $this->attributes['punteggio'],);
+        $this->attributes['num_post']++;
+        $params = array(
+            'punteggio'=> $this->attributes['punteggio'],
+            'num_post' => $this->attributes['num_post'],
+            );
         $this->update_user($params);
         if($this->err_descr != ''){return false;}
         $this->err_descr = '';

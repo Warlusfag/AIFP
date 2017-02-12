@@ -99,7 +99,7 @@ class conv_collection extends collection {
     
     function __construct(){
         parent:: __construct();
-        $this->sezione = 0;
+        $this->sezione = -1;
         $this->curr_page = 0;
     }    
     

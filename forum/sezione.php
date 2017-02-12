@@ -1,13 +1,11 @@
 <?php
-
+session_start();
 //nel forum io faccio l'elenco delle sezioni che ci stano
 require_once '../libs/aifp_controller.php';
-
 
 if (!isset($_SESSION['convs'])){
     $_SESSION['convs'] = serialize(new conv_collection());
 }
-
 //La prima volta che apro una sezione l'utente  non ha potuto selezionare la pagina
 if(isset($_GET['page'])){
     $page = $_GET['page'] -1;    
@@ -17,12 +15,12 @@ if(isset($_GET['page'])){
 $smarty = new AIFP_smarty();
 $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
-$i = $_POST['sezione'];  
+$i = $_POST['sezione'];
+$flag = true;
 //
 if( $coll_c->sezione == $i){
     if( ($convs = $coll_c->getitem($page)) != false){
         $smarty->assign('convs',$convs);
-        $smarty->assign('sezione',$i);
     }
 }else{
     //l'utente ha cambiato sezione e devo caricare tutte le conversazioni di quella sezione
@@ -33,14 +31,23 @@ if( $coll_c->sezione == $i){
     $sez = new sezione();
     $sez->init($temp);
     $convs = $sez->get_conversazioni();
-    $coll_c->additem($convs, $page);
-    $_SESSION['convs'] = serialize($coll_c);
+    if($sez->err_descr != ''){
+        $smarty->assign('error',$sez->err_descr);
+        $flag = false;
+    }else{
+        $coll_c->additem($convs, $page);
+        $_SESSION['convs'] = serialize($coll_c);
+        $smarty->assign('convs', $convs);
+    }
 }
 $smarty->assign('sezione',$i);
-$smarty->assign('convs', $convs);
 foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }
 $smarty->assign('profilo', $t );
-$smarty->display('sezione.tpl');               
+if($flag){
+    $smarty->display('sezione.tpl');               
+}else{
+    $smarty->display('forum.tpl');
+}
 

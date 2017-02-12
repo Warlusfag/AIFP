@@ -12,7 +12,7 @@ if(!isset($_SESSION['curr_user'])){
 if (!isset($_SESSION['forum'])){
     $_SESSION['forum'] = serialize(new sezioni_collection());
 }
-
+$flag = true;
 $contr = new aifp_controller();
 $smarty = new AIFP_smarty();
 $coll_s = unserialize($_SESSION['forum']);
@@ -33,6 +33,7 @@ if($coll_s->is_load()){
 }
 if($contr->description != ''){
     $smarty->assign('error',GEN_ERROR);
+    $flag = false;
 }else{    
     $smarty->assign('sez',$sez);
 }
@@ -41,4 +42,8 @@ foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }
 $smarty->assign('profilo', $t );
-$smarty->display('forum.tpl');
+if($flag){
+    $smarty->display('forum.tpl');
+}else{
+    $smarty->display('index.tpl');
+}
