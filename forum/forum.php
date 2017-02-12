@@ -9,11 +9,9 @@ if(!isset($_SESSION['curr_user'])){
     $smarty->assign('login',1);
     $smarty->display('index.tpl');
 }
-
 if (!isset($_SESSION['forum'])){
     $_SESSION['forum'] = serialize(new sezioni_collection());
 }
-
 
 $contr = new aifp_controller();
 $smarty = new AIFP_smarty();

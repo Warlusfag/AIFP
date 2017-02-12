@@ -33,6 +33,6 @@ if($flag == false){
     $fungo->init($f[$i]);
     $smarty->assign('descrizione',$fungo->get_attributes());
     $photos = $fungo->get_photos();
-    $smarty->assign('foto',$photos);
+    $smarty->assign('foto',$photos[0]);
 }
 $smarty->display('fungo.tpl');

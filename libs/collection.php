@@ -55,8 +55,10 @@ class collection{
         return count($this->items);
     }
     public function erase(){
-        foreach(array_keys($this->items) as $key){
-            unset($this->items[$key]);
+        if($this->count()>0){
+            foreach(array_keys($this->items) as $key){
+                unset($this->items[$key]);
+            }
         }
     }
     public function updateitem($key, $obj){

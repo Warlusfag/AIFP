@@ -33,12 +33,14 @@ if( $coll_c->sezione == $i){
     $sez = new sezione();
     $sez->init($temp);
     $convs = $sez->get_conversazioni();
-    $coll_c->additem($page, $convs);
+    $coll_c->additem($convs, $page);
     $_SESSION['convs'] = serialize($coll_c);
 }
 $smarty->assign('sezione',$i);
 $smarty->assign('convs', $convs);
-$smarty->assign('user',$_SESSION['curr_user']['user']);
-$smarty->assign('image',$_SESSION['curr_user']['image']);
+foreach($_SESSION['curr_user'] as $key=>$value){
+    $t[$key] = $value;
+}
+$smarty->assign('profilo', $t );
 $smarty->display('sezione.tpl');               
 

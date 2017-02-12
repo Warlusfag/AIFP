@@ -76,6 +76,32 @@ class user extends gen_model{
         return false;
     }
     
+    function get_attributes($way = -1) {
+        if(($t = parent::get_attributes($way)) != false){
+            return $t;
+        }else if(strpos($way,',')){
+            $t = array();
+            $keys = explode(',',$way);
+            foreach($keys as $i=>$key){
+                if(isset($this->attributes[$key])){
+                    $t[$i] = $this->attributes[$key];
+                    $t[$key] = $this->attributes[$key];
+                }
+            }
+            return $t;
+        }else if('post'){
+            $t = array();
+            $t['user'] = $this->attributes['user'];
+            $t['punteggio'] = $this->attributes['punteggio'];
+            $t['image'] = $this->get_image();
+            $t['regione'] = $this->attributes['regione'];
+            return $t;
+        }
+        else{
+            parent::get_attributes($way);
+        }
+    }
+    
     public function get_image(){
         $path = $this->attributes['image'];        
         $path = str_replace('/srv/www', '',$path);
