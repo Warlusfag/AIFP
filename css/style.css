@@ -308,6 +308,11 @@
                     text-transform: lowercase;
                     width: 100%;
                 }
+
+                .button.regole{
+                	float: center;
+                	font-size: 1em;
+                }
 			.button:hover
 			{
 				background: #307d09;

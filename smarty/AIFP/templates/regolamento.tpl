@@ -25,130 +25,136 @@
                 <header>
                         <h2>REGOLAMENTI</h2>
                 </header>
-                <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
-               {if $path!=null}
-                    <a href="{$path}" download></a>
-               {/if}
+              
+                {if $path!=null}
+                    <a id="down" style="display:none;" href="{$root}{$path}" download>download</a>
+                {/if}
                 
                 
                 <ul class="default">
-                    <form action="{$root}funghi/regolamento.php" method="get">
-                    <a>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/abruzzo.png" width="78" height="78" alt="">
+                <form action="{$root}funghi/regolamento.php" method="get">
+                    <div class="row half">
+                        <div class="3u">
+                        <button value="abruzzo" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/abruzzo.gif" width="50" height="50" alt="">
                             <br>Abruzzo<br>
-                            <span class="posted"><button value="abruzzo" name="regione" type="submit" class="button"> Download </button></span>
-                            
-                        </li><br>
-                    </a>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/basilicata.png" width="78" height="78" alt="">
-                            Basilicata<br>
-                            <span class="posted"><button value="basilicata" name="regione" type="submit" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/calabria.png" width="78" height="78" alt="">
-                            Calabria<br>
-                            <span class="posted"><button value="calabria" name="regione" type="submit" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/campania.png" width="78" height="78" alt="">
-                            Campania<br>
-                            <span class="posted"><button value="campania" name="regione" type="submit" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/emiliaromagna.png" width="78" height="78" alt="">
-                            Emilia Romagna<br>
-                            <span class="posted"><button value="emiliaromagna" name="regione"type="submit" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/friuliveneziagiulia.png" width="78" height="78" alt="">
-                            Friuli Venezia Giulia<br>
-                            <span class="posted"><button value="friuliveneziagiulia" name="regione" type="submit" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/lazio.png" width="78" height="78" alt="">
-                            Lazio<br>
-                            <span class="posted"><button value="lazio" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/abruzzo.png" width="78" height="78" alt="">
-                            Abruzzo<br>
-                            <span class="posted"><button value="abruzzo" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/ligura.png" width="78" height="78" alt="">
-                            Ligura<br>
-                            <span class="posted"><button value="ligura" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/lombardia.png" width="78" height="78" alt="">
-                            Lombardia<br>
-                            <span class="posted"><button value="lombardia" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/marche.png" width="78" height="78" alt="">
-                            Marche<br>
-                            <span class="posted"><button value="marche" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/molise.png" width="78" height="78" alt="">
-                            Molise<br>
-                            <span class="posted"><button value="molise" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/piemonte.png" width="78" height="78" alt="">
-                            Piemonte<br>
-                            <span class="posted"><button value="piemonte" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/puglia.png" width="78" height="78" alt="">
-                            Puglia<br>
-                            <span class="posted"><button value="puglia" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/Sardegna.png" width="78" height="78" alt="">
-                            Sardegna<br>
-                            <span class="posted"><button value="sardegna" type="submit"  name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/sicilia.png" width="78" height="78" alt="">
-                            Sicilia<br>
-                            <span class="posted"><button value="sicilia" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/toscana.png" width="78" height="78" alt="">
-                            Toscana<br>
-                            <span class="posted"><button value="toscana" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/trentinoaltoadige.png" width="78" height="78" alt="">
-                            Trentino Alto Adige<br>
-                            <span class="posted"><button value="trentinoaltoadige" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/umbria.png" width="78" height="78" alt="">
-                            Umbria<br>
-                            <span class="posted"><button value="umbria" type="submit" name="regione" class="button"> Download </button></span>
-                        </li>
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/valledaosta.png" width="78" height="78" alt="">
-                            Valle D'Aosta<br>
-                            <span class="posted"><button value="valledaosta" name="regione" type="submit" class="button"> Download </button></span>
-                        </li>
-                        
-                        <li  style="background-color: #eeeff2;">
-                            <img src="{$root}images/foto_regioni/veneto.png" width="78" height="78" alt="">
-                            Veneto<br>
-                            <span class="posted"><button value="veneto" name="regione" type="submit" class="button"> Download </button></span>
-                        </li>
-                        
-                        
-                        
-                    
-                    <br>
-                    
+                             <span>Download</span> </button>
+                        </div>
+                            <div class="3u">
+                            <button value="basilicata" name="regione" type="submit" class="button regole"> 
+                            <img src="{$root}images/foto_regioni/basilicata.gif" width="50" height="50" alt="">
+                            <br>Basilicata<br>
+                             Download </button>
+                            <br>
+                        </div>
+                            <div class="3u">
+                            <button value="calabria" name="regione" type="submit" class="button regole"> 
+                            <img src="{$root}images/foto_regioni/calabria.gif" width="50" height="50" alt="">
+                            <br>Calabria<br>
+                            Download </button>
+                            <br>
+                        </div>
+                            <div class="3u">
+                             <button value="emiliaromagna" name="regione" type="submit" class="button regole"> 
+                            <img src="{$root}images/foto_regioni/emiliaromagna.gif" width="50" height="50" alt="">
+                            <br>Emilia<br>
+                           
+                            Download </button>
+                        </div>
+                            <div class="3u">
+                            <button value="friuliveneziagiulia" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/friuliveneziagiulia.gif" width="50" height="50" alt="">
+                            <br>Friuli<br>
+                              Download </button> 
+                        </div>
+                            <div class="3u">
+                             <button value="lazio" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/lazio.gif" width="50" height="50" alt="">
+                            <br>Lazio<br>
+                             Download </button> 
+                        </div>
+                            <div class="3u">
+                            <button value="liguria" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/liguria.gif" width="50" height="50" alt="">
+                            <br>Liguria<br>
+                              Download </button> 
+                        </div>
+                            <div class="3u">
+                            <button value="lombardia" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/lombardia.gif" width="50" height="50" alt="">
+                            <br>Lombardia<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="marche" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/marche.gif" width="50" height="50" alt="">
+                            <br>Marche<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="molise" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/molise.gif" width="50" height="50" alt="">
+                            <br>Molise<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="piemonte" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/piemonte.gif" width="50" height="50" alt="">
+                            <br>Piemonte<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="puglia" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/puglia.gif" width="50" height="50" alt="">
+                            <br>Puglia<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="sardegna" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/sardegna.gif" width="50" height="50" alt="">
+                            <br>Sardegna<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="sicilia" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/sicilia.gif" width="50" height="50" alt="">
+                            <br>Sicilia<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                          <button value="toscana" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/toscana.gif" width="50" height="50" alt="">
+                            <br>Toscana<br>
+                             Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="trentinoaltoadige" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/trentinoaltoadige.gif" width="50" height="50" alt="">
+                            <br>Trentino<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="umbria" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/umbria.gif" width="50" height="50" alt="">
+                            <br>Umbria<br>
+                              Download </button> 
+                        </div>
+                         <div class="3u">
+                         <button value="valledaosta" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/valledaosta.gif" width="50" height="50" alt="">
+                            <br>D'Aosta<br>
+                              Download </button> 
+
+                        </div>
+                         <div class="3u">
+                         <button value="veneto" name="regione" type="submit" class="button regole">
+                            <img src="{$root}images/foto_regioni/veneto.gif" width="50" height="50" alt="">
+                            <br>Veneto<br>
+                              Download </button> 
+                        </div>
+                    </div>
                     </form>
+                    
                 </ul>
         </section>
 </div>

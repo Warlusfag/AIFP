@@ -29,7 +29,7 @@
 	{/block}
 	</head>
 	{block name=define_class}
-	<body>
+	<body onload="download()">
 	{/block}
 	{block name=general_body}
 	<!-- Header -->		
