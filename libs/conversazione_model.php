@@ -132,7 +132,7 @@ class conversazione extends gen_model
             }            
             $query = substr_replace($query, '', count($query)-6);
         }
-        $query .= " ORDER BY 'data'";
+        $query .= " ORDER BY 'data' DESC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }
@@ -257,7 +257,7 @@ class post extends gen_model
             }            
             $query = substr_replace($query, '', count($query)-6);
         }
-        $query .= " ORDER BY 'time'";
+        $query .= " ORDER BY 'time' DESC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }

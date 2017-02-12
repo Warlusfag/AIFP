@@ -62,10 +62,11 @@ if(isset($_SESSION['curr_user'])){
         $smarty->assign('error', GEN_ERROR);
     }
 }
-$new_col = unserialize($_SESSION['news']);
-$news = $new_col->get_all_news();
-$smarty->assign('news', $news );
-
+if(isset($_SESSION['news'])){
+    $new_col = unserialize($_SESSION['news']);
+    $news = $new_col->get_all_news();
+    $smarty->assign('news', $news );
+}
 $smarty->display('index.tpl');
 
 
