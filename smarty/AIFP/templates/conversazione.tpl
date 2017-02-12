@@ -59,6 +59,8 @@
                                 <div class="9u" style="float:left;">
                                     <br>
                                     <textarea rows='3' cols='50' style="resize:none;" placeholder="Rispondi..." name="text" required></textarea>
+                                    <input name="sezione" value="{$sezione}" style="display:none;">
+                                    <input name="conversazione" value="{$conversazione}" style="display:none;">
                                     <input name="c_index" value="{$c_index}" style="display:none;">
                                     <input name="s_index" value="{$s_index}" style="display:none;">
                                     <button type="submit" class="button personal">Rispondi</button> 
