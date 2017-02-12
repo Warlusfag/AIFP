@@ -1,6 +1,7 @@
 {extends file="generic_page_sidebar.tpl"}
 	{block "title"}Forum{/block}
-        
+        {block name="buttom_main"}
+            {/block}
         
         
 	{block name=main}  

@@ -129,7 +129,7 @@
                         <div id="alert_login" class="modal">
                             <div class="modal-content animate alert">
                                 <span onclick="document.getElementById('alert_login').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
-                                <strong>Attenzione!</strong> <a onclick="document.getElementById('login').style.display='block'; document.getElementById('alert').style.display='none'">Accedi per continuare</a>
+                                <strong>Attenzione!</strong> <a onclick="document.getElementById('login').style.display='block'; document.getElementById('alert_login').style.display='none'">Accedi per continuare</a>
                             </div>
                         </div>
                         <div id="alert" class="modal">
