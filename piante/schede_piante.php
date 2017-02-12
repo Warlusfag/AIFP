@@ -7,18 +7,24 @@ if (!isset($_SESSION['piante'])){
     $_SESSION['piante'] = serialize(new piante_collection());
 }
 
-
 $smarty = new AIFP_Smarty();
 //$_GET['genere'] = 'lactarius';
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
     $collection = unserialize($_SESSION['piante']);
+    $error = '';
     if( ($piante=$collection->getitem($genere))==false){
         $contr = new aifp_controller();
         $piante = $contr->get_schede_piante($genere);
+        if($contr->description != ''){
+            $error = $contr->description;    
+        }
+        $collection->additem($piante, $genere);
+        $_SESSION['piante'] = serialize($collection);
     }
-    if($contr->description != ''){
-        $smarty->assign('error',$contr->description);    
+    
+    if($error != ''){
+        $smarty->assign('error',$error);    
     }else{
         $smarty->assign('genere',$_GET['genere']);
         //preparo i dati iin uscita
