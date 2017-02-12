@@ -20,7 +20,7 @@
         <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                    <h3>Sezione</h3>
+                    <h3>{$sezione}</h3>
                 </header>
             
                 <div class="10u">
@@ -43,8 +43,8 @@
                                             
                                             {foreach $convs as $c}
                                                     {$count=$count+1}
-                                                    <input name="sezione" value="{$sezione}" style="display:none;">
-                                                    <button class="sezione" name="conversazione" value="{$count}" type="submit">
+                                                    <input name="s_index" value="{$s_index}" style="display:none;">
+                                                    <button class="sezione" name="c_index" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
                                                             <div class="7u" style="float:left;">
@@ -89,8 +89,8 @@
                                     <br><br>
                                     <textarea rows='6' cols='55' style="resize:none;" placeholder="Inserisci Testo" name="text" required></textarea><br>
                                     <br><hr>
-                                    <input value="{$sezione}" name="sezione" style="display:none;">
-                                    <button class="loginbtn" type="submit">Crea</button>
+                                    <input value="{$s_index}" name="s_index" style="display:none;">
+                                    <button class="loginbtn" name="sezione" value="{$sezione}" type="submit">Crea</button>
                                     <br>
                                     
                                 </div>
