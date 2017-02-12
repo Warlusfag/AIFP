@@ -28,14 +28,14 @@
 		{/block}
 	{/block}
         
-        {if isset($error)}
+        {if $error!=null}
             <script>
                 document.getElementById('alert').style.display='block';
             </script>
         {/if}
-        {if isset($message)}
+        {if $message!=null}
             <script>
-                document.getElementById('succes').style.display='block';
+                document.getElementById('success').style.display='block';
             </script>
         {/if}
 	</head>

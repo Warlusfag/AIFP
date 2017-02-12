@@ -4,9 +4,11 @@ $(document).ready(function(){
     document.getElementById("form").style.display="block";
 })
 
-function show(id){
+function show(id, btn){
         hide(id);
         document.getElementById(id).style.display="block";
+        document.getElementById(btn).boxShadow= "10px 20px 30px blue";
+      
 }
 
 function hide(){

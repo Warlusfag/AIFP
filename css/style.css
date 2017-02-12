@@ -309,6 +309,12 @@
                     width: 100%;
                 }
                 
+                .button.personal{
+                    font-size:0.6;
+                    text-transform:none;
+                }
+              
+                
                 .button.prec{
                     float:right;
                     border-radius: 20 px;
@@ -1185,7 +1191,7 @@ span.psw{
 
 .sezione{
     width: 100%;
-    background-color:#ccf5cc;
+    background-color:#98CC52;
     border-radius: 2%;
     border-style: groove;
     cursor: pointer;

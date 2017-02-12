@@ -26,9 +26,9 @@
                         <div class="10u">
                             <section>
                                     <header>
-                                        <h3>{$sezione}</h3>
+                                        <h3>Sezioni</h3>
                                     </header>
-                                <form action="{$root}forum/conversazione.php" type="get">
+                                <form action="{$root}forum/conversazione.php" type="post">
                                         <ul class="default">
                                             {$count=-1}
                                             
@@ -45,7 +45,7 @@
                                                             </div>
                                                             <div class="3u" style="float:right;">
                                                                 <br>
-                                                                <span> Numero post:<strong> {$c.num_post}  <br>  Data: {$s.data}</strong></span>
+                                                                <span> Numero post:<strong> {$c.num_post}  <br>  Data: {$c.data}</strong></span>
                                                             </div>
                                                         </div>
                                                         
