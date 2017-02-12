@@ -1,5 +1,7 @@
 {extends file="generic_page_sidebar.tpl"}
 	{block "title"}Schede Funghi{/block}
+{block name=buttom_main}
+{/block}
 	
 	{block name=main}  
 	<!-- Main -->

@@ -23,3 +23,6 @@ return true;
   
 }
 
+function download(){
+     document.getElementById("down").click();
+}
