@@ -28,6 +28,11 @@
 		{/block}
 	{/block}
         
+        
+	</head>
+	{block name=define_class}
+	<body onload="download()">
+	{/block}
         {if $error!=null}
             <script>
                 document.getElementById('alert').style.display='block';
@@ -38,10 +43,6 @@
                 document.getElementById('success').style.display='block';
             </script>
         {/if}
-	</head>
-	{block name=define_class}
-	<body onload="download()">
-	{/block}
 	{block name=general_body}
 	<!-- Header -->		
 		<div id="header">
