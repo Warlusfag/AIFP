@@ -25,7 +25,7 @@ $attr = $t[$c];
 $conv = new conversazione();
 $conv->init($attr);
 
-$posts = $conv->get_post();
+$posts = $conv->get_posts();
 if($posts == false){
     $smarty->assign('error',$conv->err_descr);  
 }else{
