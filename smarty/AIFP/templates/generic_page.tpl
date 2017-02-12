@@ -68,7 +68,7 @@
                                                     <li><a href="{$root}lettera_esperto.php">Chiedi all'esperto</a></li>
                                 {if !$profilo.user}
                                     <li class="dropdown">
-                                    <a class="dropbtn "href="#"><img src="{$root}/images/user.png" class="pic"></a>
+                                    <a class="dropbtn "href="#"><img src="{$root}/images/user.png"></a>
                                     <div class="dropdown-content">
                                         <a onclick="document.getElementById('login').style.display='block'" href="#">Accedi</a>
                                         <a href="{$root}profilize/reg.php">Registrati</a>
@@ -76,12 +76,11 @@
                                     </li>
                            	{else}
                                     <li class="dropdown">                           			
-                                             <a class="dropbtn "href="#">
-                                                 <img src="#" class="picnav"><p>Benvenuto {$profilo.user}</p></a>
+                                             <a class="dropbtn "href="#"><img src={$image}><p>Benvenuto {$profilo.user}</p></a>
                                             <div class="dropdown-content">
-                                                <a  href="{$root}personal_page/personal_page.php">Pagina personale</a>
-                                                <a href="{$root}logout.php">logout</a>                                
-                                            </div>                           				
+                                        <a  href="{$root}personal_page/personal_page.php">Pagina personale</a>
+                                        <a href="{$root}logout.php">logout</a>                                
+                                    </div>                           				
                                     </li>
                            	{/if}
 

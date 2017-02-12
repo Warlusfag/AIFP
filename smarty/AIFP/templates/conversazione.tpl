@@ -11,7 +11,7 @@
         <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h3>Post</h3>
+                        <h3>{$conversazioni}</h3>
                 </header>
                 
       
