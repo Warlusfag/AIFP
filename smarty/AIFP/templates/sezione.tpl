@@ -28,7 +28,7 @@
                                     <header>
                                         <h3>Sezioni</h3>
                                     </header>
-                                <form action="{$root}forum/conversazione.php" type="get">
+                                <form action="{$root}forum/conversazione.php" type="post">
                                         <ul class="default">
                                             {$count=-1}
                                             
