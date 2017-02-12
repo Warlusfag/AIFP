@@ -27,6 +27,17 @@
 		<link rel="stylesheet" href="{$root}css/style-desktop.css" />
 		{/block}
 	{/block}
+        
+        {if isset($error)}
+            <script>
+                document.getElementById('alert').style.display='block';
+            </script>
+        {/if}
+        {if isset($message)}
+            <script>
+                document.getElementById('succes').style.display='block';
+            </script>
+        {/if}
 	</head>
 	{block name=define_class}
 	<body onload="download()">
@@ -125,6 +136,8 @@
                             </form>
                         </div>
                         
+                                           
+                                       
                         <!-- Allert form -->
                         <div id="alert_login" class="modal">
                             <div class="modal-content animate alert">

@@ -15,26 +15,31 @@
                 </header>
                 
       
-               
+              
                     <div class="row half">
                         <div class="10u">
                             <section>
                                     <header>
                                             <h4>Ultime sezioni</h4>
                                     </header>
-                                    <form action="{$root}forum/conversazione.php" type="get">
+                                    <form action="{$root}forum/sezione.php" type="get">
                                         <ul class="default">
+                                            {$count=-1}
+                                            
                                             {foreach $sez as $s}
-                                                    <button class="sezione" type="submit">
+                                                    {$count=$count+1}
+                                                    <button class="sezione" name="sezione" method="post" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
                                                             <div class="7u" style="float:left;">
                                                                 <br>
-                                                                <span style="font-size:20px;"><strong>{$s[0]} {$s[1]}</strong></span>
+                                                                <span style="font-size:20px;"><strong>{$s.id_sez} {$s.nome}</strong></span>
+                                                                <br>
+                                                                <p>{$s.descrizione}</p>
                                                             </div>
                                                             <div class="3u" style="float:right;">
                                                                 <br>
-                                                                <span> Moderatore:<strong> {$s[2]}  <br>  {$s[3]}</strong> commenti</span>
+                                                                <span> Moderatore:<strong> {$s.moderatore}  <br>  {$s.num_conv}</strong> commenti</span>
                                                             </div>
                                                         </div>
                                                         
