@@ -139,6 +139,10 @@
     		border-radius: 25%;
 		}	
 
+                img.picnav{
+                    width:5%;
+                    
+                }
 		.image
 		{
 			display: inline-block;

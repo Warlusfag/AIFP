@@ -28,7 +28,8 @@
                                             
                                             {foreach $sez as $s}
                                                     {$count=$count+1}
-                                                    <button class="sezione" name="sezione" value="{$count}" type="submit">
+                                                    <input name="sezione" value="{$s.nome}" style="display:none;">
+                                                    <button class="sezione" name="s_index" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
                                                             <div class="7u" style="float:left;">
