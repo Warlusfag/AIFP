@@ -6,7 +6,16 @@
         
 {block name=main}  
             
-        
+        {if $error!=null}
+                                 <script>
+                                     document.getElementById('alert').style.display='block';
+                                </script>
+                            {/if}
+                             {if $message!=null}
+                            <script>
+                               document.getElementById('success').style.display='block';
+                                 </script>
+                            {/if}
         <!-- Main -->
         <div id="content" class="9u skel-cell-important">
         <section>
@@ -28,14 +37,14 @@
                                     <header>
                                         <h3></h3>
                                     </header>
-                                <form action="{$root}forum/conversazione.php" type="post">
+                                <form action="{$root}forum/conversazione.php" method="post">
                                         <ul class="default">
                                             {$count=-1}
                                             
                                             {foreach $convs as $c}
                                                     {$count=$count+1}
                                                     <input name="sezione" value="{$sezione}" style="display:none;">
-                                                    <button class="sezione" name="conversazione" method="post" value="{$count}" type="submit">
+                                                    <button class="sezione" name="conversazione" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
                                                             <div class="7u" style="float:left;">
