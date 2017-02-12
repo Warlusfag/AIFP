@@ -33,16 +33,7 @@
 	{block name=define_class}
 	<body onload="download()">
 	{/block}
-        {if $error!=null}
-            <script>
-                document.getElementById('alert').style.display='block';
-            </script>
-        {/if}
-        {if $message!=null}
-            <script>
-                document.getElementById('success').style.display='block';
-            </script>
-        {/if}
+        
 	{block name=general_body}
 	<!-- Header -->		
 		<div id="header">
@@ -178,6 +169,16 @@
                             {/block}
 
                             {block name=main}
+                                {if $error!=null}
+                                 <script>
+                                     document.getElementById('alert').style.display='block';
+                                </script>
+                            {/if}
+                             {if $message!=null}
+                            <script>
+                               document.getElementById('success').style.display='block';
+                                 </script>
+                            {/if}
                             {/block}
                         </div>
                     </div>
