@@ -133,7 +133,7 @@ class user extends gen_model{
         return $this->update($params);  
     }    
     
-    public function write_post($text, $fk_conv)            
+    public function write_post($text, $fk_conv, $time)            
     {     
         require_once 'conversazione_model.php';
         
@@ -152,7 +152,7 @@ class user extends gen_model{
             'id' => $id,
             'tipo' => $this->type,
         );
-        $p->new_post($text, $us, $fk_conv);
+        $p->new_post($text, $us, $time, $fk_conv);
         if($p->err_descr != ''){
             $this->err_descr = $p->err_descr;
             return false;

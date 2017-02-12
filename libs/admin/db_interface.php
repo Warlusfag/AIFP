@@ -137,6 +137,7 @@ class db_interface
         $g_param= array();
 
         $param_name = explode(',', $param_name);
+        $param_type = explode(',', $param_type);
         for( $i=0; $i<count($param_name);$i++){               
             if($param_type[$i] == 'da'){
                 $set.=$param_name[$i]." = str_to_date(?,\'%Y-%m-%d\'), ";

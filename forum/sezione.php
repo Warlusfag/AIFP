@@ -3,6 +3,23 @@ session_start();
 //nel forum io faccio l'elenco delle sezioni che ci stano
 require_once '../libs/aifp_controller.php';
 
+function load_newconv($coll_c, $s_index, $page){
+    $coll_c->sezione = $s_index;
+    $coll_c->erase();
+    $c_sez = unserialize($_SESSION['forum']);
+    $temp = $c_sez->getitem($s_index);
+    $sez = new sezione();
+    $sez->init($temp);
+    $convs = $sez->get_conversazioni();
+    if($sez->err_descr != ''){
+        return $sez->err_descr;
+    }else{
+        $coll_c->additem($convs, $page);
+        $_SESSION['convs'] = serialize($coll_c);
+        return $convs;
+    }
+}
+
 if (!isset($_SESSION['convs'])){
     $_SESSION['convs'] = serialize(new conv_collection());
 }
@@ -24,21 +41,11 @@ if( $coll_c->sezione == $i){
     }
 }else{
     //l'utente ha cambiato sezione e devo caricare tutte le conversazioni di quella sezione
-    $coll_c->sezione = $i;
-    $coll_c->erase();
-    $c_sez = unserialize($_SESSION['forum']);
-    $temp = $c_sez->getitem($i);
-    $sez = new sezione();
-    $sez->init($temp);
-    $convs = $sez->get_conversazioni();
-    if($sez->err_descr != ''){
-        $smarty->assign('error',$sez->err_descr);
-        $flag = false;
-    }else{
-        $coll_c->additem($convs, $page);
-        $_SESSION['convs'] = serialize($coll_c);
-        $smarty->assign('convs', $convs);
-    }
+   $ris = load_newconv($coll_c, $i, $page);
+   if(is_array($ris)){
+       $flag = true;
+       $smarty->assign('convs', $ris);
+   }
 }
 $smarty->assign('sezione',$i);
 foreach($_SESSION['curr_user'] as $key=>$value){

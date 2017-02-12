@@ -45,17 +45,26 @@ if(isset($_SESSION['curr_user'])){
         $title = $post['titolo'];
         if($sez->add_conversazione($user, $text, $title)){
             //cancello convs così forzo il refresh
-            unset($_SESSION['convs']);
             $coll_s->updateitem($s, $sez->get_attributes());
+            $_SESSION['curr_user']['punteggio'] = $user->get_attributes('punteggio');
+            $_SESSION['curr_user']['num_post']= $user->get_attributes('num_post');
             $_SESSION['sezione'] = serialize($coll_s);
+            $coll_c = unserialize($_SESSION['convs']);
+            $coll_c->erase();
+            $convs = $sez->get_conversazioni();           
+            $smarty->assign('convs', $convs);
             $smarty->assign('sezione', $s);
-            $smarty->assign('message','Nuova conversazione aggiunta con successo');
+            $smarty->assign('message','Nuova conversazione aggiunta con successo!');
         }else{
             $smarty->assign('error',GEN_ERROR);        
         }
     }else{
         $smarty->assign('error','BAD parameters');        
     }
+    foreach($_SESSION['curr_user'] as $key=>$value){
+    $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );
     $smarty->display('sezione.tpl');
 }else{
     $smarty->display('index.tpl');

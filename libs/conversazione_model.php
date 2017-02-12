@@ -20,7 +20,7 @@ class conversazione extends gen_model
             'key'=>'id_conv',
             'key_type'=>'i',
             'column_name' => 'sezione,titolo,num_post,data',
-            'column_type' => 'i,s,i,i,t',
+            'column_type' => 'i,s,i,t',
         );    
 
         
@@ -50,32 +50,28 @@ class conversazione extends gen_model
         $this->attributes['sezione'] = $fk_sez;
         $this->attributes['titolo'] = $titolo;
         $this->attributes['data'] = $this->conn->get_timestamp();
-        
-        $name = $this->table_descr['column_name'];
-        $type = $this->table_descr['column_type'];        
-        foreach(array_values($this->attributes) as $val){
-            $value[] = $val;
-        }    
-        if(!$this->conn->statement_insert($this->table_descr['table'],$name, $value, $type) ){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }
+        $this->insert($this->attributes);
         
         $this->attributes[$this->table_descr['key']] = $this->conn->last_id;
         
-        $this->add_post($text, $user);
+        $this->add_post($text, $user, $this->attributes['data']);
         if($this->err_descr == ''){
             return true;
         }else{ return false; }
     }
     
-    public function add_post($text, $user){
-        if(!is_array($user) || !is_string($text)){
+    public function add_post($text, $user, $time = -1){
+        if(!is_object($user) || !is_string($text)){
             $this->err_descr = 'ERROR:Bad parameters';
             return false;
         }        
         $fk = $this->attributes[$this->table_descr['key']];
-        $user->write_post($text, $fk);           
+        if($time == -1){
+            $time = $this->conn->get_timestamp();
+        }else{
+            $time = $this->attributes['data'];
+        }
+        $user->write_post($text, $fk, $time );           
         if($user->err_descr == ''){
             $this->attributes['num_post']++;
             $param = array('num_post' => $this->attributes['num_post']);
@@ -177,7 +173,7 @@ class post extends gen_model
             'key'=>'id_post',
             'key_type'=>'i',
             'column_name' => 'fk_conversazione,user,tipo_user,text,time',
-            'column_type' => 'i,s,s,s,s,t',
+            'column_type' => 'i,i,s,s,t',
         );        
 
         if($id != -1){
@@ -211,7 +207,7 @@ class post extends gen_model
         return $this->get_attributes();
     }
 
-    public function new_post($text, $user, $fk_conv=-1){
+    public function new_post($text, $user, $time, $fk_conv=-1){
         if($fk_conv == -1){
             if($this->attributes['fk_conversazione']==-1){
                 $this->err_descr = "ERROR: No conversation is setted";
@@ -220,26 +216,16 @@ class post extends gen_model
         }else{
             $this->attributes['fk_conversazione'] = $fk_conv;
         }
-        if(count($text)==0 || !is_array($user) || count($user)==3){
+        if(count($text)==0 || !is_array($user)){
             $this->err_descr = "ERROR: bad parameters";
             return false;
         }
         $this->attributes['user'] = $user['id'];
         $this->attributes['tipo_user'] = $user['tipo'];
         $this->attributes['text'] = $text;
-        if($this->attributes['time'] == ''){
-            $this->attrubutes['time'] = $this->conn->get_timestamp();
-        }
-        $name = $this->table_descr['column_name'];
-        $type = $this->table_descr['column_type'];
-        foreach(array_values($this->attributes) as $val){
-            $value[] = $val;            
-        }       
-        if(!$this->conn->statement_insert($this->table_descr['table'], $name, $value, $type)){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }
-        conversazione::$inserted = true;
+        $this->attributes['time'] = $time;
+        
+        $this->insert($this->attributes);
         $this->err_descr = '';
         return true;       
     }
