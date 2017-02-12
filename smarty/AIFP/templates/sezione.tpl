@@ -11,16 +11,22 @@
         <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h2>Conversazioni</h2>
+                        
                 </header>
-                
+            
+                <div class="10u">
+                    
+                    <a class="button" onclick="document.getElementById('conv').style.display='block'" href="#">Crea una nuova conversazione</a>
+                </div>
+            
+            <hr>
       
                
                     <div class="row half">
                         <div class="10u">
                             <section>
                                     <header>
-                                            <h4></h4>
+                                        <h3>{$sezione}</h3>
                                     </header>
                                 <form action="{$root}forum/conversazione.php" type="get">
                                         <ul class="default">
@@ -56,4 +62,34 @@
                         </div>
                     </div>
         </section>
+                                            
+                                            
+<div id="conv" class="modal">
+                            <form name="conv" class="modal-content animate" method="post" action="{$root}forum/nuova_conversazione.php">
+                            	 <div class="logcontainer" style="background-color: #f1f1f1">
+                                	
+                                	
+                                	<label><b>Nuova Conversazione</b></label>
+                                </div>
+                                <div class="imgcontainer">
+                                	<span onclick="document.getElementById('conv').style.display='none'" class="close" title="Chiudi">&times;</span>
+                                </div>
+
+                                <div class="logcontainer">
+                                    <input type="text" placeholder="Inserisci Titolo" name="titolo" required>
+                                    <br><br>
+                                    <textarea rows='6' cols='55' style="resize:none;" placeholder="Inserisci Testo" name="text" required></textarea><br>
+                                    <br><hr>
+                                    <input value="{$sezione}" name="sezione" style="display:none;">
+                                    <button class="loginbtn" type="submit">Crea</button>
+                                    <br>
+                                    
+                                </div>
+                                <div class="logcontainer" style="background-color:#f1f1f1">
+                                	  
+                                    
+                                </div>
+                            </form>
+                        </div>
+                                            
 {/block}

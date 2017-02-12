@@ -1,64 +1,59 @@
-{extends file="generic_page.tpl"}
-	{block name=main}  
-	<!-- Main -->
-<!-- Main -->
-		<div id="main">
-		
-			<div class="container">
-				<div id="banner"></div>
-			</div>
-			
-			<div class="container">
-				<div class="row">
-					<div id="sidebar" class="3u">
-						<section>
-							<header>
-								<h2>Donec dictum</h2>
-							</header>
-							<p>Pellentesque viverra  enim.Tristique ante ut risus. Quisque dictum. Integer nisl elementum.</p>
-							<ul class="style1">
-								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
-								<li><a href="#">Integer rutrum nisl in mi</a></li>
-								<li><a href="#">Etiam malesuada rutrum enim</a></li>
-								<li><a href="#">Aenean elementum facilisis ligula</a></li>
-								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
-								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
-							</ul>
-						</section>
-						<section>
-							<header>
-								<h2>Sagittis convallis</h2>
-							</header>
-							<p>Quisque dictum. Integer nisl risus, sagittis convallis elementum.</p>
-							<ul class="style1">
-								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
-								<li><a href="#">Integer rutrum nisl in mi</a></li>
-								<li><a href="#">Etiam malesuada rutrum enim</a></li>
-								<li><a href="#">Aenean elementum facilisis ligula</a></li>
-								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
-								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
-							</ul>
-						</section>
-					</div>
-					
-					<div id="content" class="9u skel-cell-important">
-						<section>
-							<header>
-								<h2>Left Sidebar</h2>
-							</header>
-							<a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
-							<p>
+{extends file="generic_page_sidebar.tpl"}
+	{block "title"}Conversazioni{/block}
+        {block name="buttom_main"}
+            {/block}
+        
+        
+{block name=main}  
+            
+            
+        <!-- Main -->
+        <div id="content" class="9u skel-cell-important">
+        <section>
+                <header>
+                        <h3>Post</h3>
+                </header>
+                
+      
+               
+                    <div class="row half">
+                        <div class="10u">
+                            <section>
+                                    <header>
+                                            <h4></h4>
+                                    </header>
+                              
+                                        
+                                            {$count=-1}
+                                            
+                                            {foreach $posts as $p}
+                                                    {$count=$count+1}
+                                                   
+                                                        <div class="row half">
+                                                            <div class="4u">
+                                                                <img src="{$root}{$p.image}" class="pic"><br>
+                                                                <span>{$p.user} Punteggio: {$p.punteggio}</span>
+                                                            </div>
+                                                                
+                                                            <div class="7u" style="float:left;">
+                                                                <br>
+                                                                <p>{$p.text}</p>
+                                                                <br>
+                                                            </div>
+                                                                <hr>
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                      
 
-							<b>SCHEDE FUNGHI</b>
-							Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-						</section>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	<!-- /Main -->
-
+                                                    
+                                                    </button>
+                                            {/foreach}
+                                        
+                                    </form>
+                            </section>
+                        </div>
+                    </div>
+        </section>
 {/block}

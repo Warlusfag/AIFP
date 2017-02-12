@@ -22,13 +22,13 @@
                                     <header>
                                             <h4>Ultime sezioni</h4>
                                     </header>
-                                    <form action="{$root}forum/sezione.php" type="get">
+                                    <form action="{$root}forum/sezione.php" method="post">
                                         <ul class="default">
                                             {$count=-1}
                                             
                                             {foreach $sez as $s}
                                                     {$count=$count+1}
-                                                    <button class="sezione" name="sezione" method="post" value="{$count}" type="submit">
+                                                    <button class="sezione" name="sezione" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
                                                             <div class="7u" style="float:left;">
@@ -42,11 +42,6 @@
                                                                 <span> Moderatore:<strong> {$s.moderatore}  <br>  {$s.num_conv}</strong> commenti</span>
                                                             </div>
                                                         </div>
-                                                        
-                                                        
-                                                        
-                                                      
-
                                                     </li>
                                                     </button>
                                             {/foreach}

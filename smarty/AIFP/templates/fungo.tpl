@@ -27,7 +27,16 @@
 <div id="content" class="9u skel-cell-important">
     <section>
         <header>
-            <h2>{$descrizione.genere} {$descrizione.specie}</h2>
+            <div class="row half">
+                <div class="6u"><h2>{$descrizione.genere} {$descrizione.specie}</h2></div>
+                <div class="4u" style="float:right;">
+                     <form action="{$root}funghi/schede_funghi.php" type="get">
+                        <button class="button prec" type="submit" name="genere" value="{$descrizione.genere}"> < </button>
+                     </form>
+                </div>
+            </div>
+            
+            
         </header>
     </section>
         <div class="row half">

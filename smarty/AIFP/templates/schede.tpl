@@ -48,7 +48,13 @@
                     </div>
                 {else}
                     <header>
-                        <h2>{$genere}</h2>
+                    <div class="row half">
+                        <div class="6u"><h2>{$genere}</h2></div>
+                        <div class="4u" style="float:right;">
+                            <a href="{$root}funghi/schede_funghi.php" class="button prec"> < </a>
+                            
+                        </div>
+                    </div>
                     </header>
                    
                     <div class="row">

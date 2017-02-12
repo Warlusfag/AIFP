@@ -308,7 +308,11 @@
                     text-transform: lowercase;
                     width: 100%;
                 }
-
+                
+                .button.prec{
+                    float:right;
+                    border-radius: 20 px;
+                }
                 .button.regole{
                 	float: center;
                 	font-size: 1em;

@@ -33,7 +33,7 @@ $controller = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){
     $tok = $_SESSION['curr_user']['token'];    
-    $user = $contr->get_user($tok);
+    $user = $controller->get_user($tok);
     if(($post=check_post($_POST))){ 
         $s = $post['sezione'];
         $coll_s = unserialize($_SESSION['forum']);
