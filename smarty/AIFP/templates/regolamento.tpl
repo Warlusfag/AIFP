@@ -31,12 +31,23 @@
                 {/if}
                 
                 
-                <ul class="default">
+                 <section>
+                        <header>
+                            <h3>Scarica il regolamento della tua regione </h3>
+                        </header>
+                        <form action="{$root}funghi/regolamento.php" method="get">
+                            <button type="submit" class="button" name="miaregione" value="1"> Download</button>
+                       
+                        </form>
+                    </section>
+            
+                            <hr>
+                
                 <form action="{$root}funghi/regolamento.php" method="get">
                     <div class="row half">
                         <div class="3u">
                         <button value="abruzzo" name="regione" type="submit" class="button regole">
-                            <img src="{$root}images/foto_regioni/abruzzo.gif" width="50" height="50" alt="">
+                                <img src="{$root}images/foto_regioni/abruzzo.gif" width="50" height="50" alt="">
                             <br>Abruzzo<br>
                              <span>Download</span> </button>
                         </div>
@@ -154,8 +165,8 @@
                         </div>
                     </div>
                     </form>
-                    
-                </ul>
+                   
+                
         </section>
 </div>
 					
