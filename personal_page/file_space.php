@@ -38,7 +38,7 @@ if( $ass instanceof associazioni){
                     if($file == '.' || $file == '..'){
                         continue;
                     }
-                    $files[$i][] = $base_path.$file;
+                    $files[$i][] = str_replace(PROJ_DIR, '', $base_path.$file);
                     $files[$i][] = filesize($base_path.$file);                    
                 }
             }

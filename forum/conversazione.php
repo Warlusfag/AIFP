@@ -46,6 +46,7 @@ if($posts == false){
 }
 $smarty->assign('s_index',$s);
 $smarty->assign('c_index',$c);
+$smarty->assign('conversazione',$tito_conv);
 foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }

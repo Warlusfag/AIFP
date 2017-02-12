@@ -59,8 +59,6 @@ if( ($post = check_post($_POST)) ){
     }else{
         $smarty->assign('message','La tua richiesta è stata inoltrata con successo ai esperti');
     }
-}else{
-    $smarty->assign('error', GEN_ERROR);    
 }
 if(isset($_SESSION['curr_user'])){   
     foreach($_SESSION['curr_user'] as $key=>$value){

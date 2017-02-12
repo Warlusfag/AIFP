@@ -115,9 +115,6 @@ class news_collection extends collection{
         $this->is_load = true;
     }
     public function get_all_news(){
-        if($this->is_load){
-            return $this->items;
-        }
-        return false;
+        return $this->items;
     }
 }
