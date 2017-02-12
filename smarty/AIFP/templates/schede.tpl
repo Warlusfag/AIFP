@@ -65,7 +65,7 @@
                                         {if $fun.commestibile == "velenoso"}
                                                 {$color = "yellow"}
                                         {/if}
-                                        <button style="background-color:{$color};" class="button" type="submit" value="{$fun.specie}">
+                                        <button style="background-color:{$color};" class="button" name="genere" type="submit" value="{$fun.genere}">
                                         <img src="{$root}{$fun.foto}" alt="{$fun.specie}" class="image full">
                                         {$fun.genere} {$fun.specie}</button>
                                         <br>
