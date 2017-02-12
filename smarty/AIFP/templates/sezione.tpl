@@ -1,22 +1,59 @@
 {extends file="generic_page_sidebar.tpl"}
-	{block name=main}  
-	<!-- Main -->
-<!-- Main -->
-
-<div id="content" class="9u skel-cell-important">
+	{block "title"}Conversazioni{/block}
+        {block name="buttom_main"}
+            {/block}
+        
+        
+{block name=main}  
+            
+            
+        <!-- Main -->
+        <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h2>Left Sidebar</h2>
+                        <h2>Conversazioni</h2>
                 </header>
-                <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
-                <p>
+                
+      
+               
+                    <div class="row half">
+                        <div class="10u">
+                            <section>
+                                    <header>
+                                            <h4></h4>
+                                    </header>
+                                <form action="{$root}forum/conversazione.php" type="get">
+                                        <ul class="default">
+                                            {$count=-1}
+                                            
+                                            {foreach $convs as $c}
+                                                    {$count=$count+1}
+                                                    <input name="sezione" value="{$c.sezione}" style="display:none;">
+                                                    <button class="sezione" name="conversazione" method="post" value="{$count}" type="submit">
+                                                    <li>
+                                                        <div class="row half">
+                                                            <div class="7u" style="float:left;">
+                                                                <br>
+                                                                <span style="font-size:20px;"><strong>{$c.id_convs} {$c.titolo}</strong></span>
+                                                                <br>
+                                                            </div>
+                                                            <div class="3u" style="float:right;">
+                                                                <br>
+                                                                <span> Numero post:<strong> {$c.num_post}  <br>  Data: {$s.data}</strong></span>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        
+                                                        
+                                                      
 
-                <b>SCHEDE FUNGHI</b>
-                Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                <p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-                <p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
+                                                    </li>
+                                                    </button>
+                                            {/foreach}
+                                        </ul>
+                                    </form>
+                            </section>
+                        </div>
+                    </div>
         </section>
-</div>
-					
-
 {/block}
