@@ -6,12 +6,12 @@
         
 {block name=main}  
             
-            
+        
         <!-- Main -->
         <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        
+                    <h3>Sezione</h3>
                 </header>
             
                 <div class="10u">
@@ -26,7 +26,7 @@
                         <div class="10u">
                             <section>
                                     <header>
-                                        <h3>Sezioni</h3>
+                                        <h3></h3>
                                     </header>
                                 <form action="{$root}forum/conversazione.php" type="post">
                                         <ul class="default">
@@ -34,7 +34,7 @@
                                             
                                             {foreach $convs as $c}
                                                     {$count=$count+1}
-                                                    <input name="sezione" value="{$c.sezione}" style="display:none;">
+                                                    <input name="sezione" value="{$sezione}" style="display:none;">
                                                     <button class="sezione" name="conversazione" method="post" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
