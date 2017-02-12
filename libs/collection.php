@@ -5,6 +5,7 @@ require_once "evento_model.php";
 require_once "admin_model.php";
 require_once 'funghi_model.php';
 require_once 'sezione_model.php';
+require_once 'piante_model.php';
 
 //limit constant
 const limit_sez = 5;

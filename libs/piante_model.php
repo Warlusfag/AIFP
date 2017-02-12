@@ -86,7 +86,7 @@ class piante extends gen_model{
             }
             $file = $this->attributes['genere'].'-'.$this->attributes['specie'].'/';
         }
-        $photos = load_file(IMG_MUSH.$file);
+        $photos = load_file(IMG_PLANT.$file);
         foreach ($photos as $i => $file){
             $photos[$i] = $path = str_replace(PROJ_DIR, '',$photos[$i]);
         }

@@ -14,28 +14,24 @@ function check_post($param)
         else if( $key == 'regione' ){
             $app[$key] = $value;
         }
-        else if( $key == 'provincia' ){
-            $app[$key] =$value;
-        }
         else if( $key == 'data_inizio' ){
             $app[$key] = $value;
         }
-        else if( $key == 'data_fine' ){
-            $app[$key] = $value;
-        } 
     }
     return $app;  
 }
 
 $smarty = new AIFP_smarty();
 if(isset($_POST) && count($_POST)>0){
-    $ev = new evento();
-    $events = $ev->search_eventi($post, -1, 20);
-    if($ev->err_descr == ''){
-        $smarty->assign('eventi',$events);	
-    }else{
-        $smarty->assign('error', $ev->err_descr);        
-    }    
+    if(($post = check_post($_POST))){
+        $ev = new evento();
+        $events = $ev->search_eventi($post, -1, 20);
+        if($ev->err_descr == ''){
+            $smarty->assign('eventi',$events);	
+        }else{
+            $smarty->assign('error', $ev->err_descr);        
+        }
+    }
 }
 
 if(isset($_SESSION['curr_user'])){   

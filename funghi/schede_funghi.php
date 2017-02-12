@@ -1,26 +1,31 @@
 <?php
 session_start();
 
-
 require_once '../libs/aifp_controller.php';
 
 if (!isset($_SESSION['funghi'])){
     $_SESSION['funghi'] = serialize(new funghi_collection());
 }
 
-
 $smarty = new AIFP_Smarty();
 
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
     $collection = unserialize($_SESSION['funghi']);
-    
+    $error = '';
     if( ($funghi=$collection->getitem($genere))==false){
+        
         $contr = new aifp_controller();
         $funghi = $contr->get_scheda_funghi($genere);
+        if($contr->description != ''){
+            $error = $contr->description;
+        }
+        $collection->additem($funghi, $genere);
+        $_SESSION['funghi'] = serialize($collection);
+        
     }
-    if($contr->description != ''){
-        $smarty->assign('error',$contr->description);    
+    if($error != ''){
+        $smarty->assign('error',$error);    
     }else{
         $smarty->assign('genere',$_GET['genere']);
         //preparo i dati iin uscita

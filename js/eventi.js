@@ -4,8 +4,9 @@ function testeventi(){
   var regione = document.forms["s_eventi"]["regione"].value;
   var tipo = document.forms["s_eventi"]["tipologia"].value;
   var data_inizio = document.forms["s_eventi"]["data_inizio"].value;
-  //if (nome==null && regione==null && tipo==null && data_inizio==null) {
-  if(nome==""){
+
+  if (nome === "" && regione === "" && tipo === "" && data_inizio === "") {
+  
     alert("Inserire almeno un campo di ricerca");
     
     document.forms["s_eventi"]["regione"].focus();
@@ -17,6 +18,7 @@ function testeventi(){
     document.forms["s_eventi"]["nome"].select();
     return false;
   }
+  
 return true;  	
   
 }

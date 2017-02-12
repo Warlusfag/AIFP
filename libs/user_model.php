@@ -62,14 +62,6 @@ class user extends gen_model{
         $this->err_descr = 'ERROR: user can not be espert if not subscribe into association';
         return false;
     }
-    
-    public function make_token(){
-        if($this->attributes[$this->table_descr['key']] == -1){
-            $this->err_descr = 'ERROR: user is not initialized';
-            return false;                    
-        }
-        return md5($this->attributes['email'].$this->attributes['password']); 
-    }
 
     public function check_pwd($password)
     {
@@ -115,30 +107,31 @@ class user extends gen_model{
         return $this->update($params);  
     }    
     
-    public function write_post($fk_conv, $text)            
+    public function write_post($text, $fk_conv)            
     {     
         require_once 'conversazione_model.php';
         
-        if($this->attributes[$this->table_descr['key']] == -1){
+        $id = $this->attributes[$this->table_descr['key']];
+        
+        if( $id == -1){
             $this->err_descr = "Error: you have to initialize user class";
             return false;
         }        
         if($fk_conv <= -1 || !isset($fk_conv) ){
             $this->err_descr = "Error: conversaton id is not set";
             return false;                
-        }
-        $user = array(
-            'user'=>$this->attributes['user'],
-            'punteggio'=>$this->attributes['punteggio'],
-            'image'=>$this->attributes['image'],
-        );
+        }        
         $p = new post();
-        $p->new_post($text, $user, $fk_conv);
+        $us = array(
+            'id' => $id,
+            'tipo' => $this->type,
+        );
+        $p->new_post($text, $us, $fk_conv);
         if($p->err_descr != ''){
             $this->err_descr = $p->err_descr;
             return false;
         }
-        $this->attributes['punteggio']+=10;
+        $this->attributes['punteggio']+=20;
         $params = array('punteggio'=> $this->attributes['punteggio'],);
         $this->update_user($params);
         if($this->err_descr != ''){return false;}

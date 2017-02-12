@@ -43,13 +43,7 @@ if(isset($_SESSION['curr_user'])){
         
         $text = $post['text'];
         $title = $post['titolo'];
-        $us = array(
-            'user' => $user->attributes['user'],
-            'image'=> $user->attributes_descr['image'],
-            'punteggio'=>$user->attributes_descr['punteggio'],
-        );     
-        
-        if($sez->add_conversazione($us, $text, $title)){
+        if($sez->add_conversazione($user, $text, $title)){
             //cancello convs così forzo il refresh
             unset($_SESSION['convs']);
             $coll_s->updateitem($s, $sez->get_attributes());

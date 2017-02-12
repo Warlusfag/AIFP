@@ -88,7 +88,7 @@
 			
             <!-- Login form -->
                         <div id="login" class="modal">
-                            <form class="modal-content animate" method="post" action="{$root}login.php">
+                            <form name="login" class="modal-content animate" method="post" onsubmit="return testlogin()" action="{$root}login.php">
                             	 <div class="logcontainer" style="background-color: #f1f1f1">
                                 	
                                 	
@@ -100,7 +100,7 @@
                                 </div>
 
                                 <div class="logcontainer">
-                                	<input type="text" placeholder="Inserisci Username" name="email" required>
+                                    <input id="mailus" type="text" placeholder="Inserisci Username" name="email" required>
                                     <br>
                                     <input type="password" placeholder="Inserisci Password" name="password" required>
                                     <br>

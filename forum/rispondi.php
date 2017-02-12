@@ -38,12 +38,8 @@ if(isset($_SESSION['curr_user'])){
         $attr = $t[$c];
         $conv = new conversazione();
         $conv->init($attr);
-        $us = array(
-            'user' => $user->attributes['user'],
-            'image'=> $user->attributes_descr['image'],
-            'punteggio'=>$user->attributes_descr['punteggio'],
-        );     
-        $conv->add_post($post['text'], $us);
+    
+        $conv->add_post($post['text'], $user);
         if($conv->err_descr == ''){
             $smarty->assign('sezione', $s);
             $smarty->assign('conversazione',$c);
