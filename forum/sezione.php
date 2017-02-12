@@ -32,9 +32,9 @@ if(isset($_GET['page'])){
 $smarty = new AIFP_smarty();
 $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
-$i = $_POST['sezione'];
+$i = $_POST['s_index'];
+$titolo = $_POST['sezione'];
 $flag = true;
-//
 if( $coll_c->sezione == $i){
     if( ($convs = $coll_c->getitem($page)) != false){
         $smarty->assign('convs',$convs);
@@ -47,7 +47,8 @@ if( $coll_c->sezione == $i){
        $smarty->assign('convs', $ris);
    }
 }
-$smarty->assign('sezione',$i);
+$smarty->assign('s_index',$i);
+$smarty->assign('sezione',$titolo);
 foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }

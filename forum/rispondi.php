@@ -41,8 +41,8 @@ if(isset($_SESSION['curr_user'])){
     
         $conv->add_post($post['text'], $user);
         if($conv->err_descr == ''){
-            $smarty->assign('sezione', $s);
-            $smarty->assign('conversazione',$c);
+            $smarty->assign('s_index', $s);
+            $smarty->assign('c_index',$c);
             $smarty->assign('message','Post caricato con successo');  
         }else{
             $smarty->assign('error',$conv->err_descr);

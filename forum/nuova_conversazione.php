@@ -16,12 +16,8 @@ function check_post ($param)
             $app[$key] = $value;
             $i++;
         }
-        else if( $key == 'sezione' ){
-            $app[$key] = $value;
-            $i++;
-        }
     }
-    if($i == 3){
+    if($i == 2){
         return $app;
     }else{
         return false;
@@ -35,7 +31,8 @@ if(isset($_SESSION['curr_user'])){
     $tok = $_SESSION['curr_user']['token'];    
     $user = $controller->get_user($tok);
     if(($post=check_post($_POST))){ 
-        $s = $post['sezione'];
+        $s = $_POST['s_index'];
+        $titolo = $_POST['sezione'];
         $coll_s = unserialize($_SESSION['forum']);
         $t = $coll_s->getitem($s);
         $sez = new sezione();
@@ -43,7 +40,7 @@ if(isset($_SESSION['curr_user'])){
         
         $text = $post['text'];
         $title = $post['titolo'];
-        if($sez->add_conversazione($user, $text, $title)){
+        if($sez->add_conversazione($user, $title, $text)){
             //cancello convs così forzo il refresh
             $coll_s->updateitem($s, $sez->get_attributes());
             $_SESSION['curr_user']['punteggio'] = $user->get_attributes('punteggio');
@@ -53,7 +50,8 @@ if(isset($_SESSION['curr_user'])){
             $coll_c->erase();
             $convs = $sez->get_conversazioni();           
             $smarty->assign('convs', $convs);
-            $smarty->assign('sezione', $s);
+            $smarty->assign('s_index', $s);
+            $smarty->assign('sezione', $titolo);
             $smarty->assign('message','Nuova conversazione aggiunta con successo!');
         }else{
             $smarty->assign('error',GEN_ERROR);        

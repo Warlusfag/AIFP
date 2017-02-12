@@ -13,8 +13,9 @@ $controller = new aifp_controller();
 
 $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
-$s = $_POST['sezione'];
-$c = $_POST['conversazione'];
+$s = $_POST['s_index'];
+$c = $_POST['c_index'];
+$tito_conv = $_POST['conversazione'];
 if(isset($_POST['page_conv'])){
     $cpage = $_POST['page_conv'];
 }else{ 
@@ -43,8 +44,8 @@ if($posts == false){
     }
     $smarty->assign('posts', $posts);
 }
-$smarty->assign('sezione',$s);
-$smarty->assign('conversazione',$c);
+$smarty->assign('s_index',$s);
+$smarty->assign('c_index',$c);
 foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }

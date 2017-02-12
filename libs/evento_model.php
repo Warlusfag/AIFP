@@ -145,7 +145,7 @@ class evento extends gen_model
         }
         $query = substr_replace($query, '', count($query)-6);
         
-        $query .= " ORDER BY 'data_inzio'";
+        $query .= " ORDER BY data_inzio";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }

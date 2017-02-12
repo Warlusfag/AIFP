@@ -104,7 +104,7 @@ class user extends gen_model{
     
     public function get_image(){
         $path = $this->attributes['image'];        
-        $path = str_replace('/srv/www', '',$path);
+        $path = str_replace(PROJ_DIR, '',$path);
         return $path;
     }
     
