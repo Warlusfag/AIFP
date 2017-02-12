@@ -2,8 +2,16 @@
 	{block "title"}Conversazioni{/block}
         {block name="buttom_main"}
             {/block}
-        
-
+{if $error!=null}
+    <script>
+        document.getElementById('alert').style.display='block';
+    </script>
+{/if}
+{if $message!=null}
+    <script>
+        document.getElementById('success').style.display='block';
+    </script>
+{/if}
             
         
 {block name=main}  

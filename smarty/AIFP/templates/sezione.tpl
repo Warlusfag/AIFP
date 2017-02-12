@@ -6,16 +6,16 @@
         
 {block name=main}  
             
-        {if $error!=null}
-                                 <script>
-                                     document.getElementById('alert').style.display='block';
-                                </script>
-                            {/if}
-                             {if $message!=null}
-                            <script>
-                               document.getElementById('success').style.display='block';
-                                 </script>
-                            {/if}
+{if $error!=null}
+    <script>
+        document.getElementById('alert').style.display='block';
+    </script>
+{/if}
+{if $message!=null}
+    <script>
+        document.getElementById('success').style.display='block';
+    </script>
+{/if}
         <!-- Main -->
         
         
