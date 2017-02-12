@@ -30,7 +30,7 @@
                     <a id="down" style="display:none;" href="{$root}{$path}" download>download</a>
                 {/if}
                 
-                
+                {if $profilo.user}
                  <section>
                         <header>
                             <h3>Scarica il regolamento della tua regione </h3>
@@ -40,7 +40,7 @@
                        
                         </form>
                     </section>
-            
+                {/if}
                             <hr>
                 
                 <form action="{$root}funghi/regolamento.php" method="get">

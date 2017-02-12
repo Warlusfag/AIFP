@@ -34,15 +34,21 @@
                     </div>
                 {else}
                     <header>
-                        <h2>{$genere}</h2>
+                    <div class="row half">
+                        <div class="6u"><h2>{$genere}</h2></div>
+                        <div class="4u" style="float:right;">
+                            <a href="{$root}piante/schede_piante.php" class="button prec"> < </a>
+                            
+                        </div>
+                    </div>
                     </header>
-                    <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
+                
                 
                     <div class="row">
                         {foreach $piante as $pianta}
                         <div class="4u">
                                 <section>
-                                    <form action="{$root}funghi/fungo.php" method="get">
+                                    <form action="{$root}piante/pianta.php" method="get">
                                         
                                         <button class="button" type="submit" value="{$pianta.specie}">
                                         <img src="{$root}funghi/foto_generi/amanita.jpeg" alt="{$pianta.specie}" class="image full">

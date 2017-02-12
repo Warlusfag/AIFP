@@ -3,10 +3,7 @@
 {block name=buttom_main}
 {/block}	
 {block name=mainside}
-    {if $error != null}
-        <script>
-            document.getElementById('alert').style.display='block';
-        </script>
+
     {/if} 
      <section>
         <header>
