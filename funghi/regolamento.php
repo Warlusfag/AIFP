@@ -12,15 +12,19 @@ if(isset($_GET['regione'])){
     }else{
         $smarty->assign('error', $controller->description);
     }
-}else if(isset($_GET['miaregione']) && isset($_SESSION['curr_user']) ){
-    $tok = $_SESSION['curr_user']['token'];    
-    $user = $contr->get_user($tok);    
-    
-    $path = $controller->get_regolamento($user->attributes['provincia']);
-    if($path){        
-        $smarty->assign('path',$path);
+}else if(isset($_GET['miaregione']) ){
+    if(isset($_SESSION['curr_user'])){
+        $tok = $_SESSION['curr_user']['token'];    
+        $user = $contr->get_user($tok);    
+
+        $path = $controller->get_regolamento($user->attributes['provincia']);
+        if($path){        
+            $smarty->assign('path',$path);
+        }else{
+            $smarty->assign('error', $controller->description);
+        }
     }else{
-        $smarty->assign('error', $controller->description);
+        $smarty->assign('error', "Per scaricare in automatico la tua regione, devi essere loggato");
     }
 }
 if(isset($_SESSION['curr_user'])){   

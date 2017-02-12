@@ -17,6 +17,9 @@ function check_post($param)
         else if( $key == 'data_inizio' ){
             $app[$key] = $value;
         }
+        else if( $key == 'tipologia' ){
+            $app[$key] = $value;
+        }
     }
     return $app;  
 }
