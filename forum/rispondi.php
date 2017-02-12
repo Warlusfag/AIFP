@@ -22,7 +22,7 @@ function check_post ($param)
     return $app;
 }
 
-if(!isset($_POST['page_conv'])){
+if(isset($_POST['page_conv'])){
     $cpage = $_POST['page_conv'];
 }else{
     $cpage = 0;
@@ -38,7 +38,7 @@ if(isset($_SESSION['curr_user'])){
     if (($post = check_post($_POST))){
         $coll_c = unserialize($_SESSION['convs']);
         $tito_sez = $_POST['sezione'];
-        $tito_sez = $_POST['conversazione'];
+        $tito_conv = $_POST['conversazione'];
         $c = $_POST['c_index'];
         $s = $_POST['s_index'];       
 
@@ -60,7 +60,7 @@ if(isset($_SESSION['curr_user'])){
     }else{
         $smarty->assign('error','BAD parameters');        
     }
-    $smarty->display('rispondi.tpl');
+    $smarty->display('conversazione.tpl');
 }else{
     $smarty->display('index.tpl');
 }

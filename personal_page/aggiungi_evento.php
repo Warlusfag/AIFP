@@ -1,15 +1,14 @@
 <?php
+session_start();
 
 require_once '../libs/aifp_controller.php';
-
-session_start();
 
 function check_post($param)
 {
     $app = array();
     $i = 0;
     foreach ($param as $key=>$value){
-        if( $key == 'nome_evento' ){
+        if( $key == 'nome' ){
             $app[$key] = $value;
             $i += 1;
         }
@@ -53,7 +52,7 @@ if(isset($_SESSION['curr_user'])){
             if($ass->add_evento($post)){
                 $smarty->assign('error', $ass->err_descr);
             }else{
-                $smarty->assign('message', 'evento aggiornato con successo');                
+                $smarty->assign('message', 'evento aggiunto con successo');                
             }
         }else{
             $smarty->assign('error', 'BAD parameters');

@@ -122,8 +122,7 @@ class associazione extends user
         }
         $this->err_descr = '';
         return $files;        
-    }
-    
+    }    
 
     public function register_evento ($id_evento)
     {
@@ -195,12 +194,8 @@ class associazione extends user
            $this->err_descr='ERROR: File is not found ';
            return false;
         }        
-        if(!download($filepath)){
-           $this->err_descr='ERROR: Impossible download file';
-           return false; 
-        }
         $this->err_descr = '';
-        return true;                
+        return $filepath;                
     }
     
     public function delete_file($filename)

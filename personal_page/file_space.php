@@ -9,15 +9,29 @@ if(isset($_SESSIONS['curr_user'])){
     $controller = new aifp_controller();
     $tok = $_SESSIONS['curr_user']['token'];
     $type = $_SESSIONS['curr_user']['type'];
-    $ass = $controller->get_user($tok, $type);
+    $user = $controller->get_user($tok, $type);
 }else{
-    $ass = -1;    
+    $user = -1;    
 }
-
-if( $ass instanceof associazioni){           
+$grant = false;
+if(! $user instanceof user){
+    if($user instanceof associazione){
+        $id_ass = $user->attributes[$ass->table_descr['key']];
+        $ass = $user;
+        $grant = true;
+    }
+    else if(isset($ass->attributes['associazione'])){
+        $params = array('ID_ass' =>  $user->attributes['associazione']);
+        $ass = $controller->get_user($params);
+        $id_ass = $ass->attributes[$ass->table_descr['key']];
+    }
     if(isset($_POST['filename'])){
         if($_POST['action']=='delete'){
-            $ass->delete_file($_POST['filename']);
+            if($grant == false){
+                $smarty->assign('error',"Non hai permessi per cancellare i file");
+            }else{
+                $ass->delete_file($_POST['filename']);
+            }
         }
         else if($_POST['action']=='download'){
             $ass->download_file($_POST['filename']);            
@@ -27,7 +41,7 @@ if( $ass instanceof associazioni){
                 $ass->upload_file($_FILES);
             }
         }else if ($_POST['action']=='show'){
-            $path = FILE_ASS.$ass->attributes['id'].'/';
+            $path = FILE_ASS.$id_ass.'/';
             $files = array();
             if(!(file_exists($path))){
                 mkdir($path, 0777, true);
