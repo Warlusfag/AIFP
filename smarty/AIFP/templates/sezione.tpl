@@ -25,6 +25,9 @@
         <section>
                 <header>
                     <h3>{$sezione}</h3>
+                    <div class="4u" style="float:right;">
+                        <a href="{$root}/forum/forum.php" class="button prec"> < </button></a>
+                    </div>
                 </header>
             
                 <div class="10u">
@@ -47,7 +50,7 @@
                                             
                                             {foreach $convs as $c}
                                                     {$count=$count+1}
-                                                    <input name="conversazione" value="$c.titolo" style="display:none;">
+                                                    <input name="conversazione" value="{$c.titolo}" style="display:none;">
                                                     <input name="s_index" value="{$s_index}" style="display:none;">
                                                     <button class="sezione" name="c_index" value="{$count}" type="submit">
                                                     <li>

@@ -3,6 +3,8 @@
         {block name="buttom_main"}
             {/block}
         
+
+            
         
 {block name=main}  
             
@@ -12,6 +14,12 @@
         <section>
                 <header>
                         <h3>{$conversazioni}</h3>
+                         <div class="4u" style="float:right;">
+                        <form action="{$root}forum/sezione.php" type="post">
+                            <input name="sezione" value="{$sezione}" style="display:none">
+                            <button class="button prec" type="submit" name="s_index" value="{$s_index}"> < </button>
+                        </form>
+                        </div>  
                 </header>
                 
       
@@ -20,40 +28,44 @@
                         <div class="10u">
                             <section>
                                     <header>
-                                            <h4></h4>
+                                            <h3>{$sezione}</h3>
                                     </header>
-                              
-                                        
-                                            {$count=-1}
-                                            
-                                            {foreach $posts as $p}
-                                                    {$count=$count+1}
-                                                   
-                                                        <div class="row half">
-                                                            <div class="4u">
-                                                                <img src="{$root}{$p.image}" class="pic"><br>
-                                                                <span>{$p.user} Punteggio: {$p.punteggio}</span>
-                                                            </div>
+                                    {foreach $posts as $p}
+                                        <div class="row half">
+                                            <div class="2u">
+                                                <img src="{$root}{$p.image}" class="pic"><br>
+                                                <span><b>{$p.user}</b><br>{$p.data}</span>
+                                            </div>
                                                                 
-                                                            <div class="7u" style="float:left;">
-                                                                <br>
-                                                                <p>{$p.text}</p>
-                                                                <br>
-                                                            </div>
-                                                                <hr>
-                                                        </div>
-                                                        
-                                                        
-                                                        
-                                                      
-
-                                                    
-                                                    </button>
-                                            {/foreach}
-                                        
-                                    </form>
+                                            <div class="9u">
+                                                <br>
+                                                <p>{$p.text}</p>
+                                                <br>
+                                            </div>
+                                            
+                                        </div>
+                                        <hr>
+                                    {/foreach}
                             </section>
                         </div>
+                        <div class="10u">
+                            <div class="row half">
+                                <div class="2u">
+                                    <img src="{$profilo.image}" class="pic"><br>
+                                    <span><b>{$p.user}</b><br> {$p.data}</span>
+                                </div>
+                                <form action="{$root}/forum/rispondi.php" method="post">
+                                
+                                <div class="9u" style="float:left;">
+                                    <br>
+                                    <textarea rows='3' cols='50' style="resize:none;" placeholder="Rispondi..." name="text" required></textarea>
+                                    
+                                    <button type="submit" class="button personal">Rispondi</button> 
+                                </div>
+                                </form>
+                            </div>    
+                        </div>
                     </div>
+                                <br><br>
         </section>
 {/block}

@@ -4,7 +4,7 @@
 {/block}	
 {block name=mainside}
 
-    {/if} 
+    
      <section>
         <header>
             <h2>Overview</h2>
