@@ -15,7 +15,7 @@
                 <header>
                         <h3>{$conversazioni}</h3>
                          <div class="4u" style="float:right;">
-                        <form action="{$root}forum/sezione.php" type="post">
+                        <form action="{$root}forum/sezione.php" method="post">
                             <input name="sezione" value="{$sezione}" style="display:none">
                             <button class="button prec" type="submit" name="s_index" value="{$s_index}"> < </button>
                         </form>
@@ -59,7 +59,8 @@
                                 <div class="9u" style="float:left;">
                                     <br>
                                     <textarea rows='3' cols='50' style="resize:none;" placeholder="Rispondi..." name="text" required></textarea>
-                                    
+                                    <input name="c_index" value="{$c_index}" style="display:none;">
+                                    <input name="s_index" value="{$s_index}" style="display:none;">
                                     <button type="submit" class="button personal">Rispondi</button> 
                                 </div>
                                 </form>
