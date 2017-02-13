@@ -131,6 +131,38 @@
 		{
 			margin-bottom: 0;
 		}
+        /* Table */
+        table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #86ff56;
+            }
+        
+            table.input{
+                border: 0px;
+            }
+            td.input,tr.input{
+                border: 0px;
+            }  
+            th.input{
+                text-align: right;
+                border: 0px;
+            }
+                   
+            tr.input:nth-child(even){
+                background-color:transparent; 
+            }
+            
 
 	/* Images */
 
@@ -142,6 +174,10 @@
                 img.picnav{
                     width:5%;
                     
+                }
+                img.filespace{
+                    width:80%;
+                
                 }
 		.image
 		{
@@ -285,7 +321,7 @@
                 
                         
                 
-	/* Buttons */
+	/* Button */
 		
 		.button
 		{
@@ -312,10 +348,21 @@
                     text-transform: lowercase;
                     width: 100%;
                 }
+                .button.option{
+                    font-size:0.9em;
+                    text-transform: none;
+                    background: #daff99;
+                    color:black;
+                }
                 
-                .button.personal{
-                    font-size:0.6;
+               
+                
+                .button.schede{
+                    font-size:1em;
                     text-transform:none;
+                    margin-top: 0em;
+                    padding: 1.5em 1.5em;
+                    width: 100%;
                 }
               
                 
@@ -327,11 +374,17 @@
                 	float: center;
                 	font-size: 1em;
                 }
+                
 			.button:hover
 			{
 				background: #307d09;
 				color: #FFF !important;
 			}
+                        .button.option:hover{
+                            background: white;
+                            color: black !important;
+                                
+                        }
 
 	/* Dropdown */
 

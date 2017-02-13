@@ -18,7 +18,7 @@
                 <script src="{$root}js/eventi.js"></script>
 		<script src="{$root}js/slideshow.js"></script>
                 <script src="{$root}js/personal_page.js"></script>
-                <script src="{$root}js/fixed_scrollable_bar.js"></script>
+                <!--<script src="js/fixed_scrollable_bar.js"></script>-->
                 <script src="{$root}js/reg.js"></script>
 		{/block}
 		{block name=css}

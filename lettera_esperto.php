@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'libs/aifp_controller.php';
+    require_once 'libs/aifp_controller.php';
 function check_post($param)
 {
     $app = array();
@@ -39,8 +39,8 @@ if(isset($_SESSION['news'])){}
     $new_col = unserialize($_SESSION['news']);
     $news = $new_col->get_all_news();
     $smarty->assign('news', $news );
-}
-$smarty->display('lettera_esperto.tpl')
+
+$smarty->display('lettera_esperto.tpl');
     $oggetto="AIFP: L\'utente $post[nome] con email $post[email] ha richiesto la consulenza di un esperto";
     /* La parte dell'invio delle email va commentata
     foreach ($emails as $value) {
@@ -61,7 +61,7 @@ $smarty->display('lettera_esperto.tpl')
     }else{
         $smarty->assign('message','La tua richiesta è stata inoltrata con successo agli esperti');
     }
-}
+
 if(isset($_SESSION['curr_user'])){   
     foreach($_SESSION['curr_user'] as $key=>$value){
         $t[$key] = $value;

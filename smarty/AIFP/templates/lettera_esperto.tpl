@@ -10,7 +10,7 @@
                         <h2>Chiedi all'esperto</h2>
                 </header>
             <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a><br>
-                <form method='POST' action='{$root}lettera_esperto.php'>
+                <form method='post' action='{$root}lettera_esperto.php'>
                     <label><b>Inserire email e nome, un esperto le risponderà il prima possibile!</b></label><br><br>   
                     <label>E-Mail</label><br>
                     <input type="email" placeholder="Inserisci Email" name="email" required><br><br>
