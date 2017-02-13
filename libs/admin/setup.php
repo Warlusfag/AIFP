@@ -1,21 +1,21 @@
 <?php
 
-//Constanti per la trasportabilità del sito su diverse piattaforme
-
 $server_root = "/srv/www/AIFP/";
-
-//date_default_timezone_set('UTC');
 
 //constanti per la gestione del sito
 define('PROJ_DIR', $server_root);
+define('IMAGE', PROJ_DIR.'images/');
 define('PROJ_LIBS',PROJ_DIR.'libs/');
 define('PROJ_ADMIN', PROJ_LIBS.'admin/');
-define('FILE_ASS', PROJ_LIBS.'fuser/filespace_ass/');
-define('IMG_USER', PROJ_LIBS.'fuser/image_user/');
-define('IMG_MUSH', PROJ_LIBS.'image_funghi/');
-define('IMG_PLANT',PROJ_LIBS.'image_piante/');
-define('DEFAULT_IMG', IMG_USER.'default.png');
-define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com');
+//IMMAGINI
+define('IMG_USER', IMAGE.'image_user/');
+define('DEFAULT_IMG', IMAGE.'default.png');
+define('IMG_MUSH', PROJ_DIR.'funghi/image_funghi/');
+define('IMG_PLANT',PROJ_DIR.'piante/image_piante/');
+//DILE SPACE ASSOCIAZIONE
+define('FILE_ASS', PROJ_DIR.'filespace_ass/');
+//GENERAL ERROR
+define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com and gianmarcotroiano@gmail.com');
 
 //ini_set('include_path', PROJ_ADMIN.'smarty/libs');
 require_once(PROJ_ADMIN.'smarty/Smarty.class.php');

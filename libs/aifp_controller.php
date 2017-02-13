@@ -308,7 +308,7 @@ class aifp_controller
         'esperto' => 1,
     );
     for($i=0;$i<count($this->tipo);$i++){
-    	$us = get_us_from_type($this->tipo[$i]);
+    	$us = $this->get_us_from_type($this->tipo[$i]);
     	if($us instanceof user || $us instanceof admin){
     		continue;
     	}
@@ -332,7 +332,7 @@ class aifp_controller
     $name = "nome,email,test";
     $value = array($name,$email,$text);
     $db = new db_interface();
-    if(!$db->insert_statement('lettera_esperto',$value,$name,$type)){
+    if(!$db->statement_insert('lettera_esperto',$name,$value,$type)){
         $this->description = $db->error;    
         return false;
     }else{

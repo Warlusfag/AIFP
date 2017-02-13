@@ -14,7 +14,7 @@ if(isset($_POST['email'])){
     }else{
         $ass = -1;    
     }
-    if($ass instanceof associazione){
+    if($ass instanceof associazione || $ass instanceof admin){
 
         $email = $_POST['email'];
         if(!isset($_POST['type'])){

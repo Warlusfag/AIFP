@@ -53,12 +53,17 @@ if(isset($_SESSION['curr_user'])){
             $smarty->assign('c_index',$c);
             $smarty->assign('conversazione',$tito_conv);
             $smarty->assign('sezione',$tito_sez);
+            $posts = $conv->get_posts();
+            $smarty->assign('posts',$posts);
             $smarty->assign('message','Post caricato con successo');  
         }else{
             $smarty->assign('error',$conv->err_descr);
         }        
     }else{
         $smarty->assign('error','BAD parameters');        
+    }
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
     }
     $smarty->display('conversazione.tpl');
 }else{

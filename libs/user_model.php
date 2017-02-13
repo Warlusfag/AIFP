@@ -2,11 +2,8 @@
 
 require_once 'gen_model.php';
 require_once 'admin/setup.php';
-
-
 //ancora da finire
 const limit_filesize = 4000000;
-
 //normal user
 class user extends gen_model{       
     //public $attributes_descr;

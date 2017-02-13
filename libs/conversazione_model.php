@@ -5,8 +5,7 @@ const limit_post = 10;
 class conversazione extends gen_model
 {
     function __construct($id=-1, $titolo=-1){
-        parent::__construct();
-        
+        parent::__construct();        
       
         $this->attributes = array(
             'id_conv'=>-1,
@@ -132,7 +131,7 @@ class conversazione extends gen_model
             }            
             $query = substr_replace($query, '', count($query)-6);
         }
-        $query .= " ORDER BY data ASC";
+        $query .= " ORDER BY data DESC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }
@@ -257,7 +256,7 @@ class post extends gen_model
             }            
             $query = substr_replace($query, '', count($query)-6);
         }
-        $query .= " ORDER BY time DESC";
+        $query .= " ORDER BY time ASC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }
