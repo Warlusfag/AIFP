@@ -324,8 +324,8 @@ class aifp_controller
         1 => 's',
         2 => 's',
     );
-    $name = $email.','.$name.','.$text;
-    $value = array($email,$name,$text);
+    $name = "nome,email,test";
+    $value = array($name,$email,$text);
     $db = new db_interface();
     if(!$db->insert_statement('lettera_esperto',$value,$name,$type)){
         $this->description = $db->error;    
