@@ -20,7 +20,13 @@
 
 {if $file!=null}
     <script>
-        show("form3");
+        show("form4");
+    </script>
+{/if}
+
+{if $ass!=null}
+    <script>
+        show("form5");
     </script>
 {/if}
     <section>
@@ -34,11 +40,20 @@
             {/if}
             <li><button class="button schede" onclick="show('form','b1')">{$personal_data.user}</button></li>
             <li><button class="button schede" onclick="show('form1')">Modifica Profilo</button></li>
-            <li><button class="button schede" onclick="show('form2')"  >Ricerca</button></li>
-            <li><button class="button schede" onclick="show('form3')"  >Aggiungi Evento</button></li>
-            <form action="{$root}personal_page/file_space.php" method="post">
-            <li><button type="submit" name="action" value="show" class="button schede" onclick="show('form4')"  >File Space</button></li>
-            </form>
+            <li><button class="button schede" style="background-color:{$color}" onclick="show('form2')" {$status} >Ricerca</button></li>
+            <li><button class="button schede" style="background-color:{$color}" onclick="show('form3')" {$status}>Aggiungi Evento</button></li>
+            
+            <li><form action="{$root}personal_page/file_space.php" method="post">
+                <button type="submit" name="action" value="show" style="background-color:{$color}" class="button schede" onclick="show('form4')" {$status}>File Space</button>
+                </form>
+            </li>
+            {if $type=="admin"}
+            <li>
+                <form action="{$root}personal_page/show_ass.php" method="post">
+                    <button type="submit" name="" value="" class="button schede" onclick="show('form5')" >Request Ass</button>
+                </form>
+            </li>
+            {/if}
         </ul>
     </section>
 
@@ -351,8 +366,36 @@
         </div>
     </div>
        
+       <!-- REQUEST ASS -->
        
-        
+       <div class="9u skel-cell-important" id="form5">
+        <div class="">
+          <section>
+                    <header>
+                            <h2>REQUEST ASS</h2>
+                    </header>
+           </section>
+            <form action="{$root}personal_page/#.php" method="post">
+            <table>
+                   <tr>
+                       <th><b>Associazione</b></th>
+                       <th><b>Size</b></th>
+                       <th></th>
+                   </tr>
+                   
+                   {foreach $ass ad $a}
+                   <tr>
+                     <td>{$a.nome}</td>
+                     <td>{$file.size}</td>
+                   
+                     <td style="width:47px; text-align:center;"><button type="submit" name="action" value="download"><img src="{$root}images/checked.png" class="filespace"></button></td>
+                  
+                   </tr>
+                   {/foreach}
+                 </table>
+            </form>
+        </div>
+    </div>
                 
            	<!-- /Main -->
 

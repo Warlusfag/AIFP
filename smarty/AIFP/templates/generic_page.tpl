@@ -128,7 +128,7 @@
                         
                                            
                                        
-                        <!-- Allert form -->
+                        <!-- Alert form -->
                         <div id="alert_login" class="modal">
                             <div class="modal-content animate alert">
                                 <span onclick="document.getElementById('alert_login').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
@@ -166,18 +166,19 @@
                             {block name=sidebar}
                             {/block}
 
-                            {block name=main}
-                                {if $error!=null}
-                                 <script>
-                                     document.getElementById('alert').style.display='block';
+                        {block name=main}
+                                
+                            {if $error!=null}
+                                <script>
+                                    document.getElementById('alert_login').style.display='block';
                                 </script>
                             {/if}
-                             {if $message!=null}
+                            {if $message!=null}
                             <script>
                                document.getElementById('success').style.display='block';
-                                 </script>
+                            </script>
                             {/if}
-                            {/block}
+                        {/block}
                         </div>
                     </div>
                 </div>

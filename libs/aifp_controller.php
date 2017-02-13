@@ -100,6 +100,10 @@ class aifp_controller
          if($us->table_descr['key'] == $primary_key){
             return $us;
         }
+        $us = new admin();
+         if($us->table_descr['key'] == $primary_key){
+            return $us;
+        }
         return null;
     }
 
