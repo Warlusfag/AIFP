@@ -3,6 +3,18 @@
 {block "title"}Lettera esperto{/block}
 
 {block name=main}
+    
+{if $message != null}
+        <script>
+            document.getElementById('success').style.display='block';
+        </script>
+{/if}
+{if $error != null}
+        <script>
+            document.getElementById('alert').style.display='block';
+        </script>
+{/if}   
+
 					
 <div id="content" class="9u skel-cell-important">
         <section>

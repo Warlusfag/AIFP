@@ -18,4 +18,5 @@ function hide(){
     document.getElementById("form3").style.display="none";
     document.getElementById("form4").style.display="none";
     document.getElementById("form5").style.display="none";
+    document.getElementById("form6").style.display="none";
 }

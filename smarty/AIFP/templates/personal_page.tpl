@@ -35,22 +35,41 @@
         </header>
         <ul class="style1"> 
             {if $type=="utente"}
-                {$status="disabled"}
-                {$color="grey"}
+                {$status_ric="disabled"}
+                {$color_ric="grey"}
+                {$status_fs="disabled"}
+                {$color_fs="grey"}
+                {$status_add="disabled"}
+                {$color_add="grey"}
+                {$status_up="disabled"}
+                {$color_up="grey"}
+            {/if}
+            {if $type=="botanico" || $type=="micologo" || $type=="inscritto"}
+                {$status_add="disabled"}
+                {$color_add="grey"}
+                {$status_up="disabled"}
+                {$color_up="grey"}
+            {/if}
+            {if $type=="admin"}
+                {$status_fs="disabled"}
+                {$color_fs="grey"}
             {/if}
             <li><button class="button schede" onclick="show('form','b1')">{$personal_data.user}</button></li>
             <li><button class="button schede" onclick="show('form1')">Modifica Profilo</button></li>
-            <li><button class="button schede" style="background-color:{$color}" onclick="show('form2')" {$status} >Ricerca</button></li>
-            <li><button class="button schede" style="background-color:{$color}" onclick="show('form3')" {$status}>Aggiungi Evento</button></li>
+            <li><button class="button schede" style="background-color:{$color_ric}" onclick="show('form2')" {$status_ric} >Ricerca</button></li>
             
             <li><form action="{$root}personal_page/file_space.php" method="post">
-                <button type="submit" name="action" value="show" style="background-color:{$color}" class="button schede" onclick="show('form4')" {$status}>File Space</button>
+                <button type="submit" name="action" value="show" style="background-color:{$color_fs}" class="button schede" onclick="show('form4')" {$status_fs}>File Space</button>
                 </form>
             </li>
+            
+            <li><button class="button schede" style="background-color:{$color_add}" onclick="show('form3')" {$status_add}>Aggiungi Evento</button></li>
+            <li><button class="button schede" style="background-color:{$color_up}" onclick="show('form6')" {$status_up}>Promuovi Utente</button></li>
+    
             {if $type=="admin"}
             <li>
-                <form action="{$root}personal_page/show_ass.php" method="post">
-                    <button type="submit" name="" value="" class="button schede" onclick="show('form5')" >Request Ass</button>
+                <form action="{$root}personal_page/request_ass.php" method="post">
+                    <button type="submit" name="" value="" class="button schede" onclick="show('form5')" >Verifica Associazione</button>
                 </form>
             </li>
             {/if}
@@ -372,10 +391,10 @@
         <div class="">
           <section>
                     <header>
-                            <h2>REQUEST ASS</h2>
+                            <h2>Verifica Associazione</h2>
                     </header>
            </section>
-            <form action="{$root}personal_page/#.php" method="post">
+            <form action="{$root}personal_page/request_ass.php" method="post">
             <table>
                    <tr>
                        <th><b>Associazione</b></th>
@@ -397,7 +416,22 @@
         </div>
     </div>
                 
-           	<!-- /Main -->
+    <!-- UPGRADE USER -->
+     <div class="9u skel-cell-important" id="form6">
+        <div class="">
+          <section>
+                    <header>
+                            <h2>Promuovi Utente</h2>
+                    </header>
+           </section>
+            <form action="{$root}personal_page/#.php" method="post">
+                <p>Inserisci l'email dell'utente da promuovere</p>
+                <input type="email" name="email">
+                <button type="submit" class="button schede">Promuovi</button>
+            </form>
+        </div>
+    </div>
+    
 
 {/block}
 
