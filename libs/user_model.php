@@ -190,28 +190,34 @@ class user extends gen_model{
         return true;   
     }
     
-    public function load_image($file_image)
-    {
+     public function load_image($file_image)
+     {
         if($this->attributes[$this->table_descr['key']] == -1){
-            $this->err_descr = "Error, you have to initialize user, which user wants change the image?";
+            $this->err_descr = "ERROR: Utente non inizializzato";
             return false;
         }
-        $path = IMG_USER.$this->type.'/'.$this->attributes['user'];
-        if($this->attributes['image'] != DEFAULT_IMG){
-            if (file_exists($path)){
-               unlink($path);
-            )else{
-                $this->err_descr = 'ERROR:File doesn\'t exist';
-                return false;
+        $path = IMG_USER.$this->type.'/'.$this->attributes[$this->table_descr['key']].'/';
+        if(!file_exist($path)){
+            mkdir($path, 755);
+        }
+        else if($this->attributes['image'] != DEFAULT_IMG){
+            $files = scandir($path);
+            foreach($files as $file){}
+                if($file == '.' || $file == '..')
+                    continue;
+
+                unlink($file);
             }
-        }           
+        }
+        $name = basename($file_image['name']);
+        $new_image = $path.$name;
         //creazione del file
-        if (!move_uploaded_file($file_image['userfile']['temp_name'], $path)){
-            $this->err_descr = 'ERROR: an erro occurred while uplloading file';            
+        if (!move_uploaded_file($file_image['tmp_name'], $new_image)){
+            $this->err_descr =  GEN_ERROR;            
             return false;            
         }
-        $this->attributes['image'] = $path;
-        $value = array( 'image' => $path);
+        $this->attributes['image'] = $new_image;
+        $value = array( 'image' => $new_image);
         if(!$this->update($value)){
             return false;
         }else{
