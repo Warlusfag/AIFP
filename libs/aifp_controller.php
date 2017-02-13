@@ -296,4 +296,43 @@ class aifp_controller
             return false;
         }       
     }
+    
+    public function lettera_esperto($email, $nome, $text){
+	$emails = array();
+	$params = array(
+        'esperto' => 1,
+    );
+    for($i=0;$i<count($this->tipo);$i++){
+    	$us = get_us_from_type($this->tipo[$i]);
+    	if($us instanceof user || $us instanceof admin){
+    		continue;
+    	}
+    	$res = $us->search_user($params, 5);
+    	if($us->err_descr != ''){
+    		$this->description = $us->err_descr;
+    		return false;
+    	}
+    	$temp = array();
+    	foreach($res as $value){
+            $temp[] = $value['email'];        
+        }
+        $emails = array_merge($emails, $temp);
+    }
+
+    $type = array(
+        0 => 's',
+        1 => 's',
+        2 => 's',
+    );
+    $name = $email.','.$name.','.$text;
+    $value = array($email,$name,$text);
+    $db = new db_interface();
+    if(!$db->insert_statement('lettera_esperto',$value,$name,$type)){
+        $this->description = $db->error;    
+        return false;
+    }else{
+       	return $emails;
+    }
+}
+    
 }
