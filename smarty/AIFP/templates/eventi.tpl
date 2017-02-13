@@ -41,7 +41,7 @@
                     <input class="reg" type="text" name="nome">
                     <br><br>
                     <label>Cerca per regione</label>&nbsp &nbsp
-                        <select name="regione" form="search">
+                        <select class="button option" name="regione" form="search">
                             <option value="">Abruzzo</option>                          
                             <option value="abruzzo">Abruzzo</option>
                             <option value="basilicata">Basilicata</option>
@@ -66,7 +66,7 @@
                                     </select>
                     <br><br>
                     <label>Cerca per tipo</label>&nbsp &nbsp &nbsp &nbsp &nbsp
-                    <select name="tipologia" form="search">
+                    <select class="button option" name="tipologia" form="search">
                         <option value="">Corso</option>
                         <option value="corso">Corso</option>
                         <option value="sagra">Sagra</option>

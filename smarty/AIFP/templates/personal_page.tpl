@@ -81,17 +81,22 @@
        <!-- MODIFICA PROFILO --> 
     <div class="row half" id="form1">
         
-        <div class="5u" >
+        
+        <div class="7u" >
           <section>
                     <header>
                             <h3>{$personal_data.user}</h3>
                     </header>
                     
                     <img src="{$root}{$personal_data.image}" class="pic"><br>
-                    <button class="button personal">Cambia immagine del profilo</button>
+                    <hr>
+                    Cambia immagine del profilo <br>
+                    <form action="{$root}/personal_page/load_image.php">
+                    <input type="file" name="image">
+                    </form>
             </section>
         </div>
-        <div class="7u">
+        <div class="5u">
             <form id="update" action="{$root}personal_page/update_profile.php" method="post"> 
                 {if $tipo!="associazione"}
                 <section>
@@ -101,8 +106,8 @@
                         <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$personal_data.nome}"</li>
                         <li>Cognome &nbsp &nbsp<input type="text" value="{$personal_data.cognome}"</li>
                         <li>Residenza: &nbsp <input type="text" value="{$personal_data.residenza}"</li>
-                        <li><br></li>
-                        <li><label>Inserisci regione &nbsp</label>
+                      
+                        <li><label>Regione &nbsp</label>
                             <select class="button option" name="regione" form="update">
                                 <option value="{$personal_data.regione}">{$personal_data.regione}</option>
                                 <option value="abruzzo">Abruzzo</option>
@@ -269,8 +274,8 @@
     </div>
         
        <!-- AGGIUNGI EVENTO -->
-    <div class="9u skel-cell-important" id="form3">
-        <div class="15u" >
+      
+    <div class="6u skel-cell-important" id="form3">
           <section>
                     <header>
                             <h2>AGGIUNGI EVENTO</h2>
@@ -311,7 +316,7 @@
                     
                     <button type="submit" class="button">Crea</button>
             </form>
-        </div>
+       
     </div>
                    
        <!-- FILE SPACE -->

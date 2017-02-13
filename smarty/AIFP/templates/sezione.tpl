@@ -23,18 +23,18 @@
         
         <div id="content" class="9u skel-cell-important">
         <section>
-                <header>
-                    <h3>{$sezione}</h3>
-                    <div class="4u" style="float:right;">
+             <div class="4u" style="float:right;">
                         <a href="{$root}/forum/forum.php" class="button prec"> < </button></a>
                     </div>
+                <header>
+                    <h3>Benvenuto nella sezione {$sezione}, clicca su "Nuova Conversazione" per avviare una discussione!</h3>
+                   
                 </header>
             
                 <div class="10u">
-                    
-                    <a class="button" onclick="document.getElementById('conv').style.display='block'" href="#">Crea una nuova conversazione</a>
+                    <a class="button" onclick="document.getElementById('conv').style.display='block'" href="#">Nuova Conversazione</a>
                 </div>
-            
+        </section>
             <hr>
       
                
@@ -42,7 +42,7 @@
                         <div class="10u">
                             <section>
                                     <header>
-                                        <h3></h3>
+                                        <h3>CONVERSAZIONI DELLA SEZIONE {$sezione}</h3>
                                     </header>
                                 <form action="{$root}forum/conversazione.php" method="post">
                                         <ul class="default">
@@ -55,12 +55,12 @@
                                                     <button class="sezione" name="c_index" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
-                                                            <div class="7u" style="float:left;">
+                                                            <div class="7u">
                                                                 <br>
                                                                 <span style="font-size:20px;"><strong>{$c.id_convs} {$c.titolo}</strong></span>
                                                                 <br>
                                                             </div>
-                                                            <div class="3u" style="float:right;">
+                                                            <div class="3u" style="float:right; border-left: solid 1px #ddd">
                                                                 <br>
                                                                 <span> Numero post:<strong> {$c.num_post}  <br>  Data: {$c.data}</strong></span>
                                                             </div>
@@ -78,7 +78,7 @@
                             </section>
                         </div>
                     </div>
-        </section>
+      
                                             
                                             
 <div id="conv" class="modal">

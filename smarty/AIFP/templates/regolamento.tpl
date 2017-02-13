@@ -36,7 +36,7 @@
                             <h3>Scarica il regolamento della tua regione </h3>
                         </header>
                         <form action="{$root}funghi/regolamento.php" method="get">
-                            <button type="submit" class="button" name="miaregione" value="1"> Download</button>
+                            <button type="submit" class="button regole" name="miaregione" value="1"> Download</button>
                        
                         </form>
                     </section>

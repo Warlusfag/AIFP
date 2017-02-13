@@ -202,7 +202,7 @@ class user extends gen_model{
         }
         else if($this->attributes['image'] != DEFAULT_IMG){
             $files = scandir($path);
-            foreach($files as $file){}
+            foreach($files as $file){
                 if($file == '.' || $file == '..')
                     continue;
 

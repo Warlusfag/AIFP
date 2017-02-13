@@ -59,8 +59,8 @@
                         <div class="10u">
                             <div class="row half">
                                 <div class="2u">
-                                    <img src="{$profilo.image}" class="pic"><br>
-                                    <span><b>{$p.user}</b><br> {$p.data}</span>
+                                    <img src="{$root}{$profilo.image}" class="pic"><br>
+                                    <span><b>{$profilo.user}</b><br> {$p.data}</span>
                                 </div>
                                 <form action="{$root}/forum/rispondi.php" method="post">
                                 

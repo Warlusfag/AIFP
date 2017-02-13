@@ -32,13 +32,13 @@
                                                     <button class="sezione" name="s_index" value="{$count}" type="submit">
                                                     <li>
                                                         <div class="row half">
-                                                            <div class="7u" style="float:left;">
+                                                            <div class="8u">
                                                                 <br>
                                                                 <span style="font-size:20px;"><strong>{$s.id_sez} {$s.nome}</strong></span>
                                                                 <br>
                                                                 <p>{$s.descrizione}</p>
                                                             </div>
-                                                            <div class="3u" style="float:right;">
+                                                            <div class="2u" style="float:right;border-left: solid 1px #ddd;">
                                                                 <br>
                                                                 <span> Moderatore:<strong> {$s.moderatore}  <br>  {$s.num_conv}</strong> commenti</span>
                                                             </div>

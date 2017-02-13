@@ -115,8 +115,6 @@
                                     <input type="radio" name="type" value="botanico">Botanico
                                     <input type="radio" name="type" value="associazione">Associazione
                                     <br>
-                                    <label class="rmbme"><input type="checkbox" checked="checked">Ricordami</label> 
-                                    <span class="psw"><a href="#">Password</a> dimenticata?</span>
                                     <button class="loginbtn" type="submit">Login</button>
                                     <br>
                                     
@@ -195,23 +193,16 @@
 		<!--block body closed-->
     {/block}
 	<!-- /Footer -->
+        {block name=footer}
 	<div id="footer">
-	{block name=footer}
-		<div class="container">
-	<!-- Copyright -->
-">
-                <div id="copyright">
+            <div id="copyright">
                 <div class="container">
                     Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
                 </div>
-                </div>
             </div>
-			
         </div>
-		
-	<!-- Copyright -->
 	{/block}
-	</div>
+
 	<!-- Footer -->
 	</body>
 </html>
