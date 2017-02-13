@@ -348,6 +348,13 @@
                     text-transform: lowercase;
                     width: 100%;
                 }
+                
+                .button.sezio{
+                    font-size: 0.9em;
+                    text-transform: none;
+                    
+                }
+                
                 .button.option{
                     font-size:0.9em;
                     text-transform: none;

@@ -4,6 +4,15 @@
             {/block}
         
         
+{block name="mainside"}
+    <section>
+         <ul class="style1"> 
+             <li><a href="{$root}/forum/forum.php" class="button schede" style="color:white;r"> < FORUM </a></li>
+         </ul>
+    </section>
+{/block}
+            
+            
 {block name=main}  
             
 {if $error!=null}
@@ -21,63 +30,61 @@
         
        
         
-        <div id="content" class="9u skel-cell-important">
+<div id="content" class="9u skel-cell-important">
+    
+    <section>
+        <header>
+            <h2>{$sezione}</h2>
+        </header>
+        <div class="10u">
+            <a class="button sezio" onclick="document.getElementById('conv').style.display='block'" href="#">Inizia una nuova conversazione</a>
+        </div>
+    </section>
+    <hr>
+<div class="row half">
+    <div class="10u">
         <section>
-             <div class="4u" style="float:right;">
-                        <a href="{$root}/forum/forum.php" class="button prec"> < </button></a>
-                    </div>
                 <header>
-                    <h3>Benvenuto nella sezione {$sezione}, clicca su "Nuova Conversazione" per avviare una discussione!</h3>
-                   
+                    <h3>Ultime conversazioni</h3>
                 </header>
-            
-                <div class="10u">
-                    <a class="button" onclick="document.getElementById('conv').style.display='block'" href="#">Nuova Conversazione</a>
-                </div>
-        </section>
-            <hr>
-      
-               
-                    <div class="row half">
-                        <div class="10u">
-                            <section>
-                                    <header>
-                                        <h3>CONVERSAZIONI DELLA SEZIONE {$sezione}</h3>
-                                    </header>
-                                <form action="{$root}forum/conversazione.php" method="post">
-                                        <ul class="default">
-                                            {$count=-1}
-                                            
-                                            {foreach $convs as $c}
-                                                    {$count=$count+1}
-                                                    <input name="conversazione" value="{$c.titolo}" style="display:none;">
-                                                    <input name="s_index" value="{$s_index}" style="display:none;">
-                                                    <button class="sezione" name="c_index" value="{$count}" type="submit">
-                                                    <li>
-                                                        <div class="row half">
-                                                            <div class="7u">
-                                                                <br>
-                                                                <span style="font-size:20px;"><strong>{$c.id_convs} {$c.titolo}</strong></span>
-                                                                <br>
-                                                            </div>
-                                                            <div class="3u" style="float:right; border-left: solid 1px #ddd">
-                                                                <br>
-                                                                <span> Numero post:<strong> {$c.num_post}  <br>  Data: {$c.data}</strong></span>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        
-                                                        
-                                                      
 
-                                                    </li>
-                                                    </button>
-                                            {/foreach}
-                                        </ul>
-                                    </form>
-                            </section>
-                        </div>
-                    </div>
+                    <ul class="default">
+                        {$count=-1}
+
+                        {foreach $convs as $c}
+                            <form action="{$root}forum/conversazione.php" method="post">
+                                {$count=$count+1}
+                                <input name="conversazione" value="{$c.titolo}" style="display:none;">
+                                <input name="sezione" value="{$sezione}" style="display:none;">
+                                <input name="s_index" value="{$s_index}" style="display:none;">
+                                <button class="sezione" name="c_index" value="{$count}" type="submit">
+                                <li>
+                                    <div class="row half">
+                                        <div class="7u">
+                                            <br>
+                                            <span style="font-size:20px;"><strong>{$c.id_convs} {$c.titolo}</strong></span>
+                                            <br>
+                                        </div>
+                                        <div class="3u" style="float:right; border-left: solid 1px #ddd">
+                                            <br>
+                                            <span> Numero post:<strong> {$c.num_post}  <br>  Data: {$c.data}</strong></span>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </li>
+                                </button>
+                            </form>
+                        {/foreach}
+                    </ul>
+
+        </section>
+    </div>
+</div>
+</div>
       
                                             
                                             

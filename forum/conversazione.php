@@ -15,6 +15,7 @@ $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
 $s = $_POST['s_index'];
 $c = $_POST['c_index'];
+$tito_sez=$_POST['sezione'];
 $tito_conv = $_POST['conversazione'];
 if(isset($_POST['page_conv'])){
     $cpage = $_POST['page_conv'];
@@ -46,6 +47,7 @@ if($posts == false){
 }
 $smarty->assign('s_index',$s);
 $smarty->assign('c_index',$c);
+$smarty->assign('sezione',$tito_sez);
 $smarty->assign('conversazione',$tito_conv);
 foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;

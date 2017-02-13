@@ -12,6 +12,19 @@
         document.getElementById('success').style.display='block';
     </script>
 {/if}
+
+{block name="mainside"}
+    <section>
+         <ul class="style1"> 
+             <li>
+                <form action="{$root}forum/sezione.php" method="post">
+                    <input name="sezione" value="{$sezione}" style="display:none">
+                        <button class="button schede" type="submit" name="s_index" value="{$s_index}"> < {$sezione}</button>
+                    </form>
+             </li>
+         </ul>
+    </section>
+{/block}
             
         
 {block name=main}  
@@ -21,12 +34,9 @@
         <div id="content" class="9u skel-cell-important">
         <section>
                 <header>
-                        <h3>{$conversazioni}</h3>
+                        <h2>{$conversazione}</h2>
                          <div class="4u" style="float:right;">
-                        <form action="{$root}forum/sezione.php" method="post">
-                            <input name="sezione" value="{$sezione}" style="display:none">
-                            <button class="button prec" type="submit" name="s_index" value="{$s_index}"> < </button>
-                        </form>
+                        
                         </div>  
                 </header>
                 
@@ -36,7 +46,7 @@
                         <div class="10u">
                             <section>
                                     <header>
-                                            <h3>{$sezione}</h3>
+                                            <h3>{$conversazione}</h3>
                                     </header>
                                     {foreach $posts as $p}
                                         <div class="row half">

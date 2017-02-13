@@ -282,12 +282,12 @@
                     </header>
            </section>
             <form action="{$root}personal_page/aggiungi_evento.php" method="post">
-                <input type="text" placeholder="Nome dell'evento" style="border:none;" name="nome">
+                <input type="text" placeholder="Nome dell'evento" style="border:none;" name="nome" required>
                 <hr>
-                Data di inzio <input type="date" name="data_inizio">  Data di fine <input type="date" name="data_fine">
+                Data di inzio <input type="date" name="data_inizio" required>  Data di fine <input type="date" name="data_fine" required>
                 <hr>
-                Luogo<br><input type="text" placeholder="Indirizzo" name="indirizzo">
-                <input type="text" placeholder="Provincia" name="provincia"><br>
+                Luogo<br><input type="text" placeholder="Indirizzo" name="indirizzo" required>
+                <input type="text" placeholder="Provincia" name="provincia" required><br>
                 <label>Regione &nbsp</label>
                 <select class="button option" name="regione" form="update">
                     <option value="{$personal_data.regione}">{$personal_data.regione}</option>

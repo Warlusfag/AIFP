@@ -22,14 +22,16 @@
                                     <header>
                                             <h4>Ultime sezioni</h4>
                                     </header>
-                                    <form action="{$root}forum/sezione.php" method="post">
+                                    
                                         <ul class="default">
                                             {$count=-1}
                                             
                                             {foreach $sez as $s}
                                                     {$count=$count+1}
-                                                    <input name="sezione" value="{$s.nome}" style="display:none;">
-                                                    <button class="sezione" name="s_index" value="{$count}" type="submit">
+                                                    <form action="{$root}forum/sezione.php" method="post">
+                                                    <input name="s_index" value="{$count}" style="display:none;">
+                                                    <button class="sezione" name="sezione" value="{$s.nome}" type="submit">
+                                                      
                                                     <li>
                                                         <div class="row half">
                                                             <div class="8u">
@@ -44,10 +46,11 @@
                                                             </div>
                                                         </div>
                                                     </li>
+                                                    </form>
                                                     </button>
                                             {/foreach}
                                         </ul>
-                                    </form>
+                                    
                             </section>
                         </div>
                     </div>
