@@ -190,8 +190,8 @@ class user extends gen_model{
         return true;   
     }
     
-   public function load_image($file_image)
-   {
+    public function load_image($file_image)
+    {
         if($this->attributes[$this->table_descr['key']] == -1){
             $this->err_descr = "Error, you have to initialize user, which user wants change the image?";
             return false;
@@ -200,12 +200,23 @@ class user extends gen_model{
         if($this->attributes['image'] != DEFAULT_IMG){
             if (file_exists($path)){
                unlink($path);
-            )
+            )else{
+                $this->err_descr = 'ERROR:File doesn\'t exist';
+                return false;
+            }
         }           
         //creazione del file
         if (!move_uploaded_file($file_image['userfile']['temp_name'], $path)){
             $this->err_descr = 'ERROR: an erro occurred while uplloading file';            
             return false;            
+        }
+        $this->attributes['image'] = $path;
+        $value = array( 'image' => $path);
+        if(!$this->update($value)){
+            return false;
+        }else{
+            $this->err_descr = '';
+            return true;
         }    
     }
     
