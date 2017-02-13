@@ -93,7 +93,7 @@
                                 
                        <!-- Association registration -->
                         <div id="id03" class="modal">
-                            <form class="modal-content animate" method="post" action="{$root}profilize/reg_assoc.php">
+                            <form class="modal-content animate" method="post" id="reg_assoc" action="{$root}profilize/reg_assoc.php">
                                 <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Chiudi">&times;</span>
                                 <div class="logcontainer" style="background-color: #f1f1f1">
                                     <label><b>REGISTRATI COME ASSOCIAZIONE</b></label>
@@ -109,8 +109,33 @@
                                    
                                     <label><b>Dettagli Associazione</b></label><br>
                                     <input type="text" placeholder="Inserisci Nome" name="nome" required><br>
+                                    <input type="text" placeholder="Inserisci Indirizzo" name="indirizzo" required><br>
                                     <input type="text" placeholder="Inserisci Provincia" name="provincia" required><br>
-                                    <input type="text" placeholder="Inserisci CAP" name="cap" required><br>
+                                    <input type="text" placeholder="Inserisci CAP" name="CAP" required><br>
+                                    <label>Inserisci regione</label>
+                                    <select name="regione" form="reg_assoc" class="button option" required>
+                                        <option value="abruzzo">Abruzzo</option>
+                                        <option value="basilicata">Basilicata</option>
+                                        <option value="calabria">Calabria</option>
+                                        <option value="campania">Campania</option>
+                                        <option value="emiliaromagna">Emilia Romagna</option>
+                                        <option value="friuliveneziagiulia">Friuli Venezia Giulia</option>
+                                        <option value="lazio">Lazio</option>
+                                        <option value="liguria">Liguria</option>
+                                        <option value="lombardia">Lombardia</option>
+                                        <option value="marche">Marche</option>
+                                        <option value="molise">Molise</option>
+                                        <option value="piemonte">Piemonte</option>
+                                        <option value="puglia">Puglia</option>
+                                        <option value="sardegna">Sardegna</option>
+                                        <option value="sicilia">Sicilia</option>
+                                        <option value="toscana">Toscana</option>
+                                        <option value="trentinoaltoadige">Trentino Alto Adige</option>
+                                        <option value="umbria">Umbria</option>
+                                        <option value="valledaosta">Valle d’Aosta</option>
+                                        <option value="veneto">Veneto</option>
+                                        
+                                    </select>
                                     <input type="text" placeholder="Inserisci Sito Web" name="sito_web" required><br>
                                     <input type="text" placeholder="Inserisci Componenti" name="componenti" required><br>
                              

@@ -30,6 +30,7 @@
                     </header>
                 <!--    <img a="avatar.jpg">-->
                 <ul>
+                    <li><img src="{$root}{$profilo.image}" class="pic"></li>
                     <li>Tipologia: {$profilo.type}</li>
                     <li>Punteggio: {$profilo.punteggio}</li>
                     <li>Numero post: {$profilo.num_post}</li>

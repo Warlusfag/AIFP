@@ -4,6 +4,14 @@
 {/block}	
 {block name=mainside}
 
+    <section>
+         <ul class="style1"> 
+             <li><form action="{$root}funghi/schede_funghi.php" type="get">
+                        <button class="button schede" type="submit" name="genere" value="{$descrizione.genere}"> < {$descrizione.genere} </button>
+                     </form></li>
+         </ul>
+    </section>
+
     
      <section>
         <header>
@@ -27,9 +35,7 @@
             <div class="row half">
                 <div class="6u"><h2>{$descrizione.genere} {$descrizione.specie}</h2></div>
                 <div class="4u" style="float:right;">
-                     <form action="{$root}funghi/schede_funghi.php" type="get">
-                        <button class="button prec" type="submit" name="genere" value="{$descrizione.genere}"> < </button>
-                     </form>
+                     
                 </div>
             </div>
             

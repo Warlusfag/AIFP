@@ -7,7 +7,7 @@
 {block name="mainside"}
     <section>
          <ul class="style1"> 
-             <li><a href="{$root}/forum/forum.php" class="button schede" style="color:white;r"> < FORUM </a></li>
+             <li><a href="{$root}/forum/forum.php" class="button schede" style="color:white;"> < FORUM </a></li>
          </ul>
     </section>
 {/block}

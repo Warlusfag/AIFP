@@ -3,6 +3,13 @@
 {block name=buttom_main}
 {/block}	
 {block name=mainside}
+        <section>
+         <ul class="style1"> 
+             <li> <a href="{$root}funghi/schede_funghi.php" class="button schede" style="color:black;"> < Schede Funghi</a></li>
+         </ul>
+    </section>
+    
+    
      <section>
         <header>
             <h2>Overview</h2>
@@ -51,7 +58,7 @@
                     <div class="row half">
                         <div class="6u"><h2>{$genere}</h2></div>
                         <div class="4u" style="float:right;">
-                            <a href="{$root}funghi/schede_funghi.php" class="button prec"> < </a>
+                           
                             
                         </div>
                     </div>

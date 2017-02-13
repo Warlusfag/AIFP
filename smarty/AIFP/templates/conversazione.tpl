@@ -48,15 +48,18 @@
                                     <header>
                                             <h3>{$conversazione}</h3>
                                     </header>
+                                    <hr>
                                     {foreach $posts as $p}
+                                        <div class="15u" style="text-align:right;">
+                                            {$p.time}
+                                        </div>
                                         <div class="row half">
                                             <div class="2u">
                                                 <img src="{$root}{$p.image}" class="pic"><br>
-                                                <span><b>{$p.user}</b><br>{$p.data}</span>
+                                                <span><b>{$p.user}</b><br>{$p.tipo_user}</span>
                                             </div>
                                                                 
                                             <div class="9u">
-                                                <br>
                                                 <p>{$p.text}</p>
                                                 <br>
                                             </div>
@@ -75,7 +78,7 @@
                                 <form action="{$root}/forum/rispondi.php" method="post">
                                 
                                 <div class="9u" style="float:left;">
-                                    <br>
+                                    
                                     <textarea rows='3' cols='50' style="resize:none;" placeholder="Rispondi..." name="text" required></textarea>
                                     <input name="sezione" value="{$sezione}" style="display:none;">
                                     <input name="conversazione" value="{$conversazione}" style="display:none;">
