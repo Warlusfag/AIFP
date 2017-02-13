@@ -1,8 +1,6 @@
 <?php
 session_start();
-
 require_once 'libs/aifp_controller.php';
-
 function check_post($param)
 {
     $app = array();
@@ -19,26 +17,30 @@ function check_post($param)
     }
     return $app;
 }
-
 $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
-
 if( ($post = check_post($_POST)) ){
-    $params = array(
-        'esperto' => 1,
-    );    
-    $list_user = $contr->search_OnAll_users($params, 20);
-    if($contr->description == ''){
-        $emails = array();
-        $i=0;
-        foreach($list_user as $value){
-            $emails[$i] = $value['email'];
-            $i++;           
-        }        
+   
+    $emails = $contr->lettera_esperto($post['email'], $post['nome'],$post['testo']);
+    if($email == false){
+        $smarty->assign('error',$contr->description);
     }else{
-        $smarty->assign('error', GEN_ERROR);
-        $smarty->display('error.tpl');        
-    }       
+        //code for send email
+        $smarty->assign('message','La tua richiesta è stata spedita agli esperti del nostri sito con successo.\n Grazie per aver usato questo servizio');
+   }
+}
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
+}
+if(isset($_SESSION['news'])){}
+    $new_col = unserialize($_SESSION['news']);
+    $news = $new_col->get_all_news();
+    $smarty->assign('news', $news );
+}
+$smarty->display('lettera_esperto.tpl')
     $oggetto="AIFP: L\'utente $post[nome] con email $post[email] ha richiesto la consulenza di un esperto";
     /* La parte dell'invio delle email va commentata
     foreach ($emails as $value) {
@@ -57,7 +59,7 @@ if( ($post = check_post($_POST)) ){
     if(!$db->insert_statement('lettera_esperto',$value,$name,$type)){
         $smarty->assign('error', GEN_ERROR);        
     }else{
-        $smarty->assign('message','La tua richiesta è stata inoltrata con successo ai esperti');
+        $smarty->assign('message','La tua richiesta è stata inoltrata con successo agli esperti');
     }
 }
 if(isset($_SESSION['curr_user'])){   
@@ -70,6 +72,3 @@ $new_col = unserialize($_SESSION['news']);
 $news = $new_col->get_all_news();
 $smarty->assign('news', $news );
 $smarty->display('lettera_esperto.tpl');
-
-
-
