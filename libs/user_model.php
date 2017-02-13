@@ -196,7 +196,7 @@ class user extends gen_model{
             $this->err_descr = "Error, you have to initialize user, which user wants change the image?";
             return false;
         }
-        $path = IMG_USER.$this->attributes['user'];
+        $path = IMG_USER.$this->type.'/'.$this->attributes['user'];
         if (file_exists($path)){
             unlink($path);           
         }           
