@@ -42,7 +42,7 @@ if(isset($_SESSION['curr_user'])){
             $us = $post['user'];
             $user = $contr->login($pwd, -1, $us, $post['type']);
         }
-        if($user){
+        if($user && $contr->description == ''){
             $_SESSION['curr_user'] = array();
             $pk = array($user->table_descr['key'] => $user->attributes[$user->table_descr['key']]);
             $_SESSION['curr_user']['token'] = $pk;

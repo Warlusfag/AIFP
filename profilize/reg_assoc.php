@@ -38,12 +38,16 @@ function check_post($param){
             $app[$key] = $value;
             $i++;
         }
-        else if( $key == 'componenti' ){
+        else if( $key == 'partecipanti' ){
+            $app[$key] = $value;
+            $i++;
+        }
+        else if( $key == 'indirizzo' ){
             $app[$key] = $value;
             $i++;
         }
     }
-    if($i == 8){
+    if($i == 10){
         return $app;
     }else{
         return null;

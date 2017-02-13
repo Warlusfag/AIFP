@@ -132,11 +132,11 @@ class conversazione extends gen_model
             }            
             $query = substr_replace($query, '', count($query)-6);
         }
-        $query .= " ORDER BY data DESC";
+        $query .= " ORDER BY data ASC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }
-        $query .= ';';        
+        $query .= ';';  
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            

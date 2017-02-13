@@ -47,15 +47,8 @@ class user extends gen_model{
             'punteggio' => $this->default_col['punteggio'],
             'image' => $this->default_col['image'],
             'patentino' => $this->default_col['patentino'],
-        );
+        );        
         
-        /*$this->attributes_descr = array(
-            'id_user' => -1,
-            'num_post' => $this->default_col['num_post'],
-            'punteggio' => $this->default_col['punteggio'],
-            'image' => $this->default_col['image'],
-            'patentino' => $this->default_col['patentino'],
-        );*/
     }
     
     public function upgrade_esperto(){

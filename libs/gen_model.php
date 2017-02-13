@@ -70,9 +70,6 @@ class gen_model{
             $this->err_descr = $this->conn->error;
             return false;
         }
-        //inserimento nella tabella descritpion
-        $this->attributes_descr[$this->table_descr['key']]=$this->conn->last_id;      
-
         $this->err_descr='';
         return true;       
     }

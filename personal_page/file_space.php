@@ -14,7 +14,7 @@ if(isset($_SESSIONS['curr_user'])){
     $user = -1;    
 }
 $grant = false;
-if(! $user instanceof user){
+if(! $user instanceof user || ! $user instanceof admin){
     if($user instanceof associazione){
         $id_ass = $user->attributes[$ass->table_descr['key']];
         $ass = $user;

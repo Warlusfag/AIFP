@@ -29,18 +29,19 @@ class aifp_controller
         } 
         if($email!=-1){ 
             $params = array( 
-                    'email'=>$email, 
-                    'password'=>$password, 
+                'email'=>$email, 
+                'password'=>$password, 
             );             
         }else if ($user != -1){ 
             $params = array( 
-                    'user'=>$user, 
-                    'password'=>md5($password), 
+                'user'=>$user, 
+                'password'=>$password, 
             );             
         }
         //preparati i parametri li passo alla search on all user
         $us = $this->get_user($params, $type);
         if($this->description != ''){
+            $this->description = 'ERRORE: utente/password non coretti';
             return false;
         }       
         $this->description =''; 
@@ -115,7 +116,7 @@ class aifp_controller
         if($us->type == $type){
             return $us;
         }
-        $us = new inscritto();
+        $us = new botanico();
         if($us->type == $type){
            return $us; 
         }
