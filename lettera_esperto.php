@@ -19,7 +19,8 @@ function check_post($param)
 }
 $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
-if( ($post = check_post($_POST)) ){
+$post = check_post($_POST);
+if(count($post) > 0){
    
     $emails = $contr->lettera_esperto($post['email'], $post['nome'],$post['testo']);
     if(!is_array($emails)){

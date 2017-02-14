@@ -12,7 +12,7 @@ function check_post($param)
             $app[$key] = $value;
             $i += 1;
         }
-        else if( $key == 'indirizzo' ){
+        else if( $key == 'tipologia' ){
             $app[$key] = $value;
             $i++;
         }
@@ -47,8 +47,7 @@ if(isset($_SESSION['curr_user'])){
     $tok = $_SESSION['curr_user']['token'];
     $t = $_SESSION['curr_user']['type'];        
     if( ($ass = $c->get_user($tok, $t)) ){   
-        if(($post = check_post($_POST))){            
-
+        if(($post = check_post($_POST))){
             if($ass->add_evento($post)){
                 $smarty->assign('error', $ass->err_descr);
             }else{
@@ -57,9 +56,10 @@ if(isset($_SESSION['curr_user'])){
         }else{
             $smarty->assign('error', 'BAD parameters');
         }
-        $smarty->assign('user', $user->attributes['user'] );
-        $smarty->assign('image', $user->get_image());
-        $smarty->assign('type', $user->type);
+        foreach($_SESSION['curr_user'] as $key=>$value){
+            $t[$key] = $value;
+        }
+        $smarty->assign('profilo', $t );
         $smarty->display('personal_page.tpl');
     }else{
         $smarty->assign('error', $ass->err_descr);

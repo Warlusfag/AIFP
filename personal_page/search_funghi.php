@@ -17,20 +17,19 @@ if(isset($_POST['reset'])){
             $_SESSION['view'] = $fungo->table_descr['table'];
         }
     }
+    unset($_SESSION['funghi']);
 }
 else if(isset($_SESSION['curr_user'])){    
     if( ($type = $_SESSION['curr_user']['type']) != 'user' ){
         $smarty->assign('error',"ERROR: you are not authorized to perform this action");
         $smarty->display('personal_page.tpl'); 
-    }
+    }    
+    $username = $_SESSION['curr_user']['user'];   
     
-    $username = $_SESSION['curr_user']['user'];
-        
     $params = array();
     foreach($_POST as $key=>$value){
         $params[$key] = $value;
     }    
-    
     $_SESSION['view'] = $fungo->preapare_dynaimic_search($_SESSION['view'], $username);
     $fung = $fungo->search_funghi($params, 20);
     
@@ -39,6 +38,10 @@ else if(isset($_SESSION['curr_user'])){
     }else{
         $smarty->assign('funghi',$fung);
     }
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );
     $smarty->display('search_funghi.tpl');
 }else{
     $smarty->display('index.tpl');    

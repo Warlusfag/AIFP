@@ -59,27 +59,11 @@ class evento extends gen_model
                 return false;
             }
         }
-        $table = $this->table_descr['table'];
-        $name = $this->table_descr['column_name'];
-        $type = $this->table_descr['column_type'];
-        
-        $keys = explode(',',$this->table_descr['column_name']);
-        $values = array();
-        $i=0;
-        foreach($keys as $key){
-            if(isset($params[$key])){
-                if($key == 'id_ass'){
-                    $values[$i] = $ass->attributes[$ass->table_descr['key']];
-                }
-                $values[$i]=$params[$key];
-                $i++;
-            }            
-        }
-        if(!$this->conn->statement_insert($table, $name, $values, $type)){
-            $this->err_descr = $this->conn->error;
+        $t = array('id_ass' => $ass);
+        $params = array_merge($params, $t);
+        if(!$this->insert($params)){
             return false;
-        }
-        
+        }        
         //send email to confirm
         $this->err_descr = '';
         return true;

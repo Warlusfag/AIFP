@@ -309,7 +309,7 @@ class aifp_controller
     );
     for($i=0;$i<count($this->tipo);$i++){
     	$us = $this->get_us_from_type($this->tipo[$i]);
-    	if($us instanceof user || $us instanceof admin){
+    	if( $us->type == 'utente' || $us instanceof admin || $us instanceof associazione){
     		continue;
     	}
     	$res = $us->search_user($params, 5);
@@ -324,15 +324,11 @@ class aifp_controller
         $emails = array_merge($emails, $temp);
     }
 
-    $type = array(
-        0 => 's',
-        1 => 's',
-        2 => 's',
-    );
-    $name = "nome,email,test";
-    $value = array($name,$email,$text);
+    $type = 's,s,s';
+    $name = "nome,email,testo";
+    $value = array($nome,$email,$text);
     $db = new db_interface();
-    if(!$db->statement_insert('lettera_esperto',$name,$value,$type)){
+    if(!$db->statement_insert('lettere_esperto',$name,$value,$type)){
         $this->description = $db->error;    
         return false;
     }else{

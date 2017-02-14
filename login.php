@@ -44,13 +44,11 @@ if(isset($_SESSION['curr_user'])){
         }
         if($user && $contr->description == ''){
             $_SESSION['curr_user'] = array();
-            $pk = array($user->table_descr['key'] => $user->attributes[$user->table_descr['key']]);
-            $_SESSION['curr_user']['token'] = $pk;
-            $_SESSION['curr_user']['user'] =$user->attributes['user'];
-            $_SESSION['curr_user']['image'] =$user->get_image();
+            $tok = array($user->table_descr['key'] => $user->attributes[$user->table_descr['key']]);
+            $_SESSION['curr_user']['token'] = $tok;
             $_SESSION['curr_user']['type'] =$user->type;
-            $_SESSION['curr_user']['num_post'] =$user->attributes['num_post'];
-            $_SESSION['curr_user']['punteggio'] =$user->attributes['punteggio'];
+            $t = $user->get_attributes('user,punteggio,num_post,image,regione,data');
+            $_SESSION['curr_user'] = array_merge($_SESSION['curr_user'],$t );           
             foreach($_SESSION['curr_user'] as $key=>$value){
                 $t[$key] = $value;
             }

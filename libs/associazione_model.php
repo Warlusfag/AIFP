@@ -259,8 +259,7 @@ class associazione extends user
         return true;            
     }
     
-    public function add_evento($params)
-    {
+    public function add_evento($params){
         if($this->attributes[$this->table_descr['key']] == -1)
         {
             $this->err_descr = 'Association class have to be initialize';
@@ -268,15 +267,14 @@ class associazione extends user
         }
         require_once 'evento_class.php';
         
-        $ev = new evento();
-        if( !($ev->add_evento($params, $this)) )
-        {
+        $ev = new evento();                
+        if( !($ev->add_evento($params, $this->attributes[$this->table_descr['key']])) ){
             $this->err_descr = $ev->err_descr;
             return false;
         }
-        $this->attributes_descr['punteggio'] += 100;
-        $params_descr = array('punteggio' => $this->attributes_decr['punteggio']);
-        $this->update_user(array(), $params_descr);
+        $this->attributes['punteggio'] += 100;
+        $params = array('punteggio' => $this->attributes['punteggio']);
+        $this->update_user($params);
         if($this->err_descr != ''){return false;}
         return true;        
     }

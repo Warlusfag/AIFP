@@ -1,13 +1,13 @@
 <?php
 session_start();
-require_once 'libs/aifp_controller.php';
+require_once '../libs/aifp_controller.php';
 
 $smarty = new AIFP_smarty();
 $controller = new aifp_controller();
 
 $type_image = array('image/jpg', 'image/jpeg', 'image/png');
 
-if(isset($_SESSSION['curr_user']) && isset($_FILES['image'])){
+if(isset($_SESSION['curr_user']) && isset($_FILES['image'])){
     $img = $_FILES['image'];
     if($img['error'] > 0){
         $smarty->assign('error',"ERROR: file caricato non correttamente, riprovare!");
@@ -20,8 +20,8 @@ if(isset($_SESSSION['curr_user']) && isset($_FILES['image'])){
             }
         }
         if($flag){
-            $tok = $_SESSSION['curr_user']['token'];
-            $type = $_SESSSION['curr_user']['type'];
+            $tok = $_SESSION['curr_user']['token'];
+            $type = $_SESSION['curr_user']['type'];
             $user = $controller->get_user($tok, $type);
             if($user->load_image($img)){
                 $smarty->assign('message',"L'immagine e' stata caricata con successo");

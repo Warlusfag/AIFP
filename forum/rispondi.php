@@ -32,8 +32,9 @@ $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){
-    $tok = $_SESSION['curr_user']['token'];    
-    $user = $contr->get_user($tok);
+    $tok = $_SESSION['curr_user']['token'];
+    $tipo = $_SESSION['curr_user']['type'];
+    $user = $contr->get_user($tok, $tipo);
     
     if (($post = check_post($_POST))){
         $coll_c = unserialize($_SESSION['convs']);

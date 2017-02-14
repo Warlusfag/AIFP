@@ -23,7 +23,7 @@ class sezione extends gen_model{
             'id_sez'=>-1,
             'nome' => '',
             'moderatore' => '',            
-            'num_conv' => -1,
+            'num_conv' => 0,
             'descrizione'=>'',
         );
         

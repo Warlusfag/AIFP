@@ -74,7 +74,6 @@ class user extends gen_model{
             $keys = explode(',',$way);
             foreach($keys as $i=>$key){
                 if(isset($this->attributes[$key])){
-                    $t[$i] = $this->attributes[$key];
                     $t[$key] = $this->attributes[$key];
                 }
             }

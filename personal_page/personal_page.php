@@ -5,13 +5,11 @@ require_once '../libs/aifp_controller.php';
 $smarty = new AIFP_smarty();
 $c = new aifp_controller();
 if(isset($_SESSION['curr_user'])){    
-    $tok = $_SESSION['curr_user']['token'];
-    $t = $_SESSION['curr_user']['type'];        
-    if( ($user = $c->get_user($tok, $t)) ){   
-        $attributes = $user->get_attributes();
-        $smarty->assign('type',$user->type);
-        $smarty->assign('personal_data',$attributes);
-                
+    if(isset($_SESSION['curr_user'])){   
+        foreach($_SESSION['curr_user'] as $key=>$value){
+            $t[$key] = $value;
+        }
+        $smarty->assign('profilo', $t );
         $smarty->display('personal_page.tpl');
     }else{
         unset($_SESSION['curr_user']);
