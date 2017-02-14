@@ -1,4 +1,4 @@
-{$profilo.user=$personal_data.user}
+{$profilo.user=$profilo.user}
 {extends file="generic_page_sidebar.tpl"}
 {block "title"}{$user}{/block}
 
@@ -54,7 +54,7 @@
                 {$status_fs="disabled"}
                 {$color_fs="grey"}
             {/if}
-            <li><button class="button schede" onclick="show('form','b1')">{$personal_data.user}</button></li>
+            <li><button class="button schede" onclick="show('form','b1')">{$profilo.user}</button></li>
             <li><button class="button schede" onclick="show('form1')">Modifica Profilo</button></li>
             <li><button class="button schede" style="background-color:{$color_ric}" onclick="show('form2')" {$status_ric} >Ricerca</button></li>
             
@@ -89,24 +89,24 @@
             <div class="5u">
                 <section>
                     <header>
-                        <h3>{$personal_data.user}</h3>
+                        <h3>{$profilo.user}</h3>
                     </header>
-                    <img src="{$root}{$personal_data.image}" class="pic"><br>
+                    <img src="{$root}{$profilo.image}" class="pic"><br>
                 </section>
             </div>
             <div class="7u">
                 <section>
                     <br><br>
                     <ul>
-                        <li>Email: <strong> {$personal_data.email}</strong></li>
-                        <li>Nome e Cognome:<strong> {$personal_data.nome} {$personal_data.cognome}</strong></li>
-                        <li>Residenza: <strong>{$personal_data.residenza}</strong></li>
+                        <li>Email: <strong> {$profilo.email}</strong></li>
+                        <li>Nome e Cognome:<strong> {$profilo.nome} {$profilo.cognome}</strong></li>
+                        <li>Residenza: <strong>{$profilo.residenza}</strong></li>
                     </ul>
                     <br><hr><br>
                     <ul>
                         <li>Tipologia:<strong> {$type}</strong></li>
-                        <li>Punteggio:<strong> {$personal_data.punteggio}</strong></li>
-                        <li>Numero post:<strong> {$personal_data.num_post}</strong></li>
+                        <li>Punteggio:<strong> {$profilo.punteggio}</strong></li>
+                        <li>Numero post:<strong> {$profilo.num_post}</strong></li>
                     </ul>
                 </section>
             </div>
@@ -119,10 +119,10 @@
         <div class="7u" >
           <section>
                     <header>
-                            <h3>{$personal_data.user}</h3>
+                            <h3>{$profilo.user}</h3>
                     </header>
                     
-                    <img src="{$root}{$personal_data.image}" class="pic"><br>
+                    <img src="{$root}{$profilo.image}" class="pic"><br>
                     <hr>
                     Cambia immagine del profilo <br>
                     <form action="{$root}/personal_page/load_image.php">
@@ -132,18 +132,18 @@
         </div>
         <div class="5u">
             <form id="update" action="{$root}personal_page/update_profile.php" method="post"> 
-                {if $tipo!="associazione"}
+                {if $type!="associazione"}
                 <section>
                     <br><br>
                     <ul>
-                        <li>Email: &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" value="{$personal_data.email}"</li>
-                        <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$personal_data.nome}"</li>
-                        <li>Cognome &nbsp &nbsp<input type="text" value="{$personal_data.cognome}"</li>
-                        <li>Residenza: &nbsp <input type="text" value="{$personal_data.residenza}"</li>
+                        <li>Email: &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" value="{$profilo.email}"</li>
+                        <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.nome}"</li>
+                        <li>Cognome &nbsp &nbsp<input type="text" value="{$profilo.cognome}"</li>
+                        <li>Residenza: &nbsp <input type="text" value="{$profilo.residenza}"</li>
                       
                         <li><label>Regione &nbsp</label>
                             <select class="button option" name="regione" form="update">
-                                <option value="{$personal_data.regione}">{$personal_data.regione}</option>
+                                <option value="{$profilo.regione}">{$profilo.regione}</option>
                                 <option value="abruzzo">Abruzzo</option>
                                 <option value="basilicata">Basilicata</option>
                                 <option value="calabria">Calabria</option>
@@ -176,15 +176,15 @@
                     <section>
                     <br><br>
                     <ul>
-                        <li>Email &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" value="{$personal_data.email}"</li>
-                        <li>User &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$personal_data.user}"</li>
-                        <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$personal_data.nome}"</li>
-                        <li>Provincia &nbsp &nbsp<input type="text" value="{$personal_data.provincia}"</li>
-                        <li>Residenza: &nbsp <input type="text" value="{$personal_data.residenza}"</li>
+                        <li>Email &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" value="{$profilo.email}"</li>
+                        <li>User &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.user}"</li>
+                        <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.nome}"</li>
+                        <li>Provincia &nbsp &nbsp<input type="text" value="{$profilo.provincia}"</li>
+                        <li>Residenza: &nbsp <input type="text" value="{$profilo.residenza}"</li>
                         <li><br></li>
                         <li><label>Inserisci regione &nbsp</label>
                             <select class="button option" name="regione" form="update">
-                                <option value="{$personal_data.regione}">{$personal_data.regione}</option>
+                                <option value="{$profilo.regione}">{$profilo.regione}</option>
                                 <option value="abruzzo">Abruzzo</option>
                                 <option value="basilicata">Basilicata</option>
                                 <option value="calabria">Calabria</option>
@@ -208,9 +208,9 @@
                             </select>
                         </li>
                         <li><br></li>
-                        <li>CAP &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" name="CAP" value="{$personal_data.CAP}"></li>
-                        <li>Sito Web &nbsp &nbsp<input type="text" name="sito_web" value="{$personal_data.sito_web}"></li>
-                        <li>Componenti &nbsp<input type="text" name="componenti" value="{$personal_data.componenti}"></li>
+                        <li>CAP &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" name="CAP" value="{$profilo.CAP}"></li>
+                        <li>Sito Web &nbsp &nbsp<input type="text" name="sito_web" value="{$profilo.sito_web}"></li>
+                        <li>Componenti &nbsp<input type="text" name="componenti" value="{$profilo.componenti}"></li>
                     </ul>
                     <button class="button personal" type="submit">Salva</button>
                     <br><br>
@@ -241,8 +241,8 @@
                             <select class="button option" name="sporata" form="search">
                                 <option value="leucosporeo">Leucosporeo</option>
                                 <option value="ocroscoporeo">Ocroscoporeo</option>
-                                <option value="ocroscoporeo">Ocroscoporeo</option>
                                 <option value="iantinosporeo">Iantinosporeo</option>
+                                <option value="rodosporeo">Rodosporeo</option>
                             </select>
                         </td>
                         <th class="input">Viraggio</th>
@@ -259,11 +259,14 @@
                     <tr class="input">
                         <th class="input">Commestibilità</th>
                         <td class="input">
-                            <select class="button option" name="commestibilie" form="search">
+                            <select class="button option" name="commestibile" form="search">
                                 <option value="ottimo">Ottimo</option>
                                 <option value="buono">Buono</option>
                                 <option value="discreto">Discreto</option>
                                 <option value="immangiabile">Immangiabile</option>
+                                <option value="tossico">Tossico</option>
+                                <option value="velenoso">Velenoso</option>
+                                <option value="mortale">Mortale</option>
                             </select>
                         </td>
                         <th class="input">Imenio</th>
@@ -283,7 +286,8 @@
                                 <option value="circoncisa">Circoncisa</option>
                                 <option value="sacco">Sacco</option>
                                 <option value="linguinale">Linguinale</option>
-                                <option value="napifor">Napifor</option>
+                                <option value="napiforme">Napiforme</option>
+                                <option value="perlata">Napiforme</option>
                             </select>
                         </td>
                         <th class="input">Habitat</th>
@@ -297,9 +301,8 @@
                         </td> 
                     </tr>
                     <tr class="input">
-                        <td class="input" colspan="4" style="text-align:center">
-                            <button class="button" type="submit">Cerca</button>
-                        </td>
+                        <th colspan="2" class="input"> <button class="button" type="submit">Cerca</button></th>
+                        <td colspan="2" class="input"> <button class="button" name="reset" value="1" type="submit">Reset</button></td>
                     </tr>
                 </table>
             </form>
@@ -320,11 +323,18 @@
                 <hr>
                 Data di inzio <input type="date" name="data_inizio" required>  Data di fine <input type="date" name="data_fine" required>
                 <hr>
-                Luogo<br><input type="text" placeholder="Indirizzo" name="indirizzo" required>
+                <label>Tipologia &nbsp </label>
+                <select class="button option" name="tipologia" form="update">
+                    <option value="sagra">Sagra</option>
+                    <option value="corso">Corso</option>
+                    <option value="mostra">Mostra</option>
+                </select>
+                <hr>
+                Luogo
                 <input type="text" placeholder="Provincia" name="provincia" required><br>
                 <label>Regione &nbsp</label>
                 <select class="button option" name="regione" form="update">
-                    <option value="{$personal_data.regione}">{$personal_data.regione}</option>
+                    <option value="{$profilo.regione}">{$profilo.regione}</option>
                     <option value="abruzzo">Abruzzo</option>
                     <option value="basilicata">Basilicata</option>
                     <option value="calabria">Calabria</option>

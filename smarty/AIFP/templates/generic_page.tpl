@@ -75,12 +75,16 @@
                                     </div>
                                     </li>
                            	{else}
-                                    <li class="dropdown">                           			
-                                             <a class="dropbtn "href="#"><img src={$image}><p>Benvenuto {$profilo.user}</p></a>
-                                            <div class="dropdown-content">
-                                        <a  href="{$root}personal_page/personal_page.php">Pagina personale</a>
-                                        <a href="{$root}logout.php">logout</a>                                
-                                    </div>                           				
+                                    <li class="dropdown">   
+                                                                              
+                                        <a class="dropbtn "href="#">
+                                             <img class="picnav" src={$root}{$profilo.image}> 
+                                            <p> {$profilo.user}</p>
+                                        </a>
+                                        <div class="dropdown-content">
+                                            <a  href="{$root}personal_page/personal_page.php">Pagina personale</a>
+                                            <a href="{$root}logout.php">logout</a>                                
+                                        </div>                           				
                                     </li>
                            	{/if}
 
@@ -131,11 +135,15 @@
                         <!-- Alert form -->
                         <div id="alert_login" class="modal">
                             <div class="modal-content animate alert">
-                                <span onclick="document.getElementById('alert_login').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
-                                <strong>Attenzione!</strong> <a onclick="document.getElementById('login').style.display='block'; document.getElementById('alert_login').style.display='none'">Accedi per continuare</a>
+                                <a href="{$root}index.php" id="link"></a>
+                                <span onclick="document.getElementById('link').click();" class="alertclosebtn" title="Chiudi">&times;</span>
+                                <strong>Attenzione!</strong> <a onclick="document.getElementById('login').style.display='block'; document.getElementById('alert_login').style.display='none'"><u>Accedi per continuare</u></a>
                             </div>
                         </div>
                         <div id="alert" class="modal">
+                            
+
+
                             <div class="modal-content animate alert">
                                 <span onclick="document.getElementById('alert').style.display='none'" class="alertclosebtn" title="Chiudi">&times;</span>
                                 <strong>Attenzione!</strong> {$error}
