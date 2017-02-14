@@ -12,6 +12,7 @@
                 <script>
                     document.getElementById('alert_login').style.display='block';
                 </script>
+                
             {/if}
             {if $message != null}
                 <script>

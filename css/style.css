@@ -172,7 +172,9 @@
 		}	
 
                 img.picnav{
-                    width:5%;
+                    width: 18px;
+                    height: 18px;
+                        
                     
                 }
                 img.filespace{
