@@ -47,7 +47,7 @@ if(isset($_SESSION['curr_user'])){
             $tok = array($user->table_descr['key'] => $user->attributes[$user->table_descr['key']]);
             $_SESSION['curr_user']['token'] = $tok;
             $_SESSION['curr_user']['type'] =$user->type;
-            $t = $user->get_attributes('user,punteggio,num_post,image,regione,data');
+            $t = $user->get_attributes();
             $_SESSION['curr_user'] = array_merge($_SESSION['curr_user'],$t );           
             foreach($_SESSION['curr_user'] as $key=>$value){
                 $t[$key] = $value;
