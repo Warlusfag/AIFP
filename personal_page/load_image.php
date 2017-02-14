@@ -23,7 +23,13 @@ if(isset($_SESSION['curr_user']) && isset($_FILES['image'])){
             $tok = $_SESSION['curr_user']['token'];
             $type = $_SESSION['curr_user']['type'];
             $user = $controller->get_user($tok, $type);
-            if($user->load_image($img)){
+            $path_img =  $user->load_image($img);
+            if($path_img != false){
+                $_SESSION['curr_user']['image'] = str_replace(PROJ_DIR,'',$path_img);
+                foreach($_SESSION['curr_user'] as $key=>$value){
+                    $t[$key] = $value;
+                }
+                $smarty->assign('profilo', $t );
                 $smarty->assign('message',"L'immagine e' stata caricata con successo");
             }else{
                 $smarty->assign('error',$user->err_descr);

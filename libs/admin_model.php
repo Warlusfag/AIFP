@@ -7,8 +7,6 @@ require_once 'admin/utils.php';
 require_once 'evento_model.php';
 require_once 'conversazione_model.php';
 
-
-
 class admin extends user{
     
     public $table_descr_product;

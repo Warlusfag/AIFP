@@ -12,7 +12,7 @@ function check_post($param){
     return $app;
 }
 
-$smart = new AIFP_smarty();
+$smarty = new AIFP_smarty();
 $controller = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){

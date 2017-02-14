@@ -185,34 +185,40 @@ class user extends gen_model{
             $this->err_descr = "ERROR: Utente non inizializzato";
             return false;
         }
-        $path = IMG_USER.$this->type.'/'.$this->attributes[$this->table_descr['key']].'/';
-        if(!file_exist($path)){
-            mkdir($path, 755);
+        $path = IMG_USER.$this->type.'/'.$this->attributes[$this->table_descr['key']].'/';        
+        if(!file_exists($path)){
+            if(!mkdir($path)){
+                $this->err_descr = 'ERROR:creazione della cartella non eseguita';
+                return false;
+            }
         }
         else if($this->attributes['image'] != DEFAULT_IMG){
             $files = scandir($path);
             foreach($files as $file){
                 if($file == '.' || $file == '..')
                     continue;
-
-                unlink($file);
+                if(!unlink($path.$file)){
+                    $this->err_descr = 'error: nella cancellazione imagine';
+                    return false;
+                }
             }
         }
         $name = basename($file_image['name']);
         $new_image = $path.$name;
         //creazione del file
-        if (!move_uploaded_file($file_image['tmp_name'], $new_image)){
-            $this->err_descr =  GEN_ERROR;            
-            return false;            
-        }
-        $this->attributes['image'] = $new_image;
-        $value = array( 'image' => $new_image);
-        if(!$this->update($value)){
+        if(!move_uploaded_file($file_image['tmp_name'], $new_image)){
+            $this->err_descr = 'ERROR:';
             return false;
         }else{
-            $this->err_descr = '';
-            return true;
-        }    
+            $this->attributes['image'] = $new_image;
+            $value = array( 'image' => $new_image);
+            if(!$this->update($value)){
+                return false;
+            }else{
+                $this->err_descr = '';
+                return $new_image;
+            }
+        }
     }
     
 }

@@ -45,13 +45,13 @@ $c = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){    
     $tok = $_SESSION['curr_user']['token'];
-    $t = $_SESSION['curr_user']['type'];        
-    if( ($ass = $c->get_user($tok, $t)) ){   
+    $type = $_SESSION['curr_user']['type'];        
+    if( ($ass = $c->get_user($tok, $type)) ){   
         if(($post = check_post($_POST))){
             if($ass->add_evento($post)){
-                $smarty->assign('error', $ass->err_descr);
-            }else{
                 $smarty->assign('message', 'evento aggiunto con successo');                
+            }else{
+                $smarty->assign('error', $ass->err_descr);
             }
         }else{
             $smarty->assign('error', 'BAD parameters');
@@ -59,6 +59,7 @@ if(isset($_SESSION['curr_user'])){
         foreach($_SESSION['curr_user'] as $key=>$value){
             $t[$key] = $value;
         }
+        unset($_SESSION['news']);
         $smarty->assign('profilo', $t );
         $smarty->display('personal_page.tpl');
     }else{

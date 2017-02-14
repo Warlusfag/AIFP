@@ -11,8 +11,8 @@ class evento extends gen_model
         
         $this->attributes = array(
             'id_evento'=>-1,
-            'nome' => '',
             'id_ass' => -1,
+            'nome' => '',            
             'tipologia' => '',
             'regione' => '',
             'provincia'=> '',
