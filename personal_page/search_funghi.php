@@ -20,7 +20,7 @@ if(isset($_POST['reset'])){
     unset($_SESSION['funghi']);
 }
 else if(isset($_SESSION['curr_user'])){    
-    if( ($type = $_SESSION['curr_user']['type']) != 'user' ){
+    if( ($type = $_SESSION['curr_user']['type']) == 'user' ){
         $smarty->assign('error',"ERROR: you are not authorized to perform this action");
         $smarty->display('personal_page.tpl'); 
     }    
@@ -42,7 +42,7 @@ else if(isset($_SESSION['curr_user'])){
         $t[$key] = $value;
     }
     $smarty->assign('profilo', $t );
-    $smarty->display('search_funghi.tpl');
+    $smarty->display('personal_page.tpl');
 }else{
     $smarty->display('index.tpl');    
 }
