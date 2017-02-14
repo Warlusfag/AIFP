@@ -125,8 +125,9 @@
                     <img src="{$root}{$profilo.image}" class="pic"><br>
                     <hr>
                     Cambia immagine del profilo <br>
-                    <form action="{$root}/personal_page/load_image.php">
-                    <input type="file" name="image">
+                    <form action="{$root}/personal_page/load_image.php" method="post" enctype="multipart/form-data">
+                        <input type="file" name="image">
+                        <button class="button personal" type="submit" value="upload">Cambia</button>
                     </form>
             </section>
         </div>

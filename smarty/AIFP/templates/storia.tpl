@@ -4,7 +4,7 @@
 
 {if $error!=null}
 <script>
-    document.getElementById('alert_login').style.display='block';
+    document.getElementById('alert').style.display='block';
 </script>
 {/if}
 {if $message!=null}

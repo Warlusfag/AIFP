@@ -17,7 +17,7 @@ if(isset($_GET['regione'])){
         $tok = $_SESSION['curr_user']['token'];    
         $user = $controller->get_user($tok);    
 
-        $path = $controller->get_regolamento($user->attributes['provincia']);
+        $path = $controller->get_regolamento($user->attributes['regione']);
         if($path){        
             $smarty->assign('path',$path);
         }else{
