@@ -3,6 +3,17 @@
 {block name=buttom_main}
 {/block}
 
+{block name=mainside}
+     {if $genere}
+    <section>
+         <ul class="style1"> 
+             <li> <a href="{$root}funghi/schede_piante.php" class="button schede" style="color:black;"> < Schede Piante</a></li>
+         </ul>
+    </section>
+    {/if}
+{/block}
+
+
 
 {block name=main}  
 {if $error}

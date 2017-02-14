@@ -91,7 +91,7 @@
                     <header>
                         <h3>{$profilo.user}</h3>
                     </header>
-                    <img src="{$root}{$profilo.image}" class="pic"><br>
+                        <img src="{$root}{$profilo.image}" class="pic" style="width:200px;height:200px;"><br>
                 </section>
             </div>
             <div class="7u">
@@ -180,8 +180,8 @@
                         <li>Email &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" value="{$profilo.email}"</li>
                         <li>User &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.user}"</li>
                         <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.nome}"</li>
+                        <li>Indirizzo: &nbsp <input type="text" value="{$profilo.indirizzo}"</li>
                         <li>Provincia &nbsp &nbsp<input type="text" value="{$profilo.provincia}"</li>
-                        <li>Residenza: &nbsp <input type="text" value="{$profilo.residenza}"</li>
                         <li><br></li>
                         <li><label>Inserisci regione &nbsp</label>
                             <select class="button option" name="regione" form="update">
@@ -230,18 +230,18 @@
                     <h2>RICERCA DICOTOMICA</h2>
                     <h3>Ricerca fungo per </h3>
             </header>
-            <form id="search" name="s_funghi"  onsubmit="return searchtest()" action="{$root}personal_page/search_funghi.php" method="post">
+            <form id="search" name="s_funghi"   action="{$root}personal_page/search_funghi.php" method="post">
                 <table class="input">
                     <tr class="input">
-                        <td colspan="3" class="input center"><input type="text" placeholder="Genere" name="genere"></td>
+                        <td colspan="3" class="input center"><input type="text" id="0" placeholder="Genere" name="genere"></td>
                         
                     </tr>
                     <tr class="input">
-                        <td colspan="3" class="input center"><input type="text" placeholder="Specie" name="specie"></td>
+                        <td colspan="3" class="input center"><input type="text" id="1" placeholder="Specie" name="specie"></td>
                     </tr>
                     <tr class="input">
                         <th class="input">
-                            <select class="button option" name="cappello" form="search">
+                            <select class="button option" name="cappello" id="2" form="search">
                                 <option value="">Cappello</option>
                                 <option value="nessuno">Nessuno</option>
                                 <option value="umbonato">Umbonato</option>
@@ -251,7 +251,7 @@
                             </select>
                         </th>
                         <td class="input center">
-                            <select class="button option" name="sporata" form="search">
+                            <select class="button option" name="sporata" id="3" form="search">
                                 <option value="">Sporata</option>
                                 <option value="leucosporeo">Leucosporeo</option>
                                 <option value="ocroscoporeo">Ocroscoporeo</option>
@@ -260,7 +260,7 @@
                             </select>
                         </td>
                         <td class="input">
-                            <select class="button option" name="anello" form="search">
+                            <select class="button option" name="anello" id="4" form="search">
                                 <option value="">Anello</option>
                                 <option value="assente">Assente</option>
                                 <option value="semplice">Semplice</option>
@@ -273,7 +273,7 @@
                     <tr class="input">
                       
                         <th class="input">
-                            <select class="button option" name="commestibile" form="search">
+                            <select class="button option" name="commestibile" id="5" form="search">
                                 <option value="">Commestibilità</option>
                                 <option value="ottimo">Ottimo</option>
                                 <option value="buono">Buono</option>
@@ -285,7 +285,7 @@
                             </select>
                         </th>
                         <td class="input center">
-                            <select class="button option" name="viraggio" form="search">
+                            <select class="button option" name="viraggio" id="6" form="search">
                                 <option value="">Viraggio</option>
                                 <option value="assente">Assente</option>
                                 <option value="rosso">Rosso</option>
@@ -296,7 +296,7 @@
                         </td> 
                         
                         <td class="input">
-                        <select class="button option" name="imenio" form="search">
+                        <select class="button option" name="imenio" id="7" form="search">
                             <option value="">Imenio</option>
                             <option value="tuboli">Tuboli</option>
                             <option value="lamelle">Lamelle</option>
@@ -307,7 +307,7 @@
                     </tr>
                     <tr class="input">
                         <th class="input">
-                            <select class="button option" name="stagione" form="search">
+                            <select class="button option" name="stagione" id="8" form="search">
                                 <option value="">Stagione</option>
                                 <option value="inverno">Inverno</option>
                                 <option value="primavera">Primavera</option>
@@ -315,7 +315,7 @@
                                 <option value="estate">Estate</option>
                             </select></th>
                         <td class="input center">
-                            <select class="button option" name="habitat" form="search">
+                            <select class="button option" name="habitat" id="9" form="search">
                                 <option value="">Habitat</option>
                                 <option value="lignicolo">Lignicolo</option>
                                 <option value="prato">Prato</option>
@@ -323,7 +323,7 @@
                                 <option value="bosco">Bosco</option>
                             </select></td>
                         <td class="input">
-                            <select class="button option" name="volva" form="search">
+                            <select class="button option" name="volva" id="10" form="search">
                                 <option value="">Volva</option>
                                 <option value="circoncisa">Circoncisa</option>
                                 <option value="sacco">Sacco</option>
@@ -335,7 +335,7 @@
                        
                     </tr>
                     <tr class="input">
-                        <th class="input"> <button class="button" type="submit">Cerca</button></th>
+                        <th class="input"> <button class="button" onclick="return searchtest()" type="submit">Cerca</button></th>
                         <th class="input"></th>
                         <td class="input"> <button class="button" name="reset" value="1" type="">Reset</button></td>
                     </tr>
@@ -347,7 +347,7 @@
         
        <!-- AGGIUNGI EVENTO -->
       
-    <div class="6u skel-cell-important" id="form3">
+    <div class="9u skel-cell-important" id="form3">
           <section>
                     <header>
                             <h2>AGGIUNGI EVENTO</h2>

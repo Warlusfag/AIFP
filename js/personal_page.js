@@ -24,25 +24,23 @@ function hide(){
 
 
 function searchtest(){
-    var a = document.forms["s_funghi"]["genere"].value;
-    var b = document.forms["s_funghi"]["specie"].value;
-    var c = document.forms["s_funghi"]["cappello"].value;
-    var d = document.forms["s_funghi"]["sporata"].value;
-    var e = document.forms["s_funghi"]["anello"].value;
-    var f = document.forms["s_funghi"]["commestibile"].value;
-    var g = document.forms["s_funghi"]["viraggio"].value;
-    var h = document.forms["s_funghi"]["imenio"].value;
-    var i = document.forms["s_funghi"]["stagione"].value;
-    var l = document.forms["s_funghi"]["habitat"].value;
-    var m = document.forms["s_funghi"]["volva"].value;
+    var count=0;
+    
+    for(i=0; i<=10; i++){
+        if(document.getElementById(i).value===""){
+            count++;
+            document.getElementById(i).disabled = true;
+        }
+    }
 
-    if (a === "" && b === "" && c === "" && d === "" && e === "" && f === ""&& g === ""&& h === ""&& i === ""&& l === ""&& m === "") {
-        alert("Inserire almeno un campo di ricerca");
-        document.forms["s_eventi"]["genere"].focus();
-        document.forms["s_eventi"]["genere"].select();
+    if(count===11){
+        for(i=0; i<=10; i++){
+            document.getElementById(i).disabled = false;
+        }
+        alert("Selezionare almeno un elemento di ricerca");
         return false;
     }
-    else{
-    return true;  	
-    }
+   return true;
 }
+
+
