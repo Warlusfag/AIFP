@@ -1,12 +1,23 @@
 {extends file="generic_page_sidebar.tpl"}
 	{block "title"}Forum{/block}
         {block name="buttom_main"}
-            {/block}
+        {/block}
         
-        
+
 	{block name=main}  
             
-            
+                    
+        {if $message}
+        <script>
+            document.getElementById('success').style.display='block';
+        </script>
+        {/if}
+        {if $error}
+        <script>
+            document.getElementById('alert').style.display='block';
+        </script>
+        {/if} 
+        
         <!-- Main -->
         <div id="content" class="9u skel-cell-important">
             <section>

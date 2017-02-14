@@ -33,7 +33,7 @@ function check_post($param)
             $i++;
         } 
     }
-    if(i == 6){
+    if($i == 6){
         return $app;  
     }else{
         return null;

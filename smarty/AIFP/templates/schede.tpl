@@ -2,13 +2,17 @@
 {block "title"}Schede Funghi{/block}
 {block name=buttom_main}
 {/block}	
+
+
+
 {block name=mainside}
-        <section>
+     {if $genere}
+    <section>
          <ul class="style1"> 
              <li> <a href="{$root}funghi/schede_funghi.php" class="button schede" style="color:black;"> < Schede Funghi</a></li>
          </ul>
     </section>
-    
+    {/if}
     
      <section>
         <header>
@@ -24,9 +28,17 @@
 {/block}        
         
         
-	{block name=main}  
-	<!-- Main -->
-<!-- Main -->
+{block name=main}  
+{if $error}
+<script>
+    document.getElementById('alert_login').style.display='block';
+</script>
+{/if}
+{if $message}
+<script>
+    document.getElementById('success').style.display='block';
+</script>
+{/if}
 	
         <div id="content" class="9u skel-cell-important">
             <section>

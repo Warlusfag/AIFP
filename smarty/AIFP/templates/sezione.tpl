@@ -2,7 +2,8 @@
 	{block "title"}Conversazioni{/block}
         {block name="buttom_main"}
             {/block}
-        
+ 
+
         
 {block name="mainside"}
     <section>
@@ -14,22 +15,17 @@
             
             
 {block name=main}  
-            
-{if $error!=null}
-    <script>
-        document.getElementById('alert').style.display='block';
-    </script>
+{if $error}
+<script>
+    document.getElementById('alert_login').style.display='block';
+</script>
 {/if}
-{if $message!=null}
-    <script>
-        document.getElementById('success').style.display='block';
-    </script>
+{if $message}
+<script>
+    document.getElementById('success').style.display='block';
+</script>
 {/if}
-        <!-- Main -->
-        
-        
-       
-        
+
 <div id="content" class="9u skel-cell-important">
     
     <section>

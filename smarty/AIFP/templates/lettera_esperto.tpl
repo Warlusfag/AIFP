@@ -4,12 +4,12 @@
 
 {block name=main}
     
-{if $message != null}
+{if $message}
         <script>
             document.getElementById('success').style.display='block';
         </script>
 {/if}
-{if $error != null}
+{if $error}
         <script>
             document.getElementById('alert').style.display='block';
         </script>

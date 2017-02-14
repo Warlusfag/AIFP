@@ -1,6 +1,20 @@
 {extends file="generic_page.tpl"}
 {block "title"}Registrazione{/block}
-	{block name=main}  
+
+
+
+	{block name=main} 
+            
+            {if $error}
+            <script>
+                document.getElementById('alert_login').style.display='block';
+            </script>
+            {/if}
+            {if $message}
+            <script>
+                document.getElementById('success').style.display='block';
+            </script>
+            {/if}
 		<div id="index">
 					
 			<div class="container">

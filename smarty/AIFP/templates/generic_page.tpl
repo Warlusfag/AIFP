@@ -176,16 +176,7 @@
 
                         {block name=main}
                                 
-                            {if $error!=null}
-                                <script>
-                                    document.getElementById('alert_login').style.display='block';
-                                </script>
-                            {/if}
-                            {if $message!=null}
-                            <script>
-                               document.getElementById('success').style.display='block';
-                            </script>
-                            {/if}
+                          
                         {/block}
                         </div>
                     </div>

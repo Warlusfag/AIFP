@@ -2,7 +2,7 @@
 session_start();
 require_once '../libs/aifp_controller.php';
 $smarty = new AIFP_smarty();
-if(isset($_POST['email']) && isset($_POST['type']){
+if(isset($_POST['email']) && isset($_POST['type'])){
     if(isset($_SESSIONS['curr_user'])){
         $controller = new aifp_controller();        
         $type = $_SESSIONS['curr_user']['type'];

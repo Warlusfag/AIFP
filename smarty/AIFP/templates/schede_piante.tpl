@@ -2,10 +2,19 @@
 	{block "title"}Schede Funghi{/block}
 {block name=buttom_main}
 {/block}
-	
-	{block name=main}  
-	<!-- Main -->
-<!-- Main -->
+
+
+{block name=main}  
+{if $error}
+<script>
+    document.getElementById('alert_login').style.display='block';
+</script>
+{/if}
+{if $message}
+<script>
+    document.getElementById('success').style.display='block';
+</script>
+{/if}
 	
         <div id="content" class="9u skel-cell-important">
             <section>

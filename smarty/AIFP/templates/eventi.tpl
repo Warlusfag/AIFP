@@ -2,19 +2,23 @@
 {block "title"}Eventi{/block}
 
 
+
 {block name=main}  
-    {assign $i 0}
-    {assign $count 0}
-    {if $message != null}
+    
+    {if $message}
         <script>
             document.getElementById('success').style.display='block';
         </script>
-    {/if}
-    {if $error != null}
+{/if}
+{if $error}
         <script>
             document.getElementById('alert').style.display='block';
         </script>
-    {/if}     
+{/if} 
+
+    {assign $i 0}
+    {assign $count 0}
+        
     <div class="container">
         <section>
                 <header> 
@@ -42,7 +46,7 @@
                     <br><br>
                     <label>Cerca per regione</label>&nbsp &nbsp
                         <select class="button option" name="regione" form="search">
-                            <option value="">Abruzzo</option>                          
+                            <option value="" select="selected">Regione</option>                          
                             <option value="abruzzo">Abruzzo</option>
                             <option value="basilicata">Basilicata</option>
                             <option value="calabria">Calabria</option>
@@ -67,7 +71,7 @@
                     <br><br>
                     <label>Cerca per tipo</label>&nbsp &nbsp &nbsp &nbsp &nbsp
                     <select class="button option" name="tipologia" form="search">
-                        <option value="">Corso</option>
+                        <option value="" select="selected">Tipo</option>
                         <option value="corso">Corso</option>
                         <option value="sagra">Sagra</option>
                         <option value="mostra">Mostra</option>

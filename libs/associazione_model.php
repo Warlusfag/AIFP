@@ -265,7 +265,7 @@ class associazione extends user
             $this->err_descr = 'Association class have to be initialize';
             return false;
         }
-        require_once 'evento_class.php';
+        require_once 'evento_model.php';
         
         $ev = new evento();                
         if( !($ev->add_evento($params, $this->attributes[$this->table_descr['key']])) ){

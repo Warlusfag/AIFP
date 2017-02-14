@@ -158,7 +158,9 @@
                 text-align: right;
                 border: 0px;
             }
-                   
+            td.input.center{
+                text-align: center;
+            }  
             tr.input:nth-child(even){
                 background-color:transparent; 
             }

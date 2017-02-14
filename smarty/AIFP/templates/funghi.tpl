@@ -1,6 +1,10 @@
 {extends file="generic_page_sidebar.tpl"}
-
 {block name=title}Funghi{/block}
+   
+
+
+
+
 
 {block name=mainside}
      <section>
@@ -17,6 +21,17 @@
 {/block}
 
 {block name=main}  
+    
+    {if $message}
+<script>
+    document.getElementById('success').style.display='block';
+</script>
+{/if}
+{if $error}
+<script>
+    document.getElementById('alert').style.display='block';
+</script>
+{/if} 
 	<!-- Main -->
     <div id="content" class="9u skel-cell-important">
             <section>

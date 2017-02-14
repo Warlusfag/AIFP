@@ -2,6 +2,7 @@
 {block "title"}Schede Funghi{/block}
 {block name=buttom_main}
 {/block}	
+
 {block name=mainside}
 
     <section>
@@ -28,7 +29,17 @@
         
         
 {block name=main}  
-	
+	{if $message}
+     <script>
+         document.getElementById('success').style.display='block';
+     </script>
+     {/if}
+     {if $error}
+     <script>
+         document.getElementById('alert').style.display='block';
+     </script>
+     {/if} 
+
 <div id="content" class="9u skel-cell-important">
     <section>
         <header>
