@@ -8,8 +8,8 @@ $contr = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){
     if(isset($_POST['evento'])){
-        $params = $_SESSION['curr_user']['token'];        
-        $user = $contr->get_user($params, $_SESSION['curr_user']['type']);
+        $user = $contr->get_us_from_type($_SESSION['curr_user']['type']);
+        $user->init($_SESSION['curr_user']);
         if(!$user->register_evento($_POST['evento'])){
             $smarty->assign('error',$user->err_descr);            
         }else{
