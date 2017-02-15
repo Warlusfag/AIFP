@@ -429,7 +429,6 @@
                 </ul>
           </section>
         
-        <!--Fungo model-->
         
     </div>
         
@@ -502,7 +501,9 @@
                        <th></th>
                        <th></th>
                    </tr>
-                   
+                    {if $path!=null}
+                        <a id="down" style="display:none;" href="{$root}{$path}" download>download</a>
+                    {/if}
                    {foreach $files as $file}
                    <tr>
                      <td>{$file.nome}</td>

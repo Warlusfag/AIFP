@@ -1153,7 +1153,7 @@ img.avatar{
 }
 
 span.psw{
-	float: right;
+    float: right;
     padding-right: 10%;
 }
 /*The Modal (background)*/
@@ -1177,12 +1177,13 @@ span.psw{
     width: 50%;
   }
   .modal-content.reg{
-      width: 60%;
+    width: 60%;
   }  
 
   .modal-content.fun{
-      width: 80%;
+      float: 100%;
   }
+
 /*The close button (x)*/
 .close{
     position: absolute;
