@@ -67,6 +67,11 @@ class conversazione extends gen_model
         $fk = $this->attributes[$this->table_descr['key']];
         if($time == -1){
             $time = $this->conn->get_timestamp();
+            $params = array('num_post'=>$this->attributes['num_post']++);
+            $this->update($params);
+            if($this->err_descr != ''){
+                return false;
+            }
         }else{
             $time = $this->attributes['data'];
         }

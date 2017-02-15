@@ -43,27 +43,23 @@ function check_post($param)
 $smarty = new AIFP_smarty();
 $c = new aifp_controller();
 
-if(isset($_SESSION['curr_user'])){    
-    $tok = $_SESSION['curr_user']['token'];
-    $type = $_SESSION['curr_user']['type'];        
-    if( ($ass = $c->get_user($tok, $type)) ){   
-        if(($post = check_post($_POST))){
-            if($ass->add_evento($post)){
-                $smarty->assign('message', 'evento aggiunto con successo');                
-            }else{
-                $smarty->assign('error', $ass->err_descr);
-            }
-        }else{
-            $smarty->assign('error', 'BAD parameters');
-        }
-        foreach($_SESSION['curr_user'] as $key=>$value){
-            $t[$key] = $value;
-        }
+$type = $_SESSION['curr_user']['type'];
+if($type == 'associazione'){
+    $ass = $c->get_us_from_type($type);
+    $ass->init($_SESSION['curr_user']);
+    $post = check_post($_POST);
+    if($ass->add_evento($post)){
         unset($_SESSION['news']);
-        $smarty->assign('profilo', $t );
-        $smarty->display('personal_page.tpl');
+        $smarty->assign('message', 'evento aggiunto con successo');                
     }else{
         $smarty->assign('error', $ass->err_descr);
-        $smarty->display('index.tpl');
     }
+}else{
+    $smarty->assign('error', "ERROR:non sei autorizzato ad utilizzare questa funzionalita'");
 }
+foreach($_SESSION['curr_user'] as $key=>$value){
+            $t[$key] = $value;
+}
+
+$smarty->assign('profilo', $t );
+$smarty->display('personal_page.tpl');

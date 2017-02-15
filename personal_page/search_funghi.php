@@ -3,14 +3,42 @@ session_start();
 
 require_once '../libs/aifp_controller.php';
 
-
 if (!isset($_SESSION['view'])){
     $_SESSION['view'] = 'funghi';
+}
+if (!isset($_SESSION['results'])){
+    $_SESSION['results'] = array();
 }
 
 $smarty = new AIFP_smarty();
 $fungo = new funghi();
-if(isset($_POST['reset'])){
+ 
+if( ($type = $_SESSION['curr_user']['type']) == 'user' ){
+    $smarty->assign('error',"ERROR: non sei autorizzato ad effettuare questo tipo di ricerca");
+    unset($_SESSION['funghi']);
+    unset($_SESSION['results']);
+    $smarty->display('personal_page.tpl'); 
+} 
+
+if(isset($_POST['index'])){
+    $flag = false;
+    $ris = $_SESSION['results'];
+    for($i=0;$i<count($ris);$i++){
+        if($i == $_POST['index']){
+            $flag = true;
+            break;
+        }
+    }
+    if($flag == false){
+        $smarty->assign('error','Nessuna descrizione di questo fungo trovata');
+    }else{
+        $fungo = new funghi();
+        $fungo->init($ris[$i]);
+        $smarty->assign('descrizione',$fungo->get_attributes());
+        $photos = $fungo->get_photos();
+        $smarty->assign('foto',$photos);
+    }
+}else if(isset($_POST['reset'])){
     if($_SESSION['view'] != $fungo->table_descr['table']){   
         $fungo->set_view($_SESSION['view']);
         $fungo->reset_search();
@@ -19,14 +47,9 @@ if(isset($_POST['reset'])){
     }else{
         unset($_SESSION['funghi']);
     }
-}
-else if(isset($_SESSION['curr_user'])){    
-    if( ($type = $_SESSION['curr_user']['type']) == 'user' ){
-        $smarty->assign('error',"ERROR: non sei autorizzato ad effettuare questo tipo di ricerca");
-        $smarty->display('personal_page.tpl'); 
-    }    
+    unset($_SESSION['results']);
+}else{
     $username = $_SESSION['curr_user']['user'];   
-    
     $params = array();
     foreach($_POST as $key=>$value){
         $params[$key] = $value;
@@ -37,8 +60,9 @@ else if(isset($_SESSION['curr_user'])){
         $smarty->assign('error',$fungo->err_descr);
         $fungo->reset_search();
         $_SESSION['view'] = $fungo->table_descr['table'];
-        
+        unset($_SESSION['results']);
     }else{
+        $_SESSION['results'] = $fung;
         $smarty->assign('funghi',$fung);
     }       
 }

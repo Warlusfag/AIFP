@@ -27,9 +27,9 @@ function show_files($path) {
 $smarty = new AIFP_smarty();
 $controller = new aifp_controller();
 
-$tok = $_SESSION['curr_user']['token'];
 $type = $_SESSION['curr_user']['type'];
-$user = $controller->get_user($tok, $type);
+$user = $controller->get_us_from_type($type);
+$user->init($_SESSION['curr_user']);
 $grant = false;
 
 if (!$user instanceof user || !$user instanceof admin) {

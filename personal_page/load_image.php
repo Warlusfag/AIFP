@@ -10,7 +10,7 @@ $type_image = array('image/jpg', 'image/jpeg', 'image/png');
 if(isset($_SESSION['curr_user']) && isset($_FILES['image'])){
     $img = $_FILES['image'];
     if($img['error'] > 0){
-        $smarty->assign('error',"ERROR: file caricato non correttamente, riprovare!");
+        $smarty->assign('error',"ERROR: nel caricamento immagine, riprovare oppure sceglierne un' altra!");
     }else{        
         $flag = false;
         foreach($type_image as $ext){
@@ -31,7 +31,7 @@ if(isset($_SESSION['curr_user']) && isset($_FILES['image'])){
                 $smarty->assign('error',$user->err_descr);
             }            
         }else{
-            $smarty->assign('error',"ERROR: l'immagine caricata non è supportata");
+            $smarty->assign('error',"ERROR: estensione immagine non prevista");
         }
     }
     foreach($_SESSION['curr_user'] as $key=>$value){

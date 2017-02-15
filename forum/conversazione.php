@@ -17,6 +17,7 @@ $s = $_POST['s_index'];
 $c = $_POST['c_index'];
 $tito_sez=$_POST['sezione'];
 $tito_conv = $_POST['conversazione'];
+
 if(isset($_POST['page_conv'])){
     $cpage = $_POST['page_conv'];
 }else{ 
@@ -28,17 +29,15 @@ $conv = new conversazione();
 $conv->init($attr);
 
 $posts = $conv->get_posts();
-if($posts == false){
+if($posts == false || $conv->err_descr != ''){
     $smarty->assign('error',$conv->err_descr);  
 }else{
     //Codice per aggiungere informazioni nei post degli utenti
-    if( ($temp = $contr->prepare_post($posts)) ){
-        $smarty->assign('posts', $temp);
-        $smarty->assign('message','Post caricato con successo');  
+    if( ($temp = $controller->prepare_post($posts)) ){
+        $smarty->assign('posts', $temp);         
     }else{
         $smarty->assign('error',$contr->description);
-    }
-    $smarty->assign('posts', $temp);
+    }    
 }
 $smarty->assign('s_index',$s);
 $smarty->assign('c_index',$c);
@@ -48,4 +47,5 @@ foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }
 $smarty->assign('profilo', $t );
+
 $smarty->display('conversazione.tpl');

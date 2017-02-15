@@ -29,12 +29,15 @@ if(isset($_GET['page'])){
 }else{
     $page = 0;
 }
+
 $smarty = new AIFP_smarty();
+
 $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
 $i = $_POST['s_index'];
 $titolo = $_POST['sezione'];
-$flag = true;
+$flag = false;
+
 if( $coll_c->sezione == $i){
     if( ($convs = $coll_c->getitem($page)) != false){
         $smarty->assign('convs',$convs);
@@ -53,6 +56,7 @@ foreach($_SESSION['curr_user'] as $key=>$value){
     $t[$key] = $value;
 }
 $smarty->assign('profilo', $t );
+
 if($flag){
     $smarty->display('sezione.tpl');               
 }else{

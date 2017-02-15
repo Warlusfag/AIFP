@@ -302,41 +302,41 @@ class aifp_controller
         }       
     }
     
-	public function lettera_esperto($email, $nome, $text){
-		$emails = array();
-		$params = array(
-		'esperto' => 1,
-	    );
-	    for($i=0;$i<count($this->tipo);$i++){
-		$us = $this->get_us_from_type($this->tipo[$i]);
-		if( $us->type == 'utente' || $us instanceof admin || $us instanceof associazione){
-			continue;
-		}
-		$res = $us->search_user($params, 5);
-		if($us->err_descr != ''){
-			$this->description = $us->err_descr;
-			return false;
-		}
-		$temp = array();
-		foreach($res as $value){
-		    $temp[] = $value['email'];        
-		}
-		$emails = array_merge($emails, $temp);
-	    }
+    public function lettera_esperto($email, $nome, $text){
+        $emails = array();
+        $params = array(
+            'esperto' => 1,
+        );
+        for($i=0;$i<count($this->tipo);$i++){
+            $us = $this->get_us_from_type($this->tipo[$i]);
+            if( $us->type == 'utente' || $us instanceof admin || $us instanceof associazione){
+                    continue;
+            }
+            $res = $us->search_user($params, 5);
+            if($us->err_descr != ''){
+                    $this->description = $us->err_descr;
+                    return false;
+            }
+            $temp = array();
+            foreach($res as $value){
+                $temp[] = $value['email'];        
+            }
+            $emails = array_merge($emails, $temp);
+        }
 
-	    $type = 's,s,s';
-	    $name = "nome,email,testo";
-	    $value = array($nome,$email,$text);
-	    $db = new db_interface();
-	    if(!$db->statement_insert('lettere_esperto',$name,$value,$type)){
-		$this->description = $db->error;    
-		return false;
-	    }else{
-		return $emails;
-	    }
-	  }
+        $type = 's,s,s';
+        $name = "nome,email,testo";
+        $value = array($nome,$email,$text);
+        $db = new db_interface();
+        if(!$db->statement_insert('lettere_esperto',$name,$value,$type)){
+            $this->description = $db->error;    
+            return false;
+        }else{
+            return $emails;
+        }
+    }
           
-	public function upgrade_user($ass_attr, $em, $type){        
+    public function upgrade_user($ass_attr, $em, $type){        
         $us_new = $this->get_us_from_type($type);
         if(!is_object($us_new) || $us_new->type == 'associazione' || $us_new->type == 'utente'){
             $this->description = 'ERROR: wrong type';
@@ -389,6 +389,5 @@ class aifp_controller
         $this->description = '';
         return $posts;
     }
-	
-    
+       
 }

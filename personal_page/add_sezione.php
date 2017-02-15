@@ -23,9 +23,9 @@ function check_post($param)
 $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
 
-$tok = $_SESSION['curr_user']['token'];
-$tipo = $_SESSION['curr_user']['type'];
-$user = $contr->get_user($tok, $tipo);
+$type = $_SESSION['curr_user']['type'];
+$user = $contr->get_us_from_type($type);
+$user->init($_SESSION['curr_user']);
 
 if($user  instanceof admin) {
     $post = check_post($_POST);

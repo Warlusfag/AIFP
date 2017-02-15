@@ -49,57 +49,22 @@ class admin extends user{
             'image' => $this->default_col['image'],
             'patentino' => $this->default_col['patentino'],
             'esperto' => $this->default_col['esperto'],
-        );
-        
-        $this->table_descr_assoc = array(        
-            'table' => 'associazione',
-            'table_descr' => 'descr_ass',            
-            'key' => 'ID_ass',
-            'column_name' => 'ID_ass,email,password,user,nome,regione,indirizzo,CAP',
-            'column_descr' => 'ID_ass,sito_web,num_post,punteggio,componenti,esperto',
-            'column_type' => 'i,s,s,s,s,s,s,s',
-            'column_type_descr' => 'i,s,i,i,i,i',
-        );
-        
-        $this->table_descr_product = array(        
-            'table' => 'prodotti',
-            'key' => 'id_prod',
-            'column_name' => 'id_prod,nome,tipologia,descrizione',            
-            'column_type' => 'i,s,s,s',
-        );
-               
+        );               
     }
     
-    public function register_assoc($id){        
+    public function register_assoc($associazione){        
         if(!$this->conn->status){
             $this->err_descr = "ERROR:DB is not ready";
             return false;
         }
         $ass = new associazione();
-        $temp = $this->show_req_assoc();
-        if($this->err_descr != ''){
-            return false;
-        }
-        if(count($temp)==0){
-            return true;
-        }
-        $flag = false;
-        for($i=0;$i<count($temp);$i++){
-            if($temp[$i][$ass->table_descr['key']] == $id){
-                $flag = true;
-                break;
-            }
-        }
-        if($flag == false){
-            $this->err_descr = 'ERROR:Associazione nelle richieste non trovata';
-            return false;
-        }
-        $ass->insert($temp[$i]);
+        $ass->insert($associazione);
         if($ass->err_descr != ''){
             $this->err_descr = $ass->err_descr;
             return false;
         }
-        $query_delete = "DELETE FROM '".$ass->table_descr_req['table']."' WHERE '".$ass->table_descr['key']."'=$id;";
+        $key = $associazione[$ass->table_descr_req['key']];
+        $query_delete = "DELETE FROM '".$ass->table_descr_req['table']."' WHERE '".$ass->table_descr['key']."'=$key;";
         $this->conn->query($query_delete);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
