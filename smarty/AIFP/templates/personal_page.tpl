@@ -20,19 +20,20 @@
 
 {if $funghi}
     <script>
-        show("form2");
+        show('form2');
     </script>
 {/if}
 
 {if $files}
     <script>
-        show("form4");
+        show('form4');
     </script>
 {/if}
 
-{if $ass}
+{if $reqass!=null}
     <script>
-        show("form5");
+        document.getElementById("form5").style.display="block";
+       
     </script>
 {/if}
     <section>
@@ -62,22 +63,22 @@
                 {$status_fs="disabled"}
                 {$color_fs="grey"}
             {/if}
-            <li><button id="btn" class="button schede" onclick="show('form','btn')">{$profilo.user}</button></li>
-            <li><button id="btn1" class="button schede" onclick="show('form1','btn1')">Modifica Profilo</button></li>
-            <li><button id="btn2" class="button schede" style="background-color:{$color_ric}" onclick="show('form2','btn2')" {$status_ric} >Ricerca</button></li>
+            <li><button id="btn" class="button schede" onclick="show('form')">{$profilo.user}</button></li>
+            <li><button id="btn1" class="button schede" onclick="show('form1')">Modifica Profilo</button></li>
+            <li><button id="btn2" class="button schede" style="background-color:{$color_ric}" onclick="show('form2')" {$status_ric} >Ricerca</button></li>
             
             <li><form action="{$root}personal_page/file_space.php" method="post">
                 <button id="btn4" type="submit" name="action" value="show" style="background-color:{$color_fs}" class="button schede" onclick="show('form4')" {$status_fs}>File Space</button>
                 </form>
             </li>
             
-            <li><button id="btn3" class="button schede" style="background-color:{$color_add}" onclick="show('form3','btn3')" {$status_add}>Aggiungi Evento</button></li>
-            <li><button id="btn6" class="button schede" style="background-color:{$color_up}" onclick="show('form6','btn6')" {$status_up}>Promuovi Utente</button></li>
+            <li><button id="btn3" class="button schede" style="background-color:{$color_add}" onclick="show('form3')" {$status_add}>Aggiungi Evento</button></li>
+            <li><button id="btn6" class="button schede" style="background-color:{$color_up}" onclick="show('form6')" {$status_up}>Promuovi Utente</button></li>
     
             {if $profilo.type=="admin"}
             <li>
                 <form action="{$root}personal_page/request_ass.php" method="post">
-                    <button type="submit" id="btn5" name="" value="" class="button schede" onclick="show('form5','btn5')" >Verifica Associazione</button>
+                    <button type="submit" id="btn5" name="" value="" class="button schede">Verifica Associazione</button>
                 </form>
             </li>
             {/if}
@@ -92,8 +93,8 @@
 
 	{block name=main}  
 	<!-- Main -->
-        <div class="row half" id="form">
-           
+        <div class="9u skel-cell-importantf" id="form">
+            <div class="row">
             <div class="5u">
                 <section>
                     <header>
@@ -118,6 +119,7 @@
                     </ul>
                 </section>
             </div>
+            </div>
         </div>
         
        <!-- MODIFICA PROFILO --> 
@@ -140,13 +142,15 @@
             </section>
         </div>
         <div class="5u">
-            <form id="update" action="{$root}personal_page/update_profile.php" method="post"> 
+             
                 {if $profilo.type!="associazione"}
+                <form id="update" name="up_date" action="{$root}personal_page/update_profile.php" method="post"> 
                 <section>
                     <br><br>
                     <ul>
                         <li>Email: &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" name="email" value="{$profilo.email}"</li>
                         <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input name="nome" type="text" value="{$profilo.nome}"</li>
+                        <li>Username &nbsp &nbsp &nbsp &nbsp<input name="user" type="text" value="{$profilo.user}"</li>
                         <li>Cognome &nbsp &nbsp<input name="cognome" type="text" value="{$profilo.cognome}"</li>
                         <li>Residenza: &nbsp <input name="residenza" type="text" value="{$profilo.residenza}"</li>
                       
@@ -176,20 +180,29 @@
                             </select>
                         </li>
                         <li><br></li>
-                        <li>Data di nascita &nbsp &nbsp<input type="date" name="data"></li>
+                        <li>Data di nascita &nbsp &nbsp<input type="date" name="data" value="{$profilo.data}"></li>
                     </ul>
-                    <button class="button personal" onclick="return testmod()"type="submit">Salva</button>
+                    <button class="button personal" onclick="return testmode()" type="submit">Salva</button>
                     <br><br>
+                    <input name="email2" value="{$profilo.email}" style="display:none" disabled>
+                    <input name="nome2" value="{$profilo.nome}" style="display:none" disabled>
+                    <input name="cognome2" value="{$profilo.cognome}" style="display:none" disabled>
+                    <input name="residenza2" value="{$profilo.residenza}" style="display:none" disabled>
+                    <input name="regione2" value="{$profilo.regione}" style="display:none" disabled>
+                    <input name="data2" value="{$profilo.data}" style="display:none" disabled>
+                    <input name="user2" value="{$profilo.user}" style="display:none" disabled>
                 </section>
+                </form>
                 {else}
+                    <form id="update" name="up_date" action="{$root}personal_page/update_profile.php" method="post"> 
                     <section>
                     <br><br>
                     <ul>
-                        <li>Email &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" value="{$profilo.email}"</li>
-                        <li>User &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.user}"</li>
-                        <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" value="{$profilo.nome}"</li>
-                        <li>Indirizzo: &nbsp <input type="text" value="{$profilo.indirizzo}"</li>
-                        <li>Provincia &nbsp &nbsp<input type="text" value="{$profilo.provincia}"</li>
+                        <li>Email &nbsp &nbsp &nbsp &nbsp &nbsp<input type="email" name="email" value="{$profilo.email}"</li>
+                        <li>User &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" name="user" value="{$profilo.user}"</li>
+                        <li>Nome &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" name="nome" value="{$profilo.nome}"</li>
+                        <li>Indirizzo: &nbsp <input type="text" name="indirizzo" value="{$profilo.indirizzo}"</li>
+                        <li>Provincia &nbsp &nbsp<input type="text" name="provincia" value="{$profilo.provincia}"</li>
                         <li><br></li>
                         <li><label>Inserisci regione &nbsp</label>
                             <select class="button option" name="regione" form="update">
@@ -221,11 +234,21 @@
                         <li>Sito Web &nbsp &nbsp<input type="text" name="sito_web" value="{$profilo.sito_web}"></li>
                         <li>Componenti &nbsp<input type="text" name="componenti" value="{$profilo.componenti}"></li>
                     </ul>
-                    <button class="button personal" type="submit">Salva</button>
+                    <button class="button personal" onclick="return testmode2()" type="submit">Salva</button>
                     <br><br>
+                    <input name="email2" value="{$profilo.email}" style="display:none" disabled>
+                    <input name="nome2" value="{$profilo.nome}" style="display:none" disabled>
+                    <input name="indirizzo2" value="{$profilo.indirizzo}" style="display:none" disabled>
+                    <input name="provincia2" value="{$profilo.provincia}" style="display:none" disabled>
+                    <input name="regione2" value="{$profilo.regione}" style="display:none" disabled>
+                    <input name="CAP2" value="{$profilo.CAP}" style="display:none" disabled>
+                    <input name="user2" value="{$profilo.user}" style="display:none" disabled>
+                    <input name="sito_web2" value="{$profilo.sito_web}" style="display:none" disabled>
+                    <input name="componenti2" value="{$profilo.componenti}" style="display:none" disabled>
                 </section>
+                </form>
                 {/if}
-            </form>
+            
         </div>
            
     </div>
@@ -571,11 +594,12 @@
                        <th><b>Size</b></th>
                        <th></th>
                    </tr>
-                   
-                   {foreach $ass ad $a}
+                   {$count=-1}
+                   {foreach $reqass ad $a}
+                       {$count = $count +1}
                    <tr>
                      <td>{$a.nome}</td>
-                     <td>{$file.size}</td>
+                     <td>{$a.regione}</td>
                    
                      <td style="width:47px; text-align:center;"><button type="submit" name="action" value="download"><img src="{$root}images/checked.png" class="filespace"></button></td>
                   
