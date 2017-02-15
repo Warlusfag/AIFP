@@ -1179,7 +1179,10 @@ span.psw{
   .modal-content.reg{
       width: 60%;
   }  
- 
+
+  .modal-content.fun{
+      width: 80%;
+  }
 /*The close button (x)*/
 .close{
     position: absolute;

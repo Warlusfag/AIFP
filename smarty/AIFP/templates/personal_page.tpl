@@ -18,22 +18,12 @@
         </script>
 {/if}   
 
-  
-{if $descrizione}
-    <a onclick="show('form2')" style="display:none;" href="#" id="down" >form5</a>
-    <script>
-        document.getElementById('fungo').style.display='block';
-    </script>
-{/if}
-
 
 {if $feventi==1}
      <a onclick="show('form3')" style="display:none;" href="#" id="down" >form5</a>
 {/if}
 
-{if $fsearch==1}
-   <a onclick="show('form2')" style="display:none;" href="#" id="down" >form5</a>
-{/if}
+
 
 {if $fspace==1}
     <a onclick="show('form4')" style="display:none;" href="#" id="down" >form5</a>
@@ -98,6 +88,16 @@
 {/block}
 
 	{block name=main}  
+{if $fsearch==1}
+    <a onclick="show('form2')" style="display:none;" href="#" id="down" >form5</a>
+    {if $descrizione}
+    <script>
+        document.getElementById('descr').style.display='block';
+    </script>
+    {/if}
+{/if}
+            
+            
 	<!-- Main -->
         <div class="9u skel-cell-importantf" id="form">
             <div class="row">
@@ -406,84 +406,7 @@
           </section>
         
         <!--Fungo model-->
-        <div id="fungo" class="modal">
-            <div class="logcontainer" style="background-color: #f1f1f1">
-                <label><b>{$descrizione.genere} {$descrizione.fungo}</b></label>
-            </div>
-            <div class="imgcontainer">
-                <span onclick="document.getElementById('fungo').style.display='none'" class="close" title="Chiudi">&times;</span>
-                    <section>
-                                <div class="slideshow-container">
-                                    {$max = count($foto)}
-                                    {$count=0}
-                                    {foreach $foto as $f}
-                                        {if $count!=0}
-                                            {$count=$count+1}
-                                            <div class="mySlides fade">
-                                                <div class="numbertext">{$count} / {$max}</div>
-                                                <a class="image full"><img src="{$root}{$f}" alt=""></a>
-                                            </div>
-                                        {/if}
-                                        {if $count==0}
-                                            {$count=$count+1}
-                                            <div class="mySlides fade" style="display: block;">
-                                                <div class="numbertext">1 / {$max}</div>
-                                                <a class="image full"><img src="{$root}{$f}" alt=""></a>
-                                            </div>
-                                        {/if}
-                                        
-                                    {/foreach}
-                                    
-                                    <a class="prev" onclick="plusSlides(-1)">❮</a>
-                                    <a class="next" onclick="plusSlides(1)">❯</a>
-                                </div>
-                                <br>
-                                
-                                {$i=0}
-                                
-                                <div style="text-align:center">
-                                    {while $i < $max}
-                                         <span class="dot" onclick="currentSlide({$i})"></span> 
-                                         {$i=$i+1}
-                                    {/while}
-                                </div>
-                                
-                        </section>
-            </div>
-
-                <div class="logcontainer">
-                <div class="4u">
-                <ul>
-                    <li><b>Commestibile</b> {$descrizione.commestiblie}</li>
-                    <li><b>Sporata</b> {$descrizione.sporata}</li>
-                    <li><b>Viraggio</b> {$descrizione.viraggio}</li>
-                   
-                </ul>
-                    <hr>
-                </div>
-                <div class="4u">
-                <ul>
-                    <li><b>Imenio</b> {$descrizione.imenio}</li>
-                    <li><b>Anello</b> {$descrizione.anello}</li>
-                    <li><b>Volva</b> {$descrizione.volva}</li>
-                    <li><b>Habitat</b> {$descrizione.habitat}</li>
-                    <li><b>Stagione</b> {$descrizione.stagione}</li>
-                </ul>
-                </div>
-               
-                <div class="11u">
-                <hr>
-                <ul>
-                    <li><b>Cappello</b> {$descrizione.cappello}</li>
-                    <li><b>Colore</b> {$descrizione.colore}</li>
-                    <li><b>Gambo</b> {$descrizione.gambo}</li>
-                    <li><b>Pianta</b> {$descrizione.pianta}</li>
-                    <li><b>Descrizione</b> {$descrizione.descrizione}</li>
-                </ul>         
-
-                </div>
-                </div>
-        </div>
+        
     </div>
         
        <!-- AGGIUNGI EVENTO -->
@@ -570,7 +493,7 @@
           </form>
                    
             <form action="{$root}personal_page/file_space.php" method="post" enctype="multipart/form-data">
-                    <input type="file" name="image">
+                    <input type="file" name="fileass">
                     <button type="submit" name="action" value="upload">Upload file</button>
             </form>
                    
@@ -629,6 +552,8 @@
     </div>
     
 
+            
+            
 {/block}
 
 {block name=buttom_main}
