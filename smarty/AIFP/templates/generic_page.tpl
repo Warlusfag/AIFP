@@ -30,9 +30,9 @@
         
         
 	</head>
-
+        {block name="body"}
         <body onload="download()">
-        
+        {/block}
 	{block name=general_body}
 	<!-- Header -->		
 		<div id="header">
@@ -277,7 +277,33 @@
 	<div id="footer">
             <div id="copyright">
                 <div class="container">
-                    Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
+                    <div class="row half">
+                        <div class="4u">
+                            <h3>Chi siamo</h3>
+                            <p>Web site that worry to join all togheter mycological associations, users and burocracy in all one web interface, in order to simplify the user life but in the same time the states can manage all the user and association with relative license to perform the mushrooms picking in the national territory.
+</p>
+                            <p>
+                        </div>
+                        <div class="4u">
+                            <h3> Seguici sui social </h3>
+                        <ul>
+                            <li>Facebook</li>
+                            <li>Twitter</li>
+                            <li>Instagram</li>
+                        </ul>
+                            <h3> Contattaci </h3>
+                            <ul>
+                                <li>g.faggioni5@gmail.com</li>
+                                <li>gianrmacotroiano@gmail.com</li>
+                            </ul>
+                        </div>
+                        <div class="4u">
+                            <h3>¢ Copyright</h3>
+                            <p>Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)</p>
+                        </div>
+                        
+                    </div>
+                    
                 </div>
             </div>
         </div>

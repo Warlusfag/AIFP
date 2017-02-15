@@ -57,7 +57,7 @@
                                                             </div>
                                                             <div class="2u" style="float:right;border-left: solid 1px #ddd;">
                                                                 <br>
-                                                                <span> Moderatore:<strong> {$s.moderatore}  <br>  {$s.num_conv}</strong> commenti</span>
+                                                                <span> Moderatore:<strong> {$s.moderatore}  <br>  {$s.num_conv}</strong> conversazioni</span>
                                                             </div>
                                                         </div>
                                                     </li>

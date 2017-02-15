@@ -7,7 +7,7 @@
      {if $genere}
     <section>
          <ul class="style1"> 
-             <li> <a href="{$root}funghi/schede_piante.php" class="button schede" style="color:black;"> < Schede Piante</a></li>
+             <li> <a href="{$root}piante/schede_piante.php" class="button schede" style="color:black;"> < Schede Piante</a></li>
          </ul>
     </section>
     {/if}
@@ -69,15 +69,15 @@
                         <div class="4u">
                                 <section>
                                     <form action="{$root}piante/pianta.php" method="get">
-                                        
-                                        <button class="button" type="submit" value="{$pianta.specie}">
-                                        <img src="{$root}funghi/foto_generi/amanita.jpeg" alt="{$pianta.specie}" class="image full">
+                                        <input name="specie" value="{$pianta.specie}" style="display:none;">
+                                        <button class="button" type="submit" name="genere" value="{$pianta.genere}">
+                                        <img src="{$root}{$pianta.foto}" alt="{$pianta.specie}" class="image full">
                                         {$pianta.genere} {$pianta.specie}</button>
                                         <br>
                                     </form>
                                         
                                 </section>
-                                        <br>    
+                            <br>    
                         </div>
                     {/foreach}
                         

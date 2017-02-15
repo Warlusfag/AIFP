@@ -46,7 +46,7 @@
         {/if}
         <li><button class="button schede" onclick="show('form')">{$profilo.user}</button></li>
         <li><button class="button schede" onclick="show('form1')">Modifica Profilo</button></li>
-        <li><button class="button schede" style="background-color:{$color_ric}" onclick="show('form2')" {$status_ric} >Ricerca</button></li>
+        <li><button class="button schede" style="background-color:{$color_ric}" onclick="show('form2')" {$status_ric} >Ricerca Funghi</button></li>
         <li>
             <form action="{$root}personal_page/file_space.php" method="post">
                 <button type="submit" name="action" value="show" style="background-color:{$color_fs}" class="button schede" onclick="show('form4')" {$status_fs}>File Space</button>
@@ -69,7 +69,7 @@
 
 {block name=main} 
     {if $ass==1}
-        <a onclick="show('form5')" style="display:none;" href="#" id="on_load" >form5</a>
+        <a onclick="show('form5')" style="display:none;" href="#" id="load" >form5</a>
     {/if}
             
     {if $feventi==1}
@@ -279,7 +279,7 @@
     <div class="8u skel-cell-importantf" id="form2">
         <section>
             <header>
-                <h2>RICERCA FUNGO</h2>
+                <h2>RICERCA DICOTOMICA</h2>
                 <h3>Ricerca fungo per </h3>
             </header>
         <form id="search" name="s_funghi"   action="{$root}personal_page/search_funghi.php" method="post">
@@ -393,7 +393,10 @@
                 </tr>
             </table>
         </form>
-        
+            <hr>
+            {if $funghi}
+                <h3>Risultati ricerca </h3>
+            {/if}
         <ul class="default">
             {$count=-1}
                 {foreach $funghi as $f}
@@ -409,7 +412,7 @@
                                     <br>
                                 </div>
                                 <div class="3u" style="float:right; border-left: solid 1px #ddd">
-                                    <br>
+                                    <p>Clicca per saperne di più</p>
                                     <span> </span>
                                 </div>
                             </div>
@@ -522,7 +525,7 @@
                     <h2>Verifica Associazione</h2>
             </header>
         </section>
-        <form action="{$root}personal_page/validate_ass.php" method="post">            
+        <form action="{$root}personal_page/validate.php" method="post">            
             <table>
                 <tr>
                     <th colspan="3"><b>Associazione</b></th>
