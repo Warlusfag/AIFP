@@ -34,7 +34,7 @@ if(($post = check_post($_POST))){
         foreach ($post as $key=>$value){
             $_SESSION['curr_user'][$key] = $value;
         }            
-        $smart->assign('message','aggiornamento profilo eseguito con successo');
+        $smarty->assign('message','aggiornamento profilo eseguito con successo');
     }else{
         $smarty->assign('error',$us->err-descr);            
     }
