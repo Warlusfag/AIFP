@@ -180,7 +180,7 @@
                                         {if $eventi[$i].tipologia == 'mostra' && $count!=0}
                                         <div class="mySlides fade">
                                                 {$count=$count+1}
-                                                <div class="numbertext">{$count}/ 3</div>
+                                                <div class="numbertext">{$count}</div>
                                                 <a href="#" class="image full"><img src="{$root}images/pics10_1.jpg" alt=""></a>
                                                 <br><p><b>{$eventi[$i].nome}</b></p>
                                                 <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>
@@ -204,7 +204,7 @@
                                             {$color="#389709"}
                                             {$count=$count+1}
                                             <div class="mySlides fade" style="display: block;">
-                                                    <div class="numbertext">1 / 3</div>
+                                                    <div class="numbertext">1</div>
                                                     <a href="#" class="image full"><img src="{$root}images/pics10.jpg" alt=""></a>
                                                     <br><p><b>{$eventi[$i].nome}</b></p>
                                                     <span class="posted">Dal <b>{$eventi[$i].data_inzio}</b> al <b>{$eventi[$i].data_fine}</b></span>

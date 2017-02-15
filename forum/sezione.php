@@ -67,7 +67,7 @@ foreach($_SESSION['curr_user'] as $key=>$value){
 }
 $smarty->assign('profilo', $t );
 
-if($flag){
+if(!$flag){
     $smarty->display('sezione.tpl');               
 }else{
     $smarty->display('forum.tpl');

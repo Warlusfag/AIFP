@@ -110,12 +110,15 @@
                 </section>
             </div>
             <div class="7u">
+                {if $profilo.type!="associazione"}
                 <section>
                     <br><br>
                     <ul>
                         <li>Email: <strong> {$profilo.email}</strong></li>
                         <li>Nome e Cognome:<strong> {$profilo.nome} {$profilo.cognome}</strong></li>
                         <li>Residenza: <strong>{$profilo.residenza}</strong></li>
+                        <li>Regione: <strong>{$profilo.regione}</strong></li>
+                        <li>Data di Nascita <strong> {$profilo.data} </strong></li>
                     </ul>
                     <br><hr><br>
                     <ul>
@@ -124,6 +127,27 @@
                         <li>Numero post:<strong> {$profilo.num_post}</strong></li>
                     </ul>
                 </section>
+                {else}
+                    <section>
+                    <br><br>
+                    <ul>
+                        <li>Email: <strong> {$profilo.email}</strong></li>
+                        <li>Nome <strong> {$profilo.nome}</strong></li>
+                        <li>Indirizzo: <strong>{$profilo.indirizzo}</strong></li>
+                        <li>CAP: <strong>{$profilo.CAP}</strong></li>
+                        <li>Provincia <strong> {$profilo.provincia} </strong></li>
+                        <li>Regione: <strong>{$profilo.regione}</strong></li>
+                        <li>Sito Web: <strong>{$profilo.sito_web}</strong></li>
+                    </ul>
+                    <br><hr><br>
+                    <ul>
+                        <li>Tipologia:<strong> {$profilo.type}</strong></li>
+                        <li>Punteggio:<strong> {$profilo.punteggio}</strong></li>
+                        <li>Numero post:<strong> {$profilo.num_post}</strong></li>
+                    </ul>
+                </section>
+                {/if}
+
             </div>
             </div>
         </div>
@@ -483,7 +507,7 @@
                    <tr>
                      <td>{$file.nome}</td>
                      <td>{$file.size}</td>
-                   
+                     <input name="filename" value="{$file.nome}" style="display:none;">
                      <td style="width:47px; text-align:center;"><button type="submit" name="action" value="download"><img src="{$root}images/download.png" class="filespace"></button></td>
                      <td style="width:47px; text-align:center;"><button type="submit" name="action" value="delete"><img src="{$root}images/delete.png" class="filespace"></button></td>
                   

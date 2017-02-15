@@ -53,7 +53,7 @@ function check_post($param){
         return null;
     }    
 }
-$message = "Congratulazioni, lei si è appena registarto al nostro sito. Effettua il Login per scoprire le fantastiche funzionalita' di AIFP";
+$message = "Richiesta di iscizione avvenuto con successo! Attendi che il nostro team verichi l'identità dell'associazione, le verrà inviata una mail di conferma il prima possibile!";
 
 $smarty = new AIFP_Smarty();
 $contr = new aifp_controller();
