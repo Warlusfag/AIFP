@@ -47,7 +47,7 @@ if( (($post= check_post($_POST))) ){
     );
     $test = $contr->search_OnAll_users($params,1);
     if(count($test)>0){
-        $smarty->assign('error', $user->err_descr);
+        $smarty->assign('error', "Email gia' presente nel sito");
     }else{    
         if($user->insert_user($post, array())){
             $smarty->assign('message',$message);            

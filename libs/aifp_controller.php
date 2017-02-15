@@ -347,6 +347,10 @@ class aifp_controller
             'email'=>$em,
         );  
         $us = $this->get_user($params);
+        if(!us || $us->err_descr != ''){
+            $this->description = 'ERROR: utente non trovato';
+            return false;
+        }
         //cancello il vecchio utente dal db
         if(!$us->delete_user()){
             $this->description = $us->err_descr;

@@ -50,6 +50,7 @@ $flag = false;
 
 if( $coll_c->sezione == $i){
     if( ($convs = $coll_c->getitem($page)) != false){
+        $flag = true;
         $smarty->assign('convs',$convs);
     }
 }else{
@@ -67,7 +68,7 @@ foreach($_SESSION['curr_user'] as $key=>$value){
 }
 $smarty->assign('profilo', $t );
 
-if(!$flag){
+if($flag){
     $smarty->display('sezione.tpl');               
 }else{
     $smarty->display('forum.tpl');
