@@ -19,6 +19,4 @@ function testeventi(){
 }
 
 
-function download(){
-     document.getElementById("down").click();
-}
+

@@ -35,7 +35,7 @@
                 </header>
               
                 {if $path!=null}
-                    <a id="down" style="display:none;" href="{$root}{$path}" download>download</a>
+                    <a id="load" style="display:none;" href="{$root}{$path}" download>download</a>
                 {/if}
                 
                 {if $profilo.user}

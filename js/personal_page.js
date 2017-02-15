@@ -43,6 +43,11 @@ function searchtest(){
    return true;
 }
 
+function download(){
+     document.getElementById("load").click();
+}
+
+
 function testmode(){
     
     if(document.forms["up_date"]["email"].value===document.forms["up_date"]["email2"].value){
