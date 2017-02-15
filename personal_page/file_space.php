@@ -15,6 +15,13 @@ if(!isset($_SESSION['curr_user'])){
     $smarty->display('index.tpl');
 }
 
+function formatSize( $bytes )
+{
+    $types = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB' );
+    for( $i = 0; $bytes >= 1024 && $i < ( count( $types ) -1 ); $bytes /= 1024, $i++ );
+            return( round( $bytes, 2 ) . " " . $types[$i] );
+}
+
 function show_files($path) {
     $files = array();
     if (!(file_exists($path))) {
@@ -23,13 +30,16 @@ function show_files($path) {
         }
     } else {
         $temp = scandir($path);
-        foreach ($temp as $i => $file) {
-            $files[$i] = array();
+        $i = 0;
+        foreach (array_values($temp) as  $file) {            
             if ($file == '.' || $file == '..') {
                 continue;
             }
-            $files[$i][] = str_replace(PROJ_DIR, '', $path . $file);
-            $files[$i][] = filesize($path . $file);
+            $files[$i] = array();
+            $size = formatSize(filesize($path . $file));            
+            $files[$i]['nome'] =  $file;
+            $files[$i]['size'] = $size;
+            $i++;
         }        
     }
     return $files;
@@ -60,38 +70,33 @@ if (!$user instanceof user || !$user instanceof admin) {
             $ass->delete_file($_POST['filename']);
             if ($ass->err_descr != '') {
                 $smarty->assign('error', $ass->err_descr);
-            } else {                
-                $files = show_files($path);
-                $smarty->assign('files', $files);
+            } else {
                 $smarty->assign('message', 'File cancellato con successo');
             }
         }
     } else if ($_POST['action'] == 'download') {
-        $path = $ass->download_file($_POST['filename']);
+        $p = $ass->download_file($_POST['filename']);
         if ($ass->err_descr != '') {
             $smarty->assign('error', $ass->err_descr);
         } else {
-            $files = show_files($path);
-            $smarty->assign('files', $files);
-            $smarty->assign('path', str_replace(PROJ_DIR, '', $path));
+            $smarty->assign('path', str_replace(PROJ_DIR, '', $p));
         }
     } else if ($_POST['action'] == 'upload') {
-        if (isset($_FILES)) {
-            $ass->upload_file($_FILES);
+        if ( isset($_FILES) && $_FILES['fileass']['error']== 0) {
+            $file_descr = $_FILES['fileass'];           
+            $ass->upload_file($file_descr);
             if ($ass->err_descr != '') {
                 $smarty->assign('error', $ass->err_descr);
             } else {
                 $smarty->assign('message', 'File aggiunto con successo');
-                $files = show_files($path);
-                $smarty->assign('files', $files);
             }
+        }else{
+            $smarty->assign('error',"ERROR: il file non e' stato caricato corretamente");
         }
-    } else if ($_POST['action'] == 'show') {
-        $files = show_files($path);
-        $smarty->assign('files', $files);
-    } else {
-        $smarty->assign('error', GEN_ERROR);
     }
+    $files = show_files($path);
+    $smarty->assign('files', $files);
+
 } else {
     $smarty->assign('error', "ERROR: non sei autorizzato ad effettuare quest'azione");
 }

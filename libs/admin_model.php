@@ -11,7 +11,8 @@ class admin extends user{
     
     public $table_descr_product;
     public $table_descr_assoc;
-    public $table_descr_sez;    
+    public $table_descr_sez;
+    public $queries;
     
     function __construct(){
         
@@ -25,6 +26,13 @@ class admin extends user{
             'column_name'=>'email,password,user,nome,cognome,regione,residenza,data,num_post,punteggio,image,patentino,esperto',
             'column_type'=>'s,s,s,s,s,s,s,da,i,i,s,i,i',
         );
+        
+        $this->queries = array(
+            'delete' => "DELETE FROM %s WHERE %s=%u",
+            'insert_files'=> "INSERT INTO %s (%s) VALUES ('%u', '%u', '%s');",
+            'select' => "SELECT * FROM %s AS U ",
+        );
+        
         $this->default_col = array(
             'user' => 'admin',
             'num_post' => 0,
@@ -64,7 +72,17 @@ class admin extends user{
             return false;
         }
         $key = $associazione[$ass->table_descr_req['key']];
-        $query_delete = "DELETE FROM '".$ass->table_descr_req['table']."' WHERE '".$ass->table_descr['key']."'=$key;";
+        $table = $ass->table_descr_file['table'];
+        $size = 0;
+        $files = '';
+        $names = $ass->table_descr_file['key'].','.$ass->table_descr_file['column_name'];
+        $query = sprintf($this->queries['insert_files'],$table,$names,$key,$size,$files);
+        $this->conn->query($query);
+        if (!$this->conn->status){            
+            $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
+            return false;
+        }        
+        $query_delete = sprintf($this->queries['delete'], $ass->table_descr_req['table'],$ass->table_descr['key'],$key);        
         $this->conn->query($query_delete);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
@@ -79,7 +97,8 @@ class admin extends user{
             return false;
         }
         $ass = new associazione();
-        $query = "SELECT * FROM ".$ass->table_descr_req['table'].";";
+        $query = sprintf($this->queries['select'],$ass->table_descr_req['table']);
+        $query .= ";";
         $ris = $this->conn->query($query);
         
         if (!$this->conn->status){            

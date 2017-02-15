@@ -118,7 +118,7 @@ class associazione extends user
            mkdir($path, 0777, true);
            return array();
         }
-        $query = "SELECT * FROM ".$this->table_descr_file['table']." WHERE '".$this->table_descr['key']."'=".$key.";";
+        $query = "SELECT * FROM ".$this->table_descr_file['table']." WHERE ".$this->table_descr_file['key']."=".$key.";";
         
         $res = $this->conn->query($query);
         if(!$this->conn->status){
@@ -165,23 +165,26 @@ class associazione extends user
             return false;            
         }        
         $files = $this->get_files();        
-        if(!$files){
-            $this->err_descr ='ERROR: db is not ready';
+        if($this->err_descr != ''){            
             return false;
-        }        
-        $size += $files['occupato'];
+        }
+        if(is_array($files) && count($files)==0 ){
+            $this->err_descr =GEN_ERROR;
+            return false;
+        }
+        $size += $files[0]['occupato'];
         $name = $this->table_descr_file['column_name'];
         $type = $this->table_descr_file['column_type'];
         $value = array(
             0 => $size,
-            1 => $files['nomi_file'].','.$namefile,
+            1 => $files[0]['nomi_file'].','.$namefile,
         ); 
         $id_arr = array(
             0 => $this->table_descr_file['key'],
             1 => $key,
-            2 => $this->atributes['key_type'],
+            2 => $this->table_descr['key_type'],
         );        
-        if(!$this->conn->statement_update($this->tabe_descr_file['table'],$name,$value,$type,$id_arr)){
+        if(!$this->conn->statement_update($this->table_descr_file['table'],$name,$value,$type,$id_arr)){
             $this->err_descr = $this->conn->error;
             return false;
         }
@@ -193,18 +196,13 @@ class associazione extends user
     {
         $key = $this->attributes[$this->table_descr['key']]; 
         if( $key == -1){
-            $this->err_descr = 'ERROR: association is not initialized';
+            $this->err_descr = 'ERROR: association non inizializzata';
             return false;
         }
-        $path = FILE_ASS.$key.'/';
-        if(!(file_exists($path))){
-           mkdir($path, 0755, true);
-           $this->err_descr='ERROR: no such file or directory';
-           return false;
-        }       
+        $path = FILE_ASS.$key.'/';     
         $filepath = $path.basename($filename);
         if(!(file_exists($filepath))){
-           $this->err_descr='ERROR: File is not found ';
+           $this->err_descr='ERROR:  ';
            return false;
         }        
         $this->err_descr = '';
@@ -221,25 +219,32 @@ class associazione extends user
         $filename = basename($filename);
         $path = FILE_ASS.$key.'/'.$filename;
         if(!(file_exists($path))){
-           $this->err_descr='ERROR: we don\'t find any files for this association ';
+           $this->err_descr="ERROR: il tuo file non e' stato trovato ";
            return false;
-        }
+        }        
         $size = filesize($path);
-        $f = $this->show_files();
-        if(!$f){
-            $this->err_descr = $this->conn->error;
+        $f = $this->get_files();
+        if($this->err_descr != ''){            
+            return false;
+        }
+        if(!unlink($path)){
+           $this->err_descr='ERROR: errore nella cancellazione del file';
+           return false; 
+        }
+        if(is_array($f) && count($f)==0 ){
+            $this->err_descr =GEN_ERROR;
             return false;
         }
         //Aggiorno lo spazio occupato e l'elenco dei file
-        $size = $f['occupato'] - $size;
-        $temp = explode(',',$f['nomi_file']);
+        $size = $f[0]['occupato'] - $size;
+        $temp = explode(',',$f[0]['nomi_file']);
         $files = '';        
         foreach ($temp as $value) {
             if($value != $filename){
                 $files .= $value.',';
             }
         }
-        $files = str_replace($files, '', count($files)-1);
+        $files = substr_replace($files, '', count($files)-2);        
         $name=$this->table_descr_file['column_name'];
         $type=$this->table_descr_file['column_type'];
         $value=array(
@@ -251,7 +256,7 @@ class associazione extends user
             1=> $key,
             2 => $this->table_descr_file['key_type'],
         );
-        if(!$this->conn->statement_update($this->table_descr['table'],$name,$value,$type,$id_arr)){
+        if(!$this->conn->statement_update($this->table_descr_file['table'],$name,$value,$type,$id_arr)){
            $this->err_descr=$this->conn->error;
            return false;
         }
