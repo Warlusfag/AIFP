@@ -137,7 +137,7 @@
                             <div class="modal-content animate alert">
                                 <a href="{$root}index.php" id="link"></a>
                                 <span onclick="document.getElementById('link').click();" class="alertclosebtn" title="Chiudi">&times;</span>
-                                <strong>Attenzione!</strong> <a onclick="document.getElementById('login').style.display='block'; document.getElementById('alert_login').style.display='none'"><u>Accedi per continuare</u></a>
+                                <strong>Attenzione!</strong> <a onclick="document.getElementById('login').style.display='block'; document.getElementById('alert_login').style.display='none'"><u>Accedi per continuare {$sessione}</u></a>
                             </div>
                         </div>
                         <div id="alert" class="modal">

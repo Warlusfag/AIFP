@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     hide();
-    document.getElementById("form").style.display="block";
+   document.getElementById("form").style.display="block";
 
 })
 

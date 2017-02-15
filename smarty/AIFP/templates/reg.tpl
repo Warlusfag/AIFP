@@ -67,7 +67,7 @@
                                     <label><b>Dettagli Profilo</b></label><br>
                                     <input type="text" class="reg" placeholder="Inserisci Nome" name="nome" required>*<br>
                                     <input type="text" class="reg" placeholder="Inserisci Cognome" name="cognome" required>*<br>
-                                    <input type="text" class="reg" placeholder="Inserisci Residenza" name="residenza" required>*<br>
+                                    <input type="text" class="reg" placeholder="Inserisci Città" name="residenza" required>*<br>
 
                                     <label>Inserisci regione</label>
                                     <select name="regione" form="regform" required>

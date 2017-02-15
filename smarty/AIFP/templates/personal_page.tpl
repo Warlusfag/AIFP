@@ -18,23 +18,29 @@
         </script>
 {/if}   
 
-{if $funghi}
+  
+{if $descrizione}
+    <a onclick="show('form2')" style="display:none;" href="#" id="down" >form5</a>
     <script>
-        show('form2');
+        document.getElementById('fungo').style.display='block';
     </script>
 {/if}
 
-{if $files}
-    <script>
-        show('form4');
-    </script>
+
+{if $feventi==1}
+     <a onclick="show('form3')" style="display:none;" href="#" id="down" >form5</a>
 {/if}
 
-{if $reqass!=null}
-    <script>
-        document.getElementById("form5").style.display="block";
-       
-    </script>
+{if $fsearch==1}
+   <a onclick="show('form2')" style="display:none;" href="#" id="down" >form5</a>
+{/if}
+
+{if $fspace==1}
+    <a onclick="show('form4')" style="display:none;" href="#" id="down" >form5</a>
+{/if}
+
+{if $ass==1}
+       <a onclick="show('form5')" style="display:none;" href="#" id="down" >form5</a>
 {/if}
     <section>
         <header>
@@ -398,13 +404,7 @@
                 
                 </ul>
           </section>
-          
-        {if $descrizione}
-            <script>
-                show(form2);
-                document.getElementById('fungo').style.display='block';
-            </script>
-        {/if}
+        
         <!--Fungo model-->
         <div id="fungo" class="modal">
             <div class="logcontainer" style="background-color: #f1f1f1">
@@ -566,12 +566,11 @@
                   
                    </tr>
                    {/foreach}
-                     
-                    <
                  </table>
           </form>
-            <form action="{$root}personal_page/file_space.php" method="post" enctype="multipart/form-data>
-                    <input type="file" name="file">
+                   
+            <form action="{$root}personal_page/file_space.php" method="post" enctype="multipart/form-data">
+                    <input type="file" name="image">
                     <button type="submit" name="action" value="upload">Upload file</button>
             </form>
                    
@@ -587,21 +586,20 @@
                             <h2>Verifica Associazione</h2>
                     </header>
            </section>
-            <form action="{$root}personal_page/request_ass.php" method="post">
+            <form action="{$root}personal_page/validate_ass.php" method="post">
             <table>
                    <tr>
-                       <th><b>Associazione</b></th>
-                       <th><b>Size</b></th>
+                       <th colspan="3"><b>Associazione</b></th>
                        <th></th>
                    </tr>
                    {$count=-1}
-                   {foreach $reqass ad $a}
+                   {foreach $reqass as $a}
                        {$count = $count +1}
                    <tr>
                      <td>{$a.nome}</td>
                      <td>{$a.regione}</td>
-                   
-                     <td style="width:47px; text-align:center;"><button type="submit" name="action" value="download"><img src="{$root}images/checked.png" class="filespace"></button></td>
+                     <td>{$a.email}</td>
+                     <td style="width:47px; text-align:center;"><button type="submit" name="id_ass" value="{$count}"><img src="{$root}images/checked.png" class="filespace"></button></td>
                   
                    </tr>
                    {/foreach}
