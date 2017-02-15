@@ -20,9 +20,10 @@ if(isset($_SESSION['curr_user']) && isset($_FILES['image'])){
             }
         }
         if($flag){
-            $tok = $_SESSION['curr_user']['token'];
             $type = $_SESSION['curr_user']['type'];
-            $user = $controller->get_user($tok, $type);
+            $user = $controller->get_us_from_type($type);
+            $user->init($_SESSION['curr_user']);
+
             $path_img =  $user->load_image($img);
             if($path_img != false){
                 $_SESSION['curr_user']['image'] = str_replace(PROJ_DIR,'',$path_img);                
