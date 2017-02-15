@@ -1,6 +1,7 @@
 <?php
 
 $server_root = "/srv/www/AIFP/";
+$expired = 1800;
 
 //constanti per la gestione del sito
 define('PROJ_DIR', $server_root);
