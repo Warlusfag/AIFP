@@ -63,6 +63,11 @@ if (!$user instanceof user || !$user instanceof admin) {
         $id_ass = $ass->attributes[$ass->table_descr['key']];
     }
     $path = FILE_ASS . $id_ass . '/';
+    if(!(file_exists($path))){
+           if(!mkdir($path)){
+               $smarty->assign('error','ERROR: PERMESSO NEGATO');
+           }
+    }
     if ($_POST['action'] == 'delete') {
         if ($grant == false) {
             $smarty->assign('error', "Non hai permessi per cancellare i file");
