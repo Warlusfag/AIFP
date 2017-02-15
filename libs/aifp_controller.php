@@ -372,6 +372,22 @@ class aifp_controller
         }
         
     }
+    
+    public function prepare_post($posts ){
+        for($i=0;$i<count($posts);$i++){
+            $us = $this->get_us_from_type($posts[$i]['tipo_user']);
+            $params = array($us->table_descr['key'] => $posts[$i]['user']);
+            $user = $this->get_user($params,$posts[$i]['tipo_user']);
+            if($this->description != ''){
+                return false;
+            }else{
+                unset($posts[$i]['user']);
+                $posts[$i] = array_merge($posts[$i], $user->get_attributes('post'));
+            }
+        }
+        $this->description = '';
+        return $posts;
+    }
 	
     
 }

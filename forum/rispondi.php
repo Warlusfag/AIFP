@@ -32,9 +32,8 @@ $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){
-    $tok = $_SESSION['curr_user']['token'];
-    $tipo = $_SESSION['curr_user']['type'];
-    $user = $contr->get_user($tok, $tipo);
+    $user = $contr->get_us_from_type($_SESSION['curr_user']['type']);
+    $user->init($_SESSION['curr_user']);
     
     if (($post = check_post($_POST))){
         $coll_c = unserialize($_SESSION['convs']);
@@ -55,8 +54,13 @@ if(isset($_SESSION['curr_user'])){
             $smarty->assign('conversazione',$tito_conv);
             $smarty->assign('sezione',$tito_sez);
             $posts = $conv->get_posts();
-            $smarty->assign('posts',$posts);
-            $smarty->assign('message','Post caricato con successo');  
+            if( ($temp = $contr->prepare_post($posts)) ){
+                $smarty->assign('posts', $temp);
+                $smarty->assign('message','Post caricato con successo');  
+            }else{
+                $smarty->assign('error',$contr->description);
+            }
+            
         }else{
             $smarty->assign('error',$conv->err_descr);
         }        
@@ -66,6 +70,7 @@ if(isset($_SESSION['curr_user'])){
     foreach($_SESSION['curr_user'] as $key=>$value){
         $t[$key] = $value;
     }
+    $smarty->assign('profilo',$t); 
     $smarty->display('conversazione.tpl');
 }else{
     $smarty->display('index.tpl');

@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 require_once 'libs/aifp_controller.php';
 
 if (!isset($_SESSION['news'])){

@@ -72,14 +72,7 @@ class conversazione extends gen_model
         }
         $user->write_post($text, $fk, $time );           
         if($user->err_descr == ''){
-            $this->attributes['num_post']++;
-            $param = array('num_post' => $this->attributes['num_post']);
-            if($this->update($param)){
-                $this->err_descr = '';
-                return true;
-            }else{                
-                return false;
-            }                        
+           return true;                      
         }else{
             $this->err_descr = $user->err_descr;
             return false;

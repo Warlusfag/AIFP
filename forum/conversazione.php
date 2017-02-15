@@ -32,18 +32,13 @@ if($posts == false){
     $smarty->assign('error',$conv->err_descr);  
 }else{
     //Codice per aggiungere informazioni nei post degli utenti
-    for($i=0;$i<count($posts);$i++){
-        $us = $controller->get_us_from_type($posts[$i]['tipo_user']);
-        $params = array($us->table_descr['key'] => $posts[$i]['user']);
-        $user = $controller->get_user($params);
-        if($controller->description != ''){
-            $smarty->assign('error', $controller->description);
-        }else{
-            unset($posts[$i]['user']);
-            $posts[$i] = array_merge($posts[$i], $user->get_attributes('post'));
-        }
+    if( ($temp = $contr->prepare_post($posts)) ){
+        $smarty->assign('posts', $temp);
+        $smarty->assign('message','Post caricato con successo');  
+    }else{
+        $smarty->assign('error',$contr->description);
     }
-    $smarty->assign('posts', $posts);
+    $smarty->assign('posts', $temp);
 }
 $smarty->assign('s_index',$s);
 $smarty->assign('c_index',$c);

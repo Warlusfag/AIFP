@@ -188,7 +188,7 @@ class user extends gen_model{
         $path = IMG_USER.$this->type.'/'.$this->attributes[$this->table_descr['key']].'/';        
         if(!file_exists($path)){
             if(!mkdir($path)){
-                $this->err_descr = 'ERROR:creazione della cartella non eseguita';
+                $this->err_descr = 'ERROR:Permesso negato';
                 return false;
             }
         }

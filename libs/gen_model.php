@@ -39,8 +39,7 @@ class gen_model{
         if($way == -1){
             return $this->attributes;
         }else if(isset($this->attributes[$way])){
-            $t = array($way => $this->attributes[$way]);
-            return $t;
+            return $this->attributes[$way];            
         }else{
             return false;
         }

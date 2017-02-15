@@ -28,8 +28,10 @@ $smarty = new AIFP_smarty();
 $controller = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){
-    $tok = $_SESSION['curr_user']['token'];    
-    $user = $controller->get_user($tok);
+    $tok = $_SESSION['curr_user']['token'];
+    $user = $controller->get_us_from_type($_SESSION['curr_user']['type']);
+    $user->init($_SESSION['curr_user']);
+    
     if(($post=check_post($_POST))){ 
         $s = $_POST['s_index'];
         $titolo = $_POST['sezione'];
@@ -43,8 +45,8 @@ if(isset($_SESSION['curr_user'])){
         if($sez->add_conversazione($user, $title, $text)){
             //cancello convs così forzo il refresh
             $coll_s->updateitem($s, $sez->get_attributes());
-            $_SESSION['curr_user']['punteggio'] = $user->get_attributes('punteggio');
-            $_SESSION['curr_user']['num_post']= $user->get_attributes('num_post');
+            $_SESSION['curr_user']['punteggio'] = $user->attributes['punteggio'];
+            $_SESSION['curr_user']['num_post']= $user->attributes['num_post'];
             $_SESSION['sezione'] = serialize($coll_s);
             $coll_c = unserialize($_SESSION['convs']);
             $coll_c->erase();

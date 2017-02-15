@@ -53,7 +53,7 @@ class piante extends gen_model{
         }
       
         $this->queries = array(
-            'create' => "CREATE VIEW %s (".$this->column_view.") AS SELECT * FROM %s AS U ",
+            'create' => "CREATE VIEW %s AS SELECT * FROM %s AS U ",
             'drop' => "DROP VIEW %s; ",
             'select' => "SELECT * FROM %s AS U ",
         );        
@@ -109,11 +109,9 @@ class piante extends gen_model{
         return  md5($user.$i.$j);                
     }
     
-    public function insert_fungo($params){
+    public function insert_pianta($params){
         return $this->insert($params);
     }
-    
-
     
     public function search_piante($params, $limit = -1){
         if(!$this->conn->status){
@@ -157,24 +155,29 @@ class piante extends gen_model{
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=0){
-            $app=array();                
-            for($j=0; $j<$nr; $j++){
-                $res->data_seek($j);
-                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
+        if(isset($this->view_name) && isset($this->view_name_old) ){
+            $query = sprintf($this->queries['select'], $this->view_name);
+            $res = $this->conn->query($query);
+            if (!$this->conn->status){            
+                $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
+                return false;
             }
-            if(isset($this->view_name) && isset($this->view_name_old)){
+            if($this->view_name_old != $this->table_descr['table'] ){
                 $this->conn->query(sprintf($this->queries['drop'],$this->view_name_old));
                 if(!$this->conn->status){
                     $this->err_descr = $this->conn->error;
                     return false;
                 }
             }
+        }
+        if(($nr = $res->num_rows) >=0){
+            $app=array();                
+            for($j=0; $j<$nr; $j++){
+                $res->data_seek($j);
+                $app[$j]=$res->fetch_array(MYSQLI_ASSOC);                
+            }
             $this->err_descr = '';
             return $app;
-        }else{                
-            $this->err_descr=$this->conn->error;
-            return false;
         }
     }
     

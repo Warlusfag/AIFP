@@ -14,8 +14,8 @@ if(isset($_GET['regione'])){
     }
 }else if(isset($_GET['miaregione']) ){
     if(isset($_SESSION['curr_user'])){
-        $tok = $_SESSION['curr_user']['token'];    
-        $user = $controller->get_user($tok);    
+        $user = $controller->get_us_from_type($_SESSION['curr_user']['type']);
+        $user->init($_SESSION['curr_user']);    
 
         $path = $controller->get_regolamento($user->attributes['regione']);
         if($path){        
