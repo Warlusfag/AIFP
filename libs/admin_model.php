@@ -71,7 +71,7 @@ class admin extends user{
             $this->err_descr = $ass->err_descr;
             return false;
         }
-        $key = $associazione[$ass->table_descr_req['key']];
+        $key = $ass->conn->last_id;
         $table = $ass->table_descr_file['table'];
         $size = 0;
         $files = '';
@@ -81,7 +81,8 @@ class admin extends user{
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
-        }        
+        }
+        $key = $associazione[$ass->table_descr_req['key']];
         $query_delete = sprintf($this->queries['delete'], $ass->table_descr_req['table'],$ass->table_descr['key'],$key);        
         $this->conn->query($query_delete);
         if (!$this->conn->status){            
