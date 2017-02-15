@@ -3,11 +3,17 @@ session_start();
 
 require_once '../libs/aifp_controller.php';
 
+$smarty = new AIFP_smarty();
+if (isset($_SESSION['inactivity']) && (time() - $_SESSION['inactivity'] > $expired)){    
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+    $smarty->assign('error'," SESSIONE SCADUTA: troppo tempo senza un attivita'");
+}
+$_SESSION['inactivity'] = time();
+
 if (!isset($_SESSION['funghi'])){
     $_SESSION['funghi'] = serialize(new funghi_collection());
 }
-
-$smarty = new AIFP_Smarty();
 
 if(isset($_GET['genere'])){
     $genere = $_GET['genere'];
