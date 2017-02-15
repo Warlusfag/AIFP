@@ -40,12 +40,12 @@
             </div>
                 
             <div class="6u">
-                 <form name="s_eventi" method="post" id="search" onsubmit="return testeventi()"action="{$root}eventi/search_eventi.php" > 
+                 <form name="s_eventi" method="post" id="search" action="{$root}eventi/search_eventi.php" > 
                     <label>Cerca per nome</label>&nbsp &nbsp &nbsp
-                    <input class="reg" type="text" name="nome">
+                    <input class="reg" type="text" id="0" name="nome">
                     <br><br>
                     <label>Cerca per regione</label>&nbsp &nbsp
-                        <select class="button option" name="regione" form="search">
+                        <select class="button option" id="1" name="regione" form="search">
                             <option value="" select="selected">Regione</option>                          
                             <option value="abruzzo">Abruzzo</option>
                             <option value="basilicata">Basilicata</option>
@@ -70,7 +70,7 @@
                                     </select>
                     <br><br>
                     <label>Cerca per tipo</label>&nbsp &nbsp &nbsp &nbsp &nbsp
-                    <select class="button option" name="tipologia" form="search">
+                    <select class="button option" id="2" name="tipologia" form="search">
                         <option value="" select="selected">Tipo</option>
                         <option value="corso">Corso</option>
                         <option value="sagra">Sagra</option>
@@ -79,12 +79,12 @@
                     <br><br>
                     <label>Cerca per data </label>&nbsp &nbsp &nbsp &nbsp
                         
-                    <input type="date" placeholder="Inserisci Data di Nascita" name="data_inizio">
+                    <input type="date" id="3" placeholder="Inserisci Data di Nascita" name="data_inizio">
                  </form>     
             </div>
             <div class="3u">
                 
-                <button type="submit" class="button" form="search">Cerca</button><br>
+                <button type="submit" class="button" onclick="return testeventi()" form="search">Cerca</button><br>
             </div>
                 
             
