@@ -1,6 +1,18 @@
 <?php
 session_start();
 require_once '../libs/aifp_controller.php';
+$smarty = new AIFP_smarty();
+if (isset($_SESSION['inactivity']) && (time() - $_SESSION['inactivity'] > $expired)){    
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+    $smarty->assign('sessione'," SESSIONE SCADUTA: troppo tempo senza un attivita'");
+}
+$_SESSION['inactivity'] = time();
+
+if(!isset($_SESSION['curr_user'])){
+    $smarty->assign('login',1);
+    $smarty->display('index.tpl');
+}
 
 function check_post($param){
     $app = array();
@@ -11,7 +23,7 @@ function check_post($param){
     return $app;
 }
 
-$smarty = new AIFP_smarty();
+
 $controller = new aifp_controller();
 
 $us = $controller->get_us_from_type($_SESSION['curr_user']['type']);

@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+if (isset($_SESSION['inactivity']) && (time() - $_SESSION['incativity'] > $expired)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage    
+}
+$_SESSION['inactivity'] = time();
+
 require_once 'libs/aifp_controller.php';
 function check_post($param)
 {

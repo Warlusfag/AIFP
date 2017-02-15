@@ -103,33 +103,33 @@ class evento extends gen_model
                 return false;
             }
         }        
-        $query = "SELECT * FROM ". $this->table_descr['table'];
+        $query = "SELECT * FROM ". $this->table_descr['table']." AS U ";
         if(count($params) > 0 ||(is_array($after) && count($after)>0)){
-            $query .= " AS U WHERE ";
+            $query .= "WHERE ";
             $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
             $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
             foreach( $column as $i => $key){
                 if(isset($params[$key])){
                     if($c_type[$i] == 's' || $c_type[$i] == 'da'){
-                        $query .= " U.$key='$params[$key]' AND ";                        
+                        $query .= "U.$key='$params[$key]' AND ";                        
                     }else{
-                        $query .= " U.$key=$params[$key] AND ";
+                        $query .= "U.$key=$params[$key] AND ";
                     }
                 }
             }
             if(is_array($after) && count($after)>0){
                 foreach($after as $key=>$value){
                     if($key == 'data_inizio'){
-                        $query .= " '$key'>='$value' AND ";
+                        $query .= "U.$key>='$value' AND ";
                     }else if($key == 'data_fine'){
-                        $query .= " '$key'<='$value' AND ";
+                        $query .= "U.$key<='$value' AND ";
                     }
                 }
             }
         }
         $query = substr_replace($query, '', count($query)-6);
         
-        $query .= " ORDER BY 'data_inzio'";
+        $query .= " ORDER BY 'data_inzio' ASC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }

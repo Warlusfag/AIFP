@@ -20,6 +20,18 @@ function load_newconv($coll_c, $s_index, $page){
     }
 }
 
+$smarty = new AIFP_smarty();
+if (isset($_SESSION['inactivity']) && (time() - $_SESSION['inactivity'] > $expired)){    
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+    $smarty->assign('sessione'," SESSIONE SCADUTA: troppo tempo senza un attivita'");
+}
+$_SESSION['inactivity'] = time();
+if(!isset($_SESSION['curr_user'])){
+    $smarty->assign('login',1);
+    $smarty->display('index.tpl');
+}
+
 if (!isset($_SESSION['convs'])){
     $_SESSION['convs'] = serialize(new conv_collection());
 }
@@ -29,8 +41,6 @@ if(isset($_GET['page'])){
 }else{
     $page = 0;
 }
-
-$smarty = new AIFP_smarty();
 
 $coll_c = unserialize($_SESSION['convs']);
 $convs = array();
