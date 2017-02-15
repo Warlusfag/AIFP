@@ -49,18 +49,16 @@ $titolo = $_POST['sezione'];
 $flag = false;
 
 if( $coll_c->sezione == $i){
-    if( ($convs = $coll_c->getitem($page)) != false){
-        $flag = true;
-        $smarty->assign('convs',$convs);
-    }
+    $convs = $coll_c->getitem($page);
+    $flag = true;       
 }else{
     //l'utente ha cambiato sezione e devo caricare tutte le conversazioni di quella sezione
-   $ris = load_newconv($coll_c, $i, $page);
-   if(is_array($ris)){
+   $convs = load_newconv($coll_c, $i, $page);
+   if(is_array($convs)){
        $flag = true;
-       $smarty->assign('convs', $ris);
    }
 }
+$smarty->assign('convs',$convs); 
 $smarty->assign('s_index',$i);
 $smarty->assign('sezione',$titolo);
 foreach($_SESSION['curr_user'] as $key=>$value){

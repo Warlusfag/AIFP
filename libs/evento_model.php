@@ -59,7 +59,7 @@ class evento extends gen_model
                 return false;
             }
         }
-        $t = array('id_ass' => $ass);
+        $t = array('id_ass' => $ass);        
         $params = array_merge($params, $t);
         if(!$this->insert($params)){
             return false;
@@ -111,7 +111,8 @@ class evento extends gen_model
             foreach( $column as $i => $key){
                 if(isset($params[$key])){
                     if($c_type[$i] == 's' || $c_type[$i] == 'da'){
-                        $query .= "U.$key='$params[$key]' AND ";                        
+                        $t = $this->conn->sanitaze_input($params[$key],'sql');
+                        $query .= "U.$key='$t' AND ";                        
                     }else{
                         $query .= "U.$key=$params[$key] AND ";
                     }

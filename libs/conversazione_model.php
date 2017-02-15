@@ -47,7 +47,7 @@ class conversazione extends gen_model
             }
         }
         $this->attributes['sezione'] = $fk_sez;
-        $this->attributes['titolo'] = $titolo;
+        $this->attributes['titolo'] = $this->conn->sanitaze_input($titolo,'html');
         $this->attributes['data'] = $this->conn->get_timestamp();
         $this->insert($this->attributes);
         
@@ -75,6 +75,7 @@ class conversazione extends gen_model
         }else{
             $time = $this->attributes['data'];
         }
+        $text = $this->conn->sanitaze_input($text, 'html');
         $user->write_post($text, $fk, $time );           
         if($user->err_descr == ''){
            return true;                      
