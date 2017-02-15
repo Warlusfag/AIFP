@@ -1,27 +1,33 @@
 
 function testeventi(){
-  var nome = document.forms["s_eventi"]["nome"].value;
-  var regione = document.forms["s_eventi"]["regione"].value;
-  var tipo = document.forms["s_eventi"]["tipologia"].value;
-  var data_inizio = document.forms["s_eventi"]["data_inizio"].value;
-
-  if (nome === "" && regione === "" && tipo === "" && data_inizio === "") {
-  
-    alert("Inserire almeno un campo di ricerca");
     
-    document.forms["s_eventi"]["regione"].focus();
-
-    document.forms["s_eventi"]["tipologia"].focus();
-    
-    document.forms["s_eventi"]["data_inizio"].focus();
-    document.forms["s_eventi"]["nome"].focus();
-    document.forms["s_eventi"]["nome"].select();
-    return false;
-  }
-  
-return true;  	
-  
+    var count=0;
+    if(document.getElementById(0).value===""){
+        document.getElementById(0).disabled = true;
+        count++;
+    }
+    if(document.getElementById(1).value===""){
+        document.getElementById(1).disabled = true;
+        count++;
+    }
+    if(document.getElementById(2).value===""){
+         document.getElementById(2).disabled = true;
+         count++;
+    }
+    if(document.getElementById(3).value===""){
+         document.getElementById(3).disabled = true;
+         count++;
+    }
+    if(count===4){
+        for(i=0; i<4; i++){
+            document.getElementById(i).disabled = false;
+        }
+        alert("Inserire almeno un campo di ricerca");
+        return false;
+    }
+   return true;
 }
+
 
 function download(){
      document.getElementById("down").click();

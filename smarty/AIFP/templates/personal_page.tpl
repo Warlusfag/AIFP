@@ -18,7 +18,13 @@
         </script>
 {/if}   
 
-{if $file}
+{if $funghi}
+    <script>
+        show("form2");
+    </script>
+{/if}
+
+{if $files}
     <script>
         show("form4");
     </script>
@@ -51,6 +57,8 @@
                 {$color_up="grey"}
             {/if}
             {if $profilo.type=="admin"}
+                {$status_add="disabled"}
+                {$color_add="grey"}
                 {$status_fs="disabled"}
                 {$color_fs="grey"}
             {/if}
@@ -170,7 +178,7 @@
                         <li><br></li>
                         <li>Data di nascita &nbsp &nbsp<input type="date" name="data"></li>
                     </ul>
-                    <button class="button personal" type="submit">Salva</button>
+                    <button class="button personal" onclick="return testmod()"type="submit">Salva</button>
                     <br><br>
                 </section>
                 {else}
@@ -227,7 +235,7 @@
         
           <section>
             <header>
-                    <h2>RICERCA DICOTOMICA</h2>
+                    <h2>RICERCA FUNGO</h2>
                     <h3>Ricerca fungo per </h3>
             </header>
             <form id="search" name="s_funghi"   action="{$root}personal_page/search_funghi.php" method="post">
@@ -341,8 +349,118 @@
                     </tr>
                 </table>
             </form>
+                <ul class="default">
+                        {$count=-1}
+                {foreach $funghi as $f}
+                            <form action="{$root}personal_page/search_funghi.php" method="post">
+                                {$count=$count+1}
+   
+                                <button class="sezione" name="index" value="{$count}" type="submit">
+                                <li>
+                                    <div class="row half">
+                                        <div class="7u">
+                                            <br>
+                                            <span style="font-size:20px;"><strong>{$f.genere} {$f.specie}</strong></span>
+                                            <br>
+                                        </div>
+                                        <div class="3u" style="float:right; border-left: solid 1px #ddd">
+                                            <br>
+                                            <span> </span>
+                                        </div>
+                                    </div>
+                                </li>
+                                </button>
+                            </form>
+                    {/foreach}
+                
+                </ul>
           </section>
-       
+          
+        {if $descrizione}
+            <script>
+                show(form2);
+                document.getElementById('fungo').style.display='block';
+            </script>
+        {/if}
+        <!--Fungo model-->
+        <div id="fungo" class="modal">
+            <div class="logcontainer" style="background-color: #f1f1f1">
+                <label><b>{$descrizione.genere} {$descrizione.fungo}</b></label>
+            </div>
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('fungo').style.display='none'" class="close" title="Chiudi">&times;</span>
+                    <section>
+                                <div class="slideshow-container">
+                                    {$max = count($foto)}
+                                    {$count=0}
+                                    {foreach $foto as $f}
+                                        {if $count!=0}
+                                            {$count=$count+1}
+                                            <div class="mySlides fade">
+                                                <div class="numbertext">{$count} / {$max}</div>
+                                                <a class="image full"><img src="{$root}{$f}" alt=""></a>
+                                            </div>
+                                        {/if}
+                                        {if $count==0}
+                                            {$count=$count+1}
+                                            <div class="mySlides fade" style="display: block;">
+                                                <div class="numbertext">1 / {$max}</div>
+                                                <a class="image full"><img src="{$root}{$f}" alt=""></a>
+                                            </div>
+                                        {/if}
+                                        
+                                    {/foreach}
+                                    
+                                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                                    <a class="next" onclick="plusSlides(1)">❯</a>
+                                </div>
+                                <br>
+                                
+                                {$i=0}
+                                
+                                <div style="text-align:center">
+                                    {while $i < $max}
+                                         <span class="dot" onclick="currentSlide({$i})"></span> 
+                                         {$i=$i+1}
+                                    {/while}
+                                </div>
+                                
+                        </section>
+            </div>
+
+                <div class="logcontainer">
+                <div class="4u">
+                <ul>
+                    <li><b>Commestibile</b> {$descrizione.commestiblie}</li>
+                    <li><b>Sporata</b> {$descrizione.sporata}</li>
+                    <li><b>Viraggio</b> {$descrizione.viraggio}</li>
+                   
+                </ul>
+                    <hr>
+                </div>
+                <div class="4u">
+                <ul>
+                    <li><b>Imenio</b> {$descrizione.imenio}</li>
+                    <li><b>Anello</b> {$descrizione.anello}</li>
+                    <li><b>Volva</b> {$descrizione.volva}</li>
+                    <li><b>Habitat</b> {$descrizione.habitat}</li>
+                    <li><b>Stagione</b> {$descrizione.stagione}</li>
+                </ul>
+                </div>
+               
+                <div class="11u">
+                <hr>
+                <ul>
+                    <li><b>Cappello</b> {$descrizione.cappello}</li>
+                    <li><b>Colore</b> {$descrizione.colore}</li>
+                    <li><b>Gambo</b> {$descrizione.gambo}</li>
+                    <li><b>Pianta</b> {$descrizione.pianta}</li>
+                    <li><b>Descrizione</b> {$descrizione.descrizione}</li>
+                </ul>         
+
+                </div>
+                </div>
+        </div>
     </div>
         
        <!-- AGGIUNGI EVENTO -->
@@ -415,7 +533,7 @@
                        <th></th>
                    </tr>
                    
-                   {foreach $files ad $file}
+                   {foreach $files as $file}
                    <tr>
                      <td>{$file.nome}</td>
                      <td>{$file.size}</td>
@@ -425,8 +543,15 @@
                   
                    </tr>
                    {/foreach}
+                     
+                    <
                  </table>
+          </form>
+            <form action="{$root}personal_page/file_space.php" method="post" enctype="multipart/form-data>
+                    <input type="file" name="file">
+                    <button type="submit" name="action" value="upload">Upload file</button>
             </form>
+                   
         </div>
     </div>
        
@@ -469,10 +594,14 @@
                             <h2>Promuovi Utente</h2>
                     </header>
            </section>
-            <form action="{$root}personal_page/#.php" method="post">
+            <form action="{$root}personal_page/upgrade_user.php" method="post">
                 <p>Inserisci l'email dell'utente da promuovere</p>
-                <input type="email" name="email">
-                <button type="submit" class="button schede">Promuovi</button>
+                
+                <input type="email" name="email"><br>
+                <input type="radio" name="type" value="iscritto">Iscritto
+                <input type="radio" name="type" value="micologo">Micologo
+                <input type="radio" name="type" value="botanico">Botanico<br>
+                <button type="submit" class="button">Promuovi</button>
             </form>
         </div>
     </div>

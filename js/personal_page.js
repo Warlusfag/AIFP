@@ -43,4 +43,8 @@ function searchtest(){
    return true;
 }
 
+function testmode(){
+    
+    alert();
+}
 
