@@ -28,7 +28,6 @@ $smarty = new AIFP_smarty();
 $controller = new aifp_controller();
 
 if(isset($_SESSION['curr_user'])){
-    $tok = $_SESSION['curr_user']['token'];
     $user = $controller->get_us_from_type($_SESSION['curr_user']['type']);
     $user->init($_SESSION['curr_user']);
     
@@ -62,7 +61,7 @@ if(isset($_SESSION['curr_user'])){
         $smarty->assign('error','BAD parameters');        
     }
     foreach($_SESSION['curr_user'] as $key=>$value){
-    $t[$key] = $value;
+        $t[$key] = $value;
     }
     $smarty->assign('profilo', $t );
     $smarty->display('sezione.tpl');

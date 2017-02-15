@@ -74,7 +74,11 @@ class user extends gen_model{
             $keys = explode(',',$way);
             foreach($keys as $i=>$key){
                 if(isset($this->attributes[$key])){
-                    $t[$key] = $this->attributes[$key];
+                    if($key == 'image'){
+                        $t[$key] = $this->get_image();
+                    }else{
+                        $t[$key] = $this->attributes[$key];
+                    }
                 }
             }
             return $t;
@@ -232,11 +236,24 @@ class inscritto extends user
         $this->table_descr['table'] = 'inscritti';
         $this->table_descr['key'] = 'id_inscr';        
         $this->table_descr['column_name']='associazione,email,user,password,nome,cognome,regione,residenza,data,num_post,punteggio,image,patentino,esperto';
-        $this->table_descr['column_type']='i,s,s,s,s,s,s,s,da,i,i,s,i,i';             
-        $this->attributes['esperto'] = false;
-        $this->attributes['id_inscr'] = -1;
-        $this->attributes['associazione'] = -1;
-        $this->attributes['id_inscr'] = -1;
+        $this->table_descr['column_type']='i,s,s,s,s,s,s,s,da,i,i,s,i,i';
+        $this->attributes = array(
+            'id_inscr' => -1,
+            'associazione'=>-1,
+            'email'=>'',
+            'user'=>'',
+            'password'=>'',
+            'nome'=>'',
+            'cognome'=>'',
+            'regione'=>'',
+            'residenza'=>'',
+            'data'=>'',
+            'num_post'=>0,
+            'punteggio'=>100,
+            'image'=>DEFAULT_IMG,
+            'patentino'=>1,
+            'esperto'=>0,
+        );
     }
     
     public function upgrade_esperto(){
@@ -257,12 +274,25 @@ class micologo extends inscritto
     function __construct(){        
         parent::__construct();
         $this->type ='micologo';
-        $this->attributes['esperto'] = true;
         $this->table_descr['table'] = 'micologi';
-        $this->table_descr['table_descr'] = 'descr_mico';
         $this->table_descr['key'] = 'id_mico';
-        $this->attributes['id_mico'] = -1;
-        $this->attributes['id_mico'] = -1;
+        $this->attributes = array(
+            'id_mico' => -1,
+            'associazione'=>-1,
+            'email'=>'',
+            'user'=>'',
+            'password'=>'',
+            'nome'=>'',
+            'cognome'=>'',
+            'regione'=>'',
+            'residenza'=>'',
+            'data'=>'',
+            'num_post'=>0,
+            'punteggio'=>200,
+            'image'=>DEFAULT_IMG,
+            'patentino'=>1,
+            'esperto'=>1,
+        );
     }   
 
 }
@@ -273,12 +303,25 @@ class botanico extends inscritto
         
         parent::__construct();
         $this->type ='botanico';        
-        $this->attributes['esperto'] = true;
         $this->table_descr['table'] = 'botanici';
-        $this->table_descr['table_descr'] = 'descr_bot';
         $this->table_descr['key'] = 'id_bot';
-        $this->attributes['id_bot'] = -1;
-        $this->attributes['id_bot'] = -1;
+        $this->attributes = array(
+            'id_mico' => -1,
+            'associazione'=>-1,
+            'email'=>'',
+            'user'=>'',
+            'password'=>'',
+            'nome'=>'',
+            'cognome'=>'',
+            'regione'=>'',
+            'residenza'=>'',
+            'data'=>'',
+            'num_post'=>0,
+            'punteggio'=>200,
+            'image'=>DEFAULT_IMG,
+            'patentino'=>1,
+            'esperto'=>1,
+        );
     }
 }
 

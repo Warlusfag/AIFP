@@ -335,6 +335,7 @@ class aifp_controller
 		return $emails;
 	    }
 	  }
+          
 	public function upgrade_user($ass_attr, $em, $type){        
         $us_new = $this->get_us_from_type($type);
         if(!is_object($us_new) || $us_new->type == 'associazione' || $us_new->type == 'utente'){
@@ -355,8 +356,8 @@ class aifp_controller
         $ass = new associazione();
         $ass->init($ass_attr);
 
-        $us->attributes['associazione'] = $ass->attributes[$this->table_descr['key']];
-        $us->attributes['punteggio'] += 300;       
+        $us_new->attributes['associazione'] = $ass->attributes[$ass->table_descr['key']];
+        $us->attributes['punteggio'] += 300;
         $us->upgrade_esperto();
         if(!$us_new->insert_user($us->attributes)){
             $this->description = $us->err_descr;

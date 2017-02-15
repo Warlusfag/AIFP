@@ -54,13 +54,13 @@ class associazione extends user
             'provincia'=>'',
             'indirizzo'=>'',
             'CAP'=>'',
-            'partecipanti'=>'',
+            'componenti'=>'',
             'sito_web'=>'',
         );
         
         $this->table_descr_req = $this->table_descr;
         $this->table_descr_req['table'] = 'request_ass';    
-        $this->table_descr_req['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,partecipanti,sito_web';
+        $this->table_descr_req['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,componenti,sito_web';
         $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s,i,s';
     }
     

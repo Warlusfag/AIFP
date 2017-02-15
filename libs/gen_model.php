@@ -124,7 +124,7 @@ class gen_model{
             return false;
         }
         $this->err_descr = '';
-        return false;        
+        return true;;        
     }
     
     public function search($params, $limit=-1, $order = -1)

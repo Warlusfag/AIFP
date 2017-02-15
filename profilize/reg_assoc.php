@@ -38,7 +38,7 @@ function check_post($param){
             $app[$key] = $value;
             $i++;
         }
-        else if( $key == 'partecipanti' ){
+        else if( $key == 'componenti' ){
             $app[$key] = $value;
             $i++;
         }
@@ -53,19 +53,29 @@ function check_post($param){
         return null;
     }    
 }
-$message = "Congratulazioni, lei si è appena registarto al nostro sito";
+$message = "Congratulazioni, lei si è appena registarto al nostro sito. Effettua il Login per scoprire le fantastiche funzionalita' di AIFP";
 
 $smarty = new AIFP_Smarty();
+$contr = new aifp_controller();
 
 if( (($post= check_post($_POST))) ){
-    $user = new associazione();    
-    if($user->register_assoc($post)){
-        $smarty->assign('message',$message);
-    }else{
+    $user = new associazione();
+    $params = array(
+        'email' => $post['email'],
+    );
+    $test = $contr->search_OnAll_users($params,1);
+    if(count($test)>0){
         $smarty->assign('error', $user->err_descr);
-    }    
+    }
+    else{ 
+        if($user->register_assoc($post)){
+            $smarty->assign('message',$message);
+        }else{
+            $smarty->assign('error', $user->err_descr);
+        }    
+    }
 }else{
     $smarty->assign('error', GEN_ERROR);
 }    
-
+$smarty->display('index.tpl');
 
