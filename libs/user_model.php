@@ -108,6 +108,9 @@ class user extends gen_model{
     
     
     public function insert_user($params){
+        foreach ($this->attributes as $key=>$value){
+            $params[$key] = $this->conn->sanitaze_input($value,'html');
+        }         
         return $this->insert($params);   
     }
     
@@ -118,6 +121,16 @@ class user extends gen_model{
     
     //il parametro limit serve per limitare il numero dei risultati
     public function search_user($params, $limit=-1){
+        $i=0;
+        $type = explode(',',$this->table_descr['column_type']);
+        foreach($this->attributes as $key =>$value){
+            if(isset($params[$key])){
+                if($type[$i] == 's'){
+                    $params[$key] = $this->conn->sanitaze_input($params[$key],'sql');
+                }
+            }
+            $i++;
+        }
         return $this->search($params, $limit);       
     }  
     
@@ -306,7 +319,7 @@ class botanico extends inscritto
         $this->table_descr['table'] = 'botanici';
         $this->table_descr['key'] = 'id_bot';
         $this->attributes = array(
-            'id_mico' => -1,
+            'id_bot' => -1,
             'associazione'=>-1,
             'email'=>'',
             'user'=>'',
