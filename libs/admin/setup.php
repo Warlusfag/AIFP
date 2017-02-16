@@ -1,23 +1,22 @@
 <?php
 
-if(!define(setup)){
-    define('setup',1);
-}
-//Constanti per la trasportabilità del sito su diverse piattaforme
-$server_root='/srv/www/AIFP/';
-
-
-date_default_timezone_set('UTC');
+$server_root = "/srv/www/AIFP/";
+$expired = 1800;
 
 //constanti per la gestione del sito
 define('PROJ_DIR', $server_root);
+define('IMAGE', PROJ_DIR.'images/');
 define('PROJ_LIBS',PROJ_DIR.'libs/');
 define('PROJ_ADMIN', PROJ_LIBS.'admin/');
-define('FILE_ASS', PROJ_LIBS.'fuser/filespace_ass/');
-define('IMG_USER', PROJ_LIBS.'fuser/image_user/');
-define('IMG_MUSH',PROJ_LIBS.'/imgage_funghi/');
-define('DEFAULT_IMG', IMG_USER.'default.png');
-define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com');
+//IMMAGINI
+define('IMG_USER', IMAGE.'image_user/');
+define('DEFAULT_IMG', IMAGE.'default.png');
+define('IMG_MUSH', PROJ_DIR.'funghi/image_funghi/');
+define('IMG_PLANT',PROJ_DIR.'piante/image_piante/');
+//DILE SPACE ASSOCIAZIONE
+define('FILE_ASS', PROJ_DIR.'filespace_ass/');
+//GENERAL ERROR
+define('GEN_ERROR','Internal problem if persist, please contact the system administrator: g.faggioni5@gmail.com and gianmarcotroiano@gmail.com');
 
 //ini_set('include_path', PROJ_ADMIN.'smarty/libs');
 require_once(PROJ_ADMIN.'smarty/Smarty.class.php');
@@ -26,14 +25,24 @@ class AIFP_smarty extends Smarty
 {    
     function __construct()
     {
-        parent::__construct();       
-     
-        $this->template_dir=PROJ_DIR.'smarty/AIFP/templates/';        
-        $this->_cache_include =PROJ_DIR.'smarty/AIFP/cache/';     
-        $this->compile_dir=PROJ_DIR.'smarty/AIFP/templates_c/';
-        $this->config_dir=PROJ_DIR.'smarty/AIFP/configs/';
+        parent::__construct();
+        
+        $this->setCacheDir(PROJ_DIR.'smarty/AIFP/cache/');
+        $this->setConfigDir(PROJ_DIR.'smarty/AIFP/configs/');
+        $this->setTemplateDir(PROJ_DIR.'smarty/AIFP/templates/');
+        $this->setCompileDir(PROJ_DIR.'smarty/AIFP/templates_c/');
+        
+        //$this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+        $this->debugging = true;
+        $this->error_reporting = 0;
         
     }
+    
+    function global_variable(){
+        $this->assign('error', '');
+    }
 }
+
+
 
 

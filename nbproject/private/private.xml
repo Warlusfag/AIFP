@@ -3,14 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/srv/www/AIFP/libs/associazione_model.php</file>
-            <file>file:/srv/www/AIFP/eventi/search_eventi.php</file>
-            <file>file:/srv/www/AIFP/libs/conversazione_model.php</file>
-            <file>file:/srv/www/AIFP/libs/aifp_controller.php</file>
-            <file>file:/srv/www/AIFP/lettera_esperto.php</file>
-            <file>file:/srv/www/AIFP/libs/user_model.php</file>
-            <file>file:/srv/www/AIFP/libs/funghi_model.php</file>
-            <file>file:/srv/www/AIFP/libs/sezione_model.php</file>
+            <file>file:/srv/www/AIFP/login.php</file>
         </group>
     </open-files>
 </project-private>

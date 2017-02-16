@@ -1,25 +1,18 @@
 <?php
-if(!defined(evento)){
-    require_once 'gen_model.php';
-    require_once 'admin/setup.php';
-    define('evento',1);
-}
+
+require_once 'gen_model.php';
+require_once 'admin/setup.php';
 
 class evento extends gen_model
-{     
-    
-    static public $inserted;
-    
+{   
     function __construct()
     {        
         parent::__construct(); 
         
-        self::$inserted = true;
-        
         $this->attributes = array(
             'id_evento'=>-1,
-            'titolo' => '',
             'id_ass' => -1,
+            'nome' => '',            
             'tipologia' => '',
             'regione' => '',
             'provincia'=> '',
@@ -31,8 +24,8 @@ class evento extends gen_model
             'table' => 'eventi',
             'key'=>'id_evento',
             'key_type'=>'i',
-            'column_name' => 'id_eventi,id_ass,titolo,tipologia,regione,provincia,data_inizio,data_fine',
-            'colimn_type' => 'i,i,s,s,s,s,da,da',
+            'column_name' => 'id_ass,nome,tipologia,regione,provincia,data_inizio,data_fine',
+            'column_type' => 'i,s,s,s,s,da,da',
         );
     }
     
@@ -44,11 +37,7 @@ class evento extends gen_model
                 return false;
             }
         }
-        //If tinserted is false i have already update all my news
-        if(!self::$inserted){
-            return true;
-        }
-        $date = $this->conn->get_curdate();
+        $date = $this->conn->get_current_date();
         
         $params = array();
         $after = array(
@@ -58,7 +47,6 @@ class evento extends gen_model
        if($this->err_descr != ''){
            return false;
        }
-       self::$inserted = false;
        return $news;               
     }
     
@@ -71,49 +59,39 @@ class evento extends gen_model
                 return false;
             }
         }
-
-        $table=$this->table_descr['table'];
-        $name = extract_node($this->table_descr['column_name'], 0);        
-        $type = extract_node($this->table_descr['column_type'], 0);
-        
-        $keys = explode(',',$this->table_descr['column_name']);
-        $values = array();
-        $i=0;
-        foreach($keys as $key){
-            if(isset($params[$key]) && $key != $this->table_descr['key']){
-                if($key == 'id_ass'){
-                    $values[$i] = $ass->attributes['key'];
-                }
-                $values[$i]=$params[$key];
-                $i++;
-            }            
-        }
-        if(!$this->conn->statement_insert($table, $name, $values, $type)){
-            $this->err_descr = $this->conn->error;
+        $t = array('id_ass' => $ass);        
+        $params = array_merge($params, $t);
+        if(!$this->insert($params)){
             return false;
-        }
-        
+        }        
         //send email to confirm
-        self::$inserted = true;
         $this->err_descr = '';
         return true;
         
     }
     
     //Ancora da finire
-    public function register_evento( $email)
+    public function register_evento($id, $email)
     {     
-            
-        $titolo = $ev['titolo'];
+        require_once 'associazione_model.php';
+        
+        $params = array($this->table_descr['key'] => $id);        
+        $data = $this->search_eventi($params);
+        $this->init($data);
+        
+        $ass = new associazione();
+        $params = array($ass->table_descr['key'] => $this->attributes['id_ass']);
+        $ass->search_user($params);
+           
+        $titolo = $this->attributes['nome'];
+        $em_ass = $ass->attributes['email'];
         $subject="AIFP: un utente si è inscritto al tuo evento: $titolo ";
-        $text= "Gentile associazione ".$ass['nome'].","
+        $text= "Gentile associazione ".$ass->attributes['nome'].",\n"
                 . "con la presente email le vogliamo comunicare che un utente si appena inscritto "
-                . "al suo evento ";
-
-        $subject="AIFP: email di conferma dell\'avenuta inscrizione all\'evento: $titolo ";
-        $text= "Gentile utente,"
-                . "con la presente email le confermiamo l'avvenuta registrazione ";
-            
+                . "al suo evento, la sua email e' ".$email;
+        //incio della email
+        
+        return true;
         
     }
     
@@ -124,44 +102,53 @@ class evento extends gen_model
                 $this->err_descr = "ERROR: DB is not ready";
                 return false;
             }
-        }
-        $query = "SELECT * FROM $this->table_descr['table']";
-        if(count($params) > 0 || is_array($after)){
-             $query .= " WHERE ";
-            $column = explode(',', $this->table_descr['column_name']);
-            foreach( $column as $key){
+        }        
+        $query = "SELECT * FROM ". $this->table_descr['table']." AS U ";
+        if(count($params) > 0 ||(is_array($after) && count($after)>0)){
+            $query .= "WHERE ";
+            $column = explode(',', $this->table_descr['key'].','.$this->table_descr['column_name']);
+            $c_type = explode(',', $this->table_descr['key_type'].','.$this->table_descr['column_type']);
+            foreach( $column as $i => $key){
                 if(isset($params[$key])){
-                    $query .= $key."=".$params[$key]." AND ";
+                    if($c_type[$i] == 's' || $c_type[$i] == 'da'){
+                        $t = $this->conn->sanitaze_input($params[$key],'sql');
+                        $query .= "U.$key='$t' AND ";                        
+                    }else{
+                        $query .= "U.$key=$params[$key] AND ";
+                    }
                 }
             }
-            if(is_array($after)){
+            if(is_array($after) && count($after)>0){
                 foreach($after as $key=>$value){
-                    $query .= "$key >= $after AND ";
+                    if($key == 'data_inizio'){
+                        $query .= "U.$key>='$value' AND ";
+                    }else if($key == 'data_fine'){
+                        $query .= "U.$key<='$value' AND ";
+                    }
                 }
-            }            
-            $query = str_replace($query, '', count($query)-6);
+            }
         }
+        $query = substr_replace($query, '', count($query)-6);
+        
+        $query .= " ORDER BY 'data_inzio' ASC";
         if($limit > 0){
             $query .= " LIMIT $limit";            
         }
-        $query .= " ORDER BY $this->attributes['data_inzio];";
+        $query .= ';';        
         
         $res = $this->conn->query($query);
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $res->num_rows) >=1){
+        if(($nr = $res->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $res->data_seek($j);
-                $app[$j]=$res->fetch_assoc();                
+                $app[$j]=$res->fetch_array(MYSQLI_BOTH);                
             }
             $this->err_descr = '';
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
-        }      
+        }
     }   
 }

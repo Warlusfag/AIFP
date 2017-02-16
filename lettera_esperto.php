@@ -1,71 +1,58 @@
 <?php
+session_start();
+
+if (isset($_SESSION['inactivity']) && (time() - $_SESSION['incativity'] > $expired)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage    
+}
+$_SESSION['inactivity'] = time();
 
 require_once 'libs/aifp_controller.php';
-
 function check_post($param)
 {
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'email' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'testo' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'nome' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
     }
     return $app;
 }
-
 $smarty = new AIFP_smarty();
 $contr = new aifp_controller();
-
-if( ($post = check_post($_POST)) ){
-    $params = array(
-        'esperto' => 1,
-    );    
-    $list_user = search_OnAll_descr_user($parmas, 20);
-    if($list_user){
-        $emails = array();
-        $i=0;
-        foreach($list_user as $value){
-            //prendo solamente il primo perché ho bisogno della chiamata
-            foreach($value as $key=>$id){
-                $p = array($key => $id);
-                break;
-            }
-            $u=  $contr->search_OnAll_users($p);
-            $emails[$i] = $u['email'];
-            $i++;
-        }        
+$post = check_post($_POST);
+if(count($post) > 0){
+   
+    $emails = $contr->lettera_esperto($post['email'], $post['nome'],$post['testo']);
+    if(!is_array($emails)){
+        $smarty->assign('error',$contr->description);
     }else{
-        $smarty->assign('error', GEN_ERROR);
-        $smarty->display('error.tpl');        
-    }       
-    $oggetto="AIFP: L\'utente $post[nome] con email $post[email] ha richiesto la consulenza di un esperto";
-    
-    foreach ($emails as $value) {
-        mail($value, $oggetto, $testo);
-    }
-    $type = array(
-        0 => 's',
-        1 => 's',
-        2 => 's',
-    );
-    $name = array_keys($post);
-    $value = array_values($post);
-    $db = new db_interface();    
-    if(!$db->insert_statement('lettera_esperto',$value,$name,$type)){
-        $smarty->assign('error', GEN_ERROR);
-        $smarty->display('error.tpl');
-    }else{
-        //successo
-    }
-}else{
-    $smarty->assign('error', GEN_ERROR);
-    $smarty->display('error.tpl');
+        //code for send email
+        $smarty->assign('message','La tua richiesta è stata spedita agli esperti del nostri sito con successo.\n Grazie per aver usato questo servizio');
+   }
 }
-
-
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
+}
+if(isset($_SESSION['news'])){
+    $new_col = unserialize($_SESSION['news']);
+    $news = $new_col->get_all_news();
+    $smarty->assign('news', $news );
+}
+if(isset($_SESSION['curr_user'])){   
+    foreach($_SESSION['curr_user'] as $key=>$value){
+        $t[$key] = $value;
+    }
+    $smarty->assign('profilo', $t );    
+}
+$smarty->display('lettera_esperto.tpl');

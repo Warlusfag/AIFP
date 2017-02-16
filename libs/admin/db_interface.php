@@ -19,8 +19,9 @@ class db_interface
     );   
     
     function __construct(){       
-        if(!self::$connection){
+        if(!self::$connection){           
             self::$connection = new mysqli(self::$db_params['server'], self::$db_params['user'], self::$db_params['password'], self::$db_params['database']);
+            
         }
         if (self::$connection->connect_error){
             $this->status = false;
@@ -32,7 +33,28 @@ class db_interface
         $this->last_query = "";
         $this->last_id=-1;
     }
-
+    
+    /*mode può essere sia:
+     * sql
+     * html
+     * shell
+     * che l'uninonde delle stringhe esempio sqlhtml
+     */
+    public function sanitaze_input($input, $mode){
+        
+        if (strpos($mode, 'html') !== false){
+            $input = htmlentities($input);
+        }
+        if (strpos($mode, 'sql') !== false){
+            $input = self::$connection->real_escape_string($input);
+        }
+        if (strpos($mode, 'shell') !== false){
+            $input = escapeshellcmd($input);
+        }
+        return $input;
+        
+    }
+    
     public function format_date($date){
         //Codice per rendere una data con gli / per SQL
         
@@ -109,32 +131,32 @@ class db_interface
             $this->error='Error, in the number of parameters';
             return false;
         }
-        $query="UPDATE '$table ";        
+        $query="UPDATE $table ";        
         $set="SET ";
         $ptype='';
         $g_param= array();
 
         $param_name = explode(',', $param_name);
+        $param_type = explode(',', $param_type);
         for( $i=0; $i<count($param_name);$i++){               
             if($param_type[$i] == 'da'){
-                $set.=$param_name[$i]."= str_to_date(?,\'%Y-%m-%d\'), ";
+                $set.=$param_name[$i]." = str_to_date(?,\'%Y-%m-%d\'), ";
                 $ptype .= 's';
             }
             else if($param_type[$i] == 't'){
-                $query_val.='str_to_date(?,\'%Y-%m-%d %H:$i:%s\'), ';
+                $set .=$param_name[$i]." = str_to_date(?,\'%Y-%m-%d %H:%i:%s\'), ";
                 $ptype .= 's';                    
             }
             else{
-                $set .= $param_name[$i]."= ?, ";
+                $set .= $param_name[$i]." = ?, ";
                 $ptype .= $param_type[$i];
             }
         }
         //codice per inserire uno spazio al posto della virgola finale
         $set = substr_replace($set, ' ', count($set)-3);
         
-        $where = ' WHERE '.$id_arr[0].'='.$id_arr[2].';';
-        $q = $query.$set.$where;        
-        $ptype .= $id_arr[1];
+        $where = ' WHERE '.$id_arr[0].'='.$id_arr[1].';';
+        $q = $query.$set.$where;                
 
         $g_param[] = & $ptype;
         for($i=0;$i<count($param_value);$i++){

@@ -1,183 +1,66 @@
-<!DOCTYPE HTML>
+{extends file="generic_page_sidebar.tpl"}
 
-<html>
-	<head>
-		<title>storia</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-panels.min.js"></script>
-		<script src="js/init.js"></script>
-		<noscript>
-			<link rel="stylesheet" href="css/skel-noscript.css" />
-			<link rel="stylesheet" href="css/style.css" />
-			<link rel="stylesheet" href="css/style-desktop.css" />
-		</noscript>
-	</head>
-	<body>
+{block "title"}Storia{/block}
 
-	<!-- Header -->
-		<div id="header">
-			<div class="container">
-					
-				<!-- Logo -->
-					<div id="logo">
-						<h1><a href="index.php">AIFP</a></h1>
-					</div>
-			</div>
-			<div id="nav-wrapper" class="container">
-				<!-- Nav -->
-					<nav id="nav">
-						<ul>
-							<li><a href="index.php">Home</a></li>
-							<li><a href="funghi.php">Funghi</a></li>
-								<!--<ul>
-									<li><a href="#">Storia del fungo</a></li>
-									<li><a href="#">Schede funghi</a></li>
-									<li><a href="#">Libri e guide</a></li>
-									<li><a href="#">Approfondimenti</a></li>
-								</ul>-->
-							<li><a href="">Regolamenti</a></li>
-							<li><a href="">Eventi</a></li>
-							<li><a href="">Forum</a></li>
-							<li><a href="">Chiedi all'esperto</a></li>
-						</ul>	
-					</nav>
-			</div>
+{if $error!=null}
+<script>
+    document.getElementById('alert').style.display='block';
+</script>
+{/if}
+{if $message!=null}
+<script>
+    document.getElementById('success').style.display='block';
+</script>
+{/if}
 
-		</div>
-	<!-- Header -->
-		
+{block name=mainside}
+     <section>
+        <header>
+            <h2>Overview</h2>
+        </header>
+        <ul class="style1"> 
+            <li><a href="{$root}funghi/storia.php">Storia del fungo</a></li>
+            <li><a href="{$root}funghi/schede_funghi.php">Schede Funghi</a></li>
+            <li><a href="{$root}prodotti/libri.php">Libri e Guide</a></button></li>
+            <li><a href="{$root}funghi/regolamento.php">Regolamenti</a></button></li>
+        </ul>
+    </section>
+{/block}
 
-	<!-- Main -->
-		<div id="main">
-		
-			<div class="container">
-				<div id="banner"></div>
-			</div>
-			
-			<div class="container">
-				<div class="row">
-					<div id="sidebar" class="3u">
-						<section>
-							<header>
-								<h2>Donec dictum</h2>
-							</header>
-							<p>Pellentesque viverra  enim.Tristique ante ut risus. Quisque dictum. Integer nisl elementum.</p>
-							<ul class="style1">
-								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
-								<li><a href="#">Integer rutrum nisl in mi</a></li>
-								<li><a href="#">Etiam malesuada rutrum enim</a></li>
-								<li><a href="#">Aenean elementum facilisis ligula</a></li>
-								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
-								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
-							</ul>
-						</section>
-						<section>
-							<header>
-								<h2>Sagittis convallis</h2>
-							</header>
-							<p>Quisque dictum. Integer nisl risus, sagittis convallis elementum.</p>
-							<ul class="style1">
-								<li><a href="#">Vestibulum luctus venenatis dui</a></li>
-								<li><a href="#">Integer rutrum nisl in mi</a></li>
-								<li><a href="#">Etiam malesuada rutrum enim</a></li>
-								<li><a href="#">Aenean elementum facilisis ligula</a></li>
-								<li><a href="#">Ut tincidunt elit vitae augue</a></li>
-								<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
-							</ul>
-						</section>
-					</div>
-					
-					<div id="content" class="9u skel-cell-important">
-						<section>
-							<header>
-								<h2>STORIA DEL FUNGO</h2>
-							</header>
-							<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Proin eu wisi suscipit nulla suscipit interdum. Aenean lectus lorem, imperdiet at, ultrices eget, ornare et, wisi. Pellentesque adipiscing purus ac magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque pede. Donec pulvinar ullamcorper metus. In eu odio at lectus pulvinar mollis. Vestibulum sem magna, elementum ut, vestibulum eu, facilisis quis, arcu. Mauris a dolor. Nulla facilisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed blandit. Phasellus pellentesque, ante nec iaculis dapibus, eros justo auctor lectus, a lobortis lorem mauris quis nunc.</p>
-						</section>
-					</div>
-					
-				</div>
-			</div>
-		</div>
+{block name=main}
+    <div id="content" class="9u skel-cell-important">
+            <section>
+                    <header>
+                            <h2>STORIA DEL FUNGO</h2>
+                    </header>
+                    <a href="#" class="image full"><img src="../images/pics10.jpg" alt=""></a>
+                    <p>Stefania Cazzavillan, Biologa, Genetista, Naturopata</p>
+                    <p>
+                        I funghi per certi versi, sono considerati "oggetti misteriosi", sono vegetali che non possiedono radici, e neppure foglie e fiori, e nemmeno clorofilla che pure è presente in quasi tutte le piante e che, per mezzo della luce, permette al vegetale l'assimilazione del carbonio contenuto nell'anidride carbonica dell'atmosfera. La misteriosa biologia del fungo ha attirato l'interesse dell'uomo fin dai tempi più remoti. La prima rappresentazione esplicita documentata è stata ritrovata nel deserto del Sahara e risale a 7000-90000 anni fa. Per i padri della moderna etno-micologia (in particolare R. gordon Wasson) questa testimonianza dimostra che l'uso di funghi allucinogeni risale al periodo Paleolitico e che avveniva in contesti e rituali di natura mistico-religiosa.</p>
+
+                    <p> Nel settembre del 1991 alcuni scalatori trovarono nelle Alpi tirolesi a 3.500m slm una "mummia" datata 5300 anni che chiamarono "the iceman". Questo uomo primitivo aveva con sé un kit medicinale contenente un fungo Piptoporus betulinus, importante per le sue attività antibiotiche e vermifughe e una massa lanuginosa ottenuta dal fungo fomes fomentarius.</p>
+
+<p>Studi hanno dimostrato che era infettato da vermi intestinali e che quindi si stava probabilmente curando con i funghi.
+    Geroglifici egiziani di 4600 anni fa attestano che i Faraoni pensavano che i funghi fossero "erbe dell'immortalità". Gli antichi egiziani credevano che in funghi selvatici fossero i "figli degli Dei" mandati sulla terra attraverso i fulmini e per questo solo ai Faraoni era permesso mangiarli.</p>
+
+<p>Nella lontana civiltà greca i funghi erano particolarmente temuti e guardati con sospetto perché ritenuti velenosi. In seguito poi, nei secoli, entrarono nel folclore popolare con versioni poetiche e leggende fantastiche. Secondo una di queste, i funghi sarebbero nati dalle briciole di pane cadute in un bosco da due pagnotte che Gesù e San Pietro stavano sbocconcellando mentre camminavano nella foresta, le due pagnotte erano, l'una bianca e l'altra nera, e le briciole cadute originarono i funghi Buoni e quelli Velenosi.</p>
+
+<p>I funghi, proprio per il fatto che sembra spuntino dal nulla, sul terreno o su tronchi di piante, per l'azione, la velenosità di alcuni e per gli effetti allucinogeni di altri, hanno, sin dai tempi antichi, suscitato la fantasia degli uomini, che li hanno avvolti in un alone di magia e li hanno fatti diventare protagonisti di credenze e leggende popolari. Oggetti che ricordano i funghi, in particolare le "pietre-fungo", sono stati ritrovati negli scavi archeologici di diversi siti del Guatemala e del Messico meridionale, ma anche in centro Europa. Guzman individuò nel 1997 la rappresentazione di una fase giovanile di sviluppo di Amanita muscaria in una scultura di pietra ritrovata nella Cuenca de Patzucuaro, Michnoacan, Messico.
+Gli atzechi e i maya consideravano i funghi allucinogeni (es. "Psilocybe spp"), "carne divina" (Teonanacati), per la loro proprietà allucinogene e per le capacità che conferivano agli sciamani.
+Tra le popolazioni siberiane l'Amanita muscaria era ed è usata collettivamente, in occasione di cerimonie e di feste, oppure impiegata dagli sciamani per favorire la trance durante le pratiche curative o per contattare gli spiriti dei morti, nelle pratiche divinatorie e nell'interpretazione dei sogni, oltre ad essere impiegata come fortificante nel corso dei lunghi spostamenti della caccia. Probabilmente l'uso era esclusivamente sciamanico e in seguito all'affievolimento dell'istituzione e del potere sciamanico, l'impiego del fungo si diffuse presso altri membri della società tribale. L'interpretazione dell'esperienza con il fungo, è raffigurata nelle incisioni rupestri preistoriche degli antichi popoli siberiani ed è un motivo ricorrente nella mitologia e nei racconti degli Yakuti, Chukchee e di altre tribù.
+Le popolazioni siberiane scoprirono che l'urina di chi mangiava l'Amanita muscaria era anch'essa dotata di proprietà psicoattive e adottarono il bizzarro costume di bere la propria urina o quella di altri individui dopo l'assunzione del fungo per prolungarne gli effetti. Probabilmente queste popolazioni scoprirono le proprietà psicoattive del fungo e dell'urina di chi mangiava il fungo, osservando il comportamento delle renne, che ne andavano ghiotte e si inebriavano intenzionalmente sia con l'Agaricus muscarius che con l'urina delle altre renne che lo avevano consumato. Nel corso delle visioni indotte dall'assunzione dell'Agaricus Muscarius si presentavano allo sperimentatore siberiano figure antropomorfe prive di braccia e gambe che erano considerati gli spiriti del fungo e venivano chiamati "uomini-amanita" ricoprivano, in queste popolazioni, un ruolo importante. Si tramanda che essi entrassero attraverso un'apertura del tetto e portassero questi funghi in grandi sacchi. Erano vestiti di rosso e bianco, i colori di Babbo Natale, ma anche dell'Amanita, che in Siberia cresce nei boschi di confere.</p>
+
+<p>In Europa occidentale nella storia si riporta un'avversione per i funghi, particolarmente accentuata in Inghilterra e Irlanda, ma che parte già dagli antichi romani. Nella civiltà Romana infatti, il fungo, pur apprezzatissimo per le qualità culinarie, diventò anche simbolo di morte
+    infatti, il termine fungus significherebbe "portatore di morte" (dal latino funus = morte e ago = porto, portare). Sono vari gli episodi, tra leggenda e realtà, legati alla concezione funesta dei funghi. Si narra ad esempio che l'imperatore Claudio era così ghiotto di funghi che morì proprio a causa di questi: la moglie Agrippina, conoscendo il suo debole culinario e desiderando mettere sul trono, al suo posto, il figlio di primo letto Nerone, lo avrebbe fatto avvelenare proprio con funghi velenosi.</p>
+
+<p>Questa microfobia non si applica tuttavia a paesi dell'Europa dell'est dove i funghi costituiscono una parte importante della dieta. Nella tradizione popolare dell'Europa dell'est dove i funghi costituiscono una parte importante della dieta. Nella tradizione popolare dell'Europa dell'est viene fatto infatti un largo uso sia di funghi culinari che medicinali.
+Ma la vera tradizione dell'uso dei funghi medicinali viene dall'Oriente, dalla MTC di tradizione Taoista. Il corpo nel Taoismo è una rappresentazione del cosmo in piccola scala: poiché la natura è organizzata in 5 forze principali: acqua, legno, fuoco, terra, metallo), anche il corpo è regolato da un network di 5 organi corrispondenti (rene, fegato, cuore, milza e polmone) ognuno con una sua energia yin e yang, comandati da queste forze. La terminologia della MTC è difficilmente comprensibile per la medicina occidentale, ma è una vera e propria medicina con una storia di pratica clinica di 4000 anni, diversa, ma non necessariamente inferiore alla medicina occidentale.
+I funghi sono stati usati in medicina Tradizionale Cinese (MTC) per millennni sia come nutrizione che come fitoterapia, per benessere e longevità. La prima notizia sull'uso dei funghi in MTC risale al trattato Shen Nong Ben Cao (Diven Farmer's Materia Medica) scritto nel 250 AC. Nello shen Nong Ben Cao le piante medicinali vengono divise in 3 classi, la più importante delle quali racchiude le piante con azione tonificante dell'organismo che rafforzano la costituzione piuttosto che trattare la malattia. In questo trattato si afferma: "la classe superiore comprende 120 erbe. Sono le erbe dell'imperatore. Controllano il mantenimento della vita... non sono tossiche. L'assunzione anche di grandi quantità per lunghi periodi di tempo non è dannosa. Se uno vuole tonificare il Qi e prolungare la vita senza invecchiare, deve prendere le erbe appartenenti a questa classe". Assieme al Ginseng e all'Astragalo a questa "classe superiore" appartengono 4 funghi: Ling Zhi (o Reishi o Ganoderma lucidum), Zhu Ling (o Chorei o Polyporus umbellatus), Fu Ling (o bukuryo o Poria cocos), Dong Chong Xia Cao (o Tochukas o Cordyceps sinensis). I Cinesi pensano che i funghi abbiano un ruolo essenziale nella pulizia di fegato e reni e per questo li utilizzano nell'alimentazione giornaliera. La MTC riconosce vari tipi di funghi medicinali e li inserisce in terapia come corrispondenze naturali a varie patologie/organi per tonificare il Qi e riequilibrare lo yin e lo yang che viene alterato in corso di malattia.</p>
+
+<p>Una tradizione storica così importante può essere una valida testimonianza di quelle culture popolari e medicine antiche il cui patrimonio va oggi riscoperto e recuperato. Gli studi sulle proprietà dei funghi sono in forte crescita, ma, mentre si diffonde l'azione per una conoscenza più approfondita, rimane l'accompagnamento di vecchie tradizioni, miti e leggende che ancora considerano il fungo come qualcosa id appartenente ad un mondo misterioso legato a fenomeni ultraterreni e a forze sovraumane.</p>
+                    
+            </section>
+    </div>
 	<!-- /Main -->
-
-	<!-- Footer -->
-		<div id="footer">
-			<div class="container">
-				<div class="row half">
-					<div class="3u">
-						<section>
-							<header>
-								<h2>EVENTI & SAGRE</h2>
-							</header>
-							<ul class="default">
-								<li><img src="images/pics04.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-									<span class="posted">May 9th  |  (10 )  Comments</span>
-								</li>
-								<li><img src="images/pics05.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-									<span class="posted">May 1st  |  (10 )  Comments</span>
-								</li>
-								<li><img src="images/pics06.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-									<span class="posted">April 28th  |  (10 )  Comments</span>
-								</li>
-							</ul>
-						</section>
-					</div>
-					<div class="3u">
-						<section>
-							<header>
-								<h2>CORSI</h2>
-							</header>
-							<ul class="default">
-								<li><img src="images/pics07.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-									<span class="posted">May 9th  |  (10 )  Comments</span>
-								</li>
-								<li><img src="images/pics08.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-									<span class="posted">May 1st  |  (10 )  Comments</span>
-								</li>
-								<li><img src="images/pics09.jpg" width="78" height="78" alt="">
-									<p>Nullam non wisi a sem eleifend. Donec mattis libero.</p>
-									<span class="posted">April 28th  |  (10 )  Comments</span>
-								</li>
-							</ul>
-						</section>
-					</div>
-					<div class="6u">
-						<section>
-							<header>
-								<h2></h2>
-							</header>
-							<a href="#" class="image full"><img src="images/pics10.jpg" alt=""></a>
-							<p>Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris. Consectetuer adipiscing elit. </p>
-							<p>Consectetuer adipiscing elit. Nam pede erat, porta eu, lobortis eget, tempus et, tellus. Etiam neque. Vivamus consequat lorem at nisl. Nullam non wisi a sem semper eleifend. Donec mattis libero eget urna. Duis pretium velit ac mauris.</p>
-						</section>
-					</div>
-				</div>
-			</div>
-		</div>
-	<!-- /Footer -->
-
-	<!-- Copyright -->
-		<div id="copyright">
-			<div class="container">
-				Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
-			</div>
-		</div>
-
-
-	</body>
-</html>
+{/block}
+	

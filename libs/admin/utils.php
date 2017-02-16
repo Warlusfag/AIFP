@@ -1,34 +1,32 @@
 <?php
-if(!defined(utils)){
-    define('utils',1);
-}
-function sanitaze_input($input)
+
+function load_file($base_path)
 {
-    $output='';        
-    if (get_magic_quotes_gpc())
-    {
-        $output =  stripcslashes ($input);
+    $photo = array();
+    if(!is_dir($base_path)){
+        return $photo;
     }
-    else
-    {
-        $output = $input;
+    $files = scandir($base_path);
+    foreach($files as $file){
+        if($file == '.' || $file == '..'){
+            continue;
+        }        
+        $f = $base_path.$file;
+        $photo[] =  $f;
     }
-    return htmlentities(mysql_real_escape_string($output));
+    return $photo;
 }
 
-function check_array($post)
-{
-    $flag=true;
-    foreach ($post as $value )
-    {
-        if( !(isset($value)) )
-        {
-            $flag=false;
+function find_values($input, $array){
+    
+    foreach($array as $key => $value){
+        if($value == $input){
+            return $key;
         }
     }
-    return $flag;
-    
+    return -1;
 }
+
 function download ($file)
 {   
 

@@ -1,151 +1,149 @@
 <?php
-if(!defined(admin)){    
-    require_once 'associazione_model.php';
-    require_once 'sezione_model.php';
-    require_once 'product_model.php';
-    require_once 'admin/utils.php';
-    define('admin',1);
-}
+
+require_once 'associazione_model.php';
+require_once 'sezione_model.php';
+require_once 'product_model.php';
+require_once 'admin/utils.php';
+require_once 'evento_model.php';
+require_once 'conversazione_model.php';
 
 class admin extends user{
     
     public $table_descr_product;
     public $table_descr_assoc;
-    public $table_descr_sez;    
+    public $table_descr_sez;
+    public $queries;
     
     function __construct(){
         
         parent::__construct();
-        $this->type = 'associazione';
-        
-        $this->table_descr_assoc = array(        
-            'table' => 'associazione',
-            'table_descr' => 'descr_ass',            
-            'key' => 'ID_ass',
-            'column_name' => 'ID_ass,email,password,user,nome,regione,indirizzo,CAP',
-            'column_descr' => 'ID_ass,sito_web,num_post,punteggio,componenti,esperto',
-            'column_type' => 'i,s,s,s,s,s,s,s',
-            'column_type_descr' => 'i,s,i,i,i,i',
-        );
-        
-        $this->table_descr_product = array(        
-            'table' => 'prodotti',
-            'key' => 'id_prod',
-            'column_name' => 'id_prod,nome,tipologia,descrizione',            
-            'column_type' => 'i,s,s,s',
-        );
-        
-        $this->table_descr_sez = array(        
-            'table' => 'sezioni',
-            'key'=>'id_sez',
+        $this->type = 'admin';
+       
+        $this->table_descr=array(
+            'table' =>'admin',            
+            'key' =>'id_admin',
             'key_type'=>'i',
-            'column_name' => 'id_sez,nome,moderatore,num_conv',
-            'colimn_type' => 'i,s,s,i',
-        );        
+            'column_name'=>'email,password,user,nome,cognome,regione,residenza,data,num_post,punteggio,image,patentino,esperto',
+            'column_type'=>'s,s,s,s,s,s,s,da,i,i,s,i,i',
+        );
+        
+        $this->queries = array(
+            'delete' => "DELETE FROM %s WHERE %s=%u",
+            'insert_files'=> "INSERT INTO %s (%s) VALUES ('%u', '%u', '%s');",
+            'select' => "SELECT * FROM %s AS U ",
+        );
+        
+        $this->default_col = array(
+            'user' => 'admin',
+            'num_post' => 0,
+            'punteggio' => 0,
+            'image' => DEFAULT_IMG,
+            'patentino' => 0,
+            'esperto' => 0,
+        );  
+        
+        $this->attributes = array(
+            'id_admin' => -1,
+            'email' => "",
+            'password'=>"",
+            'user' => $this->default_col['user'],
+            'nome' => '',
+            'cognome' => '',
+            'regione' => "",
+            'residenza' => "",
+            'data'=>"",
+            'num_post' => $this->default_col['num_post'],
+            'punteggio' => $this->default_col['punteggio'],
+            'image' => $this->default_col['image'],
+            'patentino' => $this->default_col['patentino'],
+            'esperto' => $this->default_col['esperto'],
+        );               
     }
     
-    public function register_assoc($id){        
+    public function register_assoc($associazione){        
         if(!$this->conn->status){
             $this->err_descr = "ERROR:DB is not ready";
             return false;
         }
-        $key = $this->table_descr_assoc['key'];
-        $query = "SELECT * FROM req_assoc WHERE $key=$id;";
-        $ris = $this->conn->query($query);
-        
-        if(($n = $ris->num_rows)==1){
-            $ris->data_seek(0);
-            $param = $ris->fetch_array(MYSQLI_NUM);
-        }else{
-            $this->err_descr = 'ERROR: id value is not right';
-            return false;
-        }                       
-        $name=  extract_node($this->table_descr_assoc['column_name'],0);
-        $type = extract_node($this->table_descr_assoc['column_type'],0);
-        $param = extract_node($param, 0);
-        if(!$this->conn->statement_insert($this->table_descr_assoc['table'],$name,$param,$type)){
-            $this->err_descr = $this->conn->error;
+        $ass = new associazione();
+        $ass->insert($associazione);
+        if($ass->err_descr != ''){
+            $this->err_descr = $ass->err_descr;
             return false;
         }
-        //inserimento nella tabella descritpion
-        $param_descr = array();
-        $ass = new associazione();        
-        $id = $this->conn->last_id;        
-        $i=0;
-        $name=  extract_node($this->table_descr_assoc['column_descr'],0);
-        $type = extract_node($this->table_descr_assoc['column_type_descr'],0);
-        foreach($ass->attributes_descr as $key=>$value){
-            $param_descr[$i] = $value;
-            $i++;            
-        }
-        $param_descr = extract_node($param_descr, 0);
-        if(!$this->conn->statement_insert($this->table_descr_assoc['table_descr'],$name,$param_descr,$type)){
-            $this->err_descr = $this->conn->error;
+        $key = $ass->conn->last_id;
+        $table = $ass->table_descr_file['table'];
+        $size = 0;
+        $files = '';
+        $names = $ass->table_descr_file['key'].','.$ass->table_descr_file['column_name'];
+        $query = sprintf($this->queries['insert_files'],$table,$names,$key,$size,$files);
+        $this->conn->query($query);
+        if (!$this->conn->status){            
+            $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        $this->err_descr='';
+        $key = $associazione[$ass->table_descr_req['key']];
+        $query_delete = sprintf($this->queries['delete'], $ass->table_descr_req['table'],$ass->table_descr['key'],$key);        
+        $this->conn->query($query_delete);
+        if (!$this->conn->status){            
+            $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
+            return false;
+        }
+        $this->err_descr = '';
         return true;
-        
     }
     
     public function show_req_assoc(){
         if(!$this->conn->status){
             return false;
         }
-        $query = "SELECT * FROM req_assoc;";
+        $ass = new associazione();
+        $query = sprintf($this->queries['select'],$ass->table_descr_req['table']);
+        $query .= ";";
         $ris = $this->conn->query($query);
         
         if (!$this->conn->status){            
             $this->err_descr="ERROR: failed execution query \n ".$this->conn->error;
             return false;
         }
-        if(($nr = $ris->num_rows) >=1){
+        if(($nr = $ris->num_rows) >=0){
             $app=array();                
             for($j=0; $j<$nr; $j++){
                 $ris->data_seek($j);
-                $app[$j]=$ris->fetch_assoc();                
+                $app[$j]=$ris->fetch_array(MYSQLI_BOTH);                
             }            
             return $app;
-        }else{                
-            $this->err_descr="ERROR: No results found \n ";
-            return false;
         }     
     }
     
-    public function insert_section($params){
-        if(!$this->conn->status){
+    public function insert_section($params){        
+        $sezione = new sezione();        
+        $sezione->insert($params);
+        if($sezione->err_descr != ''){
+            $this->err_descr = $sezione->err_descr;
             return false;
+        }else{
+            $this->err_descr = '';
+            return true;
         }
-        $name = extract_node($this->table_descr_sez['column_name'],0);
-        $type = extract_node($this->table_descr_sez['type'], 0);
-        
-        if(!$this->conn->statement_insert($this->table_descr_sez['table_descr'],$name,$params,$type)){
-            $this->err_descr = $this->conn->error;
-            return false;
-        }
-        $this->err_descr='';
-        return true;
     }
     
     public function insert_product($params){
         if(!$this->conn->status){
             return false;
         }
-        $name = extract_node($this->table_descr_product['column_name'],0);
-        $type = extract_node($this->table_descr_product['type'], 0);
-        
-        if(!$this->conn->statement_insert($this->table_descr_product['table_descr'],$name,$params,$type)){
-            $this->err_descr = $this->conn->error;
+        $prodotti = new prodotti();
+        $prodotti->insert($params);
+        if($prodotti->err_descr != ''){
+            $this->err_descr = $prodotti->err_descr;
             return false;
         }
-        $this->err_descr='';
+        $this->err_descr = '';
         return true;
     }
     
-    public function move_post(){
-        
-    }
     public function delete_post(){}
+     
     
 }
 

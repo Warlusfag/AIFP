@@ -1,46 +1,72 @@
 <?php
-
-require_once 'libs/aifp_controller.php';
 session_start();
+require_once '../libs/aifp_controller.php';
+
 function check_post ($param)
 {
     $app = array();
     foreach ($param as $key=>$value){
         if( $key == 'conversazione' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'text' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
         }
         else if( $key == 'sezione' ){
-            $app[$key] = sanitaze_input($value);
+            $app[$key] = $value;
+        }
+        else if( $key == 'pagina' ){
+            $app[$key] = $value;
         }
     }
     return $app;
 }
 
-$smarty = new AIFP_smarty();
-
-if (isset($_SESSION['user'])){
-    $tok = $_SESSION['user'];
-    $user = aifp_controller::$collection_user[$tok];    
-    if (($post = check_post($_POST))){
-        
-        $sez = aifp_controller::$collection_sez[$post['sezione']];
-        $conv = $sez->convs[$post['conversazione']];            
-        $us = $user->attributes['user'];
-        
-        $post = new post();
-        if($post->new_post($post['text'], $us, $conv->attributes['key'])){
-                     
-        }else{
-            $smarty->assign('error',GEN_ERROR);
-            $smarty->display('error.tpl');
-        }        
-    }else{
-        $smarty->assign('error',GEN_ERROR);
-        $smarty->display('error.tpl');
-    }
+if(isset($_POST['page_conv'])){
+    $cpage = $_POST['page_conv'];
 }else{
-    //login
+    $cpage = 0;
 }
+
+$smarty = new AIFP_smarty();
+$contr = new aifp_controller();
+
+$user = $contr->get_us_from_type($_SESSION['curr_user']['type']);
+$user->init($_SESSION['curr_user']);
+
+$post = check_post($_POST);
+$coll_c = unserialize($_SESSION['convs']);
+$tito_sez = $_POST['sezione'];
+$tito_conv = $_POST['conversazione'];
+$c = $_POST['c_index'];
+$s = $_POST['s_index'];       
+
+$t = $coll_c->getitem($cpage);
+$attr = $t[$c];
+$conv = new conversazione();
+$conv->init($attr);
+
+$conv->add_post($post['text'], $user);
+if($conv->err_descr == ''){
+    $smarty->assign('s_index', $s);
+    $smarty->assign('c_index',$c);
+    $smarty->assign('conversazione',$tito_conv);
+    $smarty->assign('sezione',$tito_sez);
+
+    $posts = $conv->get_posts();
+    if( ($temp = $contr->prepare_post($posts)) ){
+        $smarty->assign('posts', $temp);
+        $smarty->assign('message','Post aggiunto alla conversazione!');  
+    }else{
+        $smarty->assign('error',$contr->description);
+    }            
+}else{
+    $smarty->assign('error',$conv->err_descr);
+}        
+
+foreach($_SESSION['curr_user'] as $key=>$value){
+    $t[$key] = $value;
+}
+$smarty->assign('profilo',$t); 
+$smarty->display('conversazione.tpl');
+
