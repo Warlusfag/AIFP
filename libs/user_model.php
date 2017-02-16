@@ -109,7 +109,7 @@ class user extends gen_model{
     
     public function insert_user($params){
         foreach ($this->attributes as $key=>$value){
-            $params[$key] = $this->conn->sanitaze_input($value,'html');
+            $params[$key] = $this->conn->sanitaze_input($params[$key],'html');
         }         
         return $this->insert($params);   
     }

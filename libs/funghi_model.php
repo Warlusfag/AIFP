@@ -38,7 +38,7 @@ class funghi extends gen_model{
             'key' => 'id_fungo',
             'key_type' => 'i',
             'column_name' =>$this->column,
-            'column_type' => 's,s,s,s,i,i,s,s,s,s,s,s,s,s,s,s,s,s,s',            
+            'column_type' => 's,s,s,s,i,s,i,s,s,s,s,s,s,s,s,s,s,s,s',            
         );
         
         $t = explode(',',$this->column);

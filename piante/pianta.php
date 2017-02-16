@@ -12,19 +12,17 @@ if(isset($_SESSION['curr_user'])){
     }
     $smarty->assign('profilo', $t );    
 }
+$tipologia = $_GET['tipologia'];
+$genere = $_GET['genere'];
+$specie = $_GET['specie'];
 $collection = unserialize($_SESSION['piante']);
-$p = $collection->getitem($_GET['genere']);
+$p = $collection->getitem($tipologia);
 $flag = false;
-for($i=0;$i<count($f);$i++){
-    foreach($f[$i] as $key=>$value){
-        if($key == 'specie'){
-            if($value == $_GET['specie']){
-                $flag = true;
-                break;
-            }
-        }
-    }
-    if($flag){break;}
+for($i=0;$i<count($p);$i++){
+    if($p[$i]['specie'] == $specie && $p[$i]['genere'] == $genere ){            
+        $flag = true;
+        break;
+    }   
 }
 if($flag == false){
     $smarty->assign('error','Nessuna descrizione di questo fungo trovata');

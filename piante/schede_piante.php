@@ -9,13 +9,13 @@ if (!isset($_SESSION['piante'])){
 
 $smarty = new AIFP_Smarty();
 //$_GET['genere'] = 'lactarius';
-if(isset($_GET['genere'])){
-    $genere = $_GET['genere'];
+if(isset($_GET['tipologia'])){
+    $tipologia = $_GET['tipologia'];
     $collection = unserialize($_SESSION['piante']);
     $error = '';
-    if( ($piante=$collection->getitem($genere))==false){
+    if( ($piante=$collection->getitem($tipologia))==false){
         $contr = new aifp_controller();
-        $piante = $contr->get_schede_piante($genere);
+        $piante = $contr->get_schede_piante($tipologia);
         if($contr->description != ''){
             $error = $contr->description;    
         }
@@ -26,7 +26,7 @@ if(isset($_GET['genere'])){
     if($error != ''){
         $smarty->assign('error',$error);    
     }else{
-        $smarty->assign('genere',$_GET['genere']);
+        $smarty->assign('tipologia',$tipologia);
         //preparo i dati iin uscita
         $temp = array();
         for($i=0;$i<count($piante);$i++){

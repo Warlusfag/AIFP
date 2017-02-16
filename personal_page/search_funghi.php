@@ -74,6 +74,9 @@ if(isset($_POST['index'])){
         $_SESSION['view'] = $fungo->table_descr['table'];
         unset($_SESSION['results']);
     }else{
+        if(count($fung)==0){
+            $smarty->assign("error","Nessun risultato trovato, fare il reset della ricerca");            
+        }
         $_SESSION['results'] = $fung;
         $smarty->assign('funghi',$fung);
     }       

@@ -63,43 +63,7 @@ class associazione extends user
         $this->table_descr_req['column_name']='email,password,user,nome,regione,provincia,indirizzo,CAP,componenti,sito_web';
         $this->table_descr_req['column_type']='s,s,s,s,s,s,s,s,i,s';
     }
-    
-    public function upgrade_user($em, $type){
-        $contr = new aifp_controller();
-        $us_new = $contr->get_us_from_type($type);
-        if($us_new == null || $us_new->table_descr['type'] == $this->table_descr['type']|| $us_new instanceof user){
-            $this->err_descr = 'ERROR: wrong type';
-            return false;
-        }
-        //Ora vado a cercare l'utente vecchiio
-        $params=array(
-            'email'=>$em,
-        );  
-        $us = $contr->get_user($params);
-
-        //cancello il vecchio utente
-        if(!$us->delete_user()){
-            $this->err_descr = $us->err_descr;
-            return false;
-        }
-        //Aggiorno i punteggi di entrambi 
-        $us->attributes['associazione'] = $this->attributes[$this->table_descr['key']];
-        $us->attributes['punteggio'] += 300;       
-        $us->upgrade_esperto();
-        if(!$us_new->insert_user($us->attributes)){
-            $this->err_descr = $us->err_descr;
-            return false;
-        }        
-        $params = array( 'punteggio'=> $this->attributes['punteggio'],);
-        if($this->update($params)){
-            $this->err_descr = '';
-            return true;            
-        }else{
-            return false;
-        }
-        
-    }    
-    
+   
     public function get_files(){
         $key = $this->attributes[$this->table_descr['key']]; 
         if( $key == -1){
