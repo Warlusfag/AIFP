@@ -280,6 +280,7 @@
         <section>
             <header>
                 <h2>RICERCA DICOTOMICA</h2>
+                <hr><br>
                 <h3>Ricerca fungo per </h3>
             </header>
         <form id="search" name="s_funghi"   action="{$root}personal_page/search_funghi.php" method="post">
@@ -393,10 +394,12 @@
                 </tr>
             </table>
         </form>
-            <hr>
+            
+            <br><hr>
             {if $funghi}
                 <h3>Risultati ricerca </h3>
             {/if}
+            <br>
         <ul class="default">
             {$count=-1}
                 {foreach $funghi as $f}
@@ -412,8 +415,7 @@
                                     <br>
                                 </div>
                                 <div class="3u" style="float:right; border-left: solid 1px #ddd">
-                                    <p>Clicca per saperne di più</p>
-                                    <span> </span>
+                                    <h3>Clicca per saperne di più</h3>
                                 </div>
                             </div>
                         </li>

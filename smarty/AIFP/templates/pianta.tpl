@@ -33,7 +33,7 @@
     <section>
         <header>
             <div class="row half">
-                <div class="6u"><h2>{$descrizione.genere} {$descrizione.tipologia}</h2></div>
+                <div class="6u"><h2>{$descrizione.tipologia} - {$descrizione.genere} {$descrizione.specie}</h2></div>
                
             </div>
             

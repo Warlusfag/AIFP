@@ -179,7 +179,7 @@
                             </div>
                             <div class="4u">
                             <ul>
-                                <li><b>Commestibile</b> {$descrizione.commestiblie}</li>
+                                <li><b>Commestibile</b> {$descrizione.commestibile}</li>
                                 <li><b>Sporata</b> {$descrizione.sporata}</li>
                                 <li><b>Viraggio</b> {$descrizione.viraggio}</li>
                             </ul>

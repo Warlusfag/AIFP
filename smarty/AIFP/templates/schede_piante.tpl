@@ -29,7 +29,7 @@
 	
         <div id="content" class="9u skel-cell-important">
             <section>
-                {if !$genere}
+                {if !$tipologia}
                     <header>
                         <h2>SCHEDE PIANTE</h2>
                     </header>
@@ -40,7 +40,7 @@
                             <div class="4u">
                                     <section>
                                         <form action="{$root}piante/schede_piante.php" method="get">
-                                            <button class="button" type="submit" value="{$gen[0]}" name="genere">
+                                            <button class="button" type="submit" value="{$gen[0]}" name="tipologia">
                                                 <img src="{$gen[1]}"class="image full">
                                                 {$gen[0]}
                                             </button>
@@ -55,7 +55,7 @@
                 {else}
                     <header>
                     <div class="row half">
-                        <div class="6u"><h2>{$genere}</h2></div>
+                        <div class="6u"><h2>{$tipologia}</h2></div>
                         <div class="4u" style="float:right;">
                             <a href="{$root}piante/schede_piante.php" class="button prec"> < </a>
                             
@@ -69,6 +69,7 @@
                         <div class="4u">
                                 <section>
                                     <form action="{$root}piante/pianta.php" method="get">
+                                        <input name="tipologia" value="{$tipologia}" style="display:none;">
                                         <input name="specie" value="{$pianta.specie}" style="display:none;">
                                         <button class="button" type="submit" name="genere" value="{$pianta.genere}">
                                         <img src="{$root}{$pianta.foto}" alt="{$pianta.specie}" class="image full">

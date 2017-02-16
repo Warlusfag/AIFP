@@ -86,8 +86,9 @@
                                 
                                 <div style="text-align:center">
                                     {while $i < $max}
-                                         <span class="dot" onclick="currentSlide({$i})"></span> 
+                                         
                                          {$i=$i+1}
+                                         <span class="dot" onclick="currentSlide({$i})"></span> 
                                     {/while}
                                 </div>
                                 
@@ -95,7 +96,7 @@
                 </div>
             <div class="4u">
                 <ul>
-                    <li><b>Commestibile</b> {$descrizione.commestiblie}</li>
+                    <li><b>Commestibile</b> {$descrizione.commestibile}</li>
                     <li><b>Sporata</b> {$descrizione.sporata}</li>
                     <li><b>Viraggio</b> {$descrizione.viraggio}</li>
                    
