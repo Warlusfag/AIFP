@@ -8,7 +8,7 @@
 
     <section>
          <ul class="style1"> 
-             <li><form action="{$root}funghi/schede_piante.php" type="get">
+             <li><form action="{$root}piante/schede_piante.php" type="get">
                         <button class="button schede" type="submit" name="genere" value="{$descrizione.genere}"> < {$descrizione.genere} </button>
                      </form></li>
          </ul>
